@@ -1,1 +1,2 @@
 # pam
+devtools::install("pam")
