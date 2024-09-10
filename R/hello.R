@@ -1,62 +1,125 @@
-# Function for importing data from .csv files
-import_data <- function(directory) {
-  # Get list of .csv files
-  csv_files <- list.files(directory, pattern = ".csv", full.names = TRUE)
+validate_data <- function(data) {
+  library(data.table)
+  library(glue)
 
-  # Check if .csv files are found
-  if (length(csv_files) == 0) {
-    stop("No .csv files found in the specified directory.")
+  if (is.null(data)) {
+    stop("data is null")
   }
 
-  # Initialize list to store data frames
-  data_list <- list()
-
-  # Iterate over each .csv file
-  for (file in csv_files) {
-    # Read data from file
-    data <- read.csv2(file)
-
-    # Add 'filename' column
-    data$filename <- basename(file)
-
-    # Append data frame to list
-    data_list[[file]] <- data
+  if (!is.data.table(data)) {
+    stop("data is not a valid data.table")
   }
 
-  # Combine all data frames into one
-  tbl_all <- do.call(rbind, data_list)
+  if (nrow(data) < 2) {
+    stop("no data rows")
+  }
 
-  return(as.data.table(tbl_all))
+  if (ncol(data) == 0) {
+    stop("no cols in data")
+  }
+
+  if (!"ID" %in% colnames(data)) {
+    stop(glue("required col 'ID' not found"))
+  }
+
+  if (!"PAR" %in% colnames(data)) {
+    stop(glue("required col 'PAR' not found"))
+  }
+
+  if (!"Y.I." %in% colnames(data) && !"Y.II." %in% colnames(data)) {
+    stop(glue("required col 'Y(I)' and 'Y(II)' not found"))
+  }
+
+  if (!"Action" %in% colnames(data)) {
+    stop(glue("required col 'Action' not found"))
+  }
+
+  if (!"Date" %in% colnames(data)) {
+    stop(glue("required col 'Date' not found"))
+  }
+
+  if (!"Time" %in% colnames(data)) {
+    stop(glue("required col 'Time' not found"))
+  }
 }
 
-par_cleaner <- function(tbl_all) {
-  if (!is.data.table(tbl_all)) {
-    stop("tbl_all is not a data.table paramter")
-  }
+read_pam_data <- function(
+    csv_path,
+    remove_recovery = TRUE,
+    etr_factor = 0.84,
+    p_ratio = 0.5) {
+  library(data.table)
+  library(glue)
+
+  data <- read.csv(csv_path, sep = ";", dec = ".")
+  data <- as.data.table(data)
+  validate_data(data)
+
+  data <- data[ID == "SP"]
+  data <- data[, DateTime := as.POSIXct(paste(Date, Time, sep = " "), tz = "GMT", "%d.%m.%y %H:%M:%S")]
+  data <- data[order(DateTime)]
 
   result <- data.table()
-  unique_files <- unique(unlist(tbl_all[["filename"]]))
-  for (filen in unique_files) {
-    file_data <- tbl_all[ID == "SP"]
-    file_data <- file_data[filename == filen]
-    file_data <- file_data[, DateTime := as.POSIXct(paste(Date, Time, sep = " "), tz = "GMT", "%d.%m.%y %H:%M:%S")]
-    file_data <- file_data[order(DateTime)]
-
-    lastPar <- as.numeric(0)
-    for (i in 1:nrow(file_data)) {
-      row <- file_data[i, ]
-      row <- row[, PAR := as.numeric(PAR)]
-      currentPar <- row[, PAR]
-      if (lastPar != 0 & currentPar < lastPar) {
-        file_data <- file_data[!i, ]
-        break
-      }
-      lastPar <- currentPar
-      result <- rbind(result, row)
+  lastPar <- as.numeric(0)
+  for (i in seq_len(nrow(data))) {
+    row <- data[i, ]
+    currentPar <- row$PAR
+    if (!is.numeric(currentPar)) {
+      stop(glue("PAR in row {i} is not numeric"))
     }
+
+    yield_I <- row$Y.I.
+    recalc_ETRI <- if (is.numeric(yield_I)) {
+      calc_etr(yield_I, currentPar, etr_factor, p_ratio)
+    } else {
+      NA
+    }
+
+    row <- cbind(row, recalc_ETR.I. = recalc_ETRI)
+
+    yield_II <- row$Y.II.
+    recalc_ETRII <- if (is.numeric(yield_II)) {
+      calc_etr(yield_II, currentPar, etr_factor, p_ratio)
+    } else {
+      NA
+    }
+
+    row <- cbind(row, recalc_ETR.II. = recalc_ETRII)
+
+    if (remove_recovery && lastPar != 0 && currentPar < lastPar) {
+      data <- data[!i, ]
+      break
+    }
+    lastPar <- currentPar
+    result <- rbind(result, row)
   }
+
   return(result)
 }
+
+calc_etr <- function(yield, par, etr_factor, p_ratio) {
+  if (!is.numeric(yield)) {
+    stop("yield is not numeric")
+  }
+
+  if (!is.numeric(par)) {
+    stop("par is not numeric")
+  }
+
+  if (!is.numeric(etr_factor)) {
+    stop("etr_factor is not numeric")
+  }
+
+  if (!is.numeric(p_ratio)) {
+    stop("p_ratio is not numeric")
+  }
+
+  return(yield * par * etr_factor * p_ratio)
+}
+
+
+
+
 
 get_data_I <- function(tbl, etr_factor = 0.84, p_ratio = 0.5) {
   return(get_data(tbl, "Y.I.", "Pm.-Det.", etr_factor, p_ratio))
@@ -113,6 +176,51 @@ get_data <- function(tbl, yield_col_name, det_action_to_use, etr_factor, p_ratio
 
   result <- cbind(result, etr = etr_values)
   return(result)
+}
+
+plot_control_raw <- function(data, title, use_etr_I) {
+  library(ggplot2)
+  library(cowplot)
+
+  validate_data(data)
+
+  if (!is.logical(use_etr_I)) {
+    stop("use_etr_I is not a valid bool")
+  }
+
+  etr_label <- expression(paste("ETR [", mu, "mol electrons"^{
+    -2
+  } ~ "s"^{
+    -1
+  } ~ "]"))
+  par_label <- expression(paste("PAR [", mu, "mol photons m"^{
+    -2
+  } ~ "s"^{
+    -1
+  } ~ "]"))
+
+  # Create a list to store individual plots
+  plots <- list()
+
+  etr_col_name <- if (use_etr_I) "recalc_ETR.I." else "recalc_ETR.II."
+  if (!use_etr_I) {
+    data <- data[Action != "Pm.-Det."]
+  }
+
+  # Create plot for ETR.II. by PAR and filename
+  plot <- ggplot(data, aes(x = PAR, y = get(etr_col_name))) +
+    geom_point() +
+    labs(x = par_label, y = etr_label, title = eval(title)) +
+    theme_minimal() # Adjust theme if needed
+
+  # Add plot to the list of plots
+  plots[[eval(title)]] <- plot
+
+  # Save plots in a grid
+  plot_grid <- cowplot::plot_grid(plotlist = plots, ncol = )
+
+  # Print the plot grid to the PDF
+  return(plot_grid)
 }
 
 plot_control <- function(tbl, file_name) {
