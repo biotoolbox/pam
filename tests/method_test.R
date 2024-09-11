@@ -17,14 +17,20 @@
 # reg <- generate_regression_eilers_peeters(yield_II)
 # plot_control_eilers_peeters(yield_II, reg, "asdgfsdafasdfsadf.pdf")
 
-
+library(glue)
 csv_files <- list.files(file.path(getwd(), "data"), pattern = ".csv", full.names = TRUE)
 
+# pdf("plots.pdf", onefile = TRUE)
 # Iterate over each .csv file
 for (file in csv_files) {
-  png(glue("{basename(file)}.png"))
+  title <- basename(file)
+  png(glue("{title}.png"))
   data <- read_pam_data(file)
-  View(data)
-  print(plot_control_raw(data, basename(file), TRUE))
+  # View(data)
+  # print(plot_control_raw(data, basename(file), TRUE))
+  reg_data <- generate_regression_eilers_peeters(data, FALSE)
+  View(reg_data)
+  print(plot_control_eilers_peeters(data, reg_data, title, FALSE))
   dev.off()
+  stop("a")
 }

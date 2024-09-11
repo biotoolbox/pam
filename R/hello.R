@@ -1,3 +1,22 @@
+etr_I_col_name <- "recalc_ETR.I."
+etr_II_col_name <- "recalc_ETR.II."
+
+etr_label <- expression(paste("ETR [", mu, "mol electrons"^{
+  -2
+} ~ "s"^{
+  -1
+} ~ "]"))
+par_label <- expression(paste("PAR [", mu, "mol photons m"^{
+  -2
+} ~ "s"^{
+  -1
+} ~ "]"))
+etr_unit_label <- expression(paste("[", mu, "mol electrons"^{
+  -2
+} ~ "s"^{
+  -1
+} ~ "]"))
+
 validate_data <- function(data) {
   library(data.table)
   library(glue)
@@ -60,37 +79,27 @@ read_pam_data <- function(
   data <- data[order(DateTime)]
 
   result <- data.table()
-  lastPar <- as.numeric(0)
+  last_par <- as.numeric(0)
   for (i in seq_len(nrow(data))) {
     row <- data[i, ]
-    currentPar <- row$PAR
-    if (!is.numeric(currentPar)) {
+    current_par <- row$PAR
+    if (!is.numeric(current_par)) {
       stop(glue("PAR in row {i} is not numeric"))
     }
 
     yield_I <- row$Y.I.
-    recalc_ETRI <- if (is.numeric(yield_I)) {
-      calc_etr(yield_I, currentPar, etr_factor, p_ratio)
-    } else {
-      NA
-    }
-
-    row <- cbind(row, recalc_ETR.I. = recalc_ETRI)
+    recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, p_ratio)
+    row[, (etr_I_col_name) := recalc_ETRI]
 
     yield_II <- row$Y.II.
-    recalc_ETRII <- if (is.numeric(yield_II)) {
-      calc_etr(yield_II, currentPar, etr_factor, p_ratio)
-    } else {
-      NA
-    }
+    recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, p_ratio)
+    row[, (etr_II_col_name) := recalc_ETRII]
 
-    row <- cbind(row, recalc_ETR.II. = recalc_ETRII)
-
-    if (remove_recovery && lastPar != 0 && currentPar < lastPar) {
+    if (remove_recovery && last_par != 0 && current_par < last_par) {
       data <- data[!i, ]
       break
     }
-    lastPar <- currentPar
+    last_par <- current_par
     result <- rbind(result, row)
   }
 
@@ -117,67 +126,6 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
   return(yield * par * etr_factor * p_ratio)
 }
 
-
-
-
-
-get_data_I <- function(tbl, etr_factor = 0.84, p_ratio = 0.5) {
-  return(get_data(tbl, "Y.I.", "Pm.-Det.", etr_factor, p_ratio))
-}
-
-get_data_II <- function(tbl, etr_factor = 0.84, p_ratio = 0.5) {
-  return(get_data(tbl, "Y.II.", "Fm-Det.", etr_factor, p_ratio))
-}
-
-get_data <- function(tbl, yield_col_name, det_action_to_use, etr_factor, p_ratio, action_to_use = "P.+F. SP") {
-  if (is.null(tbl) | !is.data.table(tbl)) {
-    stop("tbl paramter is not valid")
-  }
-
-  if (!eval(yield_col_name) %in% colnames(tbl)) {
-    stop(glue("required col '{yield_col_name}' not found"))
-  }
-
-  if (!"DateTime" %in% colnames(tbl)) {
-    stop(glue("required col 'DateTime' not found"))
-  }
-
-  if (!"filename" %in% colnames(tbl)) {
-    stop(glue("required col 'filename' not found"))
-  }
-
-  if (!"PAR" %in% colnames(tbl)) {
-    stop(glue("required col 'PAR' not found"))
-  }
-
-  if (!"Action" %in% colnames(tbl)) {
-    stop(glue("required col 'action' not found"))
-  }
-
-  tbl <- tbl[Action == eval(action_to_use) | Action == eval(det_action_to_use), ]
-  result <- data.table()
-  result <- cbind(result, date_time = tbl[, DateTime])
-  result <- cbind(result, file_name = tbl[, filename])
-  result <- cbind(result, action = tbl[, Action])
-  result <- cbind(result, par = tbl[, PAR])
-  result <- cbind(result, value = tbl[, get(yield_col_name)])
-  result <- result[, par := as.numeric(par)]
-  result <- result[, value := as.numeric(value)]
-
-  etr_values <- list()
-  for (row_index in 1:nrow(result)) {
-    row <- result[row_index]
-    if (row[, action] == eval(det_action_to_use) && row[, par] != 0) {
-      stop("PAR at Det. is not 0. Check raw data! ", toString(row))
-    }
-    etr <- as.numeric(row[, value]) * as.numeric(row[, par]) * as.numeric(etr_factor) * as.numeric(p_ratio)
-    etr_values <- c(etr_values, etr)
-  }
-
-  result <- cbind(result, etr = etr_values)
-  return(result)
-}
-
 plot_control_raw <- function(data, title, use_etr_I) {
   library(ggplot2)
   library(cowplot)
@@ -188,189 +136,108 @@ plot_control_raw <- function(data, title, use_etr_I) {
     stop("use_etr_I is not a valid bool")
   }
 
-  etr_label <- expression(paste("ETR [", mu, "mol electrons"^{
-    -2
-  } ~ "s"^{
-    -1
-  } ~ "]"))
-  par_label <- expression(paste("PAR [", mu, "mol photons m"^{
-    -2
-  } ~ "s"^{
-    -1
-  } ~ "]"))
-
-  # Create a list to store individual plots
-  plots <- list()
-
-  etr_col_name <- if (use_etr_I) "recalc_ETR.I." else "recalc_ETR.II."
-  if (!use_etr_I) {
+  etr_to_use <- ""
+  if (use_etr_I) {
+    etr_to_use <- etr_I_col_name
+    data <- data[Action != "Fm-Det."]
+  } else {
+    etr_to_use <- etr_II_col_name
     data <- data[Action != "Pm.-Det."]
   }
 
   # Create plot for ETR.II. by PAR and filename
-  plot <- ggplot(data, aes(x = PAR, y = get(etr_col_name))) +
+  plot <- ggplot(data, aes(x = PAR, y = get(etr_to_use))) +
     geom_point() +
     labs(x = par_label, y = etr_label, title = eval(title)) +
     theme_minimal() # Adjust theme if needed
 
-  # Add plot to the list of plots
-  plots[[eval(title)]] <- plot
-
-  # Save plots in a grid
-  plot_grid <- cowplot::plot_grid(plotlist = plots, ncol = )
-
   # Print the plot grid to the PDF
-  return(plot_grid)
+  return(plot)
 }
 
-plot_control <- function(tbl, file_name) {
-  # Open PDF device to save plots
-  pdf(eval(file_name))
+generate_regression_eilers_peeters <- function(data, use_etr_I) {
+  library(minpack.lm)
+  validate_data(data)
 
-  # Split unique filenames into groups of 6 for each page
-  files <- unique(tbl$file_name)
-
-  etr_label <- expression(paste("ETR [", mu, "mol electrons"^{
-    -2
-  } ~ "s"^{
-    -1
-  } ~ "]"))
-  par_label <- expression(paste("PAR [", mu, "mol photons m"^{
-    -2
-  } ~ "s"^{
-    -1
-  } ~ "]"))
-
-  # Loop through each group of filenames
-  for (file in files) {
-    # Create a list to store individual plots
-    plots <- list()
-
-    data <- tbl[file_name == eval(file), ]
-    data$par <- as.numeric(data$par)
-    data$etr <- as.numeric(data$etr)
-
-    # Create plot for ETR.II. by PAR and filename
-    plot <- ggplot(data, aes(x = par, y = etr)) +
-      geom_point() +
-      labs(x = par_label, y = etr_label, title = paste(file)) +
-      theme_minimal() # Adjust theme if needed
-
-    # Add plot to the list of plots
-    plots[[file]] <- plot
-
-    # Save plots in a grid
-    plot_grid <- cowplot::plot_grid(plotlist = plots, ncol = )
-
-    # Print the plot grid to the PDF
-    print(plot_grid)
+  if (!is.logical(use_etr_I)) {
+    stop("use_etr_I is not a valid bool")
   }
 
-  # Close the PDF device
-  dev.off()
+  etr_to_use <- ""
+  if (use_etr_I) {
+    etr_to_use <- etr_I_col_name
+    data <- data[Action != "Fm-Det."]
+  } else {
+    etr_to_use <- etr_II_col_name
+    data <- data[Action != "Pm.-Det."]
+  }
+
+  model <- nls(data[[etr_to_use]] ~ (PAR / (a * PAR^2 + b * PAR + c)),
+    data = data,
+    start = list(a = 0.00004, b = 0.004, c = 5)
+  ) # Initial parameter values
+
+  abc <- coef(model)
+  a <- abc[["a"]]
+  b <- abc[["b"]]
+  c <- abc[["c"]]
+  etr_max <- 1 / (b + 2 * sqrt(a * c))
+
+  # Calculate alpha using the formula
+  alpha <- 1 / c
+
+  # Calculate Ik using the formula
+  Ik <- c / (b + 2 * sqrt(a * c))
+
+  # Calculate Im using the formula
+  Im <- sqrt(c / a)
+
+
+  return(c(a = a, b = b, c = c, etr_max = etr_max, alpha = alpha, ik = Ik, im = Im))
 }
 
-generate_regression_eilers_peeters <- function(tbl) {
-  # Initialize lists to store filenames and coefficients
-  filenames <- c()
-  a_values <- c()
-  b_values <- c()
-  c_values <- c()
+plot_control_eilers_peeters <- function(data, regression_data, title, use_etr_I) {
+  library(ggplot2)
+  library(glue)
 
-  # Loop through each unique filename
-  for (filename in unique(tbl$file_name)) {
-    # Subset the data for the current filename
-    data_subset <- tbl[tbl$file_name == eval(filename), ]
-    data_subset$par <- as.numeric(data_subset$par)
-    data_subset$etr <- as.numeric(data_subset$etr)
+  validate_data(data)
 
-    # TODO: remove tryCatch?????
-    # Fit a nonlinear model to the data
-    model <- tryCatch(
-      {
-        nls(etr ~ (par / (a * par^2 + b * par + c)),
-          data = data_subset,
-          start = list(a = 0.00004, b = 0.004, c = 5)
-        ) # Initial parameter values
-      },
-      error = function(e) {
-        stop(glue("regression failed for file '{filename}' with error {e}"))
-      }
-    )
-
-    # Extract the coefficients
-    coefficients <- coef(model)
-
-    # Store the results
-    filenames <- c(filenames, filename)
-    a_values <- c(a_values, coefficients[["a"]])
-    b_values <- c(b_values, coefficients[["b"]])
-    c_values <- c(c_values, coefficients[["c"]])
+  if (!is.logical(use_etr_I)) {
+    stop("use_etr_I is not a valid bool")
   }
 
-  # Create a data frame with filenames and coefficients
-  results_df <- data.table(
-    filename = filenames,
-    a = a_values,
-    b = b_values,
-    c = c_values
-  )
+  a <- eval(regression_data[["a"]])
+  b <- eval(regression_data[["b"]])
+  c <- eval(regression_data[["c"]])
 
-  # Print the results data frame
-  return(results_df)
-}
+  pars <- c()
+  predictions <- c()
+  for (p in min(data$PAR):max(data$PAR)) {
+    pars <- c(pars, p)
+    predictions <- c(predictions, p / ((a * p^2) + (b * p) + c))
+  }
+  line_data <- data.table("PAR" = pars, "prediction" = predictions)
 
-plot_control_eilers_peeters <- function(tbl, regression, file_name) {
-  # Open PDF device to save plots
-  pdf(eval(file_name))
-
-  # Split unique filenames into groups of 6 for each page
-  files <- unique(tbl$file_name)
-
-  etr_label <- expression(paste("ETR [", mu, "mol electrons"^{
-    -2
-  } ~ "s"^{
-    -1
-  } ~ "]"))
-  par_label <- expression(paste("PAR [", mu, "mol photons m"^{
-    -2
-  } ~ "s"^{
-    -1
-  } ~ "]"))
-
-  # Loop through each group of filenames
-  for (file in files) {
-    # Create a list to store individual plots
-    plots <- list()
-
-    data <- tbl[file_name == eval(file), ]
-    data$par <- as.numeric(data$par)
-    data$etr <- as.numeric(data$etr)
-
-    data <- cbind(data, a = regression[filename == eval(file), a])
-    data <- cbind(data, b = regression[filename == eval(file), b])
-    data <- cbind(data, c = regression[filename == eval(file), c])
-
-    # Calculate predicted ETR.II. values using the regression equation
-    data$prediction <- with(data, par / ((a * par^2) + (b * par) + c))
-
-    # Create plot for ETR.II. by PAR and filename
-    plot <- ggplot(data, aes(x = par, y = etr)) +
-      geom_point() +
-      geom_line(aes(y = prediction), color = "blue") +
-      labs(x = par_label, y = etr_label, title = paste(file)) +
-      theme_minimal() # Adjust theme if needed
-
-    # Add plot to the list of plots
-    plots[[file]] <- plot
-
-    # Save plots in a grid
-    plot_grid <- cowplot::plot_grid(plotlist = plots, ncol = )
-
-    # Print the plot grid to the PDF
-    print(plot_grid)
+  etr_to_use <- ""
+  if (use_etr_I) {
+    etr_to_use <- etr_I_col_name
+    data <- data[Action != "Fm-Det."]
+  } else {
+    etr_to_use <- etr_II_col_name
+    data <- data[Action != "Pm.-Det."]
   }
 
-  # Close the PDF device
-  dev.off()
+  # Create plot for ETR.II. by PAR and filename
+  plot <- ggplot(data, aes(x = PAR, y = get(etr_to_use))) +
+    geom_point() +
+    geom_line(data = line_data, aes(x = PAR, y = prediction), color = "#f700ff") +
+    labs(x = par_label, y = etr_label, title = eval(title)) +
+    theme_minimal() +
+    labs(caption = glue("ETRmax: {round(regression_data[['etr_max']], 3)}
+    alpha: {round(regression_data[['alpha']], 3)}
+    Ik: {round(regression_data[['ik']], 3)}
+    Im: {round(regression_data[['im']], 3)}")) +
+    theme(plot.caption = element_text(hjust = 0))
+
+  return(plot)
 }
