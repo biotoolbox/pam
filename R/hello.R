@@ -208,6 +208,9 @@ generate_regression_eilers_peeters <- function(data, use_etr_I) {
   # Calculate Im using the formula
   Im <- sqrt(c / a)
 
+  # Calculate w using the formula
+  w <- b / sqrt(a * c)
+
   pars <- c()
   predictions <- c()
   for (p in min(data$PAR):max(data$PAR)) {
@@ -225,7 +228,8 @@ generate_regression_eilers_peeters <- function(data, use_etr_I) {
     etr_max = etr_max,
     alpha = alpha,
     ik = Ik,
-    im = Im
+    im = Im,
+    w = w
   ))
 }
 
@@ -263,6 +267,7 @@ plot_control_eilers_peeters <- function(data, regression_data, title, use_etr_I)
     alpha: {round(regression_data[['alpha']], 3)}
     Ik: {round(regression_data[['ik']], 3)}
     Im: {round(regression_data[['im']], 3)}
+    w: {round(regression_data[['w']], 3)}
     SDiff: {round(regression_data[['sdiff']], 3)}")) +
     theme(plot.caption = element_text(hjust = 0))
 
