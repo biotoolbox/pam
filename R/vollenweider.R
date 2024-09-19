@@ -1,6 +1,7 @@
 generate_regression_vollenweider <- function(data, use_etr_I) {
   library(minpack.lm)
   library(SciViews)
+
   validate_data(data)
 
   if (!is.logical(use_etr_I)) {
@@ -18,8 +19,9 @@ generate_regression_vollenweider <- function(data, use_etr_I) {
 
   model <- nlsLM(data[[etr_to_use]] ~ ((a * PAR / sqrt(1 + (b^2) * (PAR^2))) * (1 / sqrt(1 + (c^2) * (PAR ^2)))^n),
     data = data,
-    start = list(a = 0.3, b = 0.004, c = -0.0001, n = 1000)
-  ) # Initial parameter values
+    start = list(a = 0.3, b = 0.004, c = -0.0001, n = 1000),
+    control = nls.lm.control(maxiter = 1000)
+  ) 
 
   abc <- coef(model)
   a <- abc[["a"]]
@@ -57,7 +59,46 @@ generate_regression_vollenweider <- function(data, use_etr_I) {
     etr_max = etr_max,
     alpha = alpha,
     ik = Ik,
-    Iopt = Iopt
+    iopt = Iopt
   ))
 }
 
+
+plot_control_vollenweider <- function(data, regression_data, title, use_etr_I) {
+
+validate_data(data)
+
+  if (!is.logical(use_etr_I)) {
+    stop("use_etr_I is not a valid bool")
+  }
+
+  a <- eval(regression_data[["a"]])
+  b <- eval(regression_data[["b"]])
+  c <- eval(regression_data[["c"]])
+  n <- eval(regression_data[["n"]])
+  etr_regression_data <- eval(regression_data[["etr_regression_data"]])
+
+  etr_to_use <- ""
+  if (use_etr_I) {
+    etr_to_use <- etr_I_col_name
+    data <- data[Action != "Fm-Det."]
+  } else {
+    etr_to_use <- etr_II_col_name
+    data <- data[Action != "Pm.-Det."]
+  }
+
+  # Create plot for ETR.II. by PAR and filename
+  plot <- ggplot(data, aes(x = PAR, y = get(etr_to_use))) +
+    geom_point() +
+    geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#e70f1f") +
+    labs(x = par_label, y = etr_label, title = eval(title)) +
+    theme_minimal() +
+    labs(caption = glue("ETRmax: {round(regression_data[['etr_max']], 3)}
+    alpha: {round(regression_data[['alpha']], 3)}
+    Ik: {round(regression_data[['ik']], 3)}
+    Iopt: {round(regression_data[['iopt']], 3)}
+    SDiff: {round(regression_data[['sdiff']], 3)}")) +
+    theme(plot.caption = element_text(hjust = 0))
+
+  return(plot)
+}
