@@ -1,47 +1,59 @@
-generate_regression_vollenweider <- function(data, use_etr_I) {
-  library(minpack.lm)
-  library(SciViews)
+generate_regression_vollenweider_ETR_I <- function(data) {
+  return(generate_regression_vollenweider_internal(data, etr_I_col_name))
+}
 
+generate_regression_vollenweider_ETR_II <- function(data) {
+  return(generate_regression_vollenweider_internal(data, etr_II_col_name))
+}
+
+generate_regression_vollenweider_internal <- function(data, etr_type) {
+  library(data.table)
+  library(minpack.lm)
+  library(dplyr)
+
+  validate_etr_type(etr_type)
   validate_data(data)
 
-  if (!is.logical(use_etr_I)) {
-    stop("use_etr_I is not a valid bool")
-  }
-
-  etr_to_use <- ""
-  if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
-    data <- data[Action != "Fm-Det."]
-  } else {
-    etr_to_use <- etr_II_col_name
-    data <- data[Action != "Pm.-Det."]
-  }
-
-  model <- nlsLM(data[[etr_to_use]] ~ ((a * PAR / sqrt(1 + (b^2) * (PAR^2))) * (1 / sqrt(1 + (c^2) * (PAR ^2)))^n),
+  model <- nlsLM(
+    data[[etr_type]] ~
+      (a * PAR / sqrt(1 + (b^2) * (PAR^2))) * (1 / sqrt(1 + (c^2) * (PAR^2)))^n,
     data = data,
     start = list(a = 0.3, b = 0.004, c = -0.0001, n = 1000),
     control = nls.lm.control(maxiter = 1000)
-  ) 
+  )
 
   abc <- coef(model)
   a <- abc[["a"]]
   b <- abc[["b"]]
   c <- abc[["c"]]
   n <- abc[["n"]]
-  
- pars <- c()
+
+  Iopt <- 0
+  max_prediction <- 0
+  pars <- c()
   predictions <- c()
   for (p in min(data$PAR):max(data$PAR)) {
     pars <- c(pars, p)
-    predictions <- c(predictions, ((a * p / sqrt(1 + (b^2) * (p^2))) * (1 / sqrt(1 + (c^2) * (p ^2)))^n))
+    prediction <- (a * p / sqrt(1 + (b^2) * (p^2))) * (1 / sqrt(1 + (c^2) * (p^2)))^n
+    predictions <- c(
+      predictions,
+      prediction
+    )
+
+    if (prediction > max_prediction) {
+      max_prediction <- prediction
+      Iopt <- p
+    }
   }
-  etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
 
-   # Calculate Iopt using the formula
-  Iopt <- etr_regression_data[prediction == max(etr_regression_data$prediction) ]$PAR
+  etr_regression_data <- data.table(pars, predictions)
+  etr_regression_data <- setNames(
+    etr_regression_data,
+    c(PAR_name, prediction_name)
+  )
 
-# Calculate ETRmax
-  etr_max <- a * Iopt / sqrt(1 + (b^2) * (Iopt^2)) * (1 / sqrt(1 + (c^2) * (Iopt ^2)))^n
+  # Calculate ETRmax
+  etr_max <- (a * Iopt / sqrt(1 + (b^2) * (Iopt^2)) * (1 / sqrt(1 + (c^2) * (Iopt^2)))^n)
 
   # Calculate alpha using the formula
   alpha <- a
@@ -49,9 +61,11 @@ generate_regression_vollenweider <- function(data, use_etr_I) {
   # Calculate Ik using the formula
   Ik <- etr_max / a
 
+  sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+
   return(list(
     etr_regression_data = etr_regression_data,
-    sdiff = calculate_sdiff(data, etr_regression_data, etr_to_use),
+    sdiff = sdiff,
     a = a,
     b = b,
     c = c,
@@ -63,10 +77,13 @@ generate_regression_vollenweider <- function(data, use_etr_I) {
   ))
 }
 
+plot_control_vollenweider <- function(data, title, use_etr_I) {
+  validate_data(data)
+  plot_control_vollenweider(data, "kekfle", "FALSE")
+}
 
 plot_control_vollenweider <- function(data, regression_data, title, use_etr_I) {
-
-validate_data(data)
+  validate_data(data)
 
   if (!is.logical(use_etr_I)) {
     stop("use_etr_I is not a valid bool")
