@@ -31,7 +31,7 @@ generate_regression_vollenweider <- function(data, use_etr_I) {
   predictions <- c()
   for (p in min(data$PAR):max(data$PAR)) {
     pars <- c(pars, p)
-    predictions <- c(predictions, p / ((a * p / sqrt(1 + (b^2) * (p^2))) * (1 / sqrt(1 + (c^2) * (p ^2)))^n))
+    predictions <- c(predictions, ((a * p / sqrt(1 + (b^2) * (p^2))) * (1 / sqrt(1 + (c^2) * (p ^2)))^n))
   }
   etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
 
@@ -42,10 +42,10 @@ generate_regression_vollenweider <- function(data, use_etr_I) {
   etr_max <- a * Iopt / sqrt(1 + (b^2) * (Iopt^2)) * (1 / sqrt(1 + (c^2) * (Iopt ^2)))^n
 
   # Calculate alpha using the formula
-  alpha <- 1 / c
+  alpha <- a
 
   # Calculate Ik using the formula
-  Ik <- etr_max / alpha
+  Ik <- etr_max / a
 
   return(list(
     etr_regression_data = etr_regression_data,

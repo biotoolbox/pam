@@ -1,4 +1,7 @@
+install.packages("data.table", "ggplot2", "minpack.lm", "SciViews", "glue")
+
 devtools::install(".")
+
 library(pam)
 
 csv_files <- list.files(
