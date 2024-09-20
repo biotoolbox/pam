@@ -14,6 +14,8 @@ generate_regression_vollenweider_internal <- function(data, etr_type) {
   validate_etr_type(etr_type)
   validate_data(data)
 
+  data <- remove_det_row_by_etr(data, etr_type)
+
   model <- nlsLM(
     data[[etr_type]] ~
       (a * PAR / sqrt(1 + (b^2) * (PAR^2))) * (1 / sqrt(1 + (c^2) * (PAR^2)))^n,
@@ -75,11 +77,6 @@ generate_regression_vollenweider_internal <- function(data, etr_type) {
     ik = Ik,
     iopt = Iopt
   ))
-}
-
-plot_control_vollenweider <- function(data, title, use_etr_I) {
-  validate_data(data)
-  plot_control_vollenweider(data, "kekfle", "FALSE")
 }
 
 plot_control_vollenweider <- function(data, regression_data, title, use_etr_I) {

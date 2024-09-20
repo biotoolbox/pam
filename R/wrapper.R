@@ -19,7 +19,7 @@ plot_combo <- function(title, data, use_etr_I) {
     library(ggplot2)
     reg_data_eilers_peeters <- generate_regression_eilers_peeters(data, use_etr_I)
     reg_data_platt <- generate_regression_platt(data, use_etr_I)
-    reg_data_walsby <- generate_regression_walsby(data, use_etr_I)
+    reg_data_walsby <- generate_regression_walsby_internal(data, use_etr_I)
 
     etr_to_use <- ""
     if (use_etr_I) {

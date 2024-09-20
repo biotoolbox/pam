@@ -1,61 +1,55 @@
-generate_regression_platt <- function(data, use_etr_I) {
+generate_regression_platt_ETR_I <- function(data) {
+  return(generate_regression_platt_internal(data, etr_I_col_name))
+}
+
+generate_regression_platt_ETR_II <- function(data) {
+  return(generate_regression_platt_internal(data, etr_II_col_name))
+}
+
+generate_regression_platt_internal <- function(data, etr_type) {
   library(minpack.lm)
   library(SciViews)
+  library(data.table)
+
   validate_data(data)
+  validate_etr_type(etr_type)
 
-  if (!is.logical(use_etr_I)) {
-    stop("use_etr_I is not a valid bool")
-  }
+  data <- remove_det_row_by_etr(data, etr_type)
 
-  etr_to_use <- ""
-  if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
-    data <- data[Action != "Fm-Det."]
-  } else {
-    etr_to_use <- etr_II_col_name
-    data <- data[Action != "Pm.-Det."]
-  }
-
-  model <- nlsLM(data[[etr_to_use]] ~ ETRmPot * (1 - exp((-a * PAR) / ETRmPot)) * exp((-b * PAR) / ETRmPot),
+  model <- nlsLM(data[[etr_type]] ~ ETRmPot * (1 - exp((-alpha * PAR) / ETRmPot)) * exp((-beta * PAR) / ETRmPot),
     data = data,
-    start = list(a = 0.3, b = 0.01, ETRmPot = 30)
+    start = list(alpha = 0.3, beta = 0.01, ETRmPot = 30)
   )
 
   abc <- coef(model)
-  a <- abc[["a"]]
-  b <- abc[["b"]]
+  alpha <- abc[["alpha"]]
+  beta <- abc[["beta"]]
   ETRmPot <- abc[["ETRmPot"]]
 
   # Calculate ETRmax using the formula
-  ETRmax <- ETRmPot * (a / (a + b)) * ((b / (a + b))^(b / a))
-
-  # Calculate alpha using the formula
-  alpha <- a
+  ETRmax <- ETRmPot * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
 
   # Calculate Ik using the formula
-  Ik <- ETRmax / a
-
-  # Calculate beta using the formula
-  beta <- b
+  ik <- ETRmax / alpha
 
   pars <- c()
   predictions <- c()
   for (p in min(data$PAR):max(data$PAR)) {
     pars <- c(pars, p)
-    predictions <- c(predictions, ETRmPot * (1 - exp((-a * p) / ETRmPot)) * exp((-b * p) / ETRmPot))
+    predictions <- c(predictions, ETRmPot * (1 - exp((-alpha * p) / ETRmPot)) * exp((-beta * p) / ETRmPot))
   }
   etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
 
+  sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+
   return(list(
-    sdiff = calculate_sdiff(data, etr_regression_data, etr_to_use),
     etr_regression_data = etr_regression_data,
-    a = a,
-    b = b,
+    sdiff = sdiff,
+    alpha = alpha,
+    beta = beta,
     ETRmPot = ETRmPot,
     etr_max = ETRmax,
-    alpha = alpha,
-    ik = Ik,
-    beta = beta
+    ik = ik
   ))
 }
 
@@ -72,8 +66,8 @@ plot_control_platt <- function(data, regression_data, title, use_etr_I) {
 
   sdiff <- eval(regression_data[["sdiff"]])
   etr_regression_data <- eval(regression_data[["etr_regression_data"]])
-  a <- eval(regression_data[["a"]])
-  b <- eval(regression_data[["b"]])
+  a <- eval(regression_data[["alpha"]])
+  b <- eval(regression_data[["beta"]])
   ETRmPot <- eval(regression_data[["ETRmPot"]])
 
   etr_to_use <- ""

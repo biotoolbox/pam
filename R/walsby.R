@@ -1,24 +1,22 @@
-generate_regression_walsby <- function(data, use_etr_I) {
+generate_regression_walsby_ETR_I <- function(data) {
+  return(generate_regression_walsby_internal(data, etr_I_col_name))
+}
+
+generate_regression_walsby_ETR_II <- function(data) {
+  return(generate_regression_walsby_internal(data, etr_II_col_name))
+}
+
+generate_regression_walsby_internal <- function(data, etr_type) {
+  library(data.table)
   library(minpack.lm)
   library(SciViews)
   validate_data(data)
 
-  if (!is.logical(use_etr_I)) {
-    stop("use_etr_I is not a valid bool")
-  }
+  data <- remove_det_row_by_etr(data, etr_type)
 
-  etr_to_use <- ""
-  if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
-    data <- data[Action != "Fm-Det."]
-  } else {
-    etr_to_use <- etr_II_col_name
-    data <- data[Action != "Pm.-Det."]
-  }
-
-  model <- nlsLM(data[[etr_to_use]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
+  model <- nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
     data = data,
-    start = list(etr_max = 100, b = alpha, c = beta)
+    start = list(etr_max = 100, alpha = 0.4, beta = -0.01)
   )
 
   abc <- coef(model)
@@ -26,18 +24,8 @@ generate_regression_walsby <- function(data, use_etr_I) {
   alpha <- abc[["alpha"]]
   beta <- abc[["beta"]]
 
-  # Calculate ETRmax using the formula
-  ETRmax <- etr_max
-
-  # Calculate alpha using the formula
-  alpha <- alpha
-
-  # Calculate beta using the formula
-  beta <- beta
-
   # Calculate ik using the formula
-  Ik <- ik
-
+  ik <- etr_max / alpha
 
   pars <- c()
   predictions <- c()
@@ -45,14 +33,21 @@ generate_regression_walsby <- function(data, use_etr_I) {
     pars <- c(pars, p)
     predictions <- c(predictions, etr_max * (1 - exp((-alpha * p) / etr_max)) + beta * p)
   }
-  etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
+
+  etr_regression_data <- data.table(pars, predictions)
+  etr_regression_data <- setNames(
+    etr_regression_data,
+    c(PAR_name, prediction_name)
+  )
+
+  sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
 
   return(list(
     etr_regression_data = etr_regression_data,
-    sdiff = calculate_sdiff(data, etr_regression_data, etr_to_use),
-    etr_max = ETRmax,
+    sdiff = sdiff,
+    etr_max = etr_max,
     alpha = alpha,
-    ik = Ik,
+    ik = ik,
     beta = beta
   ))
 }

@@ -1,30 +1,28 @@
-generate_regression_eilers_peeters <- function(data, use_etr_I) {
+generate_regression_eilers_peeters_ETR_I <- function(data) {
+  return(generate_regression_eilers_peeters_internals(data, etr_I_col_name))
+}
+
+generate_regression_eilers_peeters_ETR_II <- function(data) {
+  return(generate_regression_eilers_peeters_internals(data, etr_II_col_name))
+}
+
+generate_regression_eilers_peeters_internals <- function(data, etr_type) {
   library(minpack.lm)
   validate_data(data)
+  validate_etr_type(etr_type)
 
-  if (!is.logical(use_etr_I)) {
-    stop("use_etr_I is not a valid bool")
-  }
+  data <- remove_det_row_by_etr(data, etr_type)
 
-  etr_to_use <- ""
-  if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
-    data <- data[Action != "Fm-Det."]
-  } else {
-    etr_to_use <- etr_II_col_name
-    data <- data[Action != "Pm.-Det."]
-  }
-
-  model <- nlsLM(data[[etr_to_use]] ~ (PAR / (a * PAR^2 + b * PAR + c)),
+  model <- nlsLM(data[[etr_type]] ~ (PAR / (a * PAR^2 + b * PAR + c)),
     data = data,
     start = list(a = 0.00004, b = 0.004, c = 5)
-  ) # Initial parameter values
+  )
 
   abc <- coef(model)
   a <- abc[["a"]]
   b <- abc[["b"]]
   c <- abc[["c"]]
-  
+
   etr_max <- 1 / (b + 2 * sqrt(a * c))
 
   # Calculate alpha using the formula
@@ -49,7 +47,7 @@ generate_regression_eilers_peeters <- function(data, use_etr_I) {
 
   return(list(
     etr_regression_data = etr_regression_data,
-    sdiff = calculate_sdiff(data, etr_regression_data, etr_to_use),
+    sdiff = calculate_sdiff(data, etr_regression_data, etr_type),
     a = a,
     b = b,
     c = c,

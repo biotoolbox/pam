@@ -81,54 +81,58 @@ read_pam_data <- function(
   validate_data(data)
   data <- data[data$ID == "SP", ]
 
-  last_par <- as.numeric(0)
   date_time_col_values <- c()
-  etr_I_col_values <- c()
-  etr_II_col_values <- c()
-
   for (i in seq_len(nrow(data))) {
     row <- data[i, ]
-    current_par <- row$PAR
-
-    if (remove_recovery && last_par != 0 && current_par < last_par) {
-      data <- data[-(seq_len(nrow(data)) - i), ]
-      break
-    }
 
     date_time_row_value <- as.POSIXct(
       paste(row$Date, row$Time, sep = " "),
       tz = "GMT", "%d.%m.%y %H:%M:%S"
     )
     date_time_col_values <- c(date_time_col_values, date_time_row_value)
-
-    yield_I <- row$Y.I.
-    recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, p_ratio)
-    etr_I_col_values <- c(etr_I_col_values, recalc_ETRI)
-
-    yield_II <- row$Y.II.
-    recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, p_ratio)
-    etr_II_col_values <- c(etr_II_col_values, recalc_ETRII)
-
-    last_par <- current_par
   }
-
-
-
-
-  data <- data %>%
-    mutate(!!etr_II_col_name := etr_II_col_values) %>%
-    select(!!etr_II_col_name, everything())
-
-  data <- data %>%
-    mutate(!!etr_I_col_name := etr_I_col_values) %>%
-    select(!!etr_I_col_name, everything())
 
   data <- data %>%
     mutate(DateTime = date_time_col_values) %>%
     select(DateTime, everything())
-
   data <- data[order(data$DateTime), ]
-  return(data)
+
+  result <- data.table()
+  last_par <- as.numeric(0)
+  for (i in seq_len(nrow(data))) {
+    row <- data[i, ]
+    current_par <- row$PAR
+
+    if (remove_recovery && last_par != 0 && current_par < last_par) {
+      #      data <- data[-(seq_len(nrow(data)) - i), ]
+      break
+    }
+
+    yield_I <- row$Y.I.
+    recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, p_ratio)
+    row <- cbind(row, etr_I_col_name = recalc_ETRI)
+    setnames(row, old = "etr_I_col_name", new = etr_I_col_name)
+
+    yield_II <- row$Y.II.
+    recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, p_ratio)
+    row <- cbind(row, etr_II_col_name = recalc_ETRII)
+    setnames(row, old = "etr_II_col_name", new = etr_II_col_name)
+
+    result <- rbind(result, row)
+
+    last_par <- current_par
+  }
+
+  result <- result %>%
+    select(!!etr_II_col_name, everything())
+
+  result <- result %>%
+    select(!!etr_I_col_name, everything())
+
+  result <- result %>%
+    select(DateTime, everything())
+
+  return(result)
 }
 
 calc_etr <- function(yield, par, etr_factor, p_ratio) {
@@ -186,10 +190,9 @@ calculate_sdiff <- function(data, etr_regression_data, etr_type) {
   finalSdiff <- 0
   for (i in seq_len(nrow(data))) {
     row <- data[i, ]
-    realEtr <- row[[eval(etr_type)]]
+    realEtr <- row[[etr_type]]
 
-    predictedEtr <- etr_regression_data %>%
-      filter(!!PAR_name == row$PAR)
+    predictedEtr <- etr_regression_data[etr_regression_data$PAR == row$PAR, ][[prediction_name]]
 
     sdiff <- (predictedEtr - realEtr)^2
     finalSdiff <- finalSdiff + sdiff
@@ -202,4 +205,16 @@ validate_etr_type <- function(etr_type) {
   if (etr_type != etr_I_col_name && etr_type != etr_II_col_name) {
     stop("etr type is not valid")
   }
+}
+
+remove_det_row_by_etr <- function(data, etr_type) {
+  validate_data(data)
+
+  if (etr_type == etr_I_col_name) {
+    data <- data %>% filter(data$Action != "Fm-Det.")
+  } else {
+    data <- data %>% filter(data$Action != "Pm.-Det.")
+  }
+
+  return(data)
 }
