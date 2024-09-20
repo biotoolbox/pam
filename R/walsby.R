@@ -16,46 +16,40 @@ generate_regression_walsby <- function(data, use_etr_I) {
     data <- data[Action != "Pm.-Det."]
   }
 
-  model <- nlsLM(data[[etr_to_use]] ~ a * (1 - exp((-b * PAR) / a)) + c * PAR,
+  model <- nlsLM(data[[etr_to_use]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
     data = data,
-    start = list(a = 100, b = 0.4, c = -0.01)
+    start = list(etr_max = 100, b = alpha, c = beta)
   )
 
   abc <- coef(model)
-  a <- abc[["a"]]
-  b <- abc[["b"]]
-  c <- abc[["c"]]
-
-  # Calculate Iopt using the formula
-  Iopt <- -(a * ln(-c / b)) / b
+  etr_max <- abc[["etr_max"]]
+  alpha <- abc[["alpha"]]
+  beta <- abc[["beta"]]
 
   # Calculate ETRmax using the formula
-  ETRmax <- a * (1 - exp(-b / a * Iopt)) + c * Iopt
+  ETRmax <- etr_max
 
   # Calculate alpha using the formula
-  alpha <- b
-
-  # Calculate Ik using the formula
-  Ik <- a / b
+  alpha <- alpha
 
   # Calculate beta using the formula
-  beta <- c
+  beta <- beta
+
+  # Calculate ik using the formula
+  Ik <- ik
+
 
   pars <- c()
   predictions <- c()
   for (p in min(data$PAR):max(data$PAR)) {
     pars <- c(pars, p)
-    predictions <- c(predictions, a * (1 - exp((-b * p) / a)) + c * p)
+    predictions <- c(predictions, etr_max * (1 - exp((-alpha * p) / etr_max)) + beta * p)
   }
   etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
 
   return(list(
     etr_regression_data = etr_regression_data,
     sdiff = calculate_sdiff(data, etr_regression_data, etr_to_use),
-    a = a,
-    b = b,
-    c = c,
-    iopt = Iopt,
     etr_max = ETRmax,
     alpha = alpha,
     ik = Ik,
