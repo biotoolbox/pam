@@ -1,12 +1,41 @@
-generate_regression_platt_ETR_I <- function(data) {
-  return(generate_regression_platt_internal(data, etr_I_col_name))
+alpha_start_value_platt_default <- 0.3
+beta_start_value_platt_default <- 0.01
+etrmpot_start_value_platt_default <- 30
+
+generate_regression_platt_ETR_I <- function(
+    data,
+    alpha_start_value = alpha_start_value_platt_default,
+    beta_start_value = beta_start_value_platt_default,
+    etrmpo_start_value = etrmpot_start_value_platt_default) {
+  return(generate_regression_platt_internal(
+    data,
+    etr_I_col_name,
+    alpha_start_value,
+    beta_start_value,
+    etrmpo_start_value
+  ))
 }
 
-generate_regression_platt_ETR_II <- function(data) {
-  return(generate_regression_platt_internal(data, etr_II_col_name))
+generate_regression_platt_ETR_II <- function(
+    data,
+    alpha_start_value = alpha_start_value_platt_default,
+    beta_start_value = beta_start_value_platt_default,
+    etrmpot_start_value = etrmpot_start_value_platt_default) {
+  return(generate_regression_platt_internal(
+    data,
+    etr_II_col_name,
+    alpha_start_value,
+    beta_start_value,
+    etrmpot_start_value
+  ))
 }
 
-generate_regression_platt_internal <- function(data, etr_type) {
+generate_regression_platt_internal <- function(
+    data,
+    etr_type,
+    alpha_start_value = alpha_start_value_platt_default,
+    beta_start_value = beta_start_value_platt_default,
+    etrmpot_start_value = etrmpot_start_value_platt_default) {
   library(minpack.lm)
   library(SciViews)
   library(data.table)
@@ -16,21 +45,35 @@ generate_regression_platt_internal <- function(data, etr_type) {
       validate_data(data)
       validate_etr_type(etr_type)
 
+      if (!is.numeric(alpha_start_value)) {
+        stop("alpha start value is not a valid number")
+      }
+      if (!is.numeric(beta_start_value)) {
+        stop("beta start value is not a valid number")
+      }
+      if (!is.numeric(etrmpot_start_value)) {
+        stop("etrmpot start value is not a valid number")
+      }
+
       data <- remove_det_row_by_etr(data, etr_type)
 
-      model <- nlsLM(data[[etr_type]] ~ ETRmPot * (1 - exp((-alpha * PAR) / ETRmPot)) * exp((-beta * PAR) / ETRmPot),
+      model <- nlsLM(data[[etr_type]] ~ etrmpot * (1 - exp((-alpha * PAR) / etrmpot)) * exp((-beta * PAR) / etrmpot),
         data = data,
-        start = list(alpha = 0.3, beta = 0.01, ETRmPot = 30),
+        start = list(
+          alpha = alpha_start_value,
+          beta = beta_start_value,
+          etrmpot = etrmpot_start_value
+        ),
         control = nls.control(maxiter = 1000)
       )
 
       abc <- coef(model)
       alpha <- abc[["alpha"]]
       beta <- abc[["beta"]]
-      ETRmPot <- abc[["ETRmPot"]]
+      etrmpot <- abc[["etrmpot"]]
 
       # Calculate ETRmax using the formula
-      ETRmax <- ETRmPot * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
+      ETRmax <- etrmpot * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
 
       # Calculate Ik using the formula
       ik <- ETRmax / alpha
@@ -39,9 +82,12 @@ generate_regression_platt_internal <- function(data, etr_type) {
       predictions <- c()
       for (p in min(data$PAR):max(data$PAR)) {
         pars <- c(pars, p)
-        predictions <- c(predictions, ETRmPot * (1 - exp((-alpha * p) / ETRmPot)) * exp((-beta * p) / ETRmPot))
+        predictions <- c(predictions, etrmpot * (1 - exp((-alpha * p) / etrmpot)) * exp((-beta * p) / etrmpot))
       }
-      etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
+      etr_regression_data <- data.table(
+        "PAR" = pars,
+        "prediction" = predictions
+      )
 
       sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
 
@@ -50,7 +96,7 @@ generate_regression_platt_internal <- function(data, etr_type) {
         sdiff = sdiff,
         alpha = alpha,
         beta = beta,
-        ETRmPot = ETRmPot,
+        etrmpot = etrmpot,
         etr_max = ETRmax,
         ik = ik
       ))

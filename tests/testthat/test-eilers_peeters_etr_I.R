@@ -1,10 +1,15 @@
-test_that("test eilers_peeters ETR I", {
-  test_data_file <- file.path(getwd(), "data", "20231122_10_W3_T20_ML.csv")
-  message("using test data file: ", test_data_file)
-
+test_that("test eilers_peeters ETR I 20231122_01_W3_T20_HL.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
   data <- read_pam_data(test_data_file)
-  data_eilers_peeters_etr_I <- generate_regression_eilers_peeters_ETR_I(data)
-  # View(data_eilers_peeters_etr_I)
+  reg_data <- generate_regression_eilers_peeters_ETR_I(data)
 
-  # expect_equal(1, 1)
+  expect_equal(reg_data[["sdiff"]], 1183.4214)
+  #expect_equal(reg_data[["a"]], 0.0000062986, tolerance = 0.0001)
+  expect_equal(reg_data[["b"]], -0.00523754, tolerance = 0.00001)
+  expect_equal(reg_data[["c"]], 6.8374816)
+  expect_equal(reg_data[["etr_max"]], 126.78253)
+  expect_equal(reg_data[["alpha"]], 0.14625268)
+  expect_equal(reg_data[["ik"]], 866.87322)
+  expect_equal(reg_data[["im"]], 1041.89685)
+  expect_equal(reg_data[["w"]], -0.79809778)
 })

@@ -1,10 +1,15 @@
 test_that("test vollenweider ETR II", {
-  test_data_file <- file.path(getwd(), "data", "20231122_10_W3_T20_ML.csv")
-  message("using test data file: ", test_data_file)
-
+  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
   data <- read_pam_data(test_data_file)
-  data_vollenweider_etr_II <- generate_regression_vollenweider_ETR_II(data)
-  # View(data_vollenweider_etr_II)
+  reg_data <- generate_regression_vollenweider_ETR_II(data)
 
-  # expect_equal(1, 1)
+  expect_equal(reg_data[["sdiff"]], 3.0424235)
+  expect_equal(reg_data[["a"]], 0.08930471, tolerance = 0.0000001)
+  expect_equal(reg_data[["b"]], 0.002437068, tolerance = 0.0000001)
+  # expect_equal(reg_data[["c"]], -0.00001524, tolerance = 0.0001)
+  expect_equal(reg_data[["n"]], 875.86512)
+  expect_equal(reg_data[["etr_max"]], 30.707068)
+  expect_equal(reg_data[["alpha"]], 0.08930471, tolerance = 0.0000001)
+  expect_equal(reg_data[["ik"]], 343.845994)
+  expect_equal(reg_data[["iopt"]], 911)
 })

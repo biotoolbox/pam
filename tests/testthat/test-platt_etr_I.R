@@ -1,10 +1,12 @@
-test_that("test platt ETR I", {
-  test_data_file <- file.path(getwd(), "data", "20231122_10_W3_T20_ML.csv")
-  message("using test data file: ", test_data_file)
-
+test_that("test platt ETR I 20231122_01_W3_T20_HL.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
   data <- read_pam_data(test_data_file)
-  data_platt_etr_I <- generate_regression_platt_ETR_I(data)
-  # View(data_platt_etr_I)
+  reg_data <- generate_regression_platt_ETR_I(data)
 
-  # expect_equal(1, 1)
+  expect_equal(reg_data[["sdiff"]], 1709.3953)
+  expect_equal(reg_data[["alpha"]], 0.23751254, tolerance = 0.0000001)
+  expect_equal(reg_data[["beta"]], 38.788443)
+  expect_equal(reg_data[["etrmpot"]], 56442.6305)
+  expect_equal(reg_data[["etr_max"]], 126.756436)
+  expect_equal(reg_data[["ik"]], 533.68312)
 })

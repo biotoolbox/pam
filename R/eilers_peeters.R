@@ -1,12 +1,41 @@
-generate_regression_eilers_peeters_ETR_I <- function(data) {
-  return(generate_regression_eilers_peeters_internal(data, etr_I_col_name))
+a_start_values_eilers_peeters_default <- 0.00004
+b_start_values_eilers_peeters_default <- 0.004
+c_start_values_eilers_peeters_default <- 5
+
+generate_regression_eilers_peeters_ETR_I <- function(
+    data,
+    a_start_value = a_start_values_eilers_peeters_default,
+    b_start_value = b_start_values_eilers_peeters_default,
+    c_start_value = c_start_values_eilers_peeters_default) {
+  return(generate_regression_eilers_peeters_internal(
+    data,
+    etr_I_col_name,
+    a_start_value,
+    b_start_value,
+    c_start_value
+  ))
 }
 
-generate_regression_eilers_peeters_ETR_II <- function(data) {
-  return(generate_regression_eilers_peeters_internal(data, etr_II_col_name))
+generate_regression_eilers_peeters_ETR_II <- function(
+    data,
+    a_start_value = a_start_values_eilers_peeters_default,
+    b_start_value = b_start_values_eilers_peeters_default,
+    c_start_value = c_start_values_eilers_peeters_default) {
+  return(generate_regression_eilers_peeters_internal(
+    data,
+    etr_II_col_name,
+    a_start_value,
+    b_start_value,
+    c_start_value
+  ))
 }
 
-generate_regression_eilers_peeters_internal <- function(data, etr_type) {
+generate_regression_eilers_peeters_internal <- function(
+    data,
+    etr_type,
+    a_start_value = a_start_values_eilers_peeters_default,
+    b_start_value = b_start_values_eilers_peeters_default,
+    c_start_value = c_start_values_eilers_peeters_default) {
   library(minpack.lm)
   library(data.table)
 
@@ -15,10 +44,20 @@ generate_regression_eilers_peeters_internal <- function(data, etr_type) {
       validate_data(data)
       validate_etr_type(etr_type)
 
+      if (!is.numeric(a_start_value)) {
+        stop("a start value is not a valid number")
+      }
+      if (!is.numeric(b_start_value)) {
+        stop("b start value is not a valid number")
+      }
+      if (!is.numeric(c_start_value)) {
+        stop("c start value is not a valid number")
+      }
+
       data <- remove_det_row_by_etr(data, etr_type)
       model <- nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
         data = data,
-        start = list(a = 0.00004, b = 0.004, c = 5),
+        start = list(a = a_start_value, b = b_start_value, c = c_start_value),
         control = nls.lm.control(maxiter = 1000)
       )
 
@@ -47,7 +86,10 @@ generate_regression_eilers_peeters_internal <- function(data, etr_type) {
         pars <- c(pars, p)
         predictions <- c(predictions, p / ((a * p^2) + (b * p) + c))
       }
-      etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
+      etr_regression_data <- data.table(
+        "PAR" = pars,
+        "prediction" = predictions
+      )
 
       sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
 

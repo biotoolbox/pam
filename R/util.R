@@ -1,6 +1,5 @@
 validate_data <- function(data) {
   library(data.table)
-  library(glue)
 
   if (is.null(data)) {
     stop("data is null")
@@ -19,27 +18,27 @@ validate_data <- function(data) {
   }
 
   if (!"ID" %in% colnames(data)) {
-    stop(glue("required col 'ID' not found"))
+    stop("required col 'ID' not found")
   }
 
   if (!"PAR" %in% colnames(data)) {
-    stop(glue("required col 'PAR' not found"))
+    stop("required col 'PAR' not found")
   }
 
   if (!"Y.I." %in% colnames(data) && !"Y.II." %in% colnames(data)) {
-    stop(glue("required col 'Y(I)' and 'Y(II)' not found"))
+    stop("required col 'Y(I)' and 'Y(II)' not found")
   }
 
   if (!"Action" %in% colnames(data)) {
-    stop(glue("required col 'Action' not found"))
+    stop("required col 'Action' not found")
   }
 
   if (!"Date" %in% colnames(data)) {
-    stop(glue("required col 'Date' not found"))
+    stop("required col 'Date' not found")
   }
 
   if (!"Time" %in% colnames(data)) {
-    stop(glue("required col 'Time' not found"))
+    stop("required col 'Time' not found")
   }
 }
 
@@ -174,8 +173,6 @@ plot_control_raw <- function(data, title, use_etr_I) {
 }
 
 calculate_sdiff <- function(data, etr_regression_data, etr_type) {
-  library(dplyr)
-
   finalSdiff <- 0
   for (i in seq_len(nrow(data))) {
     row <- data[i, ]

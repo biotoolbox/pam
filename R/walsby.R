@@ -1,12 +1,43 @@
-generate_regression_walsby_ETR_I <- function(data) {
-  return(generate_regression_walsby_internal(data, etr_I_col_name))
+etr_max_start_value_walsby_default <- 100
+alpha_start_value_walsby_default <- 0.4
+beta_start_value_walsby_default <- -0.01
+
+generate_regression_walsby_ETR_I <- function(
+    data,
+    etr_max_start_value = etr_max_start_value_walsby_default,
+    alpha_start_value = alpha_start_value_walsby_default,
+    beta_start_value = alpha_start_value_walsby_default) {
+  return(
+    generate_regression_walsby_internal(
+      data,
+      etr_I_col_name,
+      etr_max_start_value,
+      alpha_start_value,
+      beta_start_value
+    )
+  )
 }
 
-generate_regression_walsby_ETR_II <- function(data) {
-  return(generate_regression_walsby_internal(data, etr_II_col_name))
+generate_regression_walsby_ETR_II <- function(
+    data,
+    etr_max_start_value = etr_max_start_value_walsby_default,
+    alpha_start_value = alpha_start_value_walsby_default,
+    beta_start_value = beta_start_value_walsby_default) {
+  return(generate_regression_walsby_internal(
+    data,
+    etr_II_col_name,
+    etr_max_start_value,
+    alpha_start_value,
+    beta_start_value
+  ))
 }
 
-generate_regression_walsby_internal <- function(data, etr_type) {
+generate_regression_walsby_internal <- function(
+    data,
+    etr_type,
+    etr_max_start_value = etr_max_start_value_walsby_default,
+    alpha_start_value = alpha_start_value_walsby_default,
+    beta_start_value = beta_start_value_walsby_default) {
   library(data.table)
   library(minpack.lm)
   library(SciViews)
@@ -14,12 +45,27 @@ generate_regression_walsby_internal <- function(data, etr_type) {
   tryCatch(
     {
       validate_data(data)
+      validate_etr_type(etr_type)
+
+      if (!is.numeric(etr_max_start_value)) {
+        stop("etr max start value is not a valid number")
+      }
+      if (!is.numeric(alpha_start_value)) {
+        stop("alpha start value is not a valid number")
+      }
+      if (!is.numeric(beta_start_value)) {
+        stop("beta start value is not a valid number")
+      }
 
       data <- remove_det_row_by_etr(data, etr_type)
 
       model <- nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
         data = data,
-        start = list(etr_max = 100, alpha = 0.4, beta = -0.01),
+        start = list(
+          etr_max = etr_max_start_value,
+          alpha = alpha_start_value,
+          beta = beta_start_value
+        ),
         control = nls.control(maxiter = 1000)
       )
 

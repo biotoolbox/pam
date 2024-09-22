@@ -1,20 +1,67 @@
-generate_regression_vollenweider_ETR_I <- function(data) {
-  return(generate_regression_vollenweider_internal(data, etr_I_col_name))
+a_start_value_vollenweider_default <- 0.3
+b_start_value_vollenweider_default <- 0.004
+c_start_value_vollenweider_default <- -0.0001
+n_start_value_vollenweider_default <- 1000
+
+generate_regression_vollenweider_ETR_I <- function(
+    data,
+    a_start_value = a_start_value_vollenweider_default,
+    b_start_value = b_start_value_vollenweider_default,
+    c_start_value = c_start_value_vollenweider_default,
+    n_start_value = n_start_value_vollenweider_default) {
+  return(generate_regression_vollenweider_internal(
+    data,
+    etr_I_col_name,
+    a_start_value,
+    b_start_value,
+    c_start_value,
+    n_start_value
+  ))
 }
 
-generate_regression_vollenweider_ETR_II <- function(data) {
-  return(generate_regression_vollenweider_internal(data, etr_II_col_name))
+generate_regression_vollenweider_ETR_II <- function(
+    data,
+    a_start_value = a_start_value_vollenweider_default,
+    b_start_value = b_start_value_vollenweider_default,
+    c_start_value = c_start_value_vollenweider_default,
+    n_start_value = n_start_value_vollenweider_default) {
+  return(generate_regression_vollenweider_internal(
+    data,
+    etr_II_col_name,
+    a_start_value,
+    b_start_value,
+    c_start_value,
+    n_start_value
+  ))
 }
 
-generate_regression_vollenweider_internal <- function(data, etr_type) {
+generate_regression_vollenweider_internal <- function(
+    data,
+    etr_type,
+    a_start_value = a_start_value_vollenweider_default,
+    b_start_value = b_start_value_vollenweider_default,
+    c_start_value = c_start_value_vollenweider_default,
+    n_start_value = n_start_value_vollenweider_default) {
   library(data.table)
   library(minpack.lm)
-  library(dplyr)
 
   tryCatch(
     {
       validate_etr_type(etr_type)
       validate_data(data)
+
+      if (!is.numeric(a_start_value)) {
+        stop("a start value is not a valid number")
+      }
+      if (!is.numeric(b_start_value)) {
+        stop("b start value is not a valid number")
+      }
+      if (!is.numeric(c_start_value)) {
+        stop("c start value is not a valid number")
+      }
+      if (!is.numeric(n_start_value)) {
+        stop("n start value is not a valid number")
+      }
 
       data <- remove_det_row_by_etr(data, etr_type)
 
@@ -22,7 +69,12 @@ generate_regression_vollenweider_internal <- function(data, etr_type) {
         data[[etr_type]] ~
           (a * PAR / sqrt(1 + (b^2) * (PAR^2))) * (1 / sqrt(1 + (c^2) * (PAR^2)))^n,
         data = data,
-        start = list(a = 0.3, b = 0.004, c = -0.0001, n = 1000),
+        start = list(
+          a = a_start_value,
+          b = b_start_value,
+          c = c_start_value,
+          n = n_start_value
+        ),
         control = nls.control(maxiter = 1000)
       )
 
