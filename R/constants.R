@@ -3,8 +3,8 @@ color_platt <- "#2600ff"
 color_vollenweider <- "#029b07"
 color_walsby <- "#ff0000"
 
-etr_I_col_name <- "recalc_ETR.I."
-etr_II_col_name <- "recalc_ETR.II."
+etr_I_type <- "recalc_ETR.I."
+etr_II_type <- "recalc_ETR.II."
 
 PAR_name <- "PAR"
 prediction_name <- "prediction"

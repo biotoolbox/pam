@@ -87,12 +87,12 @@ read_pam_data <- function(
         yield_I <- row$Y.I.
         recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, p_ratio)
         row <- cbind(row, etr_I_col_name = recalc_ETRI)
-        setnames(row, old = "etr_I_col_name", new = etr_I_col_name)
+        setnames(row, old = "etr_I_col_name", new = etr_I_type)
 
         yield_II <- row$Y.II.
         recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, p_ratio)
         row <- cbind(row, etr_II_col_name = recalc_ETRII)
-        setnames(row, old = "etr_II_col_name", new = etr_II_col_name)
+        setnames(row, old = "etr_II_col_name", new = etr_II_type)
 
         result <- rbind(result, row)
 
@@ -100,10 +100,10 @@ read_pam_data <- function(
       }
 
       result <- result %>%
-        select(!!etr_II_col_name, everything())
+        select(!!etr_II_type, everything())
 
       result <- result %>%
-        select(!!etr_I_col_name, everything())
+        select(!!etr_I_type, everything())
 
       result <- result %>%
         select(DateTime, everything())
@@ -155,10 +155,10 @@ plot_control_raw <- function(data, title, use_etr_I) {
 
   etr_to_use <- ""
   if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
+    etr_to_use <- etr_I_type
     data <- data[Action != "Fm-Det."]
   } else {
-    etr_to_use <- etr_II_col_name
+    etr_to_use <- etr_II_type
     data <- data[Action != "Pm.-Det."]
   }
 
@@ -187,7 +187,7 @@ calculate_sdiff <- function(data, etr_regression_data, etr_type) {
 }
 
 validate_etr_type <- function(etr_type) {
-  if (etr_type != etr_I_col_name && etr_type != etr_II_col_name) {
+  if (etr_type != etr_I_type && etr_type != etr_II_type) {
     stop("etr type is not valid")
   }
 }
@@ -195,7 +195,7 @@ validate_etr_type <- function(etr_type) {
 remove_det_row_by_etr <- function(data, etr_type) {
   validate_data(data)
 
-  if (etr_type == etr_I_col_name) {
+  if (etr_type == etr_I_type) {
     data <- data %>% filter(data$Action != "Fm-Det.")
     if (length(data[data$Action == "Pm.-Det.", ]) == 0) {
       stop("Pm.-Det. is required but not present")

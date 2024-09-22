@@ -1,9 +1,9 @@
 compare_regression_models_ETR_I <- function(data_dir) {
-  return(compare_regression_models(data_dir, etr_I_col_name))
+  return(compare_regression_models(data_dir, etr_I_type))
 }
 
 compare_regression_models_ETR_II <- function(data_dir) {
-  return(compare_regression_models(data_dir, etr_II_col_name))
+  return(compare_regression_models(data_dir, etr_II_type))
 }
 
 compare_regression_models <- function(data_dir, etr_type) {

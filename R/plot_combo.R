@@ -1,9 +1,9 @@
 plot_combo_etr_I <- function(title, data) {
-  return(plot_combo_internal(title, data, etr_I_col_name))
+  return(plot_combo_internal(title, data, etr_I_type))
 }
 
 plot_combo_etr_II <- function(title, data) {
-  return(plot_combo_internal(title, data, etr_II_col_name))
+  return(plot_combo_internal(title, data, etr_II_type))
 }
 
 plot_combo_internal <- function(title, data, etr_type) {

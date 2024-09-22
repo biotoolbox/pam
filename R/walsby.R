@@ -10,7 +10,7 @@ generate_regression_walsby_ETR_I <- function(
   return(
     generate_regression_walsby_internal(
       data,
-      etr_I_col_name,
+      etr_I_type,
       etr_max_start_value,
       alpha_start_value,
       beta_start_value
@@ -25,7 +25,7 @@ generate_regression_walsby_ETR_II <- function(
     beta_start_value = beta_start_value_walsby_default) {
   return(generate_regression_walsby_internal(
     data,
-    etr_II_col_name,
+    etr_II_type,
     etr_max_start_value,
     alpha_start_value,
     beta_start_value
@@ -127,10 +127,10 @@ plot_control_walsby <- function(data, regression_data, title, use_etr_I) {
 
   etr_to_use <- ""
   if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
+    etr_to_use <- etr_I_type
     data <- data[Action != "Fm-Det."]
   } else {
-    etr_to_use <- etr_II_col_name
+    etr_to_use <- etr_II_type
     data <- data[Action != "Pm.-Det."]
   }
 

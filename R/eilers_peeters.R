@@ -9,7 +9,7 @@ generate_regression_eilers_peeters_ETR_I <- function(
     c_start_value = c_start_values_eilers_peeters_default) {
   return(generate_regression_eilers_peeters_internal(
     data,
-    etr_I_col_name,
+    etr_I_type,
     a_start_value,
     b_start_value,
     c_start_value
@@ -23,7 +23,7 @@ generate_regression_eilers_peeters_ETR_II <- function(
     c_start_value = c_start_values_eilers_peeters_default) {
   return(generate_regression_eilers_peeters_internal(
     data,
-    etr_II_col_name,
+    etr_II_type,
     a_start_value,
     b_start_value,
     c_start_value
@@ -66,19 +66,69 @@ generate_regression_eilers_peeters_internal <- function(
       b <- abc[["b"]]
       c <- abc[["c"]]
 
-      etr_max <- 1 / (b + 2 * sqrt(a * c))
+      etr_max <- NA_real_
+      tryCatch(
+        {
+          etr_max <- 1 / (b + 2 * sqrt(a * c))
+        },
+        warning = function(w) {
+          message("failed to calculate etr_max: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate etr_max: Error:", w)
+        }
+      )
 
-      # Calculate alpha using the formula
-      alpha <- 1 / c
+      alpha <- NA_real_
+      tryCatch(
+        {
+          alpha <- 1 / c
+        },
+        warning = function(w) {
+          message("failed to calculate alpha: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate alpha: Error:", w)
+        }
+      )
 
-      # Calculate Ik using the formula
-      Ik <- c / (b + 2 * sqrt(a * c))
+      ik <- NA_real_
+      tryCatch(
+        {
+          Ik <- c / (b + 2 * sqrt(a * c))
+        },
+        warning = function(w) {
+          message("failed to calculate Ik: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate Ik: Error:", w)
+        }
+      )
 
-      # Calculate Im using the formula
-      Im <- sqrt(c / a)
-
-      # Calculate w using the formula
-      w <- b / sqrt(a * c)
+      im <- NA_real_
+      tryCatch(
+        {
+          Im <- sqrt(c / a)
+        },
+        warning = function(w) {
+          message("failed to calculate Im: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate Im: Error:", w)
+        }
+      )
+      w <- NA_real_
+      tryCatch(
+        {
+          w <- b / sqrt(a * c)
+        },
+        warning = function(w) {
+          message("failed to calculate w: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate w: Error:", w)
+        }
+      )
 
       pars <- c()
       predictions <- c()
@@ -101,8 +151,8 @@ generate_regression_eilers_peeters_internal <- function(
         c = c,
         etr_max = etr_max,
         alpha = alpha,
-        ik = Ik,
-        im = Im,
+        ik = ik,
+        im = im,
         w = w
       ))
     },
@@ -115,43 +165,46 @@ generate_regression_eilers_peeters_internal <- function(
   )
 }
 
-plot_control_eilers_peeters <- function(data, regression_data, title, use_etr_I) {
+plot_control_eilers_peeters <- function(data, regression_data, title, etr_type) {
   library(ggplot2)
   library(glue)
+  library(ggthemes)
+  library(gridExtra)
 
   validate_data(data)
-
-  if (!is.logical(use_etr_I)) {
-    stop("use_etr_I is not a valid bool")
-  }
+  validate_etr_type(etr_type)
 
   a <- eval(regression_data[["a"]])
   b <- eval(regression_data[["b"]])
   c <- eval(regression_data[["c"]])
   etr_regression_data <- eval(regression_data[["etr_regression_data"]])
-
-  etr_to_use <- ""
-  if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
-    data <- data[Action != "Fm-Det."]
-  } else {
-    etr_to_use <- etr_II_col_name
-    data <- data[Action != "Pm.-Det."]
-  }
+  data <- remove_det_row_by_etr(data, etr_type)
+  params <- data.frame(
+    Parameter = c("a", "b", "c", "ETRmax", "alpha", "Ik", "Im", "W", "SDiff"),
+    Value = c(
+      round(a, 6),
+      round(b, 6),
+      round(c, 6),
+      round(regression_data[["etr_max"]], 3),
+      round(regression_data[["alpha"]], 3),
+      round(regression_data[["ik"]], 3),
+      round(regression_data[["im"]], 3),
+      round(regression_data[["w"]], 3),
+      round(regression_data[["sdiff"]], 3)
+    )
+  )
+  params_transposed <- t(params)
+  colnames(params_transposed) <- NULL
+  rownames(params_transposed) <- NULL
 
   # Create plot for ETR.II. by PAR and filename
-  plot <- ggplot(data, aes(x = PAR, y = get(etr_to_use))) +
+  plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
     geom_point() +
     geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#f700ff") +
     labs(x = par_label, y = etr_label, title = eval(title)) +
-    theme_minimal() +
-    labs(caption = glue("ETRmax: {round(regression_data[['etr_max']], 3)}
-    alpha: {round(regression_data[['alpha']], 3)}
-    Ik: {round(regression_data[['ik']], 3)}
-    Im: {round(regression_data[['im']], 3)}
-    w: {round(regression_data[['w']], 3)}
-    SDiff: {round(regression_data[['sdiff']], 3)}")) +
-    theme(plot.caption = element_text(hjust = 0))
+    theme_base()
 
-  return(plot)
+  table <- tableGrob(params_transposed, rows = NULL, theme = ttheme_minimal())
+  full_plot <- grid.arrange(plot, table, ncol = 1, heights = c(3, 0.2), widths = 1.5)
+  return(full_plot)
 }

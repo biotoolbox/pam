@@ -11,7 +11,7 @@ generate_regression_vollenweider_ETR_I <- function(
     n_start_value = n_start_value_vollenweider_default) {
   return(generate_regression_vollenweider_internal(
     data,
-    etr_I_col_name,
+    etr_I_type,
     a_start_value,
     b_start_value,
     c_start_value,
@@ -27,7 +27,7 @@ generate_regression_vollenweider_ETR_II <- function(
     n_start_value = n_start_value_vollenweider_default) {
   return(generate_regression_vollenweider_internal(
     data,
-    etr_II_col_name,
+    etr_II_type,
     a_start_value,
     b_start_value,
     c_start_value,
@@ -156,10 +156,10 @@ plot_control_vollenweider <- function(data, regression_data, title, use_etr_I) {
 
   etr_to_use <- ""
   if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
+    etr_to_use <- etr_I_type
     data <- data[Action != "Fm-Det."]
   } else {
-    etr_to_use <- etr_II_col_name
+    etr_to_use <- etr_II_type
     data <- data[Action != "Pm.-Det."]
   }
 

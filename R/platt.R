@@ -9,7 +9,7 @@ generate_regression_platt_ETR_I <- function(
     etrmpo_start_value = etrmpot_start_value_platt_default) {
   return(generate_regression_platt_internal(
     data,
-    etr_I_col_name,
+    etr_I_type,
     alpha_start_value,
     beta_start_value,
     etrmpo_start_value
@@ -23,7 +23,7 @@ generate_regression_platt_ETR_II <- function(
     etrmpot_start_value = etrmpot_start_value_platt_default) {
   return(generate_regression_platt_internal(
     data,
-    etr_II_col_name,
+    etr_II_type,
     alpha_start_value,
     beta_start_value,
     etrmpot_start_value
@@ -129,10 +129,10 @@ plot_control_platt <- function(data, regression_data, title, use_etr_I) {
 
   etr_to_use <- ""
   if (use_etr_I) {
-    etr_to_use <- etr_I_col_name
+    etr_to_use <- etr_I_type
     data <- data[Action != "Fm-Det."]
   } else {
-    etr_to_use <- etr_II_col_name
+    etr_to_use <- etr_II_type
     data <- data[Action != "Pm.-Det."]
   }
 
