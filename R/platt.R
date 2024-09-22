@@ -11,46 +11,57 @@ generate_regression_platt_internal <- function(data, etr_type) {
   library(SciViews)
   library(data.table)
 
-  validate_data(data)
-  validate_etr_type(etr_type)
+  tryCatch(
+    {
+      validate_data(data)
+      validate_etr_type(etr_type)
 
-  data <- remove_det_row_by_etr(data, etr_type)
+      data <- remove_det_row_by_etr(data, etr_type)
 
-  model <- nlsLM(data[[etr_type]] ~ ETRmPot * (1 - exp((-alpha * PAR) / ETRmPot)) * exp((-beta * PAR) / ETRmPot),
-    data = data,
-    start = list(alpha = 0.3, beta = 0.01, ETRmPot = 30)
+      model <- nlsLM(data[[etr_type]] ~ ETRmPot * (1 - exp((-alpha * PAR) / ETRmPot)) * exp((-beta * PAR) / ETRmPot),
+        data = data,
+        start = list(alpha = 0.3, beta = 0.01, ETRmPot = 30),
+        control = nls.control(maxiter = 1000)
+      )
+
+      abc <- coef(model)
+      alpha <- abc[["alpha"]]
+      beta <- abc[["beta"]]
+      ETRmPot <- abc[["ETRmPot"]]
+
+      # Calculate ETRmax using the formula
+      ETRmax <- ETRmPot * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
+
+      # Calculate Ik using the formula
+      ik <- ETRmax / alpha
+
+      pars <- c()
+      predictions <- c()
+      for (p in min(data$PAR):max(data$PAR)) {
+        pars <- c(pars, p)
+        predictions <- c(predictions, ETRmPot * (1 - exp((-alpha * p) / ETRmPot)) * exp((-beta * p) / ETRmPot))
+      }
+      etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
+
+      sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+
+      return(list(
+        etr_regression_data = etr_regression_data,
+        sdiff = sdiff,
+        alpha = alpha,
+        beta = beta,
+        ETRmPot = ETRmPot,
+        etr_max = ETRmax,
+        ik = ik
+      ))
+    },
+    warning = function(w) {
+      stop("Warning while calculating platt model: ", w)
+    },
+    error = function(e) {
+      stop("Error while calculating platt model: ", e)
+    }
   )
-
-  abc <- coef(model)
-  alpha <- abc[["alpha"]]
-  beta <- abc[["beta"]]
-  ETRmPot <- abc[["ETRmPot"]]
-
-  # Calculate ETRmax using the formula
-  ETRmax <- ETRmPot * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
-
-  # Calculate Ik using the formula
-  ik <- ETRmax / alpha
-
-  pars <- c()
-  predictions <- c()
-  for (p in min(data$PAR):max(data$PAR)) {
-    pars <- c(pars, p)
-    predictions <- c(predictions, ETRmPot * (1 - exp((-alpha * p) / ETRmPot)) * exp((-beta * p) / ETRmPot))
-  }
-  etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
-
-  sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-
-  return(list(
-    etr_regression_data = etr_regression_data,
-    sdiff = sdiff,
-    alpha = alpha,
-    beta = beta,
-    ETRmPot = ETRmPot,
-    etr_max = ETRmax,
-    ik = ik
-  ))
 }
 
 plot_control_platt <- function(data, regression_data, title, use_etr_I) {

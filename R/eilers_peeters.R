@@ -1,62 +1,76 @@
 generate_regression_eilers_peeters_ETR_I <- function(data) {
-  return(generate_regression_eilers_peeters_internals(data, etr_I_col_name))
+  return(generate_regression_eilers_peeters_internal(data, etr_I_col_name))
 }
 
 generate_regression_eilers_peeters_ETR_II <- function(data) {
-  return(generate_regression_eilers_peeters_internals(data, etr_II_col_name))
+  return(generate_regression_eilers_peeters_internal(data, etr_II_col_name))
 }
 
-generate_regression_eilers_peeters_internals <- function(data, etr_type) {
+generate_regression_eilers_peeters_internal <- function(data, etr_type) {
   library(minpack.lm)
-  validate_data(data)
-  validate_etr_type(etr_type)
+  library(data.table)
 
-  data <- remove_det_row_by_etr(data, etr_type)
+  tryCatch(
+    {
+      validate_data(data)
+      validate_etr_type(etr_type)
 
-  model <- nlsLM(data[[etr_type]] ~ (PAR / (a * PAR^2 + b * PAR + c)),
-    data = data,
-    start = list(a = 0.00004, b = 0.004, c = 5)
+      data <- remove_det_row_by_etr(data, etr_type)
+      model <- nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
+        data = data,
+        start = list(a = 0.00004, b = 0.004, c = 5),
+        control = nls.lm.control(maxiter = 1000)
+      )
+
+      abc <- coef(model)
+      a <- abc[["a"]]
+      b <- abc[["b"]]
+      c <- abc[["c"]]
+
+      etr_max <- 1 / (b + 2 * sqrt(a * c))
+
+      # Calculate alpha using the formula
+      alpha <- 1 / c
+
+      # Calculate Ik using the formula
+      Ik <- c / (b + 2 * sqrt(a * c))
+
+      # Calculate Im using the formula
+      Im <- sqrt(c / a)
+
+      # Calculate w using the formula
+      w <- b / sqrt(a * c)
+
+      pars <- c()
+      predictions <- c()
+      for (p in min(data$PAR):max(data$PAR)) {
+        pars <- c(pars, p)
+        predictions <- c(predictions, p / ((a * p^2) + (b * p) + c))
+      }
+      etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
+
+      sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+
+      return(list(
+        etr_regression_data = etr_regression_data,
+        sdiff = sdiff,
+        a = a,
+        b = b,
+        c = c,
+        etr_max = etr_max,
+        alpha = alpha,
+        ik = Ik,
+        im = Im,
+        w = w
+      ))
+    },
+    warning = function(w) {
+      stop("Warning while calculating eilers peeters model: ", w)
+    },
+    error = function(e) {
+      stop("Error while calculating eilers peeters model: ", e)
+    }
   )
-
-  abc <- coef(model)
-  a <- abc[["a"]]
-  b <- abc[["b"]]
-  c <- abc[["c"]]
-
-  etr_max <- 1 / (b + 2 * sqrt(a * c))
-
-  # Calculate alpha using the formula
-  alpha <- 1 / c
-
-  # Calculate Ik using the formula
-  Ik <- c / (b + 2 * sqrt(a * c))
-
-  # Calculate Im using the formula
-  Im <- sqrt(c / a)
-
-  # Calculate w using the formula
-  w <- b / sqrt(a * c)
-
-  pars <- c()
-  predictions <- c()
-  for (p in min(data$PAR):max(data$PAR)) {
-    pars <- c(pars, p)
-    predictions <- c(predictions, p / ((a * p^2) + (b * p) + c))
-  }
-  etr_regression_data <- data.table("PAR" = pars, "prediction" = predictions)
-
-  return(list(
-    etr_regression_data = etr_regression_data,
-    sdiff = calculate_sdiff(data, etr_regression_data, etr_type),
-    a = a,
-    b = b,
-    c = c,
-    etr_max = etr_max,
-    alpha = alpha,
-    ik = Ik,
-    im = Im,
-    w = w
-  ))
 }
 
 plot_control_eilers_peeters <- function(data, regression_data, title, use_etr_I) {

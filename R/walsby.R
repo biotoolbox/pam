@@ -10,46 +10,58 @@ generate_regression_walsby_internal <- function(data, etr_type) {
   library(data.table)
   library(minpack.lm)
   library(SciViews)
-  validate_data(data)
 
-  data <- remove_det_row_by_etr(data, etr_type)
+  tryCatch(
+    {
+      validate_data(data)
 
-  model <- nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
-    data = data,
-    start = list(etr_max = 100, alpha = 0.4, beta = -0.01)
+      data <- remove_det_row_by_etr(data, etr_type)
+
+      model <- nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
+        data = data,
+        start = list(etr_max = 100, alpha = 0.4, beta = -0.01),
+        control = nls.control(maxiter = 1000)
+      )
+
+      abc <- coef(model)
+      etr_max <- abc[["etr_max"]]
+      alpha <- abc[["alpha"]]
+      beta <- abc[["beta"]]
+
+      # Calculate ik using the formula
+      ik <- etr_max / alpha
+
+      pars <- c()
+      predictions <- c()
+      for (p in min(data$PAR):max(data$PAR)) {
+        pars <- c(pars, p)
+        predictions <- c(predictions, etr_max * (1 - exp((-alpha * p) / etr_max)) + beta * p)
+      }
+
+      etr_regression_data <- data.table(pars, predictions)
+      etr_regression_data <- setNames(
+        etr_regression_data,
+        c(PAR_name, prediction_name)
+      )
+
+      sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+
+      return(list(
+        etr_regression_data = etr_regression_data,
+        sdiff = sdiff,
+        etr_max = etr_max,
+        alpha = alpha,
+        ik = ik,
+        beta = beta
+      ))
+    },
+    warning = function(w) {
+      stop("Warning while calculating walsby model: ", w)
+    },
+    error = function(e) {
+      stop("Error while calculating walsby model: ", e)
+    }
   )
-
-  abc <- coef(model)
-  etr_max <- abc[["etr_max"]]
-  alpha <- abc[["alpha"]]
-  beta <- abc[["beta"]]
-
-  # Calculate ik using the formula
-  ik <- etr_max / alpha
-
-  pars <- c()
-  predictions <- c()
-  for (p in min(data$PAR):max(data$PAR)) {
-    pars <- c(pars, p)
-    predictions <- c(predictions, etr_max * (1 - exp((-alpha * p) / etr_max)) + beta * p)
-  }
-
-  etr_regression_data <- data.table(pars, predictions)
-  etr_regression_data <- setNames(
-    etr_regression_data,
-    c(PAR_name, prediction_name)
-  )
-
-  sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-
-  return(list(
-    etr_regression_data = etr_regression_data,
-    sdiff = sdiff,
-    etr_max = etr_max,
-    alpha = alpha,
-    ik = ik,
-    beta = beta
-  ))
 }
 
 plot_control_walsby <- function(data, regression_data, title, use_etr_I) {

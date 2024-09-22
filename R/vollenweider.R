@@ -11,72 +11,82 @@ generate_regression_vollenweider_internal <- function(data, etr_type) {
   library(minpack.lm)
   library(dplyr)
 
-  validate_etr_type(etr_type)
-  validate_data(data)
+  tryCatch(
+    {
+      validate_etr_type(etr_type)
+      validate_data(data)
 
-  data <- remove_det_row_by_etr(data, etr_type)
+      data <- remove_det_row_by_etr(data, etr_type)
 
-  model <- nlsLM(
-    data[[etr_type]] ~
-      (a * PAR / sqrt(1 + (b^2) * (PAR^2))) * (1 / sqrt(1 + (c^2) * (PAR^2)))^n,
-    data = data,
-    start = list(a = 0.3, b = 0.004, c = -0.0001, n = 1000),
-    control = nls.lm.control(maxiter = 1000)
-  )
+      model <- nlsLM(
+        data[[etr_type]] ~
+          (a * PAR / sqrt(1 + (b^2) * (PAR^2))) * (1 / sqrt(1 + (c^2) * (PAR^2)))^n,
+        data = data,
+        start = list(a = 0.3, b = 0.004, c = -0.0001, n = 1000),
+        control = nls.control(maxiter = 1000)
+      )
 
-  abc <- coef(model)
-  a <- abc[["a"]]
-  b <- abc[["b"]]
-  c <- abc[["c"]]
-  n <- abc[["n"]]
+      abc <- coef(model)
+      a <- abc[["a"]]
+      b <- abc[["b"]]
+      c <- abc[["c"]]
+      n <- abc[["n"]]
 
-  Iopt <- 0
-  max_prediction <- 0
-  pars <- c()
-  predictions <- c()
-  for (p in min(data$PAR):max(data$PAR)) {
-    pars <- c(pars, p)
-    prediction <- (a * p / sqrt(1 + (b^2) * (p^2))) * (1 / sqrt(1 + (c^2) * (p^2)))^n
-    predictions <- c(
-      predictions,
-      prediction
-    )
+      Iopt <- 0
+      max_prediction <- 0
+      pars <- c()
+      predictions <- c()
+      for (p in min(data$PAR):max(data$PAR)) {
+        pars <- c(pars, p)
+        prediction <- (a * p / sqrt(1 + (b^2) * (p^2))) * (1 / sqrt(1 + (c^2) * (p^2)))^n
+        predictions <- c(
+          predictions,
+          prediction
+        )
 
-    if (prediction > max_prediction) {
-      max_prediction <- prediction
-      Iopt <- p
+        if (prediction > max_prediction) {
+          max_prediction <- prediction
+          Iopt <- p
+        }
+      }
+
+      etr_regression_data <- data.table(pars, predictions)
+      etr_regression_data <- setNames(
+        etr_regression_data,
+        c(PAR_name, prediction_name)
+      )
+
+      # Calculate ETRmax
+      etr_max <- (a * Iopt / sqrt(1 + (b^2) * (Iopt^2)) * (1 / sqrt(1 + (c^2) * (Iopt^2)))^n)
+
+      # Calculate alpha using the formula
+      alpha <- a
+
+      # Calculate Ik using the formula
+      Ik <- etr_max / a
+
+      sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+
+      return(list(
+        etr_regression_data = etr_regression_data,
+        sdiff = sdiff,
+        a = a,
+        b = b,
+        c = c,
+        n = n,
+        etr_max = etr_max,
+        alpha = alpha,
+        ik = Ik,
+        iopt = Iopt
+      ))
+    },
+    warning = function(w) {
+      stop("Warning while calculating vollenweider model: ", w)
+    },
+    error = function(e) {
+      stop("Error while calculating vollenweider model: ", e)
     }
-  }
-
-  etr_regression_data <- data.table(pars, predictions)
-  etr_regression_data <- setNames(
-    etr_regression_data,
-    c(PAR_name, prediction_name)
   )
-
-  # Calculate ETRmax
-  etr_max <- (a * Iopt / sqrt(1 + (b^2) * (Iopt^2)) * (1 / sqrt(1 + (c^2) * (Iopt^2)))^n)
-
-  # Calculate alpha using the formula
-  alpha <- a
-
-  # Calculate Ik using the formula
-  Ik <- etr_max / a
-
-  sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-
-  return(list(
-    etr_regression_data = etr_regression_data,
-    sdiff = sdiff,
-    a = a,
-    b = b,
-    c = c,
-    n = n,
-    etr_max = etr_max,
-    alpha = alpha,
-    ik = Ik,
-    iopt = Iopt
-  ))
 }
 
 plot_control_vollenweider <- function(data, regression_data, title, use_etr_I) {

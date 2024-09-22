@@ -1,0 +1,98 @@
+compare_regression_models_ETR_I <- function(data_dir) {
+  return(compare_regression_models(data_dir, etr_I_col_name))
+}
+
+compare_regression_models_ETR_II <- function(data_dir) {
+  return(compare_regression_models(data_dir, etr_II_col_name))
+}
+
+compare_regression_models <- function(data_dir, etr_type) {
+  library(data.table)
+  csv_files <- list.files(data_dir, pattern = ".csv", full.names = TRUE)
+
+  eilers_peeters_points <- 0
+  platt_points <- 0
+  vollenweider_points <- 0
+  walsby_points <- 0
+
+  for (file in csv_files) {
+    title <- basename(file)
+    data <- read_pam_data(file)
+
+    tryCatch(
+      {
+        eilers_peeters <- generate_regression_eilers_peeters_internal(data, etr_type)
+        eilers_peeters_sdiff <- eilers_peeters[["sdiff"]]
+        if (!is.numeric(eilers_peeters_sdiff)) {
+          stop("eilers_peeters sdiff result is not numeric")
+        }
+
+        platt <- generate_regression_platt_internal(data, etr_type)
+        platt_sdiff <- platt[["sdiff"]]
+        if (!is.numeric(eilers_peeters_sdiff)) {
+          stop("platt sdiff result is not numeric")
+        }
+
+        vollenweider <- generate_regression_vollenweider_internal(data, etr_type)
+        vollenweider_sdiff <- vollenweider[["sdiff"]]
+        if (!is.numeric(eilers_peeters_sdiff)) {
+          stop("vollenweider sdiff result is not numeric")
+        }
+
+        walsby <- generate_regression_walsby_internal(data, etr_type)
+        walsby_sdiff <- walsby[["sdiff"]]
+        if (!is.numeric(eilers_peeters_sdiff)) {
+          stop("walsby sdiff result is not numeric")
+        }
+
+        if (is.na(eilers_peeters_sdiff)) {
+          stop("failed to calculate sdiff with eilers_peeters")
+        }
+        if (is.na(platt_sdiff)) {
+          stop("failed to calculate sdiff with platt")
+        }
+        if (is.na(vollenweider_sdiff)) {
+          stop("failed to calculate sdiff with vollenweider")
+        }
+        if (is.na(walsby_sdiff)) {
+          stop("failed to calculate sdiff with walsby")
+        }
+
+        data1 <- data.table(group = "eilers_peeters", value = eilers_peeters_sdiff)
+        data2 <- data.table(group = "platt", value = platt_sdiff)
+        data3 <- data.table(group = "vollenweider", value = vollenweider_sdiff)
+        data4 <- data.table(group = "walsby", value = walsby_sdiff)
+
+        combined_data <- rbind(data1, data2, data3, data4)
+        combined_data <- combined_data[order(combined_data$value), ]
+
+        for (i in seq_len(nrow(combined_data))) {
+          row <- combined_data[i, ]
+          points <- 4 - i
+          if (row$group == "eilers_peeters") {
+            eilers_peeters_points <- eilers_peeters_points + points
+          } else if (row$group == "platt") {
+            platt_points <- platt_points + points
+          } else if (row$group == "vollenweider") {
+            vollenweider_points <- vollenweider_points + points
+          } else if (row$group == "walsby") {
+            walsby_points <- walsby_points + points
+          }
+        }
+      },
+      warning = function(w) {
+        message("Skipped file: ", title, " because of warning: ", w)
+      },
+      error = function(e) {
+        message("Skipped file: ", title, " because of error: ", e)
+      }
+    )
+  }
+
+  return(c(
+    eilers_peeters = eilers_peeters_points,
+    platt = platt_points,
+    vollenweider = vollenweider_points,
+    walsby = walsby_points
+  ))
+}

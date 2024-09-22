@@ -1,27 +1,3 @@
-etr_I_col_name <- "recalc_ETR.I."
-etr_II_col_name <- "recalc_ETR.II."
-
-PAR_name <- "PAR"
-prediction_name <- "prediction"
-
-etr_label <- expression(paste("ETR [", mu, "mol electrons"^{
-  -2
-} ~ "s"^{
-  -1
-} ~ "]"))
-
-par_label <- expression(paste("PAR [", mu, "mol photons m"^{
-  -2
-} ~ "s"^{
-  -1
-} ~ "]"))
-
-etr_unit_label <- expression(paste("[", mu, "mol electrons"^{
-  -2
-} ~ "s"^{
-  -1
-} ~ "]"))
-
 validate_data <- function(data) {
   library(data.table)
   library(glue)
@@ -75,67 +51,80 @@ read_pam_data <- function(
   library(data.table)
   library(dplyr)
 
-  data <- read.csv(csv_path, sep = ";", dec = ".")
-  data <- as.data.table(data)
+  tryCatch(
+    {
+      data <- read.csv(csv_path, sep = ";", dec = ".")
+      data <- as.data.table(data)
 
-  validate_data(data)
-  data <- data[data$ID == "SP", ]
+      validate_data(data)
+      data <- data[data$ID == "SP", ]
 
-  date_time_col_values <- c()
-  for (i in seq_len(nrow(data))) {
-    row <- data[i, ]
+      date_time_col_values <- c()
+      for (i in seq_len(nrow(data))) {
+        row <- data[i, ]
 
-    date_time_row_value <- as.POSIXct(
-      paste(row$Date, row$Time, sep = " "),
-      tz = "GMT", "%d.%m.%y %H:%M:%S"
-    )
-    date_time_col_values <- c(date_time_col_values, date_time_row_value)
-  }
+        date_time_row_value <- as.POSIXct(
+          paste(row$Date, row$Time, sep = " "),
+          tz = "GMT", "%d.%m.%y %H:%M:%S"
+        )
+        date_time_col_values <- c(date_time_col_values, date_time_row_value)
+      }
 
-  data <- data %>%
-    mutate(DateTime = date_time_col_values) %>%
-    select(DateTime, everything())
-  data <- data[order(data$DateTime), ]
+      data <- data %>%
+        mutate(DateTime = date_time_col_values) %>%
+        select(DateTime, everything())
+      data <- data[order(data$DateTime), ]
 
-  result <- data.table()
-  last_par <- as.numeric(0)
-  for (i in seq_len(nrow(data))) {
-    row <- data[i, ]
-    current_par <- row$PAR
+      result <- data.table()
+      last_par <- as.numeric(0)
+      for (i in seq_len(nrow(data))) {
+        row <- data[i, ]
+        current_par <- row$PAR
 
-    if (remove_recovery && last_par != 0 && current_par < last_par) {
-      #      data <- data[-(seq_len(nrow(data)) - i), ]
-      break
+        if (remove_recovery && last_par != 0 && current_par < last_par) {
+          break
+        }
+
+        yield_I <- row$Y.I.
+        recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, p_ratio)
+        row <- cbind(row, etr_I_col_name = recalc_ETRI)
+        setnames(row, old = "etr_I_col_name", new = etr_I_col_name)
+
+        yield_II <- row$Y.II.
+        recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, p_ratio)
+        row <- cbind(row, etr_II_col_name = recalc_ETRII)
+        setnames(row, old = "etr_II_col_name", new = etr_II_col_name)
+
+        result <- rbind(result, row)
+
+        last_par <- current_par
+      }
+
+      result <- result %>%
+        select(!!etr_II_col_name, everything())
+
+      result <- result %>%
+        select(!!etr_I_col_name, everything())
+
+      result <- result %>%
+        select(DateTime, everything())
+
+      return(result)
+    },
+    warning = function(w) {
+      stop("Warning in file: ", csv_path, " Warning: ", w)
+    },
+    error = function(e) {
+      stop("Error in file: ", csv_path, " Error: ", e)
     }
-
-    yield_I <- row$Y.I.
-    recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, p_ratio)
-    row <- cbind(row, etr_I_col_name = recalc_ETRI)
-    setnames(row, old = "etr_I_col_name", new = etr_I_col_name)
-
-    yield_II <- row$Y.II.
-    recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, p_ratio)
-    row <- cbind(row, etr_II_col_name = recalc_ETRII)
-    setnames(row, old = "etr_II_col_name", new = etr_II_col_name)
-
-    result <- rbind(result, row)
-
-    last_par <- current_par
-  }
-
-  result <- result %>%
-    select(!!etr_II_col_name, everything())
-
-  result <- result %>%
-    select(!!etr_I_col_name, everything())
-
-  result <- result %>%
-    select(DateTime, everything())
-
-  return(result)
+  )
 }
 
 calc_etr <- function(yield, par, etr_factor, p_ratio) {
+  if (is.na(yield)) {
+    return(NA_real_)
+  }
+
   if (!is.numeric(yield)) {
     stop("yield is not numeric")
   }
@@ -191,7 +180,6 @@ calculate_sdiff <- function(data, etr_regression_data, etr_type) {
   for (i in seq_len(nrow(data))) {
     row <- data[i, ]
     realEtr <- row[[etr_type]]
-
     predictedEtr <- etr_regression_data[etr_regression_data$PAR == row$PAR, ][[prediction_name]]
 
     sdiff <- (predictedEtr - realEtr)^2
@@ -212,8 +200,14 @@ remove_det_row_by_etr <- function(data, etr_type) {
 
   if (etr_type == etr_I_col_name) {
     data <- data %>% filter(data$Action != "Fm-Det.")
+    if (length(data[data$Action == "Pm.-Det.", ]) == 0) {
+      stop("Pm.-Det. is required but not present")
+    }
   } else {
     data <- data %>% filter(data$Action != "Pm.-Det.")
+    if (length(data[data$Action == "Fm-Det.", ]) == 0) {
+      stop("Fm-Det. is required but not present")
+    }
   }
 
   return(data)
