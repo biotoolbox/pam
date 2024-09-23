@@ -75,7 +75,7 @@ generate_regression_eilers_peeters_internal <- function(
           message("failed to calculate etr_max: Warning:", w)
         },
         error = function(e) {
-          message("failed to calculate etr_max: Error:", w)
+          message("failed to calculate etr_max: Error:", e)
         }
       )
 
@@ -88,33 +88,33 @@ generate_regression_eilers_peeters_internal <- function(
           message("failed to calculate alpha: Warning:", w)
         },
         error = function(e) {
-          message("failed to calculate alpha: Error:", w)
+          message("failed to calculate alpha: Error:", e)
         }
       )
 
       ik <- NA_real_
       tryCatch(
         {
-          Ik <- c / (b + 2 * sqrt(a * c))
+          ik <- c / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
           message("failed to calculate Ik: Warning:", w)
         },
         error = function(e) {
-          message("failed to calculate Ik: Error:", w)
+          message("failed to calculate Ik: Error:", e)
         }
       )
 
       im <- NA_real_
       tryCatch(
         {
-          Im <- sqrt(c / a)
+          im <- sqrt(c / a)
         },
         warning = function(w) {
           message("failed to calculate Im: Warning:", w)
         },
         error = function(e) {
-          message("failed to calculate Im: Error:", w)
+          message("failed to calculate Im: Error:", e)
         }
       )
       w <- NA_real_
@@ -126,7 +126,7 @@ generate_regression_eilers_peeters_internal <- function(
           message("failed to calculate w: Warning:", w)
         },
         error = function(e) {
-          message("failed to calculate w: Error:", w)
+          message("failed to calculate w: Error:", e)
         }
       )
 
@@ -177,22 +177,28 @@ plot_control_eilers_peeters <- function(data, regression_data, title, etr_type) 
   a <- eval(regression_data[["a"]])
   b <- eval(regression_data[["b"]])
   c <- eval(regression_data[["c"]])
+
   etr_regression_data <- eval(regression_data[["etr_regression_data"]])
+
   data <- remove_det_row_by_etr(data, etr_type)
+
+  values <- c(
+    as.character(round(a, 7)),
+    as.character(round(b, 6)),
+    as.character(round(c, 6)),
+    as.character(round(regression_data[["etr_max"]], 3)),
+    as.character(round(regression_data[["alpha"]], 3)),
+    as.character(round(regression_data[["ik"]], 3)),
+    as.character(round(regression_data[["im"]], 3)),
+    as.character(round(regression_data[["w"]], 3)),
+    as.character(round(regression_data[["sdiff"]], 3))
+  )
+
   params <- data.frame(
     Parameter = c("a", "b", "c", "ETRmax", "alpha", "Ik", "Im", "W", "SDiff"),
-    Value = c(
-      round(a, 6),
-      round(b, 6),
-      round(c, 6),
-      round(regression_data[["etr_max"]], 3),
-      round(regression_data[["alpha"]], 3),
-      round(regression_data[["ik"]], 3),
-      round(regression_data[["im"]], 3),
-      round(regression_data[["w"]], 3),
-      round(regression_data[["sdiff"]], 3)
-    )
+    Value = unlist(values)
   )
+
   params_transposed <- t(params)
   colnames(params_transposed) <- NULL
   rownames(params_transposed) <- NULL

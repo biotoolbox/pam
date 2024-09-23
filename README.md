@@ -4,8 +4,7 @@
 
 ### wrapper pdf
 
-- Tabelle unter plots etrmax, ik, alpha etc
-- paramterdata validation
+- create test for data that produces NA
 
 ## waiting....
 

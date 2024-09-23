@@ -83,8 +83,9 @@ generate_regression_vollenweider_internal <- function(
       b <- abc[["b"]]
       c <- abc[["c"]]
       n <- abc[["n"]]
+      alpha <- a
 
-      Iopt <- 0
+      iopt <- 0
       max_prediction <- 0
       pars <- c()
       predictions <- c()
@@ -98,24 +99,40 @@ generate_regression_vollenweider_internal <- function(
 
         if (prediction > max_prediction) {
           max_prediction <- prediction
-          Iopt <- p
+          iopt <- p
         }
       }
 
-      etr_regression_data <- data.table(pars, predictions)
-      etr_regression_data <- setNames(
-        etr_regression_data,
-        c(PAR_name, prediction_name)
+      etr_regression_data <- data.table(
+        "PAR" = pars,
+        "prediction" = predictions
       )
 
-      # Calculate ETRmax
-      etr_max <- (a * Iopt / sqrt(1 + (b^2) * (Iopt^2)) * (1 / sqrt(1 + (c^2) * (Iopt^2)))^n)
+      etr_max <- NA_real_
+      tryCatch(
+        {
+          etr_max <- (a * iopt / sqrt(1 + (b^2) * (iopt^2)) * (1 / sqrt(1 + (c^2) * (iopt^2)))^n)
+        },
+        warning = function(w) {
+          message("failed to calculate etr_max: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate etr_max: Error:", e)
+        }
+      )
 
-      # Calculate alpha using the formula
-      alpha <- a
-
-      # Calculate Ik using the formula
-      Ik <- etr_max / a
+      ik <- NA_real_
+      tryCatch(
+        {
+          ik <- etr_max / a
+        },
+        warning = function(w) {
+          message("failed to calculate ik: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate ik: Error:", e)
+        }
+      )
 
       sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
 
@@ -128,8 +145,8 @@ generate_regression_vollenweider_internal <- function(
         n = n,
         etr_max = etr_max,
         alpha = alpha,
-        ik = Ik,
-        iopt = Iopt
+        ik = ik,
+        iopt = iopt
       ))
     },
     warning = function(w) {

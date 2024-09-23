@@ -24,3 +24,30 @@ wrapper_pdf_eilers_peeters <- function(
     }
     dev.off()
 }
+
+wrapper_pdf_walsby <- function(
+    csv_src_folder,
+    pdf_dest_path,
+    etr_type,
+    etr_max_start_value = etr_max_start_value_walsby_default,
+    alpha_start_value = alpha_start_value_walsby_default,
+    beta_start_value = beta_start_value_walsby_default) {
+    library(data.table)
+    csv_files <- list.files(csv_src_folder, pattern = ".csv", full.names = TRUE)
+    pdf(pdf_dest_path)
+    for (file in csv_files) {
+        title <- basename(file)
+        data <- read_pam_data(file)
+        try({
+            reg_data <- generate_regression_walsby_internal(
+                data,
+                etr_type,
+                etr_max_start_value,
+                alpha_start_value,
+                beta_start_value
+            )
+            print(plot_control_walsby(data, reg_data, title, etr_type))
+        })
+    }
+    dev.off()
+}

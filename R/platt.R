@@ -72,11 +72,31 @@ generate_regression_platt_internal <- function(
       beta <- abc[["beta"]]
       etrmpot <- abc[["etrmpot"]]
 
-      # Calculate ETRmax using the formula
-      ETRmax <- etrmpot * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
+      etr_max <- NA_real_
+      tryCatch(
+        {
+          etr_max <- etrmpot * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
+        },
+        warning = function(w) {
+          message("failed to calculate etr_max: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate etr_max: Error:", e)
+        }
+      )
 
-      # Calculate Ik using the formula
-      ik <- ETRmax / alpha
+      ik <- NA_real_
+      tryCatch(
+        {
+          ik <- etr_max / alpha
+        },
+        warning = function(w) {
+          message("failed to calculate ik: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate ik: Error:", e)
+        }
+      )
 
       pars <- c()
       predictions <- c()
@@ -97,7 +117,7 @@ generate_regression_platt_internal <- function(
         alpha = alpha,
         beta = beta,
         etrmpot = etrmpot,
-        etr_max = ETRmax,
+        etr_max = etr_max,
         ik = ik
       ))
     },

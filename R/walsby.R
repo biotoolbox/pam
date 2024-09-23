@@ -74,9 +74,6 @@ generate_regression_walsby_internal <- function(
       alpha <- abc[["alpha"]]
       beta <- abc[["beta"]]
 
-      # Calculate ik using the formula
-      ik <- etr_max / alpha
-
       pars <- c()
       predictions <- c()
       for (p in min(data$PAR):max(data$PAR)) {
@@ -84,10 +81,22 @@ generate_regression_walsby_internal <- function(
         predictions <- c(predictions, etr_max * (1 - exp((-alpha * p) / etr_max)) + beta * p)
       }
 
-      etr_regression_data <- data.table(pars, predictions)
-      etr_regression_data <- setNames(
-        etr_regression_data,
-        c(PAR_name, prediction_name)
+      etr_regression_data <- data.table(
+        "PAR" = pars,
+        "prediction" = predictions
+      )
+
+      ik <- NA_real_
+      tryCatch(
+        {
+          ik <- etr_max / alpha
+        },
+        warning = function(w) {
+          message("failed to calculate ik: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate ik: Error:", e)
+        }
       )
 
       sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
@@ -110,43 +119,43 @@ generate_regression_walsby_internal <- function(
   )
 }
 
-plot_control_walsby <- function(data, regression_data, title, use_etr_I) {
+plot_control_walsby <- function(data, regression_data, title, etr_type) {
   library(ggplot2)
   library(glue)
+  library(ggthemes)
+  library(gridExtra)
 
   validate_data(data)
+  validate_etr_type(etr_type)
 
-  if (!is.logical(use_etr_I)) {
-    stop("use_etr_I is not a valid bool")
-  }
+  etr_regression_data <- eval(regression_data[["etr_regression_data"]])
 
-  a <- eval(regression_data[["a"]])
-  b <- eval(regression_data[["b"]])
-  c <- eval(regression_data[["c"]])
-  etr_regression_data <- regression_data[["etr_regression_data"]]
+  data <- remove_det_row_by_etr(data, etr_type)
 
-  etr_to_use <- ""
-  if (use_etr_I) {
-    etr_to_use <- etr_I_type
-    data <- data[Action != "Fm-Det."]
-  } else {
-    etr_to_use <- etr_II_type
-    data <- data[Action != "Pm.-Det."]
-  }
+  values <- c(
+    as.character(round(regression_data[["etr_max"]], 3)),
+    as.character(round(regression_data[["alpha"]], 3)),
+    as.character(round(regression_data[["ik"]], 3)),
+    as.character(round(regression_data[["beta"]], 3)),
+    as.character(round(regression_data[["sdiff"]], 3))
+  )
 
-  # Create plot for ETR.II. by PAR and filename
-  plot <- ggplot(data, aes(x = PAR, y = get(etr_to_use))) +
+  params <- data.frame(
+    Parameter = c("ETRmax", "alpha", "Ik", "beta", "SDiff"),
+    Value = unlist(values)
+  )
+
+  params_transposed <- t(params)
+  colnames(params_transposed) <- NULL
+  rownames(params_transposed) <- NULL
+
+  plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
     geom_point() +
     geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#f700ff") +
     labs(x = par_label, y = etr_label, title = eval(title)) +
-    theme_minimal() +
-    labs(caption = glue("ETRmax: {round(regression_data[['etr_max']], 3)}
-    alpha: {round(regression_data[['alpha']], 3)}
-    Ik: {round(regression_data[['ik']], 3)}
-    beta: {round(regression_data[['beta']], 3)}
-    Iopt: {round(regression_data[['iopt']], 3)}
-    SDiff: {round(regression_data[['sdiff']], 3)}")) +
-    theme(plot.caption = element_text(hjust = 0))
+    theme_base()
 
-  return(plot)
+  table <- tableGrob(params_transposed, rows = NULL, theme = ttheme_minimal())
+  full_plot <- grid.arrange(plot, table, ncol = 1, heights = c(3, 0.2), widths = 1.5)
+  return(full_plot)
 }
