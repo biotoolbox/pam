@@ -51,3 +51,24 @@ wrapper_pdf_walsby <- function(
     }
     dev.off()
 }
+
+wrapper_pdf_vollenweider <- function(
+    csv_src_folder,
+    pdf_dest_path,
+    etr_type) {
+    library(data.table)
+    csv_files <- list.files(csv_src_folder, pattern = ".csv", full.names = TRUE)
+    pdf(pdf_dest_path)
+    for (file in csv_files) {
+        title <- basename(file)
+        data <- read_pam_data(file)
+        try({
+            reg_data <- generate_regression_vollenweider_internal(
+                data,
+                etr_type
+            )
+            print(plot_control_vollenweider(data, reg_data, title, etr_type))
+        })
+    }
+    dev.off()
+}
