@@ -109,7 +109,19 @@ generate_regression_platt_internal <- function(
         "prediction" = predictions
       )
 
-      sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+      
+      sdiff <- NA_real_
+      tryCatch(
+        {
+        sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+        },
+        warning = function(w) {
+          message("failed to calculate sdiff: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate  sdiff: Error:", e)
+        }
+      )
 
       return(list(
         etr_regression_data = etr_regression_data,

@@ -1,7 +1,17 @@
+#' default a start values for eilers_peeters_regression regression (0.00004)
 a_start_values_eilers_peeters_default <- 0.00004
+#' default b start values for eilers_peeters_regression regression (0.004)
 b_start_values_eilers_peeters_default <- 0.004
+#' default c start values for eilers_peeters_regression regression (5)
 c_start_values_eilers_peeters_default <- 5
 
+#' generate regression for eiler and peeters and ETR I
+#' @param data (required): the raw data from csv file
+#' @param a_start_value (optional): the start values used for the regression model @seealso a_start_values_eilers_peeters_default
+#' @param b_start_value (optional): the start values used for the regression model
+#' @param c_start_value (optional): the start values used for the regression model
+#' @return list with regression data table and the calculated values: sdiff, ..... 
+#' @export 
 generate_regression_eilers_peeters_ETR_I <- function(
     data,
     a_start_value = a_start_values_eilers_peeters_default,
@@ -16,6 +26,9 @@ generate_regression_eilers_peeters_ETR_I <- function(
   ))
 }
 
+#' generate regression for eiler and peeters and ETR II
+#' @param data (required): the raw data from csv file
+#' 
 generate_regression_eilers_peeters_ETR_II <- function(
     data,
     a_start_value = a_start_values_eilers_peeters_default,
@@ -141,7 +154,18 @@ generate_regression_eilers_peeters_internal <- function(
         "prediction" = predictions
       )
 
-      sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+      sdiff <- NA_real_
+      tryCatch(
+        {
+        sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+        },
+        warning = function(w) {
+          message("failed to calculate sdiff: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate  sdiff: Error:", e)
+        }
+      )
 
       return(list(
         etr_regression_data = etr_regression_data,

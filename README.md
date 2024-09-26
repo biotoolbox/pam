@@ -29,3 +29,12 @@ devtools::load_all();
 library(testthat);
 test_file('$$path')"
 ```
+
+# Linux dependecies for devtools:
+libxml2-dev
+libssl-dev
+libcurl4-openssl-dev
+libfontconfig1-dev
+libharfbuzz-dev
+libfribidi-dev
+libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev 
