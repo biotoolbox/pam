@@ -15,7 +15,7 @@ test_that("compare_regression_models etr I + II", {
     vollenweider_total = vollenweider_total,
     walsby_total = walsby_total
   )
-  #View(result)
+  print(result)
 
   expect_equal(1, 1)
 })

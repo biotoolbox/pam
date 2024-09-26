@@ -2,7 +2,7 @@
 % Please edit documentation in R/eilers_peeters.R
 \name{generate_regression_eilers_peeters_ETR_I}
 \alias{generate_regression_eilers_peeters_ETR_I}
-\title{generate regression for eiler and peeters and ETR I}
+\title{generate regression for eilers and peeters and ETR I}
 \usage{
 generate_regression_eilers_peeters_ETR_I(
   data,
@@ -14,15 +14,15 @@ generate_regression_eilers_peeters_ETR_I(
 \arguments{
 \item{data}{(required): the raw data from csv file}
 
-\item{a_start_value}{(optional): the start values used for the regression model @seealso a_start_values_eilers_peeters_default}
+\item{a_start_value}{(optional): the start values used for the regression model @seealso a_start_value_eilers_peeters_default}
 
-\item{b_start_value}{(optional): the start values used for the regression model}
+\item{b_start_value}{(optional): the start values used for the regression model @seealso b start value eilers_peeters default}
 
-\item{c_start_value}{(optional): the start values used for the regression model}
+\item{c_start_value}{(optional): the start values used for the regression model @seealso c start value eilers_peeters default}
 }
 \value{
-list with regression data table and the calculated values: sdiff, .....
+list with regression data table and the calculated values: etrmax, alpha, ik...
 }
 \description{
-generate regression for eiler and peeters and ETR I
+generate regression for eilers and peeters and ETR I
 }

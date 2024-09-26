@@ -1,17 +1,17 @@
-#' default a start values for eilers_peeters_regression regression (0.00004)
+#' default a start value for eilers_peeters_regression regression (0.00004)
 a_start_values_eilers_peeters_default <- 0.00004
-#' default b start values for eilers_peeters_regression regression (0.004)
+#' default b start value for eilers_peeters_regression regression (0.004)
 b_start_values_eilers_peeters_default <- 0.004
-#' default c start values for eilers_peeters_regression regression (5)
+#' default c start value for eilers_peeters_regression regression (5)
 c_start_values_eilers_peeters_default <- 5
 
-#' generate regression for eiler and peeters and ETR I
+#' generate regression for eilers and peeters and ETR I
 #' @param data (required): the raw data from csv file
-#' @param a_start_value (optional): the start values used for the regression model @seealso a_start_values_eilers_peeters_default
-#' @param b_start_value (optional): the start values used for the regression model
-#' @param c_start_value (optional): the start values used for the regression model
-#' @return list with regression data table and the calculated values: sdiff, ..... 
-#' @export 
+#' @param a_start_value (optional): the start values used for the regression model @seealso a_start_value_eilers_peeters_default
+#' @param b_start_value (optional): the start values used for the regression model @seealso b start value eilers_peeters default
+#' @param c_start_value (optional): the start values used for the regression model @seealso c start value eilers_peeters default
+#' @return list with regression data table and the calculated values: etrmax, alpha, ik...
+#' @export
 generate_regression_eilers_peeters_ETR_I <- function(
     data,
     a_start_value = a_start_values_eilers_peeters_default,
@@ -26,9 +26,13 @@ generate_regression_eilers_peeters_ETR_I <- function(
   ))
 }
 
-#' generate regression for eiler and peeters and ETR II
+#' generate regression for eilers and peeters and ETR II
 #' @param data (required): the raw data from csv file
-#' 
+#' @param a_start_value (optional): the start values used for the regression model @seealso a_start_value_eilers_peeters_default
+#' @param b_start_value (optional): the start values used for the regression model @seealso b start value eilers_peeters default
+#' @param c_start_value (optional): the start values used for the regression model @seealso c start value eilers_peeters default
+#' @return list with regression data table and the calculated values: etr_max, alpha, ik...
+#' @export
 generate_regression_eilers_peeters_ETR_II <- function(
     data,
     a_start_value = a_start_values_eilers_peeters_default,
@@ -42,7 +46,10 @@ generate_regression_eilers_peeters_ETR_II <- function(
     c_start_value
   ))
 }
-
+#' internal function (not for the user) for calculating the regression according to eilers and peeters
+#' @param data : data from @seealso generate_regression_eilers_peeters_ETR_I and @seealso generate_regression_eilers_peeters_ETR_II
+#' @return internal handover
+#' @export
 generate_regression_eilers_peeters_internal <- function(
     data,
     etr_type,
@@ -67,7 +74,10 @@ generate_regression_eilers_peeters_internal <- function(
         stop("c start value is not a valid number")
       }
 
+
       data <- remove_det_row_by_etr(data, etr_type)
+
+
       model <- nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
         data = data,
         start = list(a = a_start_value, b = b_start_value, c = c_start_value),
@@ -82,6 +92,12 @@ generate_regression_eilers_peeters_internal <- function(
       etr_max <- NA_real_
       tryCatch(
         {
+          #' calculation of etrmax
+          #' @param a value
+          #' @param b value
+          #' @param c value
+          #' @return etrmax
+          #' @export
           etr_max <- 1 / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
@@ -157,7 +173,7 @@ generate_regression_eilers_peeters_internal <- function(
       sdiff <- NA_real_
       tryCatch(
         {
-        sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
           message("failed to calculate sdiff: Warning:", w)

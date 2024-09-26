@@ -3,7 +3,7 @@
 \docType{data}
 \name{b_start_values_eilers_peeters_default}
 \alias{b_start_values_eilers_peeters_default}
-\title{default b start values for eilers_peeters_regression regression (0.004)}
+\title{default b start value for eilers_peeters_regression regression (0.004)}
 \format{
 An object of class \code{numeric} of length 1.
 }
@@ -11,6 +11,6 @@ An object of class \code{numeric} of length 1.
 b_start_values_eilers_peeters_default
 }
 \description{
-default b start values for eilers_peeters_regression regression (0.004)
+default b start value for eilers_peeters_regression regression (0.004)
 }
 \keyword{datasets}
