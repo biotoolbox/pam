@@ -1,18 +1,18 @@
 alpha_start_value_platt_default <- 0.3
 beta_start_value_platt_default <- 0.01
-etrmpot_start_value_platt_default <- 30
+ps_start_value_platt_default <- 30
 
 generate_regression_platt_ETR_I <- function(
     data,
     alpha_start_value = alpha_start_value_platt_default,
     beta_start_value = beta_start_value_platt_default,
-    etrmpo_start_value = etrmpot_start_value_platt_default) {
+    ps_start_value = ps_start_value_platt_default) {
   return(generate_regression_platt_internal(
     data,
     etr_I_type,
     alpha_start_value,
     beta_start_value,
-    etrmpo_start_value
+    ps_start_value
   ))
 }
 
@@ -20,13 +20,13 @@ generate_regression_platt_ETR_II <- function(
     data,
     alpha_start_value = alpha_start_value_platt_default,
     beta_start_value = beta_start_value_platt_default,
-    etrmpot_start_value = etrmpot_start_value_platt_default) {
+    ps_start_value = ps_start_value_platt_default) {
   return(generate_regression_platt_internal(
     data,
     etr_II_type,
     alpha_start_value,
     beta_start_value,
-    etrmpot_start_value
+    ps_start_value
   ))
 }
 
@@ -35,7 +35,7 @@ generate_regression_platt_internal <- function(
     etr_type,
     alpha_start_value = alpha_start_value_platt_default,
     beta_start_value = beta_start_value_platt_default,
-    etrmpot_start_value = etrmpot_start_value_platt_default) {
+    ps_start_value = ps_start_value_platt_default) {
   library(minpack.lm)
   library(SciViews)
   library(data.table)
@@ -51,18 +51,18 @@ generate_regression_platt_internal <- function(
       if (!is.numeric(beta_start_value)) {
         stop("beta start value is not a valid number")
       }
-      if (!is.numeric(etrmpot_start_value)) {
-        stop("etrmpot start value is not a valid number")
+      if (!is.numeric(ps_start_value)) {
+        stop("ps start value is not a valid number")
       }
 
       data <- remove_det_row_by_etr(data, etr_type)
 
-      model <- nlsLM(data[[etr_type]] ~ etrmpot * (1 - exp((-alpha * PAR) / etrmpot)) * exp((-beta * PAR) / etrmpot),
+      model <- nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * PAR) / ps))) * exp(-((beta * PAR) / ps)),
         data = data,
         start = list(
           alpha = alpha_start_value,
           beta = beta_start_value,
-          etrmpot = etrmpot_start_value
+          ps = ps_start_value
         ),
         control = nls.control(maxiter = 1000)
       )
@@ -70,25 +70,25 @@ generate_regression_platt_internal <- function(
       abc <- coef(model)
       alpha <- abc[["alpha"]]
       beta <- abc[["beta"]]
-      etrmpot <- abc[["etrmpot"]]
+      ps <- abc[["ps"]]
 
-      etr_max <- NA_real_
+      pm <- NA_real_
       tryCatch(
         {
-          etr_max <- etrmpot * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
+          pm <- ps * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
         },
         warning = function(w) {
-          message("failed to calculate etr_max: Warning:", w)
+          message("failed to calculate pm: Warning:", w)
         },
         error = function(e) {
-          message("failed to calculate etr_max: Error:", e)
+          message("failed to calculate pm: Error:", e)
         }
       )
 
       ik <- NA_real_
       tryCatch(
         {
-          ik <- etr_max / alpha
+          ik <- pm / alpha
         },
         warning = function(w) {
           message("failed to calculate ik: Warning:", w)
@@ -98,11 +98,37 @@ generate_regression_platt_internal <- function(
         }
       )
 
+      is <- NA_real_
+      tryCatch(
+        {
+          is <- ps / alpha
+        },
+        warning = function(w) {
+          message("failed to calculate is: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate is: Error:", e)
+        }
+      )
+
+           ib <- NA_real_
+      tryCatch(
+        {
+          ib <- ps / beta
+        },
+        warning = function(w) {
+          message("failed to calculate ib: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate ib: Error:", e)
+        }
+      )
+
       pars <- c()
       predictions <- c()
       for (p in min(data$PAR):max(data$PAR)) {
         pars <- c(pars, p)
-        predictions <- c(predictions, etrmpot * (1 - exp((-alpha * p) / etrmpot)) * exp((-beta * p) / etrmpot))
+        predictions <- c(predictions, ps * (1 - exp((-alpha * p) / ps)) * exp((-beta * p) / ps))
       }
       etr_regression_data <- data.table(
         "PAR" = pars,
@@ -128,9 +154,11 @@ generate_regression_platt_internal <- function(
         sdiff = sdiff,
         alpha = alpha,
         beta = beta,
-        etrmpot = etrmpot,
-        etr_max = etr_max,
-        ik = ik
+        ps = ps,
+        pm = pm,
+        ik = ik,
+        is = is,
+        ib = ib
       ))
     },
     warning = function(w) {
@@ -157,7 +185,7 @@ plot_control_platt <- function(data, regression_data, title, use_etr_I) {
   etr_regression_data <- eval(regression_data[["etr_regression_data"]])
   a <- eval(regression_data[["alpha"]])
   b <- eval(regression_data[["beta"]])
-  ETRmPot <- eval(regression_data[["ETRmPot"]])
+  ps <- eval(regression_data[["ps"]])
 
   etr_to_use <- ""
   if (use_etr_I) {
@@ -174,9 +202,12 @@ plot_control_platt <- function(data, regression_data, title, use_etr_I) {
     geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#f700ff") +
     labs(x = par_label, y = etr_label, title = eval(title)) +
     theme_minimal() +
-    labs(caption = glue("ETRmax: {round(regression_data[['etr_max']], 3)}
+    labs(caption = glue("pm: {round(regression_data[['etr_max']], 3)}
+    ps: {round(regression_data[['ps']], 3)}
     alpha: {round(regression_data[['alpha']], 3)}
-    Ik: {round(regression_data[['ik']], 3)}
+    ik: {round(regression_data[['ik']], 3)}
+    is: {round(regression_data[['is']], 3)}
+    ib: {round(regression_data[['ib']], 3)}
     beta: {round(regression_data[['beta']], 3)}
     SDiff: {round(regression_data[['sdiff']], 3)}")) +
     theme(plot.caption = element_text(hjust = 0))

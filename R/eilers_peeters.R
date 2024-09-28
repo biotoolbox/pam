@@ -49,7 +49,6 @@ generate_regression_eilers_peeters_ETR_II <- function(
 #' internal function (not for the user) for calculating the regression according to eilers and peeters
 #' @param data : data from @seealso generate_regression_eilers_peeters_ETR_I and @seealso generate_regression_eilers_peeters_ETR_II
 #' @return internal handover
-#' @export
 generate_regression_eilers_peeters_internal <- function(
     data,
     etr_type,
@@ -92,12 +91,7 @@ generate_regression_eilers_peeters_internal <- function(
       etr_max <- NA_real_
       tryCatch(
         {
-          #' calculation of etrmax
-          #' @param a value
-          #' @param b value
-          #' @param c value
-          #' @return etrmax
-          #' @export
+
           etr_max <- 1 / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
