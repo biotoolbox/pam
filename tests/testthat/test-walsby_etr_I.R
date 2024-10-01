@@ -6,6 +6,5 @@ test_that("test walsby ETR I", {
   expect_equal(reg_data[["sdiff"]], 1247.65184)
   expect_equal(reg_data[["etr_max"]], 3970930.3)
   expect_equal(reg_data[["alpha"]], 27.690236)
-  expect_equal(reg_data[["ik"]], 143405.433)
   expect_equal(reg_data[["beta"]], -27.4705392)
 })

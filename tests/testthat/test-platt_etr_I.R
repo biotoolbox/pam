@@ -2,7 +2,6 @@ test_that("test platt ETR I 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
   data <- read_pam_data(test_data_file)
   reg_data <- generate_regression_platt_ETR_I(data)
-  print(reg_data)
 
   expect_equal(reg_data[["sdiff"]], 1709.3953)
   expect_equal(reg_data[["alpha"]], 0.23751254, tolerance = 0.0000001)
@@ -12,4 +11,5 @@ test_that("test platt ETR I 20231122_01_W3_T20_HL.csv", {
   expect_equal(reg_data[["ik"]], 533.68312)
   expect_equal(reg_data[["is"]], 237640.63)
   expect_equal(reg_data[["ib"]], 1455.1404)
+  expect_equal(reg_data[["im"]], 1450.7034)
 })

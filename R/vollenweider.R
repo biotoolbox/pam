@@ -100,28 +100,21 @@ generate_regression_vollenweider_internal <- function(
           popt <- prediction
         }
       }
+      etr_regression_data <- create_regression_data(pars, predictions)
 
-      ik_v <- (ik * popt) / pmax
-      alpha_real <- popt / ik_v
-      pmax_popt_and_Ik_Ik_v_ratio <- ik / ik_v
+      iik <- (ik * popt) / pmax
+      pmax_popt_and_ik_iik_ratio <- ik / iik
 
-
-      etr_regression_data <- data.table(
-        "PAR" = pars,
-        "prediction" = predictions
-      )
-
-      
       sdiff <- NA_real_
       tryCatch(
         {
-        sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
           message("failed to calculate sdiff: Warning:", w)
         },
         error = function(e) {
-          message("failed to calculate  sdiff: Error:", e)
+          message("failed to calculate sdiff: Error:", e)
         }
       )
 
@@ -134,9 +127,8 @@ generate_regression_vollenweider_internal <- function(
         n = n,
         ik = ik,
         popt = popt,
-        ik_v = ik_v,
-        alpha_real = alpha_real,
-        pmax_popt_and_Ik_Ik_v_ratio = pmax_popt_and_Ik_Ik_v_ratio
+        iik = iik,
+        pmax_popt_and_ik_iik_ratio = pmax_popt_and_ik_iik_ratio
       ))
     },
     warning = function(w) {
@@ -151,17 +143,22 @@ generate_regression_vollenweider_internal <- function(
 plot_control_vollenweider <- function(data, regression_data, title, etr_type) {
   library(ggplot2)
   library(glue)
+
   validate_data(data)
+  validate_regression_data(regression_data)
+  validate_etr_type(etr_type)
+  if (!is.character(title)) {
+    stop("title is not valid")
+  }
 
   etr_regression_data <- eval(regression_data[["etr_regression_data"]])
 
-  # Create plot for ETR.II. by PAR and filename
   plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
     geom_point() +
     geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#e70f1f") +
     labs(x = par_label, y = etr_label, title = eval(title)) +
     theme_minimal() +
-  labs(caption = glue("pmax: {round(regression_data[['pmax']], 3)}
+    labs(caption = glue("pmax: {round(regression_data[['pmax']], 3)}
   popt: {round(regression_data[['popt']], 3)}
   alpha: {round(regression_data[['alpha']], 3)}
   alpha_real: {round(regression_data[['alpha_real']], 3)}

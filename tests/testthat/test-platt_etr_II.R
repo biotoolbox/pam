@@ -12,4 +12,5 @@ test_that("test platt ETR II 20231122_01_W3_T20_HL.csv", {
   expect_equal(reg_data[["ik"]], 302.03024)
   expect_equal(reg_data[["is"]], 569.95303)
   expect_equal(reg_data[["ib"]], 2226.79356)
+  expect_equal(reg_data[["im"]], 906.60042)
 })

@@ -66,6 +66,8 @@ compare_regression_models <- function(data_dir, etr_type) {
         combined_data <- rbind(data1, data2, data3, data4)
         combined_data <- combined_data[order(combined_data$value), ]
 
+        # TODO: check if order is correct
+
         for (i in seq_len(nrow(combined_data))) {
           row <- combined_data[i, ]
           points <- 4 - i

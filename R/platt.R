@@ -111,7 +111,7 @@ generate_regression_platt_internal <- function(
         }
       )
 
-           ib <- NA_real_
+      ib <- NA_real_
       tryCatch(
         {
           ib <- ps / beta
@@ -124,22 +124,31 @@ generate_regression_platt_internal <- function(
         }
       )
 
+      im <- NA_real_
+      tryCatch(
+        {
+          im <- (ps / alpha) * log((alpha + beta) / beta)
+        },
+        warning = function(w) {
+          message("failed to calculate im: Warning:", w)
+        },
+        error = function(e) {
+          message("failed to calculate im: Error:", e)
+        }
+      )
+
       pars <- c()
       predictions <- c()
       for (p in min(data$PAR):max(data$PAR)) {
         pars <- c(pars, p)
         predictions <- c(predictions, ps * (1 - exp((-alpha * p) / ps)) * exp((-beta * p) / ps))
       }
-      etr_regression_data <- data.table(
-        "PAR" = pars,
-        "prediction" = predictions
-      )
+      etr_regression_data <- create_regression_data(pars, predictions)
 
-      
       sdiff <- NA_real_
       tryCatch(
         {
-        sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
           message("failed to calculate sdiff: Warning:", w)
@@ -158,7 +167,8 @@ generate_regression_platt_internal <- function(
         pm = pm,
         ik = ik,
         is = is,
-        ib = ib
+        ib = ib,
+        im = im
       ))
     },
     warning = function(w) {
@@ -170,36 +180,21 @@ generate_regression_platt_internal <- function(
   )
 }
 
-plot_control_platt <- function(data, regression_data, title, use_etr_I) {
+plot_control_platt <- function(data, regression_data, title, etr_type) {
   library(ggplot2)
   library(glue)
 
   validate_data(data)
-  # TODO validate regression data
+  validate_regression_data(regression_data)
+  validate_etr_type(etr_type)
 
-  if (!is.logical(use_etr_I)) {
-    stop("use_etr_I is not a valid bool")
-  }
-
-  sdiff <- eval(regression_data[["sdiff"]])
   etr_regression_data <- eval(regression_data[["etr_regression_data"]])
-  a <- eval(regression_data[["alpha"]])
-  b <- eval(regression_data[["beta"]])
-  ps <- eval(regression_data[["ps"]])
 
-  etr_to_use <- ""
-  if (use_etr_I) {
-    etr_to_use <- etr_I_type
-    data <- data[Action != "Fm-Det."]
-  } else {
-    etr_to_use <- etr_II_type
-    data <- data[Action != "Pm.-Det."]
-  }
+  data <- remove_det_row_by_etr(data, etr_type)
 
-  # Create plot for ETR.II. by PAR and filename
-  plot <- ggplot(data, aes(x = PAR, y = get(etr_to_use))) +
+  plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
     geom_point() +
-    geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#f700ff") +
+    geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = color_platt) +
     labs(x = par_label, y = etr_label, title = eval(title)) +
     theme_minimal() +
     labs(caption = glue("pm: {round(regression_data[['etr_max']], 3)}

@@ -81,29 +81,12 @@ generate_regression_walsby_internal <- function(
         predictions <- c(predictions, etr_max * (1 - exp((-alpha * p) / etr_max)) + beta * p)
       }
 
-      etr_regression_data <- data.table(
-        "PAR" = pars,
-        "prediction" = predictions
-      )
+      etr_regression_data <- create_regression_data(pars, predictions)
 
-      ik <- NA_real_
-      tryCatch(
-        {
-          ik <- etr_max / alpha
-        },
-        warning = function(w) {
-          message("failed to calculate ik: Warning:", w)
-        },
-        error = function(e) {
-          message("failed to calculate ik: Error:", e)
-        }
-      )
-
-      
       sdiff <- NA_real_
       tryCatch(
         {
-        sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
+          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
           message("failed to calculate sdiff: Warning:", w)
@@ -118,7 +101,6 @@ generate_regression_walsby_internal <- function(
         sdiff = sdiff,
         etr_max = etr_max,
         alpha = alpha,
-        ik = ik,
         beta = beta
       ))
     },

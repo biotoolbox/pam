@@ -73,9 +73,7 @@ generate_regression_eilers_peeters_internal <- function(
         stop("c start value is not a valid number")
       }
 
-
       data <- remove_det_row_by_etr(data, etr_type)
-
 
       model <- nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
         data = data,
@@ -88,11 +86,10 @@ generate_regression_eilers_peeters_internal <- function(
       b <- abc[["b"]]
       c <- abc[["c"]]
 
-      etr_max <- NA_real_
+      pm <- NA_real_
       tryCatch(
         {
-
-          etr_max <- 1 / (b + 2 * sqrt(a * c))
+          pm <- 1 / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
           message("failed to calculate etr_max: Warning:", w)
@@ -102,10 +99,10 @@ generate_regression_eilers_peeters_internal <- function(
         }
       )
 
-      alpha <- NA_real_
+      s <- NA_real_
       tryCatch(
         {
-          alpha <- 1 / c
+          s <- 1 / c
         },
         warning = function(w) {
           message("failed to calculate alpha: Warning:", w)
@@ -159,10 +156,7 @@ generate_regression_eilers_peeters_internal <- function(
         pars <- c(pars, p)
         predictions <- c(predictions, p / ((a * p^2) + (b * p) + c))
       }
-      etr_regression_data <- data.table(
-        "PAR" = pars,
-        "prediction" = predictions
-      )
+      etr_regression_data <- create_regression_data(pars, predictions)
 
       sdiff <- NA_real_
       tryCatch(
@@ -183,8 +177,8 @@ generate_regression_eilers_peeters_internal <- function(
         a = a,
         b = b,
         c = c,
-        etr_max = etr_max,
-        alpha = alpha,
+        pm = pm,
+        s = s,
         ik = ik,
         im = im,
         w = w
@@ -199,7 +193,7 @@ generate_regression_eilers_peeters_internal <- function(
   )
 }
 
-plot_control_eilers_peeters <- function(data, regression_data, title, etr_type) {
+plot_control_eilers_peeters <- function(data, model_result, title, etr_type) {
   library(ggplot2)
   library(glue)
   library(ggthemes)
@@ -208,28 +202,25 @@ plot_control_eilers_peeters <- function(data, regression_data, title, etr_type) 
   validate_data(data)
   validate_etr_type(etr_type)
 
-  a <- eval(regression_data[["a"]])
-  b <- eval(regression_data[["b"]])
-  c <- eval(regression_data[["c"]])
-
-  etr_regression_data <- eval(regression_data[["etr_regression_data"]])
+  etr_regression_data <- eval(model_result[["etr_regression_data"]])
+  validate_regression_data(etr_regression_data)
 
   data <- remove_det_row_by_etr(data, etr_type)
 
   values <- c(
-    as.character(round(a, 7)),
-    as.character(round(b, 6)),
-    as.character(round(c, 6)),
-    as.character(round(regression_data[["etr_max"]], 3)),
-    as.character(round(regression_data[["alpha"]], 3)),
-    as.character(round(regression_data[["ik"]], 3)),
-    as.character(round(regression_data[["im"]], 3)),
-    as.character(round(regression_data[["w"]], 3)),
-    as.character(round(regression_data[["sdiff"]], 3))
+    as.character(round(model_result[["sdiff"]], 3)),
+    as.character(round(model_result[["a"]], 7)),
+    as.character(round(model_result[["b"]], 6)),
+    as.character(round(model_result[["c"]], 6)),
+    as.character(round(model_result[["pm"]], 3)),
+    as.character(round(model_result[["s"]], 3)),
+    as.character(round(model_result[["ik"]], 3)),
+    as.character(round(model_result[["im"]], 3)),
+    as.character(round(model_result[["w"]], 3))
   )
 
   params <- data.frame(
-    Parameter = c("a", "b", "c", "ETRmax", "alpha", "Ik", "Im", "W", "SDiff"),
+    Parameter = c("sdiff", "a", "b", "c", "pm", "s", "ik", "im", "w"),
     Value = unlist(values)
   )
 
@@ -237,11 +228,25 @@ plot_control_eilers_peeters <- function(data, regression_data, title, etr_type) 
   colnames(params_transposed) <- NULL
   rownames(params_transposed) <- NULL
 
-  # Create plot for ETR.II. by PAR and filename
+  yield <- NA_real_
+  if (etr_type == etr_I_type) {
+    yield <- "Y.I."
+  } else {
+    yield <- "Y.II."
+  }
+
+  etr_regression_data <- model_result[["etr_regression_data"]]
+  max_etr <- max(etr_regression_data$prediction)
+
   plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
     geom_point() +
     geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#f700ff") +
+    geom_point(data = data, aes(y = get(yield) * max_etr)) +
+    geom_line(data = data, aes(y = get(yield) * max_etr)) +
     labs(x = par_label, y = etr_label, title = eval(title)) +
+    scale_y_continuous(
+      sec.axis = sec_axis(~ . / max_etr, name = "Yield")
+    ) +
     theme_base()
 
   table <- tableGrob(params_transposed, rows = NULL, theme = ttheme_minimal())
