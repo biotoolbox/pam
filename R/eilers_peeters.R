@@ -193,20 +193,8 @@ generate_regression_eilers_peeters_internal <- function(
   )
 }
 
-plot_control_eilers_peeters <- function(data, model_result, title, etr_type) {
-  library(ggplot2)
-  library(glue)
-  library(ggthemes)
-  library(gridExtra)
-
-  validate_data(data)
-  validate_etr_type(etr_type)
-
-  etr_regression_data <- eval(model_result[["etr_regression_data"]])
-  validate_regression_data(etr_regression_data)
-
-  data <- remove_det_row_by_etr(data, etr_type)
-
+plot_control_eilers_peeters <- function(data, model_result, etr_type, title) {
+  # validate model result
   values <- c(
     as.character(round(model_result[["sdiff"]], 3)),
     as.character(round(model_result[["a"]], 7)),
@@ -224,32 +212,14 @@ plot_control_eilers_peeters <- function(data, model_result, title, etr_type) {
     Value = unlist(values)
   )
 
-  params_transposed <- t(params)
-  colnames(params_transposed) <- NULL
-  rownames(params_transposed) <- NULL
-
-  yield <- NA_real_
-  if (etr_type == etr_I_type) {
-    yield <- "Y.I."
-  } else {
-    yield <- "Y.II."
-  }
-
-  etr_regression_data <- model_result[["etr_regression_data"]]
-  max_etr <- max(etr_regression_data$prediction)
-
-  plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
-    geom_point() +
-    geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#f700ff") +
-    geom_point(data = data, aes(y = get(yield) * max_etr)) +
-    geom_line(data = data, aes(y = get(yield) * max_etr)) +
-    labs(x = par_label, y = etr_label, title = eval(title)) +
-    scale_y_continuous(
-      sec.axis = sec_axis(~ . / max_etr, name = "Yield")
-    ) +
-    theme_base()
-
-  table <- tableGrob(params_transposed, rows = NULL, theme = ttheme_minimal())
-  full_plot <- grid.arrange(plot, table, ncol = 1, heights = c(3, 0.2), widths = 1.5)
-  return(full_plot)
+  return(
+    plot_control(
+      data,
+      model_result,
+      etr_type,
+      title,
+      color_eilers_peeters,
+      params
+    )
+  )
 }

@@ -180,32 +180,32 @@ generate_regression_platt_internal <- function(
   )
 }
 
-plot_control_platt <- function(data, regression_data, title, etr_type) {
-  library(ggplot2)
-  library(glue)
+plot_control_platt <- function(data, model_result, etr_type, title) {
+  values <- c(
+    as.character(round(model_result[["sdiff"]], 3)),
+    as.character(round(model_result[["alpha"]], 7)),
+    as.character(round(model_result[["beta"]], 6)),
+    as.character(round(model_result[["ps"]], 6)),
+    as.character(round(model_result[["pm"]], 3)),
+    as.character(round(model_result[["ik"]], 3)),
+    as.character(round(model_result[["is"]], 3)),
+    as.character(round(model_result[["ib"]], 3)),
+    as.character(round(model_result[["im"]], 3))
+  )
 
-  validate_data(data)
-  validate_regression_data(regression_data)
-  validate_etr_type(etr_type)
+  params <- data.frame(
+    Parameter = c("sdiff", "alpha", "beta", "ps", "pm", "ik", "is", "ib", "im"),
+    Value = unlist(values)
+  )
 
-  etr_regression_data <- eval(regression_data[["etr_regression_data"]])
-
-  data <- remove_det_row_by_etr(data, etr_type)
-
-  plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
-    geom_point() +
-    geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = color_platt) +
-    labs(x = par_label, y = etr_label, title = eval(title)) +
-    theme_minimal() +
-    labs(caption = glue("pm: {round(regression_data[['etr_max']], 3)}
-    ps: {round(regression_data[['ps']], 3)}
-    alpha: {round(regression_data[['alpha']], 3)}
-    ik: {round(regression_data[['ik']], 3)}
-    is: {round(regression_data[['is']], 3)}
-    ib: {round(regression_data[['ib']], 3)}
-    beta: {round(regression_data[['beta']], 3)}
-    SDiff: {round(regression_data[['sdiff']], 3)}")) +
-    theme(plot.caption = element_text(hjust = 0))
-
-  return(plot)
+  return(
+    plot_control(
+      data,
+      model_result,
+      etr_type,
+      title,
+      color_platt,
+      params
+    )
+  )
 }

@@ -140,35 +140,43 @@ generate_regression_vollenweider_internal <- function(
   )
 }
 
-plot_control_vollenweider <- function(data, regression_data, title, etr_type) {
-  library(ggplot2)
-  library(glue)
+plot_control_vollenweider <- function(data, model_result, etr_type, title) {
+  # validate model result
+  values <- c(
+    as.character(round(model_result[["sdiff"]], 3)),
+    as.character(round(model_result[["pmax"]], 7)),
+    as.character(round(model_result[["a"]], 6)),
+    as.character(round(model_result[["alpha"]], 6)),
+    as.character(round(model_result[["n"]], 3)),
+    as.character(round(model_result[["ik"]], 3)),
+    as.character(round(model_result[["popt"]], 3)),
+    as.character(round(model_result[["iik"]], 3)),
+    as.character(round(model_result[["pmax_popt_and_ik_iik_ratio"]], 3))
+  )
 
-  validate_data(data)
-  validate_regression_data(regression_data)
-  validate_etr_type(etr_type)
-  if (!is.character(title)) {
-    stop("title is not valid")
-  }
+  params <- data.frame(
+    Parameter = c(
+      "sdiff",
+      "pmax",
+      "a",
+      "alpha",
+      "n",
+      "ik",
+      "popt",
+      "iik",
+      "pmax_popt_and_ik_iik_ratio"
+    ),
+    Value = unlist(values)
+  )
 
-  etr_regression_data <- eval(regression_data[["etr_regression_data"]])
-
-  plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
-    geom_point() +
-    geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#e70f1f") +
-    labs(x = par_label, y = etr_label, title = eval(title)) +
-    theme_minimal() +
-    labs(caption = glue("pmax: {round(regression_data[['pmax']], 3)}
-  popt: {round(regression_data[['popt']], 3)}
-  alpha: {round(regression_data[['alpha']], 3)}
-  alpha_real: {round(regression_data[['alpha_real']], 3)}
-  ik: {round(regression_data[['ik']], 3)}
-  ik_v: {round(regression_data[['ik_v']], 3)}
-  pmax_popt_and_Ik_Ik_v_ratio: {round(regression_data[['pmax_popt_and_Ik_Ik_v_ratio']], 3)}
-  a: {round(regression_data[['a']], 3)}
-  n: {round(regression_data[['n']], 3)}
-  SDiff: {round(regression_data[['sdiff']], 3)}")) +
-    theme(plot.caption = element_text(hjust = 0))
-
-  return(plot)
+  return(
+    plot_control(
+      data,
+      model_result,
+      etr_type,
+      title,
+      color_vollenweider,
+      params
+    )
+  )
 }

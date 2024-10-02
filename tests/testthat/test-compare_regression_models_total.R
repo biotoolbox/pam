@@ -1,6 +1,5 @@
 test_that("compare_regression_models etr I + II", {
   test_data_file <- file.path(getwd(), "data", "bulk")
-
   model_points_etr_I <- compare_regression_models_ETR_I(test_data_file)
   model_points_etr_II <- compare_regression_models_ETR_II(test_data_file)
 
@@ -15,7 +14,9 @@ test_that("compare_regression_models etr I + II", {
     vollenweider_total = vollenweider_total,
     walsby_total = walsby_total
   )
-  print(result)
 
-  expect_equal(1, 1)
+  expect_equal(result[["eilers_peeters_total"]], 379)
+  expect_equal(result[["platt_total"]], 239)
+  expect_equal(result[["vollenweider_total"]], 492)
+  expect_equal(result[["walsby_total"]], 216)
 })

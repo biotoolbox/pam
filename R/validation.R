@@ -42,7 +42,7 @@ validate_data <- function(data) {
   }
 }
 
-validate_regression_data <- function(regression_data) {
+validate_etr_regression_data <- function(regression_data) {
   library(data.table)
 
   if (is.null(regression_data)) {

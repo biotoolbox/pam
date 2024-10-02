@@ -113,43 +113,33 @@ generate_regression_walsby_internal <- function(
   )
 }
 
-plot_control_walsby <- function(data, regression_data, title, etr_type) {
-  library(ggplot2)
-  library(glue)
-  library(ggthemes)
-  library(gridExtra)
-
-  validate_data(data)
-  validate_etr_type(etr_type)
-
-  etr_regression_data <- eval(regression_data[["etr_regression_data"]])
-
-  data <- remove_det_row_by_etr(data, etr_type)
-
+plot_control_walsby <- function(data, model_result, etr_type, title) {
+  # validate model result
   values <- c(
-    as.character(round(regression_data[["etr_max"]], 3)),
-    as.character(round(regression_data[["alpha"]], 3)),
-    as.character(round(regression_data[["ik"]], 3)),
-    as.character(round(regression_data[["beta"]], 3)),
-    as.character(round(regression_data[["sdiff"]], 3))
+    as.character(round(model_result[["sdiff"]], 3)),
+    as.character(round(model_result[["etr_max"]], 7)),
+    as.character(round(model_result[["alpha"]], 6)),
+    as.character(round(model_result[["beta"]], 6))
   )
 
   params <- data.frame(
-    Parameter = c("ETRmax", "alpha", "Ik", "beta", "SDiff"),
+    Parameter = c(
+      "sdiff",
+      "etr_max",
+      "alpha",
+      "beta"
+    ),
     Value = unlist(values)
   )
 
-  params_transposed <- t(params)
-  colnames(params_transposed) <- NULL
-  rownames(params_transposed) <- NULL
-
-  plot <- ggplot(data, aes(x = PAR, y = get(etr_type))) +
-    geom_point() +
-    geom_line(data = etr_regression_data, aes(x = PAR, y = prediction), color = "#f700ff") +
-    labs(x = par_label, y = etr_label, title = eval(title)) +
-    theme_base()
-
-  table <- tableGrob(params_transposed, rows = NULL, theme = ttheme_minimal())
-  full_plot <- grid.arrange(plot, table, ncol = 1, heights = c(3, 0.2), widths = 1.5)
-  return(full_plot)
+  return(
+    plot_control(
+      data,
+      model_result,
+      etr_type,
+      title,
+      color_vollenweider,
+      params
+    )
+  )
 }

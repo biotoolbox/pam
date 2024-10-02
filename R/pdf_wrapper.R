@@ -12,14 +12,14 @@ wrapper_pdf_eilers_peeters <- function(
     title <- basename(file)
     data <- read_pam_data(file)
     try({
-      reg_data <- generate_regression_eilers_peeters_internal(
+      model_result <- generate_regression_eilers_peeters_internal(
         data,
         etr_type,
         a_start_value,
         b_start_value,
         c_start_value
       )
-      print(plot_control_eilers_peeters(data, reg_data, title, etr_type))
+      print(plot_control_eilers_peeters(data, model_result, etr_type, title))
     })
   }
   dev.off()
@@ -39,14 +39,14 @@ wrapper_pdf_walsby <- function(
     title <- basename(file)
     data <- read_pam_data(file)
     try({
-      reg_data <- generate_regression_walsby_internal(
+      model_result <- generate_regression_walsby_internal(
         data,
         etr_type,
         etr_max_start_value,
         alpha_start_value,
         beta_start_value
       )
-      print(plot_control_walsby(data, reg_data, title, etr_type))
+      print(plot_control_walsby(data, model_result, title, etr_type))
     })
   }
   dev.off()
@@ -67,7 +67,7 @@ wrapper_pdf_vollenweider <- function(
     title <- basename(file)
     data <- read_pam_data(file)
     try({
-      reg_data <- generate_regression_vollenweider_internal(
+      model_result <- generate_regression_vollenweider_internal(
         data,
         etr_type,
         pmax_start_value,
@@ -75,7 +75,7 @@ wrapper_pdf_vollenweider <- function(
         alpha_start_value,
         n_start_value
       )
-      print(plot_control_vollenweider(data, reg_data, title, etr_type))
+      print(plot_control_vollenweider(data, model_result, title, etr_type))
     })
   }
   dev.off()

@@ -1,6 +1,6 @@
 # pam
 
-# Features
+## Features
 
 ### wrapper pdf
 
@@ -9,18 +9,17 @@
 ## waiting
 
 - legende für kombidiagramm das mit den vielen linien
-- plot method rework
 
-# Test
+## Test
 
-## test all
+### test all
 
 ```
 library(devtools);
 devtools::test();
 ```
 
-## test specific file
+### test specific file
 
 ```
 library(devtools);
@@ -29,7 +28,7 @@ library(testthat);
 test_file('$$path')"
 ```
 
-# Linux dependecies for devtools
+## Linux dependecies for devtools
 
 Ubuntu:
 libxml2-dev
