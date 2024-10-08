@@ -2,7 +2,7 @@
 % Please edit documentation in R/eilers_peeters.R
 \name{generate_regression_eilers_peeters_ETR_II}
 \alias{generate_regression_eilers_peeters_ETR_II}
-\title{generate regression for eilers and peeters and ETR II}
+\title{Generate Regression for ETR II using the Eilers-Peeters Model (1988)}
 \usage{
 generate_regression_eilers_peeters_ETR_II(
   data,
@@ -12,17 +12,55 @@ generate_regression_eilers_peeters_ETR_II(
 )
 }
 \arguments{
-\item{data}{(required): the raw data from csv file}
+\item{data}{A `data.table` containing the input data from \link[pam]{read_pam_data}}
 
-\item{a_start_value}{(optional): the start values used for the regression model @seealso a_start_value_eilers_peeters_default}
+\item{a_start_value}{Numeric. The starting value for the parameter \eqn{a} 
+in the model. Defaults to \code{a_start_values_eilers_peeters_default}.}
 
-\item{b_start_value}{(optional): the start values used for the regression model @seealso b start value eilers_peeters default}
+\item{b_start_value}{Numeric. The starting value for the parameter \eqn{b} 
+in the model. Defaults to \code{b_start_values_eilers_peeters_default}.}
 
-\item{c_start_value}{(optional): the start values used for the regression model @seealso c start value eilers_peeters default}
+\item{c_start_value}{Numeric. The starting value for the parameter \eqn{c} 
+in the model. Defaults to \code{c_start_values_eilers_peeters_default}.}
+
+\item{etr_type}{A character string specifying the column name of the 
+response variable (in this case: ETR II) to be used in the model.}
 }
 \value{
-list with regression data table and the calculated values: etr_max, alpha, ik...
+A list containing the following elements:
+\describe{
+  \item{etr_regression_data}{A `data.table` with the predicted values of ETR II to each PAR based on the fitted model.}
+  \item{sdiff}{The deviation between the actual and predicted ETR values.}
+  \item{a}{The obtained parameter \eqn{a}.}
+  \item{b}{The obtained parameter \eqn{b}.}
+  \item{c}{The obtained parameter \eqn{c}.}
+  \item{pm}{The maximum electron transport rate, calculated as \eqn{pm = 1 / (b + 2 * \sqrt(a * c))}.}
+  \item{s}{The initial slope of the light curve, calculated as \eqn{s = 1 / c}.}
+  \item{ik}{PAR where the transition point from light limitation to light saturation is achieved, calculated as \eqn{ik = c / (b + 2 \sqrt(a * c))}.}
+  \item{im}{The PAR at which the maximum electron transport rate is achieved, calculated as \eqn{ im = \sqrt(c / a)}.}
+  \item{w}{The sharpness of the peak, calculated as \eqn{w = b / \sqrt(a * c)}.}
+}
 }
 \description{
-generate regression for eilers and peeters and ETR II
+This function generates a regression model based on the Eilers-Peeters 
+formula. Original naming conventions from the publication are used.
+All parameters are calculated taking photoinhibition into account.
+}
+\details{
+This function uses non-linear least squares fitting to estimate the parameters 
+for the Eilers-Peeters model, which describes the relationship between PAR and 
+ETR. The model used is:
+
+\eqn{p = I / (a * I^2 + b * I + c)}
+
+It is valid: I = PAR; p = ETR
+}
+\references{
+Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
+between light intensity and the rate of photosynthesis in phytoplankton. 
+\emph{Ecological Modelling}, \strong{42}(3-4), 199-215. 
+\doi{10.1016/0304-3800(88)90057-9}
+}
+\seealso{
+\code{\link{nlsLM}}, \code{\link{minpack.lm}}
 }

@@ -1,7 +1,17 @@
+#' default alpha start value for platt_regression  (0.3)
 alpha_start_value_platt_default <- 0.3
+#' default beta start value for platt_regression (0.01)
 beta_start_value_platt_default <- 0.01
+#' default ps start value for platt_regression (30)
 ps_start_value_platt_default <- 30
 
+#' generate regression for platt and ETR I
+#' @param data (required): data (raw data from csv file)
+#' @param alpha_start_value (optional): the start values used for the regression model @seealso alpha_start_value_eilers_peeters_default
+#' @param beta_start_value (optional): the start values used for the regression model @seealso beta start value eilers_peeters default
+#' @param ps_start_value (optional): the start values used for the regression model @seealso ps start value eilers_peeters default
+#' @return list with regression data table and the calculated values: etrmax, alpha, ik...
+#' @export
 generate_regression_platt_ETR_I <- function(
     data,
     alpha_start_value = alpha_start_value_platt_default,
@@ -16,6 +26,13 @@ generate_regression_platt_ETR_I <- function(
   ))
 }
 
+#' generate regression for platt and ETR II
+#' @param data (required): data (raw data from csv file)
+#' @param alpha_start_value (optional): the start values used for the regression model @seealso alpha_start_value_eilers_peeters_default
+#' @param beta_start_value (optional): the start values used for the regression model @seealso beta start value eilers_peeters default
+#' @param ps_start_value (optional): the start values used for the regression model @seealso ps start value eilers_peeters default
+#' @return list with regression data table and the calculated values: etrmax, alpha, ik...
+#' @export
 generate_regression_platt_ETR_II <- function(
     data,
     alpha_start_value = alpha_start_value_platt_default,
@@ -30,6 +47,9 @@ generate_regression_platt_ETR_II <- function(
   ))
 }
 
+#' internal function (not for the user) for calculating the regression according to platt
+#' @param data : data from @seealso generate_regression_platt_ETR_I and @seealso generate_regression_platt_ETR_II
+#' @return internal handover
 generate_regression_platt_internal <- function(
     data,
     etr_type,
@@ -180,6 +200,10 @@ generate_regression_platt_internal <- function(
   )
 }
 
+#' function for generating control plots according to platt
+#' @param data : data from data, model_result, etr_type, title 
+#' @return control plots with data points, regression and calculated result values (pm, alpha, ik...)
+#' @export
 plot_control_platt <- function(data, model_result, etr_type, title) {
   values <- c(
     as.character(round(model_result[["sdiff"]], 3)),
