@@ -1,7 +1,103 @@
+
+#'Compare Regression Models for ETR I
+#'
+#' This function compares different regression models for the 
+#' ETR I. 
+#'
+#' @param data_dir A character string specifying the directory 
+#' where the input data files are located.
+#'
+#' @return A vector containing the total points assigned to 
+#' each regression model based on their performance. Models are ranked 
+#' based on the calculated deviation of the difference between 
+#' observed and predicted values. Rating: 1st: 3 points; 2nd: 2 points;
+#' 3rd: 1 point; 4th: 0 points.
+#'
+#' @details
+#' This function calls the \code{compare_regression_models} function, 
+#' passing the directory of the data and the specified model type for ETR I.
+#' This allows for a straightforward comparison of the models:
+#' Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997).
+#' The results can guide users in selecting 
+#' the most appropriate model for their data.
+#'
+#' @seealso \code{\link{compare_regression_models}} for further details 
+#' on the comparison methodology.
+#' 
+#' @references
+#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
+#' between light intensity and the rate of photosynthesis in phytoplankton. 
+#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
+#' 
+#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
+#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701. 
+#' \doi{10.1357/002224080786845395}
+#' 
+#' #' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
+#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the 
+#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098 
+#' 
+#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves 
+#' and some implications regarding day rate estimates in primary production measurements, 
+#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. 
+#' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
+#' 
+#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis 
+#' through time and depth in a water column. *Journal of Plankton Research*, 
+#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487 
+#' @export
 compare_regression_models_ETR_I <- function(data_dir) {
   return(compare_regression_models(data_dir, etr_I_type))
 }
 
+#'Compare Regression Models for ETR II
+#'
+#' This function compares different regression models for the 
+#' ETR II. 
+#'
+#' @param data_dir A character string specifying the directory 
+#' where the input data files are located.
+#'
+#' @return A vector containing the total points assigned to 
+#' each regression model based on their performance. Models are ranked 
+#' based on the calculated deviation of the difference between 
+#' observed and predicted values. Rating: 1st: 3 points; 2nd: 2 points;
+#' 3rd: 1 point; 4th: 0 points.
+#'
+#' @details
+#' This function calls the \code{compare_regression_models} function, 
+#' passing the directory of the data and the specified model type for ETR I.
+#' This allows for a straightforward comparison of the models:
+#' Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997).
+#' The results can guide users in selecting 
+#' the most appropriate model for their data.
+#'
+#' @seealso \code{\link{compare_regression_models}} for further details 
+#' on the comparison methodology.
+#' 
+#' @references
+#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
+#' between light intensity and the rate of photosynthesis in phytoplankton. 
+#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
+#' 
+#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
+#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701. 
+#' \doi{10.1357/002224080786845395}
+#' 
+#' #' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
+#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the 
+#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098 
+#' 
+#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves 
+#' and some implications regarding day rate estimates in primary production measurements, 
+#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. 
+#' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
+#' 
+#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis 
+#' through time and depth in a water column. *Journal of Plankton Research*, 
+#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487 
+#' 
+#' @export
 compare_regression_models_ETR_II <- function(data_dir) {
   return(compare_regression_models(data_dir, etr_II_type))
 }

@@ -1,3 +1,42 @@
+#' @title Read and process raw data
+#' @description This function reads the original csv file as created by the DualPAM software, processes it by calculating ETR values, and returns a cleaned dataset.
+#'
+#' @param csv_path A string representing the file path to the CSV file.
+#' @param remove_recovery Automatic removal of recovery measurements after the actual Pi curve for an accurate regression. Default is \code{TRUE}.
+#' @param etr_factor A numeric value used as a factor for calculating ETR. Default is \code{0.84}.
+#' @param p_ratio A numeric value representing the ratio of PS II / PSI used in the ETR calculation formula. Default is \code{0.5}. \deqn{P-Ratio = (PPS2) / (PPS1+2)}
+#'
+#' @details
+#' ETR  are calculated using the following formula:
+#' \deqn{ETR = PAR * ETR-Factor * P-Ratio * Y}
+#' 
+#' The function processes the provided csv file by:
+#' \itemize{
+#'   \item Reading the csv data using `read.csv()`.
+#'   \item Validating the data structure using `validate_data()`.
+#'   \item Filtering rows where the column \code{ID} equals "SP".
+#'   \item Combining the \code{Date} and \code{Time} columns to create a new \code{DateTime} column.
+#'   \item Calculating the ETR values for both \code{Y.I.} and \code{Y.II.} using the function `calc_etr()`.
+#'   \item Removing rows after the recovery period if \code{remove_recovery = TRUE}.
+#' }
+#'
+#' @return A `data.table` containing the processed data with additional columns for recalculated ETR values.
+#'
+#' @examples
+#' # Example usage:
+#' result <- read_pam_data("path/to/data.csv", remove_recovery = TRUE, etr_factor = 0.84, p_ratio = 0.5)
+#' 
+#' @seealso \code{\link{data.table}}, \code{\link{dplyr}}
+#' @importFrom data.table data.table
+#' @importFrom dplyr mutate select
+#' 
+#' @references
+#' Heinz Walz GmbH. (2024). DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172). 
+#' Heinz Walz GmbH, Effeltrich, Germany. Available at:
+#' \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd06.pdf}
+
+#'
+#' @export
 read_pam_data <- function(
     csv_path,
     remove_recovery = TRUE,

@@ -1,33 +1,5 @@
-#' Default start values for Eilers-Peeters Model (1988)
-#'
-#' These variables hold the default starting values for the parameters 
-#' \( a \), \( b \), and \( c \) used in the Eilers-Peeters Model. 
-#' These values can be utilized as initial guesses for the non-linear 
-#' least squares fitting process. 
-#'
-#' @name eilers_peeters_starting_values_defaults
-#' @aliases a_start_values_eilers_peeters_default
-#' @aliases b_start_values_eilers_peeters_default
-#' @aliases c_start_values_eilers_peeters_default
-#' 
-#' @details
-#' The default starting value for parameter \( a \) is set to \code{0.00004}.
-#' The default starting value for parameter \( b \) is set to \code{0.004}.
-#' The default starting value for parameter \( c \) is set to \code{5}.
-#'
-#' These values are based on experience and are intended to provide 
-#' reasonable initial estimates for fitting the Eilers-Peeters Model to 
-#' experimental data.
-#'
-#' @format A numeric value.
-#'
-#' @export
 a_start_values_eilers_peeters_default <- 0.00004
-
-#' @export
 b_start_values_eilers_peeters_default <- 0.004
-
-#' @export
 c_start_values_eilers_peeters_default <- 5
 
 
@@ -73,8 +45,8 @@ c_start_values_eilers_peeters_default <- 5
 #' @references
 #' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
 #' between light intensity and the rate of photosynthesis in phytoplankton. 
-#' \emph{Ecological Modelling}, \strong{42}(3-4), 199-215. 
-#' \doi{10.1016/0304-3800(88)90057-9}
+#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
+
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
 #' @importFrom minpack.lm nlsLM
@@ -136,8 +108,7 @@ generate_regression_eilers_peeters_ETR_I <- function(
 #' @references
 #' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
 #' between light intensity and the rate of photosynthesis in phytoplankton. 
-#' \emph{Ecological Modelling}, \strong{42}(3-4), 199-215. 
-#' \doi{10.1016/0304-3800(88)90057-9}
+#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
 #' @importFrom minpack.lm nlsLM
@@ -315,8 +286,7 @@ generate_regression_eilers_peeters_internal <- function(
 #' @references
 #' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
 #' between light intensity and the rate of photosynthesis in phytoplankton. 
-#' \emph{Ecological Modelling}, \strong{42}(3-4), 199-215. 
-#' \doi{10.1016/0304-3800(88)90057-9}
+#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
 #' 
 #' @export
 plot_control_eilers_peeters <- function(data, model_result, etr_type, title) {
