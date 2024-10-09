@@ -20,31 +20,27 @@
 #' Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997).
 #' The results can guide users in selecting 
 #' the most appropriate model for their data.
-#'
-#' @seealso \code{\link{compare_regression_models}} for further details 
-#' on the comparison methodology.
 #' 
 #' @references
 #' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
 #' between light intensity and the rate of photosynthesis in phytoplankton. 
-#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
+#' Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
 #' 
 #' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
-#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701. 
-#' \doi{10.1357/002224080786845395}
+#' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 #' 
-#' #' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the 
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098 
+#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
+#' Acclimation limits of Fucus evanescens along the salinity gradient of the 
+#' southwestern Baltic Sea. Botanica Marina, 62(1), 1-12. \doi{10.1515/bot-2018-0098}.
 #' 
 #' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves 
 #' and some implications regarding day rate estimates in primary production measurements, 
-#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. 
+#' p. 427-457. In C. R. Goldman [ed.], Primary Productivity in Aquatic Environments. 
 #' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 #' 
 #' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis 
-#' through time and depth in a water column. *Journal of Plankton Research*, 
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487 
+#' through time and depth in a water column. New Phytologist, 136(2), 189-209. 
+#' \doi{10.1046/j.1469-8137.1997.00736.x}.
 #' @export
 compare_regression_models_ETR_I <- function(data_dir) {
   return(compare_regression_models(data_dir, etr_I_type))
@@ -71,32 +67,27 @@ compare_regression_models_ETR_I <- function(data_dir) {
 #' Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997).
 #' The results can guide users in selecting 
 #' the most appropriate model for their data.
-#'
-#' @seealso \code{\link{compare_regression_models}} for further details 
-#' on the comparison methodology.
 #' 
 #' @references
 #' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
 #' between light intensity and the rate of photosynthesis in phytoplankton. 
-#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
+#' Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
 #' 
 #' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
-#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701. 
-#' \doi{10.1357/002224080786845395}
+#' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 #' 
-#' #' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the 
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098 
+#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
+#' Acclimation limits of Fucus evanescens along the salinity gradient of the 
+#' southwestern Baltic Sea. Botanica Marina, 62(1), 1-12. \doi{10.1515/bot-2018-0098}.
 #' 
 #' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves 
 #' and some implications regarding day rate estimates in primary production measurements, 
-#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. 
+#' p. 427-457. In C. R. Goldman [ed.], Primary Productivity in Aquatic Environments. 
 #' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 #' 
 #' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis 
-#' through time and depth in a water column. *Journal of Plankton Research*, 
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487 
-#' 
+#' through time and depth in a water column. New Phytologist, 136(2), 189-209. 
+#' \doi{10.1046/j.1469-8137.1997.00736.x}.
 #' @export
 compare_regression_models_ETR_II <- function(data_dir) {
   return(compare_regression_models(data_dir, etr_II_type))

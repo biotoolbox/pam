@@ -2,7 +2,7 @@
 % Please edit documentation in R/platt.R
 \name{generate_regression_platt_ETR_II}
 \alias{generate_regression_platt_ETR_II}
-\title{generate regression for platt and ETR II}
+\title{Generate Regression for ETR II using the Platt Model (1980)}
 \usage{
 generate_regression_platt_ETR_II(
   data,
@@ -12,17 +12,52 @@ generate_regression_platt_ETR_II(
 )
 }
 \arguments{
-\item{data}{(required): data (raw data from csv file)}
+\item{data}{A `data.table` containing the input data from \link[pam]{read_pam_data}}
 
-\item{alpha_start_value}{(optional): the start values used for the regression model @seealso alpha_start_value_eilers_peeters_default}
+\item{etr_type}{A character string specifying the column name of the 
+response variable (in this case: ETR II) to be used in the model.}
 
-\item{beta_start_value}{(optional): the start values used for the regression model @seealso beta start value eilers_peeters default}
+\item{alpha_start_value_platt}{Numeric. The starting value for the parameter \eqn{alpha} 
+in the model. Defaults to \code{alpha_start_value_platt_default}.}
 
-\item{ps_start_value}{(optional): the start values used for the regression model @seealso ps start value eilers_peeters default}
+\item{beta_start_value_platt}{Numeric. The starting value for the parameter \eqn{beta} 
+in the model. Defaults to \code{beta_start_value_platt_default}.}
+
+\item{ps_start_value_platt}{Numeric. The starting value for the parameter \eqn{ps} 
+in the model. Defaults to \code{ps_start_value_platt_default}.}
 }
 \value{
-list with regression data table and the calculated values: etrmax, alpha, ik...
+A list containing the following elements:
+\describe{
+  \item{etr_regression_data}{A `data.table` with the predicted values of ETR II to each PAR based on the fitted model.}
+  \item{sdiff}{The deviation between the actual and predicted ETR values.}
+  \item{ps}{The maximum electron transport rate without photoinhibition.}
+  \item{alpha}{The initial slope of the light curve.}
+  \item{beta}{The photoinhibition of the light curve.}
+  \item{pm}{The maximum electron transport rate with photoinhibition, calculated as \eqn{(pm = ps * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha)))}.}
+  \item{ik}{PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as \eqn{(ik = pm / alpha)}.}
+  \item{is}{PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as \eqn(is = ps / alpha)}
+  \item{im}{The PAR at which the maximum electron transport rate is achieved with photoinhibition, calculated as \eqn(im = (ps / alpha) * log((alpha + beta) / beta)).}
+  \item{ib}{ib, calculated as \eqn(ib = ps / beta).}
+}
 }
 \description{
-generate regression for platt and ETR II
+This function generates a regression model based on the Platt 
+formula. Original naming conventions from the publication are used.
+}
+\details{
+This function uses non-linear least squares fitting to estimate the parameters 
+for the Platt model, which describes the relationship between PAR and 
+ETR. The model used is:
+
+\eqn{p = ps * (1 - e^(-alpha * I) / ps) * (e^(-beta * I) / ps)}
+
+It is valid: I = PAR; p = ETR
+}
+\references{
+Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
+Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
+}
+\seealso{
+\code{\link{nlsLM}}, \code{\link{minpack.lm}}
 }

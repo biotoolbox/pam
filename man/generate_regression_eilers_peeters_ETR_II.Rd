@@ -58,8 +58,7 @@ It is valid: I = PAR; p = ETR
 \references{
 Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
 between light intensity and the rate of photosynthesis in phytoplankton. 
-\emph{Ecological Modelling}, \strong{42}(3-4), 199-215. 
-\doi{10.1016/0304-3800(88)90057-9}
+Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
 }
 \seealso{
 \code{\link{nlsLM}}, \code{\link{minpack.lm}}

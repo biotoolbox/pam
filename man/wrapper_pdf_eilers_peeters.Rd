@@ -2,7 +2,7 @@
 % Please edit documentation in R/pdf_wrapper.R
 \name{wrapper_pdf_eilers_peeters}
 \alias{wrapper_pdf_eilers_peeters}
-\title{function for generating control plots bulk according to eilers and peeters}
+\title{Generate PDF reports for Eilers-Peeters Model (1988)}
 \usage{
 wrapper_pdf_eilers_peeters(
   csv_src_dir,
@@ -14,11 +14,41 @@ wrapper_pdf_eilers_peeters(
 )
 }
 \arguments{
-\item{data}{: data from csv_src_folder, pdf_dest_path, etr_type}
+\item{csv_src_dir}{Directory containing input CSV files (with `.csv` 
+extension) for analysis.}
+
+\item{pdf_dest_path}{Path to the destination PDF file where plots will 
+be saved.}
+
+\item{etr_type}{Type of ETR to analyze (e.g., "ETR I" or "ETR II").}
+
+\item{a_start_value}{Starting value for parameter 'a' in the Eilers-Peeters 
+model (default: \code{a_start_values_eilers_peeters_default}).}
+
+\item{b_start_value}{Starting value for parameter 'b' in the Eilers-Peeters 
+model (default: \code{b_start_values_eilers_peeters_default}).}
+
+\item{c_start_value}{Starting value for parameter 'c' in the Eilers-Peeters 
+model (default: \code{c_start_values_eilers_peeters_default}).}
 }
 \value{
-bulk of control plots with data points, regression and calculated result values (pm, alpha, ik...)
+A PDF file with plots for each regression model applied to the 
+datasets.
 }
 \description{
-function for generating control plots bulk according to eilers and peeters
+This function generates PDF reports containing plots of Eilers-Peeters 
+regression model for ETR based on multiple CSV files. Each plot displays
+the regression results for the datasets processed.
+}
+\details{
+The function  scans for csv files, reads data using \code{read_pam_data},
+generates the regression model via 
+\code{generate_regression_eilers_peeters_internal}, and plots results 
+with \code{plot_control_eilers_peeters}. Any errors encountered during 
+file processing are reported without halting execution.
+
+#' @references
+Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
+between light intensity and the rate of photosynthesis in phytoplankton. 
+*Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
 }

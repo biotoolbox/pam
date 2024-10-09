@@ -2,7 +2,7 @@
 % Please edit documentation in R/pdf_wrapper.R
 \name{wrapper_pdf_vollenweider}
 \alias{wrapper_pdf_vollenweider}
-\title{function for generating control plots bulk according to vollenweider}
+\title{Generate PDF Reports for Vollenweider Model (1965)}
 \usage{
 wrapper_pdf_vollenweider(
   csv_src_dir,
@@ -15,11 +15,45 @@ wrapper_pdf_vollenweider(
 )
 }
 \arguments{
-\item{csv_src_dir:}{directory where the csv files are located}
+\item{csv_src_dir}{Directory containing input csv files (with `.csv` 
+extension) for analysis.}
+
+\item{pdf_dest_path}{Path to the destination PDF file where plots will 
+be saved.}
+
+\item{etr_type}{Type of ETR to analyze (e.g., "ETR I" or "ETR II").}
+
+\item{pmax_start_value}{Starting value for the parameter 'pmax' in the 
+Vollenweider model (default: \code{pmax_start_value_vollenweider_default}).}
+
+\item{a_start_value}{Starting value for parameter 'a' in the 
+Vollenweider model (default: \code{a_start_value_vollenweider_default}).}
+
+\item{alpha_start_value}{Starting value for parameter 'alpha' in the 
+Vollenweider model (default: \code{alpha_start_value_vollenweider_default}).}
+
+\item{n_start_value}{Starting value for parameter 'n' in the Vollenweider 
+model (default: \code{n_start_value_vollenweider_default}).}
 }
 \value{
-bulk of control plots with data points, regression and calculated result values (pmax, alpha, ik...)
+A PDF file with plots for each regression model applied to the 
+datasets.
 }
 \description{
-function for generating control plots bulk according to vollenweider
+This function generates PDF reports containing plots of the Vollenweider 
+regression model for ETR based on multiple csv files. Each plot displays 
+the regression results for the datasets processed.
+}
+\details{
+The function scans for csv files, reads data using \code{read_pam_data}, 
+generates the regression model via 
+\code{generate_regression_vollenweider_internal}, and plots results with 
+\code{plot_control_vollenweider}. Any errors encountered during file 
+processing are reported without halting execution.
+}
+\references{
+Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves 
+and some implications regarding day rate estimates in primary production measurements, 
+p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. 
+Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 }

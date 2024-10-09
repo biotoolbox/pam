@@ -42,8 +42,7 @@ ps_start_value_platt_default <- 30
 #'
 #' @references
 #' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
-#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701. 
-#' \doi{10.1357/002224080786845395}
+#' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
@@ -86,8 +85,8 @@ generate_regression_platt_ETR_I <- function(
 #'   \item{ps}{The maximum electron transport rate without photoinhibition.}
 #'   \item{alpha}{The initial slope of the light curve.}
 #'   \item{beta}{The photoinhibition of the light curve.}
-#'   \item{pm}{The maximum electron transport rate with photoinhibition, calculated as \eqn(pm = ps * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha)))}
-#'   \item{ik}{PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as \eqn(ik = pm / alpha)}
+#'   \item{pm}{The maximum electron transport rate with photoinhibition, calculated as \eqn{(pm = ps * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha)))}.}
+#'   \item{ik}{PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as \eqn{(ik = pm / alpha)}.}
 #'   \item{is}{PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as \eqn(is = ps / alpha)}
 #'   \item{im}{The PAR at which the maximum electron transport rate is achieved with photoinhibition, calculated as \eqn(im = (ps / alpha) * log((alpha + beta) / beta)).}
 #'   \item{ib}{ib, calculated as \eqn(ib = ps / beta).}
@@ -104,8 +103,7 @@ generate_regression_platt_ETR_I <- function(
 #'
 #' @references
 #' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
-#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701. 
-#' \doi{10.1357/002224080786845395}
+#' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
@@ -288,8 +286,7 @@ generate_regression_platt_internal <- function(
 #'
 #' @references
 #' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
-#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701. 
-#' \doi{10.1357/002224080786845395}
+#' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 #' 
 #' @export
 plot_control_platt <- function(data, model_result, etr_type, title) {

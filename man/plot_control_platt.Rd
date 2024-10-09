@@ -2,16 +2,26 @@
 % Please edit documentation in R/platt.R
 \name{plot_control_platt}
 \alias{plot_control_platt}
-\title{function for generating control plots according to platt}
+\title{Control Plot for Platt Model (1980)}
 \usage{
 plot_control_platt(data, model_result, etr_type, title)
 }
 \arguments{
-\item{data}{: data from data, model_result, etr_type, title}
+\item{data}{A `data.table` containing the original ETR and yield data for the plot.}
+
+\item{model_result}{A list containing the fitting results of the Platt Model and the calculated paramters (alpha, ik...).}
+
+\item{etr_type}{A character string describing the ETR type (ETR I or ETR II).}
+
+\item{title}{A character string that specifies the title of the plot.}
 }
 \value{
-control plots with data points, regression and calculated result values (pm, alpha, ik...)
+A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
 }
 \description{
-function for generating control plots according to platt
+This function creates a plot for the Platt Model based on the provided data and model results.
+}
+\references{
+Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
+Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 }
