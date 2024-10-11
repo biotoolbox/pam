@@ -1,8 +1,8 @@
 test_that("compare_regression_models etr I", {
-  test_data_file <- file.path(getwd(), "data", "bulk")
+  test_data_dir <- file.path(getwd(), "data", "bulk")
 
   expect_no_warning(
-    model_points_etr_I <- compare_regression_models_ETR_I(test_data_file)
+    model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir)
   )
 
   expect_equal(model_points_etr_I[["eilers_peeters"]], 133)

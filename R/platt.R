@@ -1,20 +1,20 @@
-alpha_start_value_platt_default <- 0.3
-beta_start_value_platt_default <- 0.01
-ps_start_value_platt_default <- 30
+platt_default_start_value_alpha <- 0.3
+platt_default_start_value_beta <- 0.01
+platt_default_start_value_ps <- 30
 
 #' Generate Regression for ETR I using the Platt Model (1980)
 #'
-#' This function generates a regression model based on the Platt 
+#' This function generates a regression model based on the Platt
 #' formula. Original naming conventions from the publication are used.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
-#' @param etr_type A character string specifying the column name of the 
+#' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
-#' @param alpha_start_value_platt Numeric. The starting value for the parameter \eqn{alpha} 
+#' @param alpha_start_value_platt Numeric. The starting value for the parameter \eqn{alpha}
 #' in the model. Defaults to \code{alpha_start_value_platt_default}.
-#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta} 
+#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta}
 #' in the model. Defaults to \code{beta_start_value_platt_default}.
-#' @param ps_start_value_platt Numeric. The starting value for the parameter \eqn{ps} 
+#' @param ps_start_value_platt Numeric. The starting value for the parameter \eqn{ps}
 #' in the model. Defaults to \code{ps_start_value_platt_default}.
 #'
 #' @return A list containing the following elements:
@@ -32,8 +32,8 @@ ps_start_value_platt_default <- 30
 #' }
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters 
-#' for the Platt model, which describes the relationship between PAR and 
+#' This function uses non-linear least squares fitting to estimate the parameters
+#' for the Platt model, which describes the relationship between PAR and
 #' ETR I. The model used is:
 #'
 #' \eqn{p = ps * (1 - e^(-alpha * I) / ps) * (e^(-beta * I) / ps)}
@@ -41,7 +41,7 @@ ps_start_value_platt_default <- 30
 #' It is valid: I = PAR; p = ETR
 #'
 #' @references
-#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
+#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.
 #' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 
 #'
@@ -49,12 +49,12 @@ ps_start_value_platt_default <- 30
 #' @importFrom minpack.lm nlsLM
 #' @importFrom data.table data.table
 #' @export
-generate_regression_platt_ETR_I <- function(
+platt_generate_regression_ETR_I <- function(
     data,
-    alpha_start_value = alpha_start_value_platt_default,
-    beta_start_value = beta_start_value_platt_default,
-    ps_start_value = ps_start_value_platt_default) {
-  return(generate_regression_platt_internal(
+    alpha_start_value = platt_default_start_value_alpha,
+    beta_start_value = platt_default_start_value_beta,
+    ps_start_value = platt_default_start_value_ps) {
+  return(platt_generate_regression_internal(
     data,
     etr_I_type,
     alpha_start_value,
@@ -65,17 +65,17 @@ generate_regression_platt_ETR_I <- function(
 
 #' Generate Regression for ETR II using the Platt Model (1980)
 #'
-#' This function generates a regression model based on the Platt 
+#' This function generates a regression model based on the Platt
 #' formula. Original naming conventions from the publication are used.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
-#' @param etr_type A character string specifying the column name of the 
+#' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR II) to be used in the model.
-#' @param alpha_start_value_platt Numeric. The starting value for the parameter \eqn{alpha} 
+#' @param alpha_start_value_platt Numeric. The starting value for the parameter \eqn{alpha}
 #' in the model. Defaults to \code{alpha_start_value_platt_default}.
-#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta} 
+#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta}
 #' in the model. Defaults to \code{beta_start_value_platt_default}.
-#' @param ps_start_value_platt Numeric. The starting value for the parameter \eqn{ps} 
+#' @param ps_start_value_platt Numeric. The starting value for the parameter \eqn{ps}
 #' in the model. Defaults to \code{ps_start_value_platt_default}.
 #'
 #' @return A list containing the following elements:
@@ -93,8 +93,8 @@ generate_regression_platt_ETR_I <- function(
 #' }
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters 
-#' for the Platt model, which describes the relationship between PAR and 
+#' This function uses non-linear least squares fitting to estimate the parameters
+#' for the Platt model, which describes the relationship between PAR and
 #' ETR. The model used is:
 #'
 #' \eqn{p = ps * (1 - e^(-alpha * I) / ps) * (e^(-beta * I) / ps)}
@@ -102,7 +102,7 @@ generate_regression_platt_ETR_I <- function(
 #' It is valid: I = PAR; p = ETR
 #'
 #' @references
-#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
+#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.
 #' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 
 #'
@@ -110,12 +110,12 @@ generate_regression_platt_ETR_I <- function(
 #' @importFrom minpack.lm nlsLM
 #' @importFrom data.table data.table
 #' @export
-generate_regression_platt_ETR_II <- function(
+platt_generate_regression_ETR_II <- function(
     data,
-    alpha_start_value = alpha_start_value_platt_default,
-    beta_start_value = beta_start_value_platt_default,
-    ps_start_value = ps_start_value_platt_default) {
-  return(generate_regression_platt_internal(
+    alpha_start_value = platt_default_start_value_alpha,
+    beta_start_value = platt_default_start_value_beta,
+    ps_start_value = platt_default_start_value_ps) {
+  return(platt_generate_regression_internal(
     data,
     etr_II_type,
     alpha_start_value,
@@ -124,12 +124,12 @@ generate_regression_platt_ETR_II <- function(
   ))
 }
 
-generate_regression_platt_internal <- function(
+platt_generate_regression_internal <- function(
     data,
     etr_type,
-    alpha_start_value = alpha_start_value_platt_default,
-    beta_start_value = beta_start_value_platt_default,
-    ps_start_value = ps_start_value_platt_default) {
+    alpha_start_value = platt_default_start_value_alpha,
+    beta_start_value = platt_default_start_value_beta,
+    ps_start_value = platt_default_start_value_ps) {
   library(minpack.lm)
   library(SciViews)
   library(data.table)
@@ -252,7 +252,8 @@ generate_regression_platt_internal <- function(
         }
       )
 
-      return(list(
+      result <- list(
+        etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         sdiff = sdiff,
         alpha = alpha,
@@ -263,7 +264,9 @@ generate_regression_platt_internal <- function(
         is = is,
         ib = ib,
         im = im
-      ))
+      )
+      validate_model_result(result)
+      return(result)
     },
     warning = function(w) {
       stop("Warning while calculating platt model: ", w)
@@ -274,47 +277,27 @@ generate_regression_platt_internal <- function(
   )
 }
 
-#' @title Control Plot for Platt Model (1980)
-#' @description This function creates a plot for the Platt Model based on the provided data and model results.
-#'
-#' @param data A `data.table` containing the original ETR and yield data for the plot.
-#' @param model_result A list containing the fitting results of the Platt Model and the calculated paramters (alpha, ik...).
-#' @param etr_type A character string describing the ETR type (ETR I or ETR II).
-#' @param title A character string that specifies the title of the plot.
-#'
-#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
-#'
-#' @references
-#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton. 
-#' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
-#' 
-#' @export
-plot_control_platt <- function(data, model_result, etr_type, title) {
-  values <- c(
-    as.character(round(model_result[["sdiff"]], 3)),
-    as.character(round(model_result[["alpha"]], 7)),
-    as.character(round(model_result[["beta"]], 6)),
-    as.character(round(model_result[["ps"]], 6)),
-    as.character(round(model_result[["pm"]], 3)),
-    as.character(round(model_result[["ik"]], 3)),
-    as.character(round(model_result[["is"]], 3)),
-    as.character(round(model_result[["ib"]], 3)),
-    as.character(round(model_result[["im"]], 3))
+platt_modified <- function(model_result) {
+  validate_model_result(model_result)
+  result <- create_modified_model_result(
+    etr_type = get_etr_type_from_model_result(model_result),
+    etr_regression_data = get_etr_regression_data_from_model_result(model_result),
+    sdiff = get_sdiff_from_model_result(model_result),
+    a = model_result[["ps"]],
+    b = model_result[["alpha"]],
+    c = model_result[["beta"]],
+    d = NA_real_,
+    alpha = model_result[["alpha"]],
+    beta = model_result[["beta"]],
+    etrmax_with_photoinhibition = model_result[["pm"]],
+    etrmax_without_photoinhibition = model_result[["ps"]],
+    ik_with_photoinhibition = model_result[["ik"]],
+    ik_without_photoinhibition = model_result[["is"]],
+    im_with_photoinhibition = model_result[["im"]],
+    w = NA_real_,
+    ib = model_result[["ib"]],
+    etrmax_with_without_ratio = model_result[["ps"]] / model_result[["pm"]]
   )
 
-  params <- data.frame(
-    Parameter = c("sdiff", "alpha", "beta", "ps", "pm", "ik", "is", "ib", "im"),
-    Value = unlist(values)
-  )
-
-  return(
-    plot_control(
-      data,
-      model_result,
-      etr_type,
-      title,
-      color_platt,
-      params
-    )
-  )
+  return(result)
 }

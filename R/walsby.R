@@ -1,22 +1,22 @@
-etr_max_start_value_walsby_default <- 100
-alpha_start_value_walsby_default <- 0.4
-beta_start_value_walsby_default <- -0.01
+walsby_default_start_value_etr_max <- 100
+walsby_default_start_value_alpha <- 0.4
+walsby_default_start_value_beta <- -0.01
 
 #' Generate Regression for ETR I using the Walsby Model (1997) modified by Romoth (2019)
 #'
-#' This function generates a regression model based on the Walsby Model 
+#' This function generates a regression model based on the Walsby Model
 #' formula in a modified version without respiration term.
 #' Naming conventions from Romoth (2019) are used. ETRmax is calculated without
 #' taking photoinhibition into account.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
-#' @param etr_type A character string specifying the column name of the 
+#' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
-#' @param etr_max_start_value_walsby Numeric. The starting value for the parameter \eqn{etr_max} 
+#' @param etr_max_start_value_walsby Numeric. The starting value for the parameter \eqn{etr_max}
 #' in the model. Defaults to \code{etr_max_start_value_walsby_default}.
-#' @param alpha_start_value_walsby Numeric. The starting value for the parameter \eqn{alpha} 
+#' @param alpha_start_value_walsby Numeric. The starting value for the parameter \eqn{alpha}
 #' in the model. Defaults to \code{alpha_start_value_walsby_default}.
-#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta} 
+#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta}
 #' in the model. Defaults to \code{beta_start_value_walsby_default}.
 #'
 #' @return A list containing the following elements:
@@ -29,8 +29,8 @@ beta_start_value_walsby_default <- -0.01
 #' }
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters 
-#' for the Platt model, which describes the relationship between PAR and 
+#' This function uses non-linear least squares fitting to estimate the parameters
+#' for the Platt model, which describes the relationship between PAR and
 #' ETR I. The model used is:
 #'
 #' \eqn{ETR = etr_max * (1 - e^((-alpha * I) / etr_max)) + beta * I}
@@ -38,26 +38,26 @@ beta_start_value_walsby_default <- -0.01
 #' It is valid: I = PAR
 #'
 #' @references
-#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis 
-#' through time and depth in a water column. *Journal of Plankton Research*, 
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487 
-#' 
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the 
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098 
+#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis
+#' through time and depth in a water column. *Journal of Plankton Research*,
+#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487
+#'
+#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
+#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the
+#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
 #'
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
 #' @importFrom minpack.lm nlsLM
 #' @importFrom data.table data.table
 #' @export
-generate_regression_walsby_ETR_I <- function(
+walsby_generate_regression_ETR_I <- function(
     data,
-    etr_max_start_value = etr_max_start_value_walsby_default,
-    alpha_start_value = alpha_start_value_walsby_default,
-    beta_start_value = alpha_start_value_walsby_default) {
+    etr_max_start_value = walsby_default_start_value_etr_max,
+    alpha_start_value = walsby_default_start_value_alpha,
+    beta_start_value = walsby_default_start_value_alpha) {
   return(
-    generate_regression_walsby_internal(
+    walsby_generate_regression_internal(
       data,
       etr_I_type,
       etr_max_start_value,
@@ -69,19 +69,19 @@ generate_regression_walsby_ETR_I <- function(
 
 #' Generate Regression for ETR II using the Walsby Model (1997) modified by Romoth (2019)
 #'
-#' This function generates a regression model based on the Walsby Model 
+#' This function generates a regression model based on the Walsby Model
 #' formula in a modified version without respiration term.
 #' Naming conventions from Romoth (2019) are used. ETRmax is calculated without
 #' taking photoinhibition into account.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
-#' @param etr_type A character string specifying the column name of the 
+#' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR II) to be used in the model.
-#' @param etr_max_start_value_walsby Numeric. The starting value for the parameter \eqn{etr_max} 
+#' @param etr_max_start_value_walsby Numeric. The starting value for the parameter \eqn{etr_max}
 #' in the model. Defaults to \code{etr_max_start_value_walsby_default}.
-#' @param alpha_start_value_walsby Numeric. The starting value for the parameter \eqn{alpha} 
+#' @param alpha_start_value_walsby Numeric. The starting value for the parameter \eqn{alpha}
 #' in the model. Defaults to \code{alpha_start_value_walsby_default}.
-#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta} 
+#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta}
 #' in the model. Defaults to \code{beta_start_value_walsby_default}.
 #'
 #' @return A list containing the following elements:
@@ -94,8 +94,8 @@ generate_regression_walsby_ETR_I <- function(
 #' }
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters 
-#' for the Platt model, which describes the relationship between PAR and 
+#' This function uses non-linear least squares fitting to estimate the parameters
+#' for the Platt model, which describes the relationship between PAR and
 #' ETR I. The model used is:
 #'
 #' \eqn{ETR = etr_max * (1 - e^((-alpha * I) / etr_max)) + beta * I}
@@ -103,25 +103,25 @@ generate_regression_walsby_ETR_I <- function(
 #' It is valid: I = PAR
 #'
 #' @references
-#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis 
-#' through time and depth in a water column. *Journal of Plankton Research*, 
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487 
-#' 
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the 
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098 
+#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis
+#' through time and depth in a water column. *Journal of Plankton Research*,
+#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487
+#'
+#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
+#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the
+#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
 #'
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
 #' @importFrom minpack.lm nlsLM
 #' @importFrom data.table data.table
 #' @export
-generate_regression_walsby_ETR_II <- function(
+walsby_generate_regression_ETR_II <- function(
     data,
-    etr_max_start_value = etr_max_start_value_walsby_default,
-    alpha_start_value = alpha_start_value_walsby_default,
-    beta_start_value = beta_start_value_walsby_default) {
-  return(generate_regression_walsby_internal(
+    etr_max_start_value = walsby_default_start_value_etr_max,
+    alpha_start_value = walsby_default_start_value_alpha,
+    beta_start_value = walsby_default_start_value_beta) {
+  return(walsby_generate_regression_internal(
     data,
     etr_II_type,
     etr_max_start_value,
@@ -130,12 +130,12 @@ generate_regression_walsby_ETR_II <- function(
   ))
 }
 
-generate_regression_walsby_internal <- function(
+walsby_generate_regression_internal <- function(
     data,
     etr_type,
-    etr_max_start_value = etr_max_start_value_walsby_default,
-    alpha_start_value = alpha_start_value_walsby_default,
-    beta_start_value = beta_start_value_walsby_default) {
+    etr_max_start_value = walsby_default_start_value_etr_max,
+    alpha_start_value = walsby_default_start_value_alpha,
+    beta_start_value = walsby_default_start_value_beta) {
   library(data.table)
   library(minpack.lm)
   library(SciViews)
@@ -194,13 +194,16 @@ generate_regression_walsby_internal <- function(
         }
       )
 
-      return(list(
+      result <- list(
+        etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         sdiff = sdiff,
         etr_max = etr_max,
         alpha = alpha,
         beta = beta
-      ))
+      )
+      validate_model_result(result)
+      return(result)
     },
     warning = function(w) {
       stop("Warning while calculating walsby model: ", w)
@@ -210,52 +213,34 @@ generate_regression_walsby_internal <- function(
     }
   )
 }
-#' @title Control Plot for Walsby Model (1997)
-#' @description This function creates a plot for the Walsby Model based on the provided data and model results.
-#'
-#' @param data A `data.table` containing the original ETR and yield data for the plot.
-#' @param model_result A list containing the fitting results of the Walsby Model and the calculated paramters (alpha, beta...).
-#' @param etr_type A character string describing the ETR type (ETR I or ETR II).
-#' @param title A character string that specifies the title of the plot.
-#'
-#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, beta...)
-#'
 
-#' @references
-#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis 
-#' through time and depth in a water column. *Journal of Plankton Research*, 
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487 
-#' 
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the 
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098 
-plot_control_walsby <- function(data, model_result, etr_type, title) {
-  # validate model result
-  values <- c(
-    as.character(round(model_result[["sdiff"]], 3)),
-    as.character(round(model_result[["etr_max"]], 7)),
-    as.character(round(model_result[["alpha"]], 6)),
-    as.character(round(model_result[["beta"]], 6))
+walsby_modified <- function(model_result) {
+  validate_model_result(model_result)
+
+  etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
+  etr_max_row <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ]
+  etrmax_with_photoinhibition <- etr_max_row[[prediction_name]]
+  im_with_photoinhibition <- etr_max_row[[PAR_name]]
+
+  result <- create_modified_model_result(
+    etr_type = get_etr_type_from_model_result(model_result),
+    etr_regression_data = get_etr_regression_data_from_model_result(model_result),
+    sdiff = get_sdiff_from_model_result(model_result),
+    a = model_result[["etr_max"]],
+    b = model_result[["alpha"]],
+    c = model_result[["beta"]],
+    d = NA_real_,
+    alpha = model_result[["alpha"]],
+    beta = model_result[["beta"]],
+    etrmax_with_photoinhibition = etrmax_with_photoinhibition,
+    etrmax_without_photoinhibition = model_result[["etr_max"]],
+    ik_with_photoinhibition = etrmax_with_photoinhibition / model_result[["alpha"]],
+    ik_without_photoinhibition = model_result[["etr_max"]] / model_result[["alpha"]],
+    im_with_photoinhibition = im_with_photoinhibition,
+    w = NA_real_,
+    ib = NA_real_,
+    etrmax_with_without_ratio = model_result[["etr_max"]] / etrmax_with_photoinhibition
   )
 
-  params <- data.frame(
-    Parameter = c(
-      "sdiff",
-      "etr_max",
-      "alpha",
-      "beta"
-    ),
-    Value = unlist(values)
-  )
-
-  return(
-    plot_control(
-      data,
-      model_result,
-      etr_type,
-      title,
-      color_vollenweider,
-      params
-    )
-  )
+  return(result)
 }

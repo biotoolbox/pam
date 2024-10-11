@@ -75,3 +75,27 @@ validate_etr_type <- function(etr_type) {
     stop("etr type is not valid")
   }
 }
+
+validate_model_result <- function(model_result) {
+  etr_type <- model_result[["etr_type"]]
+  validate_etr_type(etr_type)
+
+  etr_regression_data <- model_result[["etr_regression_data"]]
+  validate_etr_regression_data(etr_regression_data)
+
+  sdiff <- model_result[["sdiff"]]
+  if (!is.numeric(sdiff)) {
+    stop("sdiff is not a valid number")
+  }
+}
+
+validate_modified_model_result <- function(model_result) {
+  validate_model_result(model_result)
+
+  if (is.null(model_result[["sdiff"]]) ||
+    !is.numeric(model_result[["sdiff"]])) {
+    stop("sdiff is null of not a valid number")
+  }
+
+  # TODO:
+}

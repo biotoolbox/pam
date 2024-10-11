@@ -1,22 +1,21 @@
-a_start_values_eilers_peeters_default <- 0.00004
-b_start_values_eilers_peeters_default <- 0.004
-c_start_values_eilers_peeters_default <- 5
-
+eilers_peeters_default_start_value_a <- 0.00004
+eilers_peeters_default_start_value_b <- 0.004
+eilers_peeters_default_start_value_c <- 5
 
 #' Generate Regression for ETR I using the Eilers-Peeters Model (1988)
 #'
-#' This function generates a regression model based on the Eilers-Peeters 
+#' This function generates a regression model based on the Eilers-Peeters
 #' formula. Original naming conventions from the publication are used.
 #' All parameters are calculated taking photoinhibition into account.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
-#' @param etr_type A character string specifying the column name of the 
+#' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
-#' @param a_start_value Numeric. The starting value for the parameter \eqn{a} 
+#' @param a_start_value Numeric. The starting value for the parameter \eqn{a}
 #' in the model. Defaults to \code{a_start_values_eilers_peeters_default}.
-#' @param b_start_value Numeric. The starting value for the parameter \eqn{b} 
+#' @param b_start_value Numeric. The starting value for the parameter \eqn{b}
 #' in the model. Defaults to \code{b_start_values_eilers_peeters_default}.
-#' @param c_start_value Numeric. The starting value for the parameter \eqn{c} 
+#' @param c_start_value Numeric. The starting value for the parameter \eqn{c}
 #' in the model. Defaults to \code{c_start_values_eilers_peeters_default}.
 #'
 #' @return A list containing the following elements:
@@ -34,8 +33,8 @@ c_start_values_eilers_peeters_default <- 5
 #' }
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters 
-#' for the Eilers-Peeters model, which describes the relationship between PAR and 
+#' This function uses non-linear least squares fitting to estimate the parameters
+#' for the Eilers-Peeters model, which describes the relationship between PAR and
 #' ETR. The model used is:
 #'
 #' \eqn{p = I / (a * I^2 + b * I + c)}
@@ -43,8 +42,8 @@ c_start_values_eilers_peeters_default <- 5
 #' It is valid: I = PAR; p = ETR
 #'
 #' @references
-#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
-#' between light intensity and the rate of photosynthesis in phytoplankton. 
+#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
+#' between light intensity and the rate of photosynthesis in phytoplankton.
 #' Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
 
 #'
@@ -52,12 +51,12 @@ c_start_values_eilers_peeters_default <- 5
 #' @importFrom minpack.lm nlsLM
 #' @importFrom data.table data.table
 #' @export
-generate_regression_eilers_peeters_ETR_I <- function(
+eilers_peeters_generate_regression_ETR_I <- function(
     data,
-    a_start_value = a_start_values_eilers_peeters_default,
-    b_start_value = b_start_values_eilers_peeters_default,
-    c_start_value = c_start_values_eilers_peeters_default) {
-  return(generate_regression_eilers_peeters_internal(
+    a_start_value = eilers_peeters_default_start_value_a,
+    b_start_value = eilers_peeters_default_start_value_b,
+    c_start_value = eilers_peeters_default_start_value_c) {
+  return(eilers_peeters_generate_regression_internal(
     data,
     etr_I_type,
     a_start_value,
@@ -68,18 +67,18 @@ generate_regression_eilers_peeters_ETR_I <- function(
 
 #' Generate Regression for ETR II using the Eilers-Peeters Model (1988)
 #'
-#' This function generates a regression model based on the Eilers-Peeters 
+#' This function generates a regression model based on the Eilers-Peeters
 #' formula. Original naming conventions from the publication are used.
 #' All parameters are calculated taking photoinhibition into account.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
-#' @param etr_type A character string specifying the column name of the 
+#' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR II) to be used in the model.
-#' @param a_start_value Numeric. The starting value for the parameter \eqn{a} 
+#' @param a_start_value Numeric. The starting value for the parameter \eqn{a}
 #' in the model. Defaults to \code{a_start_values_eilers_peeters_default}.
-#' @param b_start_value Numeric. The starting value for the parameter \eqn{b} 
+#' @param b_start_value Numeric. The starting value for the parameter \eqn{b}
 #' in the model. Defaults to \code{b_start_values_eilers_peeters_default}.
-#' @param c_start_value Numeric. The starting value for the parameter \eqn{c} 
+#' @param c_start_value Numeric. The starting value for the parameter \eqn{c}
 #' in the model. Defaults to \code{c_start_values_eilers_peeters_default}.
 #'
 #' @return A list containing the following elements:
@@ -97,8 +96,8 @@ generate_regression_eilers_peeters_ETR_I <- function(
 #' }
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters 
-#' for the Eilers-Peeters model, which describes the relationship between PAR and 
+#' This function uses non-linear least squares fitting to estimate the parameters
+#' for the Eilers-Peeters model, which describes the relationship between PAR and
 #' ETR. The model used is:
 #'
 #' \eqn{p = I / (a * I^2 + b * I + c)}
@@ -106,20 +105,20 @@ generate_regression_eilers_peeters_ETR_I <- function(
 #' It is valid: I = PAR; p = ETR
 #'
 #' @references
-#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
-#' between light intensity and the rate of photosynthesis in phytoplankton. 
+#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
+#' between light intensity and the rate of photosynthesis in phytoplankton.
 #' Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
 #' @importFrom minpack.lm nlsLM
 #' @importFrom data.table data.table
 #' @export
-generate_regression_eilers_peeters_ETR_II <- function(
+eilers_peeters_generate_regression_ETR_II <- function(
     data,
-    a_start_value = a_start_values_eilers_peeters_default,
-    b_start_value = b_start_values_eilers_peeters_default,
-    c_start_value = c_start_values_eilers_peeters_default) {
-  return(generate_regression_eilers_peeters_internal(
+    a_start_value = eilers_peeters_default_start_value_a,
+    b_start_value = eilers_peeters_default_start_value_b,
+    c_start_value = eilers_peeters_default_start_value_c) {
+  return(eilers_peeters_generate_regression_internal(
     data,
     etr_II_type,
     a_start_value,
@@ -128,13 +127,12 @@ generate_regression_eilers_peeters_ETR_II <- function(
   ))
 }
 
-
-generate_regression_eilers_peeters_internal <- function(
+eilers_peeters_generate_regression_internal <- function(
     data,
     etr_type,
-    a_start_value = a_start_values_eilers_peeters_default,
-    b_start_value = b_start_values_eilers_peeters_default,
-    c_start_value = c_start_values_eilers_peeters_default) {
+    a_start_value = eilers_peeters_default_start_value_a,
+    b_start_value = eilers_peeters_default_start_value_b,
+    c_start_value = eilers_peeters_default_start_value_c) {
   library(minpack.lm)
   library(data.table)
 
@@ -251,7 +249,8 @@ generate_regression_eilers_peeters_internal <- function(
         }
       )
 
-      return(list(
+      result <- list(
+        etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         sdiff = sdiff,
         a = a,
@@ -262,7 +261,10 @@ generate_regression_eilers_peeters_internal <- function(
         ik = ik,
         im = im,
         w = w
-      ))
+      )
+
+      validate_model_result(result)
+      return(result)
     },
     warning = function(w) {
       stop("Warning while calculating eilers peeters model: ", w)
@@ -273,49 +275,27 @@ generate_regression_eilers_peeters_internal <- function(
   )
 }
 
-#' @title Control Plot for Eilers-Peeters Model (1988)
-#' @description This function creates a plot for the Eilers-Peeters Model based on the provided data and model results.
-#'
-#' @param data A `data.table` containing the original ETR and yield data for the plot.
-#' @param model_result A list containing the fitting results of the Eilers-Peeters Model and the calculated paramters (alpha, ik...).
-#' @param etr_type A character string describing the ETR type (ETR I or ETR II).
-#' @param title A character string that specifies the title of the plot.
-#'
-#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
-#'
-#' @references
-#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship 
-#' between light intensity and the rate of photosynthesis in phytoplankton. 
-#' Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
-#' 
-#' @export
-plot_control_eilers_peeters <- function(data, model_result, etr_type, title) {
-  # validate model result
-  values <- c(
-    as.character(round(model_result[["sdiff"]], 3)),
-    as.character(round(model_result[["a"]], 7)),
-    as.character(round(model_result[["b"]], 6)),
-    as.character(round(model_result[["c"]], 6)),
-    as.character(round(model_result[["pm"]], 3)),
-    as.character(round(model_result[["s"]], 3)),
-    as.character(round(model_result[["ik"]], 3)),
-    as.character(round(model_result[["im"]], 3)),
-    as.character(round(model_result[["w"]], 3))
+eilers_peeters_modified <- function(model_result) {
+  validate_model_result(model_result)
+  result <- create_modified_model_result(
+    get_etr_type_from_model_result(model_result),
+    get_etr_regression_data_from_model_result(model_result),
+    get_sdiff_from_model_result(model_result),
+    model_result[["a"]],
+    model_result[["b"]],
+    model_result[["c"]],
+    NA_real_,
+    model_result[["s"]],
+    NA_real_,
+    model_result[["pm"]],
+    NA_real_,
+    model_result[["ik"]],
+    NA_real_,
+    model_result[["im"]],
+    model_result[["w"]],
+    NA_real_,
+    NA_real_
   )
 
-  params <- data.frame(
-    Parameter = c("sdiff", "a", "b", "c", "pm", "s", "ik", "im", "w"),
-    Value = unlist(values)
-  )
-
-  return(
-    plot_control(
-      data,
-      model_result,
-      etr_type,
-      title,
-      color_eilers_peeters,
-      params
-    )
-  )
+  return(result)
 }

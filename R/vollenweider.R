@@ -1,7 +1,7 @@
-pmax_start_value_vollenweider_default <- 40
-a_start_value_vollenweider_default <- 0.1
-alpha_start_value_vollenweider_default <- -0.0001
-n_start_value_vollenweider_default <- 350
+vollenweider_default_start_value_pmax <- 40
+vollenweider_default_start_value_a <- 0.1
+vollenweider_default_start_value_alpha <- -0.0001
+vollenweider_default_start_value_n <- 350
 
 #' Generate Regression for ETR I using the Vollenweider Model (1965)
 #'
@@ -9,15 +9,15 @@ n_start_value_vollenweider_default <- 350
 #' formula. Original naming conventions from the publication are used.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
-#' @param etr_type A character string specifying the column name of the 
+#' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
-#' @param pmax_start_value_vollenweider Numeric. The starting value for the parameter \eqn{pmax} 
+#' @param pmax_start_value_vollenweider Numeric. The starting value for the parameter \eqn{pmax}
 #' in the model. Defaults to \code{pmax_start_values_vollenweider_default}.
-#' @param a_start_value_vollenweider Numeric. The starting value for the parameter \eqn{a} 
+#' @param a_start_value_vollenweider Numeric. The starting value for the parameter \eqn{a}
 #' in the model. Defaults to \code{a_start_values_vollenweider_default}.
-#' @param alpha_start_value Numeric. The starting value for the parameter \eqn{alpha} 
+#' @param alpha_start_value Numeric. The starting value for the parameter \eqn{alpha}
 #' in the model. Defaults to \code{alpha_start_values_vollenweider_default}.
-#' #' @param n_start_value Numeric. The starting value for the parameter \eqn{n} 
+#' #' @param n_start_value Numeric. The starting value for the parameter \eqn{n}
 #' in the model. Defaults to \code{n_start_values_vollenweider_default}.
 #'
 #' @return A list containing the following elements:
@@ -35,8 +35,8 @@ n_start_value_vollenweider_default <- 350
 
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters 
-#' for the Vollenweider model, which describes the relationship between PAR and 
+#' This function uses non-linear least squares fitting to estimate the parameters
+#' for the Vollenweider model, which describes the relationship between PAR and
 #' ETR. The model used is:
 #'
 #' \eqn{p = pmax * (((a * i) / (sqrt(1 + (a * i)^2))) * (1 / (sqrt(1 + (alpha * i)^2)^n))}
@@ -44,22 +44,22 @@ n_start_value_vollenweider_default <- 350
 #' It is valid: i = PAR; p = ETR
 #'
 #' @references
-#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves 
-#' and some implications regarding day rate estimates in primary production measurements, 
-#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. 
+#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves
+#' and some implications regarding day rate estimates in primary production measurements,
+#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*.
 #' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
 #' @importFrom minpack.lm nlsLM
 #' @importFrom data.table data.table
 #' @export
-generate_regression_vollenweider_ETR_I <- function(
+vollenweider_generate_regression_ETR_I <- function(
     data,
-    pmax_start_value = a_start_value_vollenweider_default,
-    a_start_value = a_start_value_vollenweider_default,
-    alpha_start_value = alpha_start_value_vollenweider_default,
-    n_start_value = n_start_value_vollenweider_default) {
-  return(generate_regression_vollenweider_internal(
+    pmax_start_value = vollenweider_default_start_value_a,
+    a_start_value = vollenweider_default_start_value_a,
+    alpha_start_value = vollenweider_default_start_value_alpha,
+    n_start_value = vollenweider_default_start_value_n) {
+  return(vollenweider_generate_regression_internal(
     data,
     etr_I_type,
     pmax_start_value,
@@ -75,15 +75,15 @@ generate_regression_vollenweider_ETR_I <- function(
 #' formula. Original naming conventions from the publication are used.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
-#' @param etr_type A character string specifying the column name of the 
+#' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR II) to be used in the model.
-#' @param pmax_start_value_vollenweider Numeric. The starting value for the parameter \eqn{pmax} 
+#' @param pmax_start_value_vollenweider Numeric. The starting value for the parameter \eqn{pmax}
 #' in the model. Defaults to \code{pmax_start_values_vollenweider_default}.
-#' @param a_start_value_vollenweider Numeric. The starting value for the parameter \eqn{a} 
+#' @param a_start_value_vollenweider Numeric. The starting value for the parameter \eqn{a}
 #' in the model. Defaults to \code{a_start_values_vollenweider_default}.
-#' @param alpha_start_value Numeric. The starting value for the parameter \eqn{alpha} 
+#' @param alpha_start_value Numeric. The starting value for the parameter \eqn{alpha}
 #' in the model. Defaults to \code{alpha_start_values_vollenweider_default}.
-#' #' @param n_start_value Numeric. The starting value for the parameter \eqn{n} 
+#' #' @param n_start_value Numeric. The starting value for the parameter \eqn{n}
 #' in the model. Defaults to \code{n_start_values_vollenweider_default}.
 #'
 #' @return A list containing the following elements:
@@ -101,8 +101,8 @@ generate_regression_vollenweider_ETR_I <- function(
 
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters 
-#' for the Vollenweider model, which describes the relationship between PAR and 
+#' This function uses non-linear least squares fitting to estimate the parameters
+#' for the Vollenweider model, which describes the relationship between PAR and
 #' ETR. The model used is:
 #'
 #' \eqn{p = pmax * (((a * i) / (sqrt(1 + (a * i)^2))) * (1 / (sqrt(1 + (alpha * i)^2)^n))}
@@ -110,22 +110,22 @@ generate_regression_vollenweider_ETR_I <- function(
 #' It is valid: i = PAR; p = ETR
 #'
 #' @references
-#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves 
-#' and some implications regarding day rate estimates in primary production measurements, 
-#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. 
+#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves
+#' and some implications regarding day rate estimates in primary production measurements,
+#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*.
 #' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 #'
 #' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
 #' @importFrom minpack.lm nlsLM
 #' @importFrom data.table data.table
 #' @export
-generate_regression_vollenweider_ETR_II <- function(
+vollenweider_generate_regression_ETR_II <- function(
     data,
-    pmax_start_value = pmax_start_value_vollenweider_default,
-    a_start_value = a_start_value_vollenweider_default,
-    alpha_start_value = alpha_start_value_vollenweider_default,
-    n_start_value = n_start_value_vollenweider_default) {
-  return(generate_regression_vollenweider_internal(
+    pmax_start_value = vollenweider_default_start_value_pmax,
+    a_start_value = vollenweider_default_start_value_a,
+    alpha_start_value = vollenweider_default_start_value_alpha,
+    n_start_value = vollenweider_default_start_value_n) {
+  return(vollenweider_generate_regression_internal(
     data,
     etr_II_type,
     pmax_start_value,
@@ -135,13 +135,13 @@ generate_regression_vollenweider_ETR_II <- function(
   ))
 }
 
-generate_regression_vollenweider_internal <- function(
+vollenweider_generate_regression_internal <- function(
     data,
     etr_type,
-    pmax_start_value = pmax_start_value_vollenweider_default,
-    a_start_value = a_start_value_vollenweider_default,
-    alpha_start_value = alpha_start_value_vollenweider_default,
-    n_start_value = n_start_value_vollenweider_default) {
+    pmax_start_value = vollenweider_default_start_value_pmax,
+    a_start_value = vollenweider_default_start_value_a,
+    alpha_start_value = vollenweider_default_start_value_alpha,
+    n_start_value = vollenweider_default_start_value_n) {
   library(data.table)
   library(minpack.lm)
 
@@ -218,7 +218,8 @@ generate_regression_vollenweider_internal <- function(
         }
       )
 
-      return(list(
+      result <- list(
+        etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         sdiff = sdiff,
         pmax = pmax,
@@ -229,7 +230,9 @@ generate_regression_vollenweider_internal <- function(
         popt = popt,
         iik = iik,
         pmax_popt_and_ik_iik_ratio = pmax_popt_and_ik_iik_ratio
-      ))
+      )
+      validate_model_result(result)
+      return(result)
     },
     warning = function(w) {
       stop("Warning while calculating vollenweider model: ", w)
@@ -240,60 +243,31 @@ generate_regression_vollenweider_internal <- function(
   )
 }
 
-#' @title Control Plot for Vollenweider Model (1965)
-#' @description This function creates a plot for the Vollenweider Model based on the provided data and model results.
-#'
-#' @param data A `data.table` containing the original ETR and yield data for the plot.
-#' @param model_result A list containing the fitting results of the Vollenweider Model and the calculated paramters (alpha, ik...).
-#' @param etr_type A character string describing the ETR type (ETR I or ETR II).
-#' @param title A character string that specifies the title of the plot.
-#'
-#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
-#'
-#' @references
-#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves 
-#' and some implications regarding day rate estimates in primary production measurements, 
-#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. 
-#' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
-#' 
-#' @export
-plot_control_vollenweider <- function(data, model_result, etr_type, title) {
-  # validate model result
-  values <- c(
-    as.character(round(model_result[["sdiff"]], 3)),
-    as.character(round(model_result[["pmax"]], 7)),
-    as.character(round(model_result[["a"]], 6)),
-    as.character(round(model_result[["alpha"]], 6)),
-    as.character(round(model_result[["n"]], 3)),
-    as.character(round(model_result[["ik"]], 3)),
-    as.character(round(model_result[["popt"]], 3)),
-    as.character(round(model_result[["iik"]], 3)),
-    as.character(round(model_result[["pmax_popt_and_ik_iik_ratio"]], 3))
+vollenweider_modified <- function(model_result) {
+  validate_model_result(model_result)
+
+  etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
+  im_with_photoinhibition <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ][[PAR_name]]
+
+  result <- create_modified_model_result(
+    etr_type = get_etr_type_from_model_result(model_result),
+    etr_regression_data = get_etr_regression_data_from_model_result(model_result),
+    sdiff = get_sdiff_from_model_result(model_result),
+    a = model_result[["pmax"]],
+    b = model_result[["a"]],
+    c = model_result[["alpha"]],
+    d = model_result[["n"]],
+    alpha = model_result[["popt"]] / model_result[["iik"]],
+    beta = NA_real_,
+    etrmax_with_photoinhibition = model_result[["popt"]],
+    etrmax_without_photoinhibition = model_result[["pmax"]],
+    ik_with_photoinhibition = model_result[["iik"]],
+    ik_without_photoinhibition = model_result[["ik"]],
+    im_with_photoinhibition = im_with_photoinhibition,
+    w = NA_real_,
+    ib = NA_real_,
+    etrmax_with_without_ratio = model_result[["pmax_popt_and_ik_iik_ratio"]]
   )
 
-  params <- data.frame(
-    Parameter = c(
-      "sdiff",
-      "pmax",
-      "a",
-      "alpha",
-      "n",
-      "ik",
-      "popt",
-      "iik",
-      "pmax_popt_and_ik_iik_ratio"
-    ),
-    Value = unlist(values)
-  )
-
-  return(
-    plot_control(
-      data,
-      model_result,
-      etr_type,
-      title,
-      color_vollenweider,
-      params
-    )
-  )
+  return(result)
 }

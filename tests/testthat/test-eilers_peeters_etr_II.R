@@ -1,7 +1,7 @@
-test_that("test eilers_peeters ETR II 20231122_01_W3_T20_HL.csv", {
+test_that("test-eilers_peeters_etr_II generate regression 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
   data <- read_pam_data(test_data_file)
-  model_result <- generate_regression_eilers_peeters_ETR_II(data)
+  model_result <- eilers_peeters_generate_regression_ETR_II(data)
 
   expect_equal(model_result[["sdiff"]], 4.0658931)
   expect_equal(model_result[["a"]], 0.00001294, tolerance = 0.0001)
@@ -14,18 +14,59 @@ test_that("test eilers_peeters ETR II 20231122_01_W3_T20_HL.csv", {
   expect_equal(model_result[["w"]], 0.8201537)
 })
 
-test_that("test plot eilers_peeters ETR II 20231122_01_W3_T20_HL.csv", {
+test_that("test-eilers_peeters_etr_II control plot 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
   data <- read_pam_data(test_data_file)
-  model_result <- generate_regression_eilers_peeters_ETR_II(data)
+  model_result <- eilers_peeters_generate_regression_ETR_II(data)
 
   expect_no_warning(
     print(
-      plot_control_eilers_peeters(
+      eilers_peeters_control_plot(
         data,
         model_result,
-        etr_II_type,
         "eilers_peeters ETR II 20231122_01_W3_T20_HL.csv"
+      )
+    )
+  )
+})
+
+test_that("test-eilers_peeters_etr_II modified 20231122_01_W3_T20_HL.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+  data <- read_pam_data(test_data_file)
+  model_result <- eilers_peeters_generate_regression_ETR_II(data)
+  expect_no_warning(
+    model_result <- eilers_peeters_modified(model_result)
+  )
+
+  expect_equal(model_result[["sdiff"]], 4.0658931)
+  expect_equal(model_result[["a"]], 0.00001294, tolerance = 0.0001)
+  expect_equal(model_result[["b"]], 0.009423141, tolerance = 0.0000001)
+  expect_equal(model_result[["c"]], 10.204545)
+  expect_equal(model_result[["d"]], NA_real_)
+  expect_equal(model_result[["alpha"]], 0.09799555)
+  expect_equal(model_result[["beta"]], NA_real_)
+  expect_equal(model_result[["etrmax_with_photoinhibition"]], 30.862193)
+  expect_equal(model_result[["etrmax_without_photoinhibition"]], NA_real_)
+  expect_equal(model_result[["ik_with_photoinhibition"]], 314.93464)
+  expect_equal(model_result[["ik_without_photoinhibition"]], NA_real_)
+  expect_equal(model_result[["im_with_photoinhibition"]], 888.16408)
+  expect_equal(model_result[["w"]], 0.8201537)
+  expect_equal(model_result[["ib"]], NA_real_)
+  expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
+})
+
+test_that("test-eilers_peeters_etr_II modified control plot 20231122_01_W3_T20_HL.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+  data <- read_pam_data(test_data_file)
+  model_result <- eilers_peeters_generate_regression_ETR_II(data)
+  model_result <- model_result <- eilers_peeters_modified(model_result)
+
+  expect_no_warning(
+    print(
+      eilers_peeters_control_plot(
+        data,
+        model_result,
+        "eilers_peeters ETR II modified 20231122_01_W3_T20_HL.csv"
       )
     )
   )

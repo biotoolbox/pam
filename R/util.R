@@ -58,10 +58,21 @@ create_regression_data <- function(pars, predictions) {
   return(regression_data)
 }
 
+get_etr_type_from_model_result <- function(model_result) {
+  return(model_result[["etr_type"]])
+}
+
+get_etr_regression_data_from_model_result <- function(model_result) {
+  return(model_result[["etr_regression_data"]])
+}
+
+get_sdiff_from_model_result <- function(model_result) {
+  return(model_result[["sdiff"]])
+}
+
 plot_control <- function(
     data,
     model_result,
-    etr_type,
     title,
     color,
     params) {
@@ -70,14 +81,11 @@ plot_control <- function(
   library(gridExtra)
 
   validate_data(data)
+  validate_model_result(model_result)
+
+  etr_type <- get_etr_type_from_model_result(model_result)
   validate_etr_type(etr_type)
-
   data <- remove_det_row_by_etr(data, etr_type)
-
-  # TODO: validate params
-  params_transposed <- t(params)
-  colnames(params_transposed) <- NULL
-  rownames(params_transposed) <- NULL
 
   yield <- NA_real_
   if (etr_type == etr_I_type) {
@@ -86,7 +94,7 @@ plot_control <- function(
     yield <- "Y.II."
   }
 
-  etr_regression_data <- model_result[["etr_regression_data"]]
+  etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
   validate_etr_regression_data(etr_regression_data)
 
   max_etr <- max(etr_regression_data$prediction)
@@ -108,6 +116,10 @@ plot_control <- function(
       sec.axis = sec_axis(~ . / max_etr, name = "Yield")
     ) +
     theme_base()
+
+  params_transposed <- t(params)
+  colnames(params_transposed) <- NULL
+  rownames(params_transposed) <- NULL
 
   custom_theme <- ttheme_minimal(
     core = list(fg_params = list(cex = 0.7)), # font size for cell text
@@ -131,4 +143,45 @@ plot_control <- function(
   )
 
   return(full_plot)
+}
+
+create_modified_model_result <- function(
+    etr_type,
+    etr_regression_data,
+    sdiff,
+    a,
+    b,
+    c,
+    d,
+    alpha,
+    beta,
+    etrmax_with_photoinhibition,
+    etrmax_without_photoinhibition,
+    ik_with_photoinhibition,
+    ik_without_photoinhibition,
+    im_with_photoinhibition,
+    w,
+    ib,
+    etrmax_with_without_ratio) {
+  result <- list(
+    etr_type = etr_type,
+    etr_regression_data = etr_regression_data,
+    sdiff = sdiff,
+    a = a,
+    b = b,
+    c = c,
+    d = d,
+    alpha = alpha,
+    beta = beta,
+    etrmax_with_photoinhibition = etrmax_with_photoinhibition,
+    etrmax_without_photoinhibition = etrmax_without_photoinhibition,
+    ik_with_photoinhibition = ik_with_photoinhibition,
+    ik_without_photoinhibition = ik_without_photoinhibition,
+    im_with_photoinhibition = im_with_photoinhibition,
+    w = w,
+    ib = ib,
+    etrmax_with_without_ratio = etrmax_with_without_ratio
+  )
+  validate_modified_model_result(result)
+  return(result)
 }

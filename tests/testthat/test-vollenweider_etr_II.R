@@ -1,7 +1,7 @@
-test_that("test vollenweider ETR II", {
+test_that("test-vollenweider_etr_II generate regression 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
   data <- read_pam_data(test_data_file)
-  model_result <- generate_regression_vollenweider_ETR_II(data)
+  model_result <- vollenweider_generate_regression_ETR_II(data)
 
   expect_equal(model_result[["sdiff"]], 3.04234525)
   expect_equal(model_result[["pmax"]], 36.644038)
@@ -13,17 +13,16 @@ test_that("test vollenweider ETR II", {
   expect_equal(model_result[["iik"]], 343.844)
 })
 
-test_that("test plot vollenweider ETR II 20231122_01_W3_T20_HL.csv", {
+test_that("test-vollenweider_etr_II control plot 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
   data <- read_pam_data(test_data_file)
-  model_result <- generate_regression_vollenweider_ETR_II(data)
+  model_result <- vollenweider_generate_regression_ETR_II(data)
 
   expect_no_warning(
     print(
-      plot_control_vollenweider(
+      vollenweider_control_plot(
         data,
         model_result,
-        etr_II_type,
         "vollenweider ETR II 20231122_01_W3_T20_HL.csv"
       )
     )
