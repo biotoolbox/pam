@@ -185,3 +185,50 @@ create_modified_model_result <- function(
   validate_modified_model_result(result)
   return(result)
 }
+
+write_model_result_csv <- function(dest_dir, name, data, model_result) {
+  data_dest <- file.path(dest_dir, paste(name, "_raw_data.csv"))
+  regression_data_dest <- file.path(dest_dir, paste(name, "_regression_data.csv"))
+  model_result_dest <- file.path(dest_dir, paste(name, "_model_result.csv"))
+
+  write.csv(
+    data,
+    file = data_dest,
+    quote = TRUE,
+    row.names = FALSE
+  )
+
+  write.csv(
+    get_etr_regression_data_from_model_result(model_result),
+    file = regression_data_dest,
+    quote = TRUE,
+    row.names = FALSE
+  )
+
+  df <- data.frame()
+  df[1, ] <- NA
+
+  for (n in names(model_result)) {
+    if (n == "etr_regression_data" || n == "etr_type") {
+      next()
+    }
+
+    entry <- data.frame(
+      setNames(
+        list(
+          c(model_result[[n]])
+        ),
+        c(n)
+      )
+    )
+
+    df <- cbind(df, NewCol = entry)
+  }
+
+  write.csv(
+    df,
+    file = model_result_dest,
+    quote = TRUE,
+    row.names = FALSE
+  )
+}
