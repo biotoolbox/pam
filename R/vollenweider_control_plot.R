@@ -62,6 +62,7 @@ vollenweider_control_plot <- function(data, model_result, title) {
   )
 }
 
+#' @export
 vollenweider_control_plot_bulk_pdf_ETR_I <- function(
     csv_src_dir,
     pdf_dest_path,
@@ -80,6 +81,7 @@ vollenweider_control_plot_bulk_pdf_ETR_I <- function(
   ))
 }
 
+#' @export
 vollenweider_control_plot_bulk_pdf_ETR_II <- function(
     csv_src_dir,
     pdf_dest_path,
