@@ -186,6 +186,7 @@ create_modified_model_result <- function(
   return(result)
 }
 
+#' @export
 write_model_result_csv <- function(dest_dir, name, data, model_result) {
   data_dest <- file.path(dest_dir, paste(name, "_raw_data.csv"))
   regression_data_dest <- file.path(dest_dir, paste(name, "_regression_data.csv"))
