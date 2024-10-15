@@ -1,149 +1,60 @@
-#' Generate combined ETR Plots for ETR I
-#'
-#' This function creates a combined plot for ETR I. It visualizes the regression results from
-#' the models: Eilers-Peeters (1988), Platt (1975), Vollenweider (1965),
-#' and Walsby (1996).
-#'
-#' @param title A character string specifying the title of the plot.
-#'
-#' @param data A data frame containing the data to be plotted. The data frame
-#' should include the relevant PAR and ETR values.
-#'
-#' @return A ggplot object containing the combined ETR plot for ETR I.
-#'
-#' @details
-#' This function utilizes \code{\link{plot_combo_internal}} to generate
-#' the combined plot by passing the specified ETR I type along with the
-#' provided data.
-#'
-#' @references
-#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
-#' between light intensity and the rate of photosynthesis in phytoplankton.
-#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
-#'
-#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.
-#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701.
-#' \doi{10.1357/002224080786845395}
-#'
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
-#'
-#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves
-#' and some implications regarding day rate estimates in primary production measurements,
-#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*.
-#' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
-#'
-#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis
-#' through time and depth in a water column. *Journal of Plankton Research*,
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487
-#' @export
-combo_control_plot_etr_I <- function(title, data) {
-  return(combo_control_plot_internal(title, data, etr_I_type))
-}
-
-#' Generate combined ETR Plots for ETR II
-#'
-#' This function creates a combined plot for ETR II. It visualizes the regression
-#' results from the models: Eilers-Peeters (1988), Platt (1975), Vollenweider (1965),
-#' and Walsby (1996).
-#'
-#' @param title A character string specifying the title of the plot.
-#'
-#' @param data A data frame containing the data to be plotted. The data frame
-#' should include the relevant PAR and ETR values.
-#'
-#' @return A ggplot object containing the combined ETR plot for ETR II.
-#'
-#' @details
-#' This function utilizes \code{\link{plot_combo_internal}} to generate
-#' the combined plot by passing the specified ETR II type along with the
-#' provided data.
-#'
-#' @references
-#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
-#' between light intensity and the rate of photosynthesis in phytoplankton.
-#' *Ecological Modelling*, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
-#'
-#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.
-#' \emph{Journal of Marine Research}, \strong{38}(4), 687–701.
-#' \doi{10.1357/002224080786845395}
-#'
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
-#'
-#' Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves
-#' and some implications regarding day rate estimates in primary production measurements,
-#' p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*.
-#' Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
-#'
-#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis
-#' through time and depth in a water column. *Journal of Plankton Research*,
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487
-#' @export
-combo_control_plot_etr_II <- function(title, data) {
-  return(combo_control_plot_internal(title, data, etr_II_type))
-}
-
-combo_control_plot_internal <- function(title, data, etr_type) {
+combo_control_plot <- function(
+    title,
+    data,
+    model_results,
+    name_list,
+    color_list) {
   library(ggplot2)
   library(ggthemes)
 
-  eiler_peeters <- eilers_peeters_generate_regression_internal(data, etr_type)
-  platt <- platt_generate_regression_internal(data, etr_type)
-  vollenweider <- vollenweider_generate_regression_internal(data, etr_type)
-  walsby <- walsby_generate_regression_internal(data, etr_type)
+  validate_data(data)
 
-  etr_regression_data_eilers_peeters <- eiler_peeters[["etr_regression_data"]]
-  etr_regression_data_platt <- platt[["etr_regression_data"]]
-  etr_regression_data_vollenweider <- vollenweider[["etr_regression_data"]]
-  etr_regression_data_walsby <- walsby[["etr_regression_data"]]
+  if (length(model_results) <= 0) {
+    stop("empty model_results")
+  }
+
+  if (!is.list(model_results) || !is.list(name_list) || !is.list(color_list)) {
+    stop("model_results, name_list and color_list all need to be lists")
+  }
+
+  if (length(model_results) != length(color_list)) {
+    stop("model_results length not equal to color_list length")
+  }
+
+  if (length(model_results) != length(name_list)) {
+    stop("model_results length not equal to name_list length")
+  }
+
+  etr_type <- get_etr_type_from_model_result(model_results[[1]])
+  validate_etr_type(etr_type)
 
   plot <- ggplot(data, aes(x = data$PAR, y = get(etr_type))) +
-    geom_point() +
-    geom_line(
-      data = etr_regression_data_eilers_peeters,
+    geom_point()
+
+  for (i in seq_along(model_results)) {
+    # name <- name_list[[i]]
+    color <- color_list[[i]]
+    model_result <- model_results[[i]]
+
+    validate_model_result(model_result)
+
+    if (get_etr_type_from_model_result(model_result) != etr_type) {
+      stop("all model results need to be calculated with the same ETR type")
+    }
+
+    plot <- plot + geom_line(
+      data = get_etr_regression_data_from_model_result(model_result),
       aes(
         x = PAR,
-        y = prediction,
-        color = "Eilers-Peeters"
+        y = prediction
       ),
-      alpha = 0.4
-    ) +
-    geom_line(
-      data = etr_regression_data_platt,
-      aes(
-        x = PAR,
-        y = prediction,
-        color = "Platt"
-      ),
-      alpha = 0.4
-    ) +
-    geom_line(
-      data = etr_regression_data_vollenweider,
-      aes(
-        x = PAR,
-        y = prediction,
-        color = "Vollenweider"
-      ),
-      alpha = 0.4
-    ) +
-    geom_line(
-      data = etr_regression_data_walsby,
-      aes(
-        x = PAR,
-        y = prediction,
-        color = "Walsby"
-      ),
-      alpha = 0.4
-    ) +
-    scale_color_manual(values = c(
-      "Eilers-Peeters" = color_eilers_peeters,
-      "Platt" = color_platt,
-      "Vollenweider" = color_vollenweider,
-      "Walsby" = color_walsby
-    )) +
+      color = color,
+      alpha = 0.4,
+      show.legend = TRUE
+    )
+  }
+
+  plot <- plot +
     labs(x = par_label, y = etr_label, title = eval(title), color = NULL) +
     theme_base() +
     theme(legend.position = "bottom")
