@@ -21,10 +21,11 @@ test_that("test-vollenweider_etr_I control plot 20231122_01_W3_T20_HL.csv", {
 
   expect_no_warning(
     print(
-      vollenweider_control_plot(
+      plot_control(
         data,
         model_result,
-        "vollenweider ETR I 20231122_01_W3_T20_HL.csv"
+        "vollenweider ETR I 20231122_01_W3_T20_HL.csv",
+        color_vollenweider
       )
     )
   )
@@ -61,10 +62,11 @@ test_that("test-vollenweider_etr_I modified control plot 20231122_01_W3_T20_HL.c
 
   expect_no_warning(
     print(
-      vollenweider_control_plot(
+      plot_control(
         data,
         model_result,
-        "vollenweider ETR I modified 20231122_01_W3_T20_HL.csv"
+        "vollenweider ETR I modified 20231122_01_W3_T20_HL.csv",
+        color_vollenweider
       )
     )
   )

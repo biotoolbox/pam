@@ -20,10 +20,11 @@ test_that("test-vollenweider_etr_II control plot 20231122_01_W3_T20_HL.csv", {
 
   expect_no_warning(
     print(
-      vollenweider_control_plot(
+      plot_control(
         data,
         model_result,
-        "vollenweider ETR II 20231122_01_W3_T20_HL.csv"
+        "vollenweider ETR II 20231122_01_W3_T20_HL.csv",
+        color_vollenweider
       )
     )
   )

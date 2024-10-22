@@ -16,10 +16,11 @@ test_that("test-walsby_etr_II control plot 20231122_01_W3_T20_HL.csv", {
 
   expect_no_warning(
     print(
-      walsby_control_plot(
+      plot_control(
         data,
         model_result,
-        "walsby ETR II 20231122_01_W3_T20_HL.csv"
+        "walsby ETR II 20231122_01_W3_T20_HL.csv",
+        color_walsby
       )
     )
   )
@@ -56,10 +57,11 @@ test_that("test-walsby_etr_II modified control plot 20231122_01_W3_T20_HL.csv", 
 
   expect_no_warning(
     print(
-      walsby_control_plot(
+      plot_control(
         data,
         model_result,
-        "walsby ETR II modified 20231122_01_W3_T20_HL.csv"
+        "walsby ETR II modified 20231122_01_W3_T20_HL.csv",
+        color_walsby
       )
     )
   )

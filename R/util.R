@@ -70,15 +70,95 @@ get_sdiff_from_model_result <- function(model_result) {
   return(model_result[["sdiff"]])
 }
 
+plot_table <- function(model_result, entries_per_row) {
+  library(ggthemes)
+  library(gridExtra)
+  library(cowplot)
+
+  validate_model_result(model_result)
+
+  custom_theme <- ttheme_minimal(
+    core = list(
+      fg_params = list(
+        cex = 0.7,
+        fontface = 3,
+        col = "darkblue"
+      )
+    ), # font size for cell text
+    colhead = list(
+      fg_params = list(cex = 0.7),
+      bg_params = list(
+        fill = "lightgray",
+        col = "black"
+      )
+    ), # font size for column headers
+    rowhead = list(
+      fg_params = list(cex = 0.7),
+      bg_params = list(
+        fill = "lightgray",
+        col = "black"
+      )
+    ), # font size for row headers
+  )
+
+  tbl_list <- list()
+  row <- NULL
+
+  row_count <- 1
+  count <- 1
+
+  for (i in names(model_result)) {
+    if (i == "etr_type" || i == "etr_regression_data") {
+      next()
+    }
+
+    value <- model_result[[i]]
+
+    if (is.null(row)) {
+      row <- data.frame(tmp = NA)
+    }
+
+    row[[i]] <- c(value)
+
+    if (count == entries_per_row) {
+      row$tmp <- NULL
+      tbl_list[[row_count]] <- tableGrob(
+        row,
+        rows = NULL,
+        theme = custom_theme
+      )
+
+      row <- NULL
+      row_count <- row_count + 1
+      count <- 0
+    } else {
+      count <- count + 1
+    }
+  }
+
+  if (is.null(row) == FALSE) {
+    row$tmp <- NULL
+    tbl_list[[row_count]] <- tableGrob(
+      row,
+      rows = NULL,
+      theme = custom_theme
+    )
+  }
+
+  tbl <- plot_grid(
+    plotlist = tbl_list,
+    ncol = 1
+  )
+  return(tbl)
+}
+
 plot_control <- function(
     data,
     model_result,
     title,
-    color,
-    params) {
+    color) {
   library(ggplot2)
   library(ggthemes)
-  library(gridExtra)
 
   validate_data(data)
   validate_model_result(model_result)
@@ -117,32 +197,15 @@ plot_control <- function(
     ) +
     theme_base()
 
-  params_transposed <- t(params)
-  colnames(params_transposed) <- NULL
-  rownames(params_transposed) <- NULL
+  tbl <- plot_table(model_result, 4)
 
-  custom_theme <- ttheme_minimal(
-    core = list(fg_params = list(cex = 0.7)), # font size for cell text
-    colhead = list(fg_params = list(cex = 0.7)), # font size for column headers
-    rowhead = list(fg_params = list(cex = 0.7)) # font size for row headers
-  )
-
-  # use different library for grid arrange because of printout
-  table <- tableGrob(
-    params_transposed,
-    rows = NULL,
-    theme = custom_theme
-  )
-
-  full_plot <- grid.arrange(
+  plot <- plot_grid(
     plot,
-    table,
+    tbl,
     ncol = 1,
-    heights = c(3, 0.2),
-    widths = 1.5
+    rel_heights = c(0.7, 0.3)
   )
-
-  return(full_plot)
+  return(plot)
 }
 
 create_modified_model_result <- function(

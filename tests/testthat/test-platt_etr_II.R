@@ -21,10 +21,11 @@ test_that("test-platt_etr_II control plot 20231122_01_W3_T20_HL.csv", {
 
   expect_no_warning(
     print(
-      platt_control_plot(
+      plot_control(
         data,
         model_result,
-        "platt ETR II 20231122_01_W3_T20_HL.csv"
+        "platt ETR II 20231122_01_W3_T20_HL.csv",
+        color_platt
       )
     )
   )
@@ -61,10 +62,11 @@ test_that("test-platt_etr_II modified control plot 20231122_01_W3_T20_HL.csv", {
 
   expect_no_warning(
     print(
-      platt_control_plot(
+      plot_control(
         data,
         model_result,
-        "platt ETR II modified 20231122_01_W3_T20_HL.csv"
+        "platt ETR II modified 20231122_01_W3_T20_HL.csv",
+        color_platt
       )
     )
   )

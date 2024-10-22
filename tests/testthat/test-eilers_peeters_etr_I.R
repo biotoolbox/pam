@@ -21,10 +21,11 @@ test_that("test-eilers_peeters_etr_I control plot 20231122_01_W3_T20_HL.csv", {
 
   expect_no_warning(
     print(
-      eilers_peeters_control_plot(
+      plot_control(
         data,
         model_result,
-        "eilers_peeters ETR I 20231122_01_W3_T20_HL.csv"
+        "eilers_peeters ETR I 20231122_01_W3_T20_HL.csv",
+        color_eilers_peeters
       )
     )
   )
@@ -63,10 +64,11 @@ test_that("test-eilers_peeters_etr_I modified control plot 20231122_01_W3_T20_HL
 
   expect_no_warning(
     print(
-      eilers_peeters_control_plot(
+      plot_control(
         data,
         model_result,
-        "eilers_peeters ETR I modified 20231122_01_W3_T20_HL.csv"
+        "eilers_peeters ETR I modified 20231122_01_W3_T20_HL.csv",
+        color_eilers_peeters
       )
     )
   )
