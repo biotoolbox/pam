@@ -38,9 +38,9 @@ walsby_default_start_value_beta <- -0.01
 #' It is valid: I = PAR
 #'
 #' @references
-#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis
-#' through time and depth in a water column. *Journal of Plankton Research*,
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487
+#' Walsby, A. E. (2007). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
+#' *New Phytologist*, 173(1), 95-105. https://doi.org/10.1111/j.1469-8137.2006.01982.x
+
 #'
 #' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
 #' Acclimation limits of *Fucus evanescens* along the salinity gradient of the

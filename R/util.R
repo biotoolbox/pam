@@ -178,6 +178,8 @@ plot_control <- function(
     color = "black") {
   library(ggplot2)
   library(ggthemes)
+  library(gridExtra)
+  library(cowplot)
 
   validate_data(data)
   validate_model_result(model_result)
