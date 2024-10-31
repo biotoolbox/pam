@@ -1,5 +1,12 @@
 # pam
 
+## Introduction
+
+The library ‘pam’ was developed to process PAM raw data (chlorophyll fluorometry to analyze photosystem II and dual wavelength absorbance spectrometry to analyze photosystem I), for example from the DUAL PAM of the manufacturer WALZ. 
+Four different models are provided for the regression of the light curve (Vollenweider (1965), Platt (1980), Eilers and Peeters (1988) and Walsby (1997)).
+To select the most suitable model for the respective data set, these can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as ETRmax, it is possible to output both with publication-compliant naming and with homogenised naming.
+Generated control plots make it possible to check each individual fit.
+
 ## Features
 
 ### wrapper pdf
