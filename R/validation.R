@@ -90,12 +90,88 @@ validate_model_result <- function(model_result) {
 }
 
 validate_modified_model_result <- function(model_result) {
-  validate_model_result(model_result)
+  tryCatch(
+    {
+      validate_model_result(model_result)
 
-  if (is.null(model_result[["sdiff"]]) ||
-    !is.numeric(model_result[["sdiff"]])) {
-    stop("sdiff is null of not a valid number")
-  }
+      if (is.null(model_result[["sdiff"]]) ||
+        !is.numeric(model_result[["sdiff"]])) {
+        stop("sdiff is null of not a valid number")
+      }
 
-  # TODO:
+      if (is.null(model_result[["a"]]) ||
+        !is.numeric(model_result[["a"]])) {
+        stop("a is null of not a valid number")
+      }
+
+      if (is.null(model_result[["b"]]) ||
+        !is.numeric(model_result[["b"]])) {
+        stop("b is null of not a valid number")
+      }
+
+      if (is.null(model_result[["c"]]) ||
+        !is.numeric(model_result[["c"]])) {
+        stop("c is null of not a valid number")
+      }
+
+      if (is.null(model_result[["d"]]) ||
+        !is.numeric(model_result[["d"]])) {
+        stop("d is null of not a valid number")
+      }
+
+      if (is.null(model_result[["alpha"]]) ||
+        !is.numeric(model_result[["alpha"]])) {
+        stop("alpha is null of not a valid number")
+      }
+      if (is.null(model_result[["beta"]]) ||
+        !is.numeric(model_result[["beta"]])) {
+        stop("beta is null of not a valid number")
+      }
+
+      if (is.null(model_result[["etrmax_with_photoinhibition"]]) ||
+        !is.numeric(model_result[["etrmax_with_photoinhibition"]])) {
+        stop("etrmax_with_photoinhibition is null of not a valid number")
+      }
+
+      if (is.null(model_result[["etrmax_without_photoinhibition"]]) ||
+        !is.numeric(model_result[["etrmax_without_photoinhibition"]])) {
+        stop("etrmax_without_photoinhibition is null of not a valid number")
+      }
+
+      if (is.null(model_result[["ik_with_photoinhibition"]]) ||
+        !is.numeric(model_result[["ik_with_photoinhibition"]])) {
+        stop("ik_with_photoinhibition is null of not a valid number")
+      }
+
+      if (is.null(model_result[["ik_without_photoinhibition"]]) ||
+        !is.numeric(model_result[["ik_without_photoinhibition"]])) {
+        stop("ik_without_photoinhibition is null of not a valid number")
+      }
+      if (is.null(model_result[["etrmax_without_photoinhibition"]]) ||
+        !is.numeric(model_result[["etrmax_without_photoinhibition"]])) {
+        stop("etrmax_without_photoinhibition is null of not a valid number")
+      }
+      if (is.null(model_result[["im_with_photoinhibition"]]) ||
+        !is.numeric(model_result[["im_with_photoinhibition"]])) {
+        stop("im_with_photoinhibition is null of not a valid number")
+      }
+      if (is.null(model_result[["w"]]) ||
+        !is.numeric(model_result[["w"]])) {
+        stop("w is null of not a valid number")
+      }
+
+      if (is.null(model_result[["ib"]]) ||
+        !is.numeric(model_result[["ib"]])) {
+        stop("ib is null of not a valid number")
+      }
+
+      if (is.null(model_result[["etrmax_with_without_ratio"]]) ||
+        !is.numeric(model_result[["etrmax_with_without_ratio"]])) {
+        stop("etrmax_with_without_ratio is null of not a valid number")
+      }
+    },
+    error = function(e) {
+      stop("not a valid modified model result. error: ", e)
+    }
+  )
 }

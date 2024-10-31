@@ -130,7 +130,7 @@ plot_table <- function(model_result, entries_per_row) {
 
       row <- NULL
       row_count <- row_count + 1
-      count <- 0
+      count <- 1
     } else {
       count <- count + 1
     }
@@ -159,7 +159,7 @@ plot_table <- function(model_result, entries_per_row) {
 #' @param model_result A list containing the fitting results of the used model and the calculated paramters (alpha, ik...).
 #' @param title A character string that specifies the title of the plot.
 #' @param color A color specification for the regression line in the plot.
-#' 
+#'
 #' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
 #'
 #' @examples
@@ -175,7 +175,7 @@ plot_control <- function(
     data,
     model_result,
     title,
-    color) {
+    color = "black") {
   library(ggplot2)
   library(ggthemes)
 
@@ -270,28 +270,28 @@ create_modified_model_result <- function(
 
 #' @title Write result data to csv files
 #'
-#' @description This function writes the raw data, regression data, and model parameters 
+#' @description This function writes the raw data, regression data, and model parameters
 #' into separate CSV files.
 #'
-#' @param dest_dir A character string specifying the directory where CSV files 
+#' @param dest_dir A character string specifying the directory where CSV files
 #' will be saved.
 #' @param name A character string specifying the base name for the output files.
 #' @param data A data frame containing the raw input data used in the model.
-#' @param model_result A list containing the model results, including parameter 
+#' @param model_result A list containing the model results, including parameter
 #' values and regression data.
 #'
-#' @details 
+#' @details
 #' Three CSV files are created:
 #' \enumerate{
 #'   \item \code{name_raw_data.csv}: contains the original raw data.
-#'   \item \code{name_regression_data.csv}: contains the regression data with 
+#'   \item \code{name_regression_data.csv}: contains the regression data with
 #'   predictions for ETR.
-#'   \item \code{name_model_result.csv}: contains the parameter values from the 
+#'   \item \code{name_model_result.csv}: contains the parameter values from the
 #'   model results (excluding regression data).
 #' }
-#' 
-#' @seealso 
-#' \code{\link{create_modified_model_result}}, 
+#'
+#' @seealso
+#' \code{\link{create_modified_model_result}},
 #' \code{\link{plot_control}}
 #'
 #' @examples
