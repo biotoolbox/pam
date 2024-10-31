@@ -1,6 +1,6 @@
 test_that("test-platt_etr_II generate regression 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_II(data)
 
   expect_equal(model_result[["sdiff"]], 4.4844798)
@@ -16,7 +16,7 @@ test_that("test-platt_etr_II generate regression 20231122_01_W3_T20_HL.csv", {
 
 test_that("test-platt_etr_II control plot 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_II(data)
 
   expect_no_warning(
@@ -33,7 +33,7 @@ test_that("test-platt_etr_II control plot 20231122_01_W3_T20_HL.csv", {
 
 test_that("test-platt_etr_II generate regression modified 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_II(data)
   model_result <- platt_modified(model_result)
 
@@ -56,7 +56,7 @@ test_that("test-platt_etr_II generate regression modified 20231122_01_W3_T20_HL.
 
 test_that("test-platt_etr_II modified control plot 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_II(data)
   model_result <- platt_modified(model_result)
 

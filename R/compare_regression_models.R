@@ -103,7 +103,7 @@ compare_regression_models <- function(data_dir, etr_type) {
 
   for (file in csv_files) {
     title <- basename(file)
-    data <- read_pam_data(file)
+    data <- read_dual_pam_data(file)
 
     tryCatch(
       {

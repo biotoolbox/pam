@@ -1,6 +1,6 @@
 test_that("test-vollenweider_etr_I generate regression 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- vollenweider_generate_regression_ETR_I(data)
 
   expect_equal(model_result[["sdiff"]], 1099.94915)
@@ -16,7 +16,7 @@ test_that("test-vollenweider_etr_I generate regression 20231122_01_W3_T20_HL.csv
 
 test_that("test-vollenweider_etr_I control plot 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- vollenweider_generate_regression_ETR_I(data)
 
   expect_no_warning(
@@ -33,7 +33,7 @@ test_that("test-vollenweider_etr_I control plot 20231122_01_W3_T20_HL.csv", {
 
 test_that("test-vollenweider_etr_I generate regression modified 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- vollenweider_generate_regression_ETR_I(data)
   model_result <- vollenweider_modified(model_result)
 
@@ -56,7 +56,7 @@ test_that("test-vollenweider_etr_I generate regression modified 20231122_01_W3_T
 
 test_that("test-vollenweider_etr_I modified control plot 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- vollenweider_generate_regression_ETR_I(data)
   model_result <- vollenweider_modified(model_result)
 

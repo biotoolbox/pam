@@ -8,7 +8,7 @@ vollenweider_default_start_value_n <- 350
 #' @description This function generates a regression model based on the Vollenweider
 #' formula. Original naming conventions from the publication are used.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
+#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
 #' @param pmax_start_value_vollenweider Numeric. The starting value for the parameter \eqn{pmax}
@@ -74,7 +74,7 @@ vollenweider_generate_regression_ETR_I <- function(
 #' @description This function generates a regression model based on the Vollenweider
 #' formula. Original naming conventions from the publication are used.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
+#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR II) to be used in the model.
 #' @param pmax_start_value_vollenweider Numeric. The starting value for the parameter \eqn{pmax}

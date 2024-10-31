@@ -8,7 +8,7 @@ eilers_peeters_default_start_value_c <- 5
 #' formula. Original naming conventions from the publication are used.
 #' All parameters are calculated taking photoinhibition into account.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
+#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
 #' @param a_start_value Numeric. The starting value for the parameter \eqn{a}
@@ -71,7 +71,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #' formula. Original naming conventions from the publication are used.
 #' All parameters are calculated taking photoinhibition into account.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
+#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR II) to be used in the model.
 #' @param a_start_value Numeric. The starting value for the parameter \eqn{a}

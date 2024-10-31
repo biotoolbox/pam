@@ -7,7 +7,7 @@ platt_default_start_value_ps <- 30
 #' @description This function generates a regression model based on the Platt
 #' formula. Original naming conventions from the publication are used.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
+#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
 #' @param alpha_start_value_platt Numeric. The starting value for the parameter \eqn{alpha}
@@ -68,7 +68,7 @@ platt_generate_regression_ETR_I <- function(
 #' @description This function generates a regression model based on the Platt
 #' formula. Original naming conventions from the publication are used.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
+#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR II) to be used in the model.
 #' @param alpha_start_value_platt Numeric. The starting value for the parameter \eqn{alpha}

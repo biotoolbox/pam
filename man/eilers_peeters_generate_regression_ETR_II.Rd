@@ -12,7 +12,7 @@ eilers_peeters_generate_regression_ETR_II(
 )
 }
 \arguments{
-\item{data}{A `data.table` containing the input data from \link[pam]{read_pam_data}}
+\item{data}{A `data.table` containing the input data from \link[pam]{read_dual_pam_data}}
 
 \item{a_start_value}{Numeric. The starting value for the parameter \eqn{a}
 in the model. Defaults to \code{a_start_values_eilers_peeters_default}.}

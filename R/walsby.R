@@ -9,7 +9,7 @@ walsby_default_start_value_beta <- -0.01
 #' Naming conventions from Romoth (2019) are used. ETRmax is calculated without
 #' taking photoinhibition into account.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
+#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
 #' @param etr_max_start_value_walsby Numeric. The starting value for the parameter \eqn{etr_max}
@@ -74,7 +74,7 @@ walsby_generate_regression_ETR_I <- function(
 #' Naming conventions from Romoth (2019) are used. ETRmax is calculated without
 #' taking photoinhibition into account.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
+#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR II) to be used in the model.
 #' @param etr_max_start_value_walsby Numeric. The starting value for the parameter \eqn{etr_max}

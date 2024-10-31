@@ -9,7 +9,7 @@
 #' @details
 #' ETR  are calculated using the following formula:
 #' \deqn{ETR = PAR * ETR-Factor * P-Ratio * Y}
-#' 
+#'
 #' The function processes the provided csv file by:
 #' \itemize{
 #'   \item Reading the csv data using `read.csv()`.
@@ -24,14 +24,14 @@
 #'
 #' @examples
 #' # Example usage:
-#' result <- read_pam_data("path/to/data.csv", remove_recovery = TRUE, etr_factor = 0.84, p_ratio = 0.5)
-#' 
+#' result <- read_dual_pam_data("path/to/data.csv", remove_recovery = TRUE, etr_factor = 0.84, p_ratio = 0.5)
+#'
 #' @seealso \code{\link{data.table}}, \code{\link{dplyr}}
 #' @importFrom data.table data.table
 #' @importFrom dplyr mutate select
-#' 
+#'
 #' @references
-#' Heinz Walz GmbH. (2024). DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172). 
+#' Heinz Walz GmbH. (2024). DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).
 #' Heinz Walz GmbH, Effeltrich, Germany. Available at:
 #' \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf}
 

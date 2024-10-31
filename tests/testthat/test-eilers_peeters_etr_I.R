@@ -1,6 +1,6 @@
 test_that("test-eilers_peeters_etr_I generate regression 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_I(data)
 
   expect_equal(model_result[["sdiff"]], 1183.4214)
@@ -16,7 +16,7 @@ test_that("test-eilers_peeters_etr_I generate regression 20231122_01_W3_T20_HL.c
 
 test_that("test-eilers_peeters_etr_I control plot 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_I(data)
 
   expect_no_warning(
@@ -33,7 +33,7 @@ test_that("test-eilers_peeters_etr_I control plot 20231122_01_W3_T20_HL.csv", {
 
 test_that("test-eilers_peeters_etr_I generate regression modified 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_I(data)
   expect_no_warning(
     model_result <- eilers_peeters_modified(model_result)
@@ -58,7 +58,7 @@ test_that("test-eilers_peeters_etr_I generate regression modified 20231122_01_W3
 
 test_that("test-eilers_peeters_etr_I modified control plot 20231122_01_W3_T20_HL.csv", {
   test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
-  data <- read_pam_data(test_data_file)
+  data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_I(data)
   model_result <- eilers_peeters_modified(model_result)
 

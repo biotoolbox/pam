@@ -12,7 +12,7 @@ walsby_generate_regression_ETR_II(
 )
 }
 \arguments{
-\item{data}{A `data.table` containing the input data from \link[pam]{read_pam_data}}
+\item{data}{A `data.table` containing the input data from \link[pam]{read_dual_pam_data}}
 
 \item{etr_type}{A character string specifying the column name of the
 response variable (in this case: ETR II) to be used in the model.}

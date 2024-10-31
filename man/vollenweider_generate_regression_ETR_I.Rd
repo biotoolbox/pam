@@ -13,7 +13,7 @@ vollenweider_generate_regression_ETR_I(
 )
 }
 \arguments{
-\item{data}{A `data.table` containing the input data from \link[pam]{read_pam_data}}
+\item{data}{A `data.table` containing the input data from \link[pam]{read_dual_pam_data}}
 
 \item{alpha_start_value}{Numeric. The starting value for the parameter \eqn{alpha}
 in the model. Defaults to \code{alpha_start_values_vollenweider_default}.
