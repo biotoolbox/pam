@@ -3,9 +3,9 @@ vollenweider_default_start_value_a <- 0.1
 vollenweider_default_start_value_alpha <- -0.0001
 vollenweider_default_start_value_n <- 350
 
-#' Generate Regression for ETR I using the Vollenweider Model (1965)
+#' @title Generate Regression for ETR I using the Vollenweider Model (1965)
 #'
-#' This function generates a regression model based on the Vollenweider
+#' @description This function generates a regression model based on the Vollenweider
 #' formula. Original naming conventions from the publication are used.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
@@ -69,9 +69,9 @@ vollenweider_generate_regression_ETR_I <- function(
   ))
 }
 
-#' Generate Regression for ETR II using the Vollenweider Model (1965)
+#' @title Generate Regression for ETR II using the Vollenweider Model (1965)
 #'
-#' This function generates a regression model based on the Vollenweider
+#' @description This function generates a regression model based on the Vollenweider
 #' formula. Original naming conventions from the publication are used.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}

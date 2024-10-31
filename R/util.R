@@ -152,6 +152,25 @@ plot_table <- function(model_result, entries_per_row) {
   return(tbl)
 }
 
+#' @title Control Plot
+#' @description This function creates a control plot for the used model based on the provided data and model results.
+#'
+#' @param data A `data.table` containing the original ETR and yield data for the plot.
+#' @param model_result A list containing the fitting results of the used model and the calculated paramters (alpha, ik...).
+#' @param title A character string that specifies the title of the plot.
+#' @param color A color specification for the regression line in the plot.
+#' 
+#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
+#'
+#' @examples
+#' plot_control_eilers_peeters <- plot_control(
+#'   data = pam_data,
+#'   model_result = model_result_eilers_peeters,
+#'   title = "ETR II - Eilers-Peeters",
+#'   color = "black"
+#' )
+#' print(plot_control_eilers_peeters)
+#' @export
 plot_control <- function(
     data,
     model_result,
@@ -249,6 +268,40 @@ create_modified_model_result <- function(
   return(result)
 }
 
+#' @title Write result data to csv files
+#'
+#' @description This function writes the raw data, regression data, and model parameters 
+#' into separate CSV files.
+#'
+#' @param dest_dir A character string specifying the directory where CSV files 
+#' will be saved.
+#' @param name A character string specifying the base name for the output files.
+#' @param data A data frame containing the raw input data used in the model.
+#' @param model_result A list containing the model results, including parameter 
+#' values and regression data.
+#'
+#' @details 
+#' Three CSV files are created:
+#' \enumerate{
+#'   \item \code{name_raw_data.csv}: contains the original raw data.
+#'   \item \code{name_regression_data.csv}: contains the regression data with 
+#'   predictions for ETR.
+#'   \item \code{name_model_result.csv}: contains the parameter values from the 
+#'   model results (excluding regression data).
+#' }
+#' 
+#' @seealso 
+#' \code{\link{create_modified_model_result}}, 
+#' \code{\link{plot_control}}
+#'
+#' @examples
+#' # Usage example for write_model_result_csv
+#' write_model_result_csv(
+#'   dest_dir = "output",
+#'   name = "eilers_peeters_experiment_001",
+#'   data = raw_data,
+#'   model_result = model_result_eilers_peeters
+#' )
 #' @export
 write_model_result_csv <- function(dest_dir, name, data, model_result) {
   data_dest <- file.path(dest_dir, paste(name, "_raw_data.csv"))

@@ -1,4 +1,4 @@
-#' @title Read and process raw data
+#' @title Read and process raw pam data
 #' @description This function reads the original csv file as created by the DualPAM software, processes it by calculating ETR values, and returns a cleaned dataset.
 #'
 #' @param csv_path A string representing the file path to the CSV file.
@@ -33,11 +33,11 @@
 #' @references
 #' Heinz Walz GmbH. (2024). DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172). 
 #' Heinz Walz GmbH, Effeltrich, Germany. Available at:
-#' \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd06.pdf}
+#' \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf}
 
 #'
 #' @export
-read_pam_data <- function(
+read_dual_pam_data <- function(
     csv_path,
     remove_recovery = TRUE,
     etr_factor = 0.84,

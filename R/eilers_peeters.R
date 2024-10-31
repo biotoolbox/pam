@@ -65,9 +65,9 @@ eilers_peeters_generate_regression_ETR_I <- function(
   ))
 }
 
-#' Generate Regression for ETR II using the Eilers-Peeters Model (1988)
+#' @title Generate Regression for ETR II using the Eilers-Peeters Model (1988)
 #'
-#' This function generates a regression model based on the Eilers-Peeters
+#' @description This function generates a regression model based on the Eilers-Peeters
 #' formula. Original naming conventions from the publication are used.
 #' All parameters are calculated taking photoinhibition into account.
 #'

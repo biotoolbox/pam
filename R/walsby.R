@@ -2,9 +2,9 @@ walsby_default_start_value_etr_max <- 100
 walsby_default_start_value_alpha <- 0.4
 walsby_default_start_value_beta <- -0.01
 
-#' Generate Regression for ETR I using the Walsby Model (1997) modified by Romoth (2019)
+#' @title Generate Regression for ETR I using the Walsby Model (1997) modified by Romoth (2019)
 #'
-#' This function generates a regression model based on the Walsby Model
+#' @description This function generates a regression model based on the Walsby Model
 #' formula in a modified version without respiration term.
 #' Naming conventions from Romoth (2019) are used. ETRmax is calculated without
 #' taking photoinhibition into account.
@@ -67,9 +67,9 @@ walsby_generate_regression_ETR_I <- function(
   )
 }
 
-#' Generate Regression for ETR II using the Walsby Model (1997) modified by Romoth (2019)
+#' @title Generate Regression for ETR II using the Walsby Model (1997) modified by Romoth (2019)
 #'
-#' This function generates a regression model based on the Walsby Model
+#' @description This function generates a regression model based on the Walsby Model
 #' formula in a modified version without respiration term.
 #' Naming conventions from Romoth (2019) are used. ETRmax is calculated without
 #' taking photoinhibition into account.

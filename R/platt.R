@@ -2,9 +2,9 @@ platt_default_start_value_alpha <- 0.3
 platt_default_start_value_beta <- 0.01
 platt_default_start_value_ps <- 30
 
-#' Generate Regression for ETR I using the Platt Model (1980)
+#' @title Generate Regression for ETR I using the Platt Model (1980)
 #'
-#' This function generates a regression model based on the Platt
+#' @description This function generates a regression model based on the Platt
 #' formula. Original naming conventions from the publication are used.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
@@ -63,9 +63,9 @@ platt_generate_regression_ETR_I <- function(
   ))
 }
 
-#' Generate Regression for ETR II using the Platt Model (1980)
+#' @title Generate Regression for ETR II using the Platt Model (1980)
 #'
-#' This function generates a regression model based on the Platt
+#' @description This function generates a regression model based on the Platt
 #' formula. Original naming conventions from the publication are used.
 #'
 #' @param data A `data.table` containing the input data from \link[pam]{read_pam_data}
