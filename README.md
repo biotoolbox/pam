@@ -24,7 +24,8 @@ This function reads the original CSV file as created by the DualPAM software, pr
 ## Details
 ETR values are calculated using the following formula:
 
-$$ETR = PAR \times \text{ETR-Factor} \times P\text{-Ratio} \times Yield$$
+$$ETR = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{P-Ratio} \cdot \text{Yield}$$
+
 
 The function processes the provided CSV file by:
 - Reading the CSV data using `read.csv()`.
@@ -39,8 +40,12 @@ A `data.table` containing the processed data with additional columns for recalcu
 
 ## Example
 ```r
-result <- read_dual_pam_data("path/to/data.csv", remove_recovery = TRUE, etr_factor = 0.84, p_ratio = 0.5)
+data <- read_dual_pam_data("path/to/data.csv", remove_recovery = TRUE, etr_factor = 0.84, p_ratio = 0.5)
 ```
+
+## References
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+
 
 ### eilers_peeters_generate_regression_ETR_I() and eilers_peeters_generate_regression_ETR_II()
 
@@ -48,7 +53,6 @@ This function generates a regression model based on the Eilers-Peeters formula. 
 
 ### Parameters
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
-- **etr_type**: A character string specifying the column name of the response variable (in this case: ETR I) to be used in the model.
 - **a_start_value**: Numeric. The starting value for the parameter $$a$$ in the model. Defaults to `a_start_values_eilers_peeters_default`.
 - **b_start_value**: Numeric. The starting value for the parameter $$b$$ in the model. Defaults to `b_start_values_eilers_peeters_default`.
 - **c_start_value**: Numeric. The starting value for the parameter $$c$$ in the model. Defaults to `c_start_values_eilers_peeters_default`.
@@ -71,18 +75,64 @@ This function uses non-linear least squares fitting to estimate the parameters f
 
 $$ p = \frac{I}{a \cdot I^2 + b \cdot I + c} $$
 
-where $$I$$ is PAR and $$p$$ is ETR.
+It is valid: $$I = PAR$$; $$p = ETR$$
 
-### References
+## Example
+```r
+result_eilers_peeters_ETR_II <- eilers_peeters_generate_regression_ETR_II(data,
+a_start_value = 0.00007,
+b_start_value =  0.005,
+c_start_value = 10)
+```
+
+## References
 Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
 
-### See Also
-- `nlsLM`
-- `minpack.lm`
+### vollenweider_generate_regression_ETR_I and vollenweider_generate_regression_ETR_II
 
-### Imports
-- `nlsLM` from `minpack.lm`
-- `data.table` from `data.table`
+This function generates a regression model based on the Vollenweider formula. Original naming conventions from the publication are used.
+
+## Parameters
+- **data**: A `data.table` containing the input data from `read_dual_pam_data`.
+- **etr_type**: A character string specifying the column name of the response variable (in this case: ETR I) to be used in the model.
+- **pmax_start_value_vollenweider**: Numeric. The starting value for the parameter $$p_{max}$$ in the model. Defaults to `pmax_start_values_vollenweider_default`.
+- **a_start_value_vollenweider**: Numeric. The starting value for the parameter $$a$$ in the model. Defaults to `a_start_values_vollenweider_default`.
+- **alpha_start_value**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_values_vollenweider_default`.
+- **n_start_value**: Numeric. The starting value for the parameter $$n$$ in the model. Defaults to `n_start_values_vollenweider_default`.
+
+## Return
+A list containing the following elements:
+- **etr_regression_data**: A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.
+- **sdiff**: The deviation between the actual and predicted ETR values.
+- **pmax**: The maximum electron transport rate without photoinhibition.
+- **a**: The obtained parameter $$a$$.
+- **alpha**: The obtained parameter $$\alpha$$.
+- **n**: The obtained parameter $$n$$.
+- **popt**: The maximum electron transport rate with photoinhibition. A function computes predicted photosynthetic rates for each PAR value and tracks the maximum rate observed.
+- **ik**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as $$i_k = \frac{1}{a}$$.
+- **iik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as $$i_{ik} = \frac{i_k \cdot popt}{pmax}$$.
+- **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$popt$$ and $$i_k$$ to $$i_{ik}$$, calculated as $$pmax\_popt\_and\_ik\_iik\_ratio = \frac{i_k}{i_{ik}}$$.
+
+## Details
+This function uses non-linear least squares fitting to estimate the parameters for the Vollenweider model, which describes the relationship between PAR and ETR. The model used is:
+
+$$ p = p_{max} \cdot \left(\frac{a \cdot i}{\sqrt{1 + (a \cdot i)^2}} \cdot \frac{1}{\left(\sqrt{1 + (\alpha \cdot i)^2}\right)^n}\right) $$
+
+It is valid: $$i = PAR; p = ETR$$
+
+## Example
+```r
+result_vollenweider_ETR_II <- vollenweider_generate_regression(data, 
+    pmax_start_value_vollenweider = 60, 
+    a_start_value_vollenweider = 0.3, 
+    alpha_start_value = -0.0003, 
+    n_start_value = 400)
+```
+
+## References
+Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements*, p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
+
+
 
 
 
