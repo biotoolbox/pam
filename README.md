@@ -135,7 +135,7 @@ result_platt_ETR_II <- platt_generate_regression_ETR_II(data,
 ```
 
 #### References
-Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
+Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from https://elischolar.library.yale.edu/journal_of_marine_research/1525.
 
 
 ### eilers_peeters_generate_regression_ETR_I() and eilers_peeters_generate_regression_ETR_II()
@@ -288,7 +288,7 @@ Returns a modified model result as a list containing:
 - **a**: The maximum electron transport rate considering photoinhibition, calculated from the regression data.
 - **b**: The maximum electron transport rate without photoinhibition, extracted from the model result.
 - **c**: The initial slope of the light curve (alpha).
-- **d**: NA (not applicable in this context).
+- **d**: NA
 - **alpha**: The initial slope of the light curve. 
 - **beta**: The photoinhibition of the light curve.. Taken directly from the model.
 - **etrmax_with_photoinhibition**: The maximum ETR considering photoinhibition, calculated as follows:
@@ -297,8 +297,8 @@ Returns a modified model result as a list containing:
 - **ik_with_photoinhibition**: The light intensity at which photosynthesis is half of the maximum, calculated as $$ ik\_with\_photoinhibition = \frac{\text{etrmax\_with\_photoinhibition}}{\alpha}$$.
 - **ik_without_photoinhibition**: The light intensity at which photosynthesis is half of the maximum without considering photoinhibition, calculated as $$ ik\_without\_photoinhibition = \frac{\text{etrmax\_without\_photoinhibition}}{\alpha}$$.
 - **im_with_photoinhibition**: Light intensity at ETRmax, extracted from the `etr_max_row`.
-- **w**: NA (not applicable in this context).
-- **ib**: NA (not applicable in this context).
+- **w**: NA
+- **ib**: NA
 - **etrmax_with_without_ratio**: The ratio of maximum ETR with to without photoinhibition, calculated as $$ \text{etrmax\_with\_without\_ratio} = \frac{\text{etrmax\_without\_photoinhibition}}{\text{etrmax\_with\_photoinhibition}}$$.
 
 
@@ -312,9 +312,46 @@ This function first validates the input model result, then extracts the necessar
 ```r
 walsby_ETR_II_modified <- walsby_modified(model_result_walsby_ETR_II)
 ```
+## Naming overview
+### Publication-accurate naming and the respective homogenisation
+same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
+|-|-|-|-|-|
+|a         |a     |ps     |etr_max         |pmax      |
+|b         |b     |alpha    |alpha          |a       |
+|c         |c     |beta    |beta          |alpha      |
+|d         |NA     |NA     |NA           |n       |
+|alpha        |s     |alpha    |alpha          |NA       |
+|beta        |NA     |beta    |beta          |NA       |
+|etrmax_with_photoinhibition  |pm     |pm     |NA           |popt      |
+|etrmax_without_photoinhibition  |NA     |ps     |etr_max         |pmax      |
+|ik_with_photoinhibition   |ik     |ik     |NA           |iik      |
+|ik_without_photoinhibition   |NA     |is     |NA           |ik       |
+|im_with_photoinhibition   |im     |im     |NA           |NA       |
+|w         |w     |NA     |NA           |NA       |
+|ib         |NA     |ib     |NA           |NA       |
+|etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
+|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
 
+### Publication-accurate naming and the respective homogenisation with additional calculations not included in the paper
+modified
 
-
+|same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
+|-|-|-|-|-|
+|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
+|a         |a     |ps     |etr_max         |pmax      |
+|b         |b     |alpha    |alpha          |a       |
+|c         |c     |beta    |beta          |alpha      |
+|d         |NA     |NA     |NA           |n       |
+|alpha        |s     |alpha    |alpha          |real_alpha     |
+|beta        |NA     |beta    |beta          |NA       |
+|etrmax_with_photoinhibition  |pm     |pm     |etrmax_with_photoinhibition    |popt      |
+|etrmax_without_photoinhibition  |NA     |ps     |etr_max         |pmax      |
+|ik_with_photoinhibition   |ik     |ik     |ik_with_photoinhibition     |iik      |
+|ik_without_photoinhibition   |NA     |is     |ik_without_photoinhibition     |ik       |
+|im_with_photoinhibition   |im     |im     |im_with_photoinhibition     |im_with_photoinhibition |
+|w         |w     |NA     |NA           |NA       |
+|ib         |NA     |ib     |NA           |NA       |
+|etrmax_with_without_ratio   |NA     |ps_pm_ratio  |etr_max_etrmax_with_photoinhibition_ratio |pmax_popt_and_ik_iik_ratio |
 
 
 
@@ -373,42 +410,3 @@ install.packages("SciViews")
 install.packages("ggthemes")
 install.packages("gridExtra")
 
-original
-
-|same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
-|-|-|-|-|-|
-|a         |a     |ps     |etr_max         |pmax      |
-|b         |b     |alpha    |alpha          |a       |
-|c         |c     |beta    |beta          |alpha      |
-|d         |NA     |NA     |NA           |n       |
-|alpha        |s     |alpha    |alpha          |NA       |
-|beta        |NA     |beta    |beta          |NA       |
-|etrmax_with_photoinhibition  |pm     |pm     |NA           |popt      |
-|etrmax_without_photoinhibition  |NA     |ps     |etr_max         |pmax      |
-|ik_with_photoinhibition   |ik     |ik     |NA           |iik      |
-|ik_without_photoinhibition   |NA     |is     |NA           |ik       |
-|im_with_photoinhibition   |im     |im     |NA           |NA       |
-|w         |w     |NA     |NA           |NA       |
-|ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
-|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
-
-modified
-
-|same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
-|-|-|-|-|-|
-|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
-|a         |a     |ps     |etr_max         |pmax      |
-|b         |b     |alpha    |alpha          |a       |
-|c         |c     |beta    |beta          |alpha      |
-|d         |NA     |NA     |NA           |n       |
-|alpha        |s     |alpha    |alpha          |real_alpha     |
-|beta        |NA     |beta    |beta          |NA       |
-|etrmax_with_photoinhibition  |pm     |pm     |etrmax_with_photoinhibition    |popt      |
-|etrmax_without_photoinhibition  |NA     |ps     |etr_max         |pmax      |
-|ik_with_photoinhibition   |ik     |ik     |ik_with_photoinhibition     |iik      |
-|ik_without_photoinhibition   |NA     |is     |ik_without_photoinhibition     |ik       |
-|im_with_photoinhibition   |im     |im     |im_with_photoinhibition     |im_with_photoinhibition |
-|w         |w     |NA     |NA           |NA       |
-|ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |ps_pm_ratio  |etr_max_etrmax_with_photoinhibition_ratio |pmax_popt_and_ik_iik_ratio |
