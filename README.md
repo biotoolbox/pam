@@ -322,7 +322,7 @@ Returns a modified model result as a list with the following elements:
 
 - **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, calculated as 
 $${ik_without_photoinhibition} = \frac{etrmax_without_photoinhibition}{alpha}$$
-$ik\_without\_photoinhibition = \frac{etrmax\_without\_photoinhibition}{alpha}$
+$$ik\_without \_photoinhibition = \frac{etrmax \_without \_photoinhibition}{alpha}$$
 
 $$s = \frac{1}{c}$$
 
