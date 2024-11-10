@@ -318,7 +318,7 @@ Returns a modified model result as a list with the following elements:
 ```
 - **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, taken over as `etr_max`
 - **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, calculated as
-$$\mathit{ik\_with\_photoinhibition} = \frac{\mathit{etrmax\_with\_photoinhibition}}{alpha}$$
+$${ik_{\text{with\_photoinhibition}} = \frac{\text{etrmax}_{\text{with\_photoinhibition}}}{\alpha}}$$
 - **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, calculated $$ {ik\_without\_photoinhibition} = \frac{etrmax\_without\_photoinhibition}{alpha} $$
 
 $$s = \frac{1}{c}$$
