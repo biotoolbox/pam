@@ -248,6 +248,142 @@ Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves a
 
 Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. https://doi.org/10.1046/j.1469-8137.1997.00736.x
 
+### eilers_peeters_modified
+
+This function adds parameters that were not originally included in the Eilers and Peeters (1988) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
+
+### Parameters
+
+- **model_result**: A list containing the results of the model, including parameters such as `a`, `b`, `c`, `s`, `pm`, `ik`, `im`, and `w`.
+
+### Return
+
+Returns a modified model result as a list with the following elements:
+
+- **etr_type**: ETR Type based on the model result.
+- **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
+- **sdiff**: The difference between observed and predicted ETR values.
+- **a**: The obtained parameter $$a$$
+- **b**: The obtained parameter $$b$$
+- **c**: The obtained parameter $$c$$
+- **d**: Not applicable (set to `NA_real_` in this context).
+- **alpha (s)**: A secondary parameter representing an alternative measure of the initial slope or ETR.
+- **beta**: Not applicable (set to `NA_real_` in this context).
+- **etrmax_with_photoinhibition (pm)**: Maximum ETR considering photoinhibition.
+- **etrmax_without_photoinhibition**: Not applicable (set to `NA_real_` in this context).
+- **ik_with_photoinhibition (ik)**: Light intensity at which ETR is half of its maximum value.
+- **ik_without_photoinhibition**: Not applicable (set to `NA_real_` in this context).
+- **im_with_photoinhibition (im)**: Maximum photosynthetic rate at light saturation, considering photoinhibition.
+- **w**: The sharpness of the peak.
+- **ib**: Not applicable (set to `NA_real_` in this context).
+- **etrmax_with_without_ratio**: Not applicable (set to `NA_real_` in this context).
+
+### Details
+
+This function validates the `model_result` input, extracts relevant parameters for the modified Eilers-Peeters model, and creates a structured list using `create_modified_model_result`. The list serves as a standardized output format for further analysis.
+
+### Examples
+
+```r
+# Example usage for eilers_peeters_modified
+modified_result <- eilers_peeters_modified(model_result_eilers_peeters)
+```
+
+### walsby_modified
+
+This function adds parameters that were not originally included in the Walsby (1997) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
+
+### Parameters
+
+- **model_result**: A list containing the results of the model, including parameters such as `etr_max`, `alpha`, and `beta`.
+
+### Return
+
+Returns a modified model result as a list with the following elements:
+
+- **etr_type**: ETR Type based on the model result.
+- **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
+- **sdiff**: The difference between observed and predicted ETR values.
+- **a**: obtained paramter `a`, here equal to etrmax_without_photoinhibition
+- **b**: obtained paramter `b`, here equal to alpha
+- **c**: obtained paramter `c`, here equal to beta
+- **d**: not available, here set to `NA_real_`
+- **alpha**: The initial slope of the light curve, taken over unchanged as `alpha`
+- **beta**: The photoinhibition of the light curve, taken over unchanged as `beta`
+- **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, calculated as:
+```r
+  etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
+  etr_max_row <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ]
+  etrmax_with_photoinhibition <- etr_max_row[[prediction_name]]
+```
+- **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, taken over as `etr_max`
+- **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, calculated as $$ {\text{ik\_with\_photoinhibition}} = \frac{\text{etrmax\_with\_photoinhibition}}{\text{alpha}} $$
+- **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, calculated as $$ {\text{ik\_without\_photoinhibition}} = \frac{\text{etrmax\_without\_photoinhibition}}{\text{alpha}} $$
+- **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, calculated as:
+```r
+  etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
+  etr_max_row <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ]
+  im_with_photoinhibition <- etr_max_row[[PAR_name]]
+```
+- **w**: not available, here set to `NA_real_`
+- **ib**: not available, here set to `NA_real_`
+- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`, calculated as: $$ {\text{etrmax\_with\_without\_ratio}} = \frac{\text{etrmax\_with\_photoinhibition}}{\text{etrmax\_without\_photoinhibition}} $$
+
+
+### Details
+
+This function validates the `model_result` input and processes relevant parameters for the Walsby model, creating a structured list using `create_modified_model_result`. This standardized output allows for consistent analysis and comparison across different photosynthesis models.
+
+### Examples
+
+```r
+modified_result <- walsby_modified(model_result_walsby)
+```
+
+
+
+### Naming overview
+#### Publication-accurate naming and the respective homogenisation
+same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
+|-|-|-|-|-|
+|a         |a     |ps     |etr_max         |pmax      |
+|b         |b     |alpha    |alpha          |a       |
+|c         |c     |beta    |beta          |alpha      |
+|d         |NA     |NA     |NA           |n       |
+|alpha        |s     |alpha    |alpha          |NA       |
+|beta        |NA     |beta    |beta          |NA       |
+|etrmax_with_photoinhibition  |pm     |pm     |NA           |popt      |
+|etrmax_without_photoinhibition  |NA     |ps     |etr_max         |pmax      |
+|ik_with_photoinhibition   |ik     |ik     |NA           |iik      |
+|ik_without_photoinhibition   |NA     |is     |NA           |ik       |
+|im_with_photoinhibition   |im     |im     |NA           |NA       |
+|w         |w     |NA     |NA           |NA       |
+|ib         |NA     |ib     |NA           |NA       |
+|etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
+|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
+
+#### Publication-accurate naming and the respective homogenisation with additional calculations not included in the paper
+
+|same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
+|-|-|-|-|-|
+|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
+|a         |a     |ps     |etr_max         |pmax      |
+|b         |b     |alpha    |alpha          |a       |
+|c         |c     |beta    |beta          |alpha      |
+|d         |NA     |NA     |NA           |n       |
+|alpha        |s     |alpha    |alpha          |real_alpha     |
+|beta        |NA     |beta    |beta          |NA       |
+|etrmax_with_photoinhibition  |pm     |pm     |etrmax_with_photoinhibition    |popt      |
+|etrmax_without_photoinhibition  |NA     |ps     |etr_max         |pmax      |
+|ik_with_photoinhibition   |ik     |ik     |ik_with_photoinhibition     |iik      |
+|ik_without_photoinhibition   |NA     |is     |ik_without_photoinhibition     |ik       |
+|im_with_photoinhibition   |im     |im     |im_with_photoinhibition     |im_with_photoinhibition |
+|w         |w     |NA     |NA           |NA       |
+|ib         |NA     |ib     |NA           |NA       |
+|etrmax_with_without_ratio   |NA     |ps_pm_ratio  |etr_max_etrmax_with_photoinhibition_ratio |pmax_popt_and_ik_iik_ratio |
+
+
+
 ### plot_control()
 This function creates a control plot for the used model based on the provided data and model results.
 
@@ -271,87 +407,42 @@ plot_control_eilers_peeters_ETR_II <- plot_control(
 print(plot_control_eilers_peeters_ETR_II)
 ```
 
-### walsby_modified()
+### combo_control_plot
 
-This function adds parameters that were not originally included in the Walsby (1997) model, but were introduced by other models. 
+The `combo_control_plot` function generates a combined plot of electron transport rate (ETR) data and regression model predictions, along with a customized table summarizing the parameters for each model.
 
 #### Parameters
 
-- **model_result**: A list containing the results of the model that has been validated. It should include necessary components such as ETR data, parameters like `etr_max`, `alpha`, and `beta`.
+- **title**: A character string specifying the title for the plot.
+- **data**: A data frame containing the raw input data for ETR and Photosynthetically Active Radiation (PAR).
+- **model_results**: A list of model results, where each model result is a list containing regression data and parameters for ETR.
+- **name_list**: A list of names corresponding to each model result. These names will be used in the legend and table.
+- **color_list**: A list of color values for each model result. Colors are used to differentiate lines on the plot.
 
 #### Return
 
-Returns a modified model result as a list containing:
-- **etr_type**: Type of ETR (e.g., ETR I or ETR II).
-- **etr_regression_data**: A `data.table` with the predicted values of ETR corresponding to each PAR based on the fitted model.
-- **sdiff**: The deviation between the actual and predicted ETR values.
-- **a**: The maximum electron transport rate considering photoinhibition, calculated from the regression data.
-- **b**: The maximum electron transport rate without photoinhibition, extracted from the model result.
-- **c**: The initial slope of the light curve (alpha).
-- **d**: NA
-- **alpha**: The initial slope of the light curve. 
-- **beta**: The photoinhibition of the light curve.. Taken directly from the model.
-- **etrmax_with_photoinhibition**: The maximum ETR considering photoinhibition, calculated as follows:
-  - Extracted from the row with the highest predicted ETR value in `etr_regression_data`.
-- **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition. Taken directly from the model.
-- **ik_with_photoinhibition**: The light intensity at which photosynthesis is half of the maximum, calculated as $$ ik\_with\_photoinhibition = \frac{\text{etrmax\_with\_photoinhibition}}{\alpha}$$.
-- **ik_without_photoinhibition**: The light intensity at which photosynthesis is half of the maximum without considering photoinhibition, calculated as $$ ik\_without\_photoinhibition = \frac{\text{etrmax\_without\_photoinhibition}}{\alpha}$$.
-- **im_with_photoinhibition**: Light intensity at ETRmax, extracted from the `etr_max_row`.
-- **w**: NA
-- **ib**: NA
-- **etrmax_with_without_ratio**: The ratio of maximum ETR with to without photoinhibition, calculated as $$ \text{etrmax\_with\_without\_ratio} = \frac{\text{etrmax\_without\_photoinhibition}}{\text{etrmax\_with\_photoinhibition}}$$.
+A plot displaying the original ETR and Yield values and the regression data from different models. A table below the plot shows the calculated data (alpha, ik, etc.).
 
-
-
-#### Details
-
-This function first validates the input model result, then extracts the necessary data for ETR regression and calculates the maximum ETR with and without photoinhibition. The resulting parameters are packaged into a modified model result for further analysis.
-
-#### Example
+#### Examples
 
 ```r
-walsby_ETR_II_modified <- walsby_modified(model_result_walsby_ETR_II)
+test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+    data <- read_dual_pam_data(test_data_file)
+
+    eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_II(data))
+    platt <- platt_modified(platt_generate_regression_ETR_II(data))
+    walsby <- walsby_modified(walsby_generate_regression_ETR_II(data))
+    vollenweider <- vollenweider_modified(vollenweider_generate_regression_ETR_II(data))
+
+    plot <- combo_control_plot(
+      "test-combo_control_plot_20231122_01_W3_T20_HL.csv",
+      data,
+      list(eilers_peeters, platt, walsby, vollenweider),
+      list("eilers_peeters", "platt", "walsby", "vollenweider"),
+      list(color_eilers_peeters, color_platt, color_walsby, color_vollenweider)
+    )
 ```
-## Naming overview
-### Publication-accurate naming and the respective homogenisation
-same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
-|-|-|-|-|-|
-|a         |a     |ps     |etr_max         |pmax      |
-|b         |b     |alpha    |alpha          |a       |
-|c         |c     |beta    |beta          |alpha      |
-|d         |NA     |NA     |NA           |n       |
-|alpha        |s     |alpha    |alpha          |NA       |
-|beta        |NA     |beta    |beta          |NA       |
-|etrmax_with_photoinhibition  |pm     |pm     |NA           |popt      |
-|etrmax_without_photoinhibition  |NA     |ps     |etr_max         |pmax      |
-|ik_with_photoinhibition   |ik     |ik     |NA           |iik      |
-|ik_without_photoinhibition   |NA     |is     |NA           |ik       |
-|im_with_photoinhibition   |im     |im     |NA           |NA       |
-|w         |w     |NA     |NA           |NA       |
-|ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
-|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
 
-### Publication-accurate naming and the respective homogenisation with additional calculations not included in the paper
-modified
-
-|same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
-|-|-|-|-|-|
-|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
-|a         |a     |ps     |etr_max         |pmax      |
-|b         |b     |alpha    |alpha          |a       |
-|c         |c     |beta    |beta          |alpha      |
-|d         |NA     |NA     |NA           |n       |
-|alpha        |s     |alpha    |alpha          |real_alpha     |
-|beta        |NA     |beta    |beta          |NA       |
-|etrmax_with_photoinhibition  |pm     |pm     |etrmax_with_photoinhibition    |popt      |
-|etrmax_without_photoinhibition  |NA     |ps     |etr_max         |pmax      |
-|ik_with_photoinhibition   |ik     |ik     |ik_with_photoinhibition     |iik      |
-|ik_without_photoinhibition   |NA     |is     |ik_without_photoinhibition     |ik       |
-|im_with_photoinhibition   |im     |im     |im_with_photoinhibition     |im_with_photoinhibition |
-|w         |w     |NA     |NA           |NA       |
-|ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |ps_pm_ratio  |etr_max_etrmax_with_photoinhibition_ratio |pmax_popt_and_ik_iik_ratio |
 
 ### write_model_result_csv
 This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.

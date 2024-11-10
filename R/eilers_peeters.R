@@ -4,10 +4,6 @@ eilers_peeters_default_start_value_c <- 5
 
 #' Generate Regression for ETR I using the Eilers-Peeters Model (1988)
 #'
-#' This function generates a regression model based on the Eilers-Peeters
-#' formula. Original naming conventions from the publication are used.
-#' All parameters are calculated taking photoinhibition into account.
-#'
 #' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
 #' @param etr_type A character string specifying the column name of the
 #' response variable (in this case: ETR I) to be used in the model.
@@ -32,24 +28,10 @@ eilers_peeters_default_start_value_c <- 5
 #'   \item{w}{The sharpness of the peak, calculated as \eqn{w = b / \sqrt(a * c)}.}
 #' }
 #'
-#' @details
-#' This function uses non-linear least squares fitting to estimate the parameters
-#' for the Eilers-Peeters model, which describes the relationship between PAR and
-#' ETR. The model used is:
-#'
-#' \eqn{p = I / (a * I^2 + b * I + c)}
-#'
-#' It is valid: I = PAR; p = ETR
-#'
 #' @references
 #' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
 #' between light intensity and the rate of photosynthesis in phytoplankton.
 #' Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
-
-#'
-#' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
-#' @importFrom minpack.lm nlsLM
-#' @importFrom data.table data.table
 #' @export
 eilers_peeters_generate_regression_ETR_I <- function(
     data,
