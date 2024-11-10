@@ -304,9 +304,9 @@ Returns a modified model result as a list with the following elements:
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
 - **sdiff**: The difference between observed and predicted ETR values.
-- **a**: obtained paramter `a`, here equal to etrmax_without_photoinhibition
-- **b**: obtained paramter `b`, here equal to alpha
-- **c**: obtained paramter `c`, here equal to beta
+- **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
+- **b**: obtained paramter `b`, here equal to `alpha`
+- **c**: obtained paramter `c`, here equal to `beta`
 - **d**: not available, here set to `NA_real_`
 - **alpha**: The initial slope of the light curve, taken over unchanged as `alpha`
 - **beta**: The photoinhibition of the light curve, taken over unchanged as `beta`
@@ -317,11 +317,15 @@ Returns a modified model result as a list with the following elements:
   etrmax_with_photoinhibition <- etr_max_row[[prediction_name]]
 ```
 - **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, taken over as `etr_max`
-- **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, calculated as $$ {\text{ik\_with\_photoinhibition}} = \frac{\text{etrmax\_with\_photoinhibition}}{\text{alpha}} $$
+- **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, calculated as
+
+
 - **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, calculated as 
-$$
-{\text{ik\_without\_photoinhibition}} = \frac{\text{etrmax\_without\_photoinhibition}}{\text{alpha}}
-$$
+$${ik_without_photoinhibition} = \frac{etrmax_without_photoinhibition}{alpha}$$
+$$ik\_without \_photoinhibition = \frac{etrmax \_without \_photoinhibition}{alpha}$$
+
+$$s = \frac{1}{c}$$
+
 - **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, calculated as:
 ```r
   etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
