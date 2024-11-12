@@ -69,7 +69,7 @@ This function generates a regression model based on Vollenweider (1965). Origina
 A list containing the following elements:
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
-- **pmax**: The maximum electron transport rate without photoinhibition ($$p_max$$).
+- **pmax**: The maximum electron transport rate without photoinhibition ($$p_{max}$$).
 - **a**: The obtained parameter $$a$$.
 - **alpha**: The obtained parameter $$\alpha$$.
 - **n**: The obtained parameter $$n$$.
