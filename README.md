@@ -93,7 +93,7 @@ A list containing the following elements:
 ```
 - **ik**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition ($$I_k$$). Calculated as:
 
-$$I_k = \frac{1}{a}$$
+$$I_k = \\frac{1}{a}$$
 
 - **iik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition ($$I`_k$$). Calculated as:
 
