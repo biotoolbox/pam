@@ -214,7 +214,7 @@ $$I_m = \sqrt{\frac{c}{a}}$$
 
 - **w**: The sharpness of the peak ($$w$$). Calculated as:
 
-$$w = \frac{b}{\sqrt{a \cdot c}}$$.
+$$w = \frac{b}{\sqrt{a \cdot c}}$$
 
 #### Details
 This function uses non-linear least squares fitting to estimate the parameters for the Eilers-Peeters model, which describes the relationship between PAR and ETR. The model used is:
