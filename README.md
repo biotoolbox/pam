@@ -99,7 +99,7 @@ $$I_k = \\frac{1}{a}$$
 
 $$I_k^\prime = \frac{I_k \cdot p_{opt}}{p_{max}}$$
 
-- **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$p_{opt}$$ and $$I_k$$ to $${I`_k}$$ ($$p_{max} / p_{opt}$$). Calculated as:
+- **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$p_{opt}$$ and $$I_k$$ to $$I_k^\prime$$ ($$p_{max} / p_{opt}$$). Calculated as:
 
 $$pmax\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I`_k}$$
 
