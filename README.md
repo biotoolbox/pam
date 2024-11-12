@@ -73,7 +73,24 @@ A list containing the following elements:
 - **a**: The obtained parameter $$a$$.
 - **alpha**: The obtained parameter $$\alpha$$.
 - **n**: The obtained parameter $$n$$.
-- **popt**: The maximum electron transport rate with photoinhibition. A function computes predicted photosynthetic rates for each PAR value and tracks the maximum rate observed.
+- **popt**: The maximum electron transport rate with photoinhibition ($$p_{opt}$$). A function computes predicted photosynthetic rates for each PAR value and tracks the maximum rate observed:
+```r
+  popt <- 0
+      pars <- c()
+      predictions <- c()
+      for (p in min(data$PAR):max(data$PAR)) {
+        pars <- c(pars, p)
+        prediction <- pmax * (((a * p) / (sqrt(1 + (a * p)^2))) * (1 / (sqrt(1 + (alpha * p)^2)^n)))
+        predictions <- c(
+          predictions,
+          prediction
+        )
+
+        if (prediction > popt) {
+          popt <- prediction
+        }
+      }
+```
 - **ik**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as $$i_k = \frac{1}{a}$$.
 - **iik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as $$i_{ik} = \frac{i_k \cdot popt}{pmax}$$.
 - **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$popt$$ and $$i_k$$ to $$i_{ik}$$, calculated as $$pmax\_popt\_and\_ik\_iik\_ratio = \frac{i_k}{i_{ik}}$$.
