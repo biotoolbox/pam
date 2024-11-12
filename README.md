@@ -22,13 +22,13 @@ Individual customisation may be necessary when reading data.
 - **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.
 - **p_ratio**: A numeric value representing the ratio of PS II / PSI used in the ETR calculation formula. Default is `0.5`. Calculated as:
 
-  $$P-Ratio = \frac{PPS2}{PPS1+2}$$
+  $$P–Ratio = \frac{PPS2}{PPS1+2}$$
 
 
 #### Details
 ETR values are calculated using the following formula:
 
-$$ETR = PAR \cdot ETR-Factor \cdot P-Ratio \cdot Yield$$
+$$ETR = PAR \cdot ETR–Factor \cdot P–Ratio \cdot Yield$$
 
 
 The function processes the provided CSV file by:
