@@ -97,7 +97,7 @@ $$I_k = \frac{1}{a}$$
 
 - **iik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition ($$I`_k$$). Calculated as:
 
-$$ $$I`_k$$ = \frac{I_k \cdot p_{opt}}{p_{max}}$$
+$$I`_k$$ $$ = \frac{I_k \cdot p_{opt}}{p_{max}}$$
 
 - **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$p_{opt}$$ and $$I_k$$ to $$I`_k$$ ($$p_{max} / p_{opt}$$). Calculated as:
 
