@@ -284,17 +284,17 @@ Returns a modified model result as a list with the following elements:
 - **a**: The obtained parameter $$a$$
 - **b**: The obtained parameter $$b$$
 - **c**: The obtained parameter $$c$$
-- **d**: Not applicable (set to `NA_real_` in this context).
+- **d**: Not available, here set to `NA_real_`
 - **alpha (s)**: A secondary parameter representing an alternative measure of the initial slope or ETR.
-- **beta**: Not applicable (set to `NA_real_` in this context).
+- **beta**: Not available, here set to `NA_real_`
 - **etrmax_with_photoinhibition (pm)**: Maximum ETR considering photoinhibition.
-- **etrmax_without_photoinhibition**: Not applicable (set to `NA_real_` in this context).
+- **etrmax_without_photoinhibition**: Not available, here set to `NA_real_`
 - **ik_with_photoinhibition (ik)**: Light intensity at which ETR is half of its maximum value.
-- **ik_without_photoinhibition**: Not applicable (set to `NA_real_` in this context).
+- **ik_without_photoinhibition**: Not available, here set to `NA_real_`
 - **im_with_photoinhibition (im)**: Maximum photosynthetic rate at light saturation, considering photoinhibition.
 - **w**: The sharpness of the peak.
-- **ib**: Not applicable (set to `NA_real_` in this context).
-- **etrmax_with_without_ratio**: Not applicable (set to `NA_real_` in this context).
+- **ib**: Not available, here set to `NA_real_`
+- **etrmax_with_without_ratio**: Not available, here set to `NA_real_`
 
 ### Details
 
@@ -326,15 +326,15 @@ Returns a modified model result as a list with the following elements:
 - **b**: obtained paramter `b`, here equal to `alpha`
 - **c**: obtained paramter `c`, here equal to `beta`
 - **d**: not available, here set to `NA_real_`
-- **alpha**: The initial slope of the light curve, taken over unchanged as `alpha`
-- **beta**: The photoinhibition of the light curve, taken over unchanged as `beta`
-- **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, calculated as:
+- **alpha**: The initial slope of the light curve, transfered unchanged as `alpha`
+- **beta**: The photoinhibition of the light curve, transfered unchanged as `beta`
+- **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, determined as:
 ```r
   etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
   etr_max_row <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ]
   etrmax_with_photoinhibition <- etr_max_row[[prediction_name]]
 ```
-- **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, taken over as: `etr_max`
+- **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, transfered as: `etr_max`
 - **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, calculated as:
 
 $$ik\\_with\\_photoinhibition = \frac{etrmax\\_with\\_photoinhibition}{alpha}$$
@@ -349,8 +349,8 @@ $$ik\\_without\\_photoinhibition = \frac{etrmax\\_without\\_photoinhibition}{alp
   etr_max_row <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ]
   im_with_photoinhibition <- etr_max_row[[PAR_name]]
 ```
-- **w**: not available, here set to `NA_real_`
-- **ib**: not available, here set to `NA_real_`
+- **w**: Not available, here set to `NA_real_`
+- **ib**: Not available, here set to `NA_real_`
 - **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`, calculated as: $$ {\text{etrmax\_with\_without\_ratio}} = \frac{\text{etrmax\_with\_photoinhibition}}{\text{etrmax\_without\_photoinhibition}} $$
 
 
