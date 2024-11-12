@@ -265,43 +265,6 @@ Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis thro
 
 Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
 
-### compare_regression_models_ETR_I and compare_regression_models_ETR_II
-
-This function compares different regression models.
-
-#### Parameters
-- **data_dir**: A character string specifying the directory where the input data files are located.
-
-#### Return
-A vector containing the total points assigned to each regression model based on their performance. Models are ranked based on the calculated deviation of the difference between observed and predicted values. Rating: 
-- 1st: 3 points
-- 2nd: 2 points
-- 3rd: 1 point
-- 4th: 0 points
-
-#### Details
-This function allows a straightforward comparison of the models: Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997). The results can guide users in selecting the most appropriate model for their data. If regression is not possible for a model, no points are awarded for the file for any of the models. Start values cannot be adjusted in this function.
-
-#### Example
-```r
-#raw data file directory
-data_dir_compare <- file.path(getwd(), "data")
-
-#compare regression models
-compare_regression_models_ETR_II <- compare_regression_models_ETR_II(data_dir_compare)
-print(compare_regression_models_ETR_II)
-```
-
-#### References
-Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
-
-Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from https://elischolar.library.yale.edu/journal_of_marine_research/1525.
-
-Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
-
-Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements*, p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
-
-Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. https://doi.org/10.1046/j.1469-8137.1997.00736.x
 
 ### eilers_peeters_modified
 
@@ -443,6 +406,44 @@ same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |ib         |NA     |ib     |NA           |NA       |
 |etrmax_with_without_ratio   |NA     |ps_pm_ratio  |etr_max_etrmax_with_photoinhibition_ratio |pmax_popt_and_ik_iik_ratio |
 
+### compare_regression_models_ETR_I and compare_regression_models_ETR_II
+
+This function compares different regression models.
+
+#### Parameters
+- **data_dir**: A character string specifying the directory where the input data files are located.
+
+#### Return
+A vector containing the total points assigned to each regression model based on their performance. Models are ranked based on the calculated deviation of the difference between observed and predicted values. Rating: 
+- 1st: 3 points
+- 2nd: 2 points
+- 3rd: 1 point
+- 4th: 0 points
+
+#### Details
+This function allows a straightforward comparison of the models: Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997). The results can guide users in selecting the most appropriate model for their data. If regression is not possible for a model, no points are awarded for the file for any of the models. Start values cannot be adjusted in this function.
+
+#### Example
+```r
+#raw data file directory
+data_dir_compare <- file.path(getwd(), "data")
+
+#compare regression models
+compare_regression_models_ETR_II <- compare_regression_models_ETR_II(data_dir_compare)
+print(compare_regression_models_ETR_II)
+```
+
+#### References
+Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
+
+Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from https://elischolar.library.yale.edu/journal_of_marine_research/1525.
+
+Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
+
+Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements*, p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
+
+Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. https://doi.org/10.1046/j.1469-8137.1997.00736.x
+
 
 
 ### plot_control()
@@ -503,7 +504,6 @@ test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
       list(color_eilers_peeters, color_platt, color_walsby, color_vollenweider)
     )
 ```
-![Alt text](test.jpg)
 
 
 ### write_model_result_csv
