@@ -240,7 +240,7 @@ This function generates a regression model based on  Walsby (1997) in a modified
 
 #### Parameters
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
-- **etr_max_start_value_walsby**: Numeric. The starting value for the parameter $$etr_{max}$$ in the model. Defaults to `etr_max_start_value_walsby_default`.
+- **etr_max_start_value_walsby**: Numeric. The starting value for the parameter $$ETR_{max}$$ in the model. Defaults to `etr_max_start_value_walsby_default`.
 - **alpha_start_value_walsby**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_walsby_default`.
 - **beta_start_value_walsby**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_walsby_default`.
 
@@ -248,14 +248,14 @@ This function generates a regression model based on  Walsby (1997) in a modified
 A list containing the following elements:
 - **etr_regression_data**: A `data.table` with the predicted values of ETR to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
-- **etr_max**: The maximum electron transport rate without photoinhibition.
-- **alpha**: The initial slope of the light curve.
-- **beta**: The photoinhibition of the light curve.
+- **etr_max**: The maximum electron transport rate without photoinhibition ($$ETR_max$$).
+- **alpha**: The initial slope of the light curve ($$\alpha$$).
+- **beta**: The photoinhibition of the light curve ($$\beta$$).
 
 #### Details
 This function uses non-linear least squares fitting to estimate the parameters for the Walsby model, which describes the relationship between PAR and ETR I. The model used is:
 
-$$ETR = etr_{max} \cdot \left(1 - e^{\left(-\frac{\alpha \cdot I}{etr_{max}}\right)}\right) + \beta \cdot I$$
+$$ETR = ETR_{max} \cdot \left(1 - e^{\left(-\frac{\alpha \cdot I}{ETR_{max}}\right)}\right) + \beta \cdot I$$
 
 It is valid: $$I = PAR$$
 
