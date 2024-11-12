@@ -137,10 +137,10 @@ This function generates a regression model based on  Platt (1980). Original nami
 A list containing the following elements:
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
-- **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$).
-- **alpha**: The initial slope of the light curve ($$\alpha$$).
-- **beta**: The photoinhibition of the light curve ($$\beta$$).
-- **pm**: The maximum electron transport rate with photoinhibition, calculated as $$pm = p_s \cdot \left(\frac{\alpha}{\alpha + \beta}\right) \cdot \left(\left(\frac{\beta}{\alpha + \beta}\right)^{\frac{\beta}{\alpha}}\right)$$.
+- **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$). Defined as a regression parameter. 
+- **alpha**: The initial slope of the light curve ($$\alpha$$). Defined as a regression parameter. 
+- **beta**: The photoinhibition of the light curve ($$\beta$$). Defined as a regression parameter. 
+- **pm**: The maximum electron transport rate with photoinhibition ($$P_m$$). calculated as $$pm = p_s \cdot \left(\frac{\alpha}{\alpha + \beta}\right) \cdot \left(\left(\frac{\beta}{\alpha + \beta}\right)^{\frac{\beta}{\alpha}}\right)$$.
 - **ik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as $$ik = \frac{pm}{\alpha}$$.
 - **is**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as $$is = \frac{p_s}{\alpha}$$.
 - **im**: The PAR at which the maximum electron transport rate is achieved with photoinhibition, calculated as $$im = \left(\frac{p_s}{\alpha}\right) \cdot \log\left(\frac{\alpha + \beta}{\beta}\right)$$.
