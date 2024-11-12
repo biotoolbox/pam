@@ -351,8 +351,9 @@ $$ik\\_without\\_photoinhibition = \frac{etrmax\\_without\\_photoinhibition}{alp
 ```
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Not available, here set to `NA_real_`
-- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`, calculated as: $$ {\text{etrmax\_with\_without\_ratio}} = \frac{\text{etrmax\_with\_photoinhibition}}{\text{etrmax\_without\_photoinhibition}} $$
+- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
 
+$${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
 
 ### Details
 
