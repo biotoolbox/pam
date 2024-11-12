@@ -91,7 +91,10 @@ A list containing the following elements:
         }
       }
 ```
-- **ik**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as $$i_k = \frac{1}{a}$$.
+- **ik**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition ($$I_k$$). Calculated as:
+
+$$I_k = \frac{1}{a}$$
+
 - **iik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as $$i_{ik} = \frac{i_k \cdot popt}{pmax}$$.
 - **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$popt$$ and $$i_k$$ to $$i_{ik}$$, calculated as $$pmax\_popt\_and\_ik\_iik\_ratio = \frac{i_k}{i_{ik}}$$.
 
