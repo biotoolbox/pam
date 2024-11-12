@@ -20,8 +20,10 @@ Individual customisation may be necessary when reading data.
 - **csv_path**: A string representing the file path to the CSV file.
 - **remove_recovery**: Automatic removal of recovery measurements after the actual Pi curve for an accurate regression. Default is `TRUE`.
 - **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.
-- **p_ratio**: A numeric value representing the ratio of PS II / PSI used in the ETR calculation formula. Default is `0.5`.  
-  $$P\text{-Ratio} = \frac{\text{PPS2}}{\text{PPS1+2}}$$
+- **p_ratio**: A numeric value representing the ratio of PS II / PSI used in the ETR calculation formula. Default is `0.5`. Calculated as:
+
+  $$P-Ratio = \frac{PPS2}{PPS1+2}$$
+
 
 #### Details
 ETR values are calculated using the following formula:
@@ -316,12 +318,12 @@ Returns a modified model result as a list with the following elements:
   etr_max_row <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ]
   etrmax_with_photoinhibition <- etr_max_row[[prediction_name]]
 ```
-- **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, taken over as `etr_max`
-- **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, calculated as
+- **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, taken over as: `etr_max`
+- **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, calculated as:
 
 $$ik\\_with\\_photoinhibition = \frac{etrmax\\_with\\_photoinhibition}{alpha}$$
 
-- **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, calculated as
+- **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, calculated as:
 
 $$ik\\_without\\_photoinhibition = \frac{etrmax\\_without\\_photoinhibition}{alpha}$$
 
