@@ -101,7 +101,7 @@ $$I_k^\prime = \frac{I_k \cdot p_{opt}}{p_{max}}$$
 
 - **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$p_{opt}$$ and $$I_k$$ to $$I_k^\prime$$ ($$p_{max} / p_{opt}$$). Calculated as:
 
-$$pmax\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I_k^\prime}$$
+$$p_max\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I_k^\prime}$$
 
 #### Details
 This function uses non-linear least squares fitting to estimate the parameters for the Vollenweider model, which describes the relationship between PAR and ETR. The model used is:
@@ -137,9 +137,9 @@ This function generates a regression model based on  Platt (1980). Original nami
 A list containing the following elements:
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
-- **ps**: The maximum electron transport rate without photoinhibition.
-- **alpha**: The initial slope of the light curve.
-- **beta**: The photoinhibition of the light curve.
+- **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$).
+- **alpha**: The initial slope of the light curve ($$\alpha$$).
+- **beta**: The photoinhibition of the light curve ($$\beta$$).
 - **pm**: The maximum electron transport rate with photoinhibition, calculated as $$pm = p_s \cdot \left(\frac{\alpha}{\alpha + \beta}\right) \cdot \left(\left(\frac{\beta}{\alpha + \beta}\right)^{\frac{\beta}{\alpha}}\right)$$.
 - **ik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as $$ik = \frac{pm}{\alpha}$$.
 - **is**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as $$is = \frac{p_s}{\alpha}$$.
