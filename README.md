@@ -285,14 +285,14 @@ Returns a modified model result as a list with the following elements:
 - **b**: The obtained parameter $$b$$
 - **c**: The obtained parameter $$c$$
 - **d**: Not available, here set to `NA_real_`
-- **alpha (s)**: A secondary parameter representing an alternative measure of the initial slope or ETR.
+- **alpha**: The initial slope of the light curve, transfered unchanged as `s`
 - **beta**: Not available, here set to `NA_real_`
-- **etrmax_with_photoinhibition (pm)**: Maximum ETR considering photoinhibition.
+- **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, transfered as `pm`
 - **etrmax_without_photoinhibition**: Not available, here set to `NA_real_`
-- **ik_with_photoinhibition (ik)**: Light intensity at which ETR is half of its maximum value.
+- **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, transfered as `ik`
 - **ik_without_photoinhibition**: Not available, here set to `NA_real_`
-- **im_with_photoinhibition (im)**: Maximum photosynthetic rate at light saturation, considering photoinhibition.
-- **w**: The sharpness of the peak.
+- **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, transfered as`im`
+- **w**: The sharpness of the peak, transfered as `w`
 - **ib**: Not available, here set to `NA_real_`
 - **etrmax_with_without_ratio**: Not available, here set to `NA_real_`
 
