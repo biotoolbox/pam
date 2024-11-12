@@ -28,7 +28,7 @@ Individual customisation may be necessary when reading data.
 #### Details
 ETR values are calculated using the following formula:
 
-$$ETR = PAR \cdot ETR–Factor \cdot P–Ratio \cdot Yield$$
+$$ETR = PAR \cdot ETR{–}Factor \cdot P–Ratio \cdot Yield$$
 
 
 The function processes the provided CSV file by:
