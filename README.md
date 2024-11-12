@@ -163,7 +163,7 @@ $$I_b = \frac{P_s}{\beta}$$
 #### Details
 This function uses non-linear least squares fitting to estimate the parameters for the Platt model, which describes the relationship between PAR and ETR I. The model used is:
 
-$$p = p_s \cdot \left(1 - \frac{e^{-\alpha I}}{p_s}\right) \cdot \left(\frac{e^{-\beta I}}{p_s}\right)$$
+$$P = P_s \cdot \left(1 - \frac{e^{-\alpha I}}{P_s}\right) \cdot \left(\frac{e^{-\beta I}}{P_s}\right)$$
 
 It is valid: $$I = PAR; p = ETR$$
 
