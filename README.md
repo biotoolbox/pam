@@ -248,7 +248,7 @@ This function generates a regression model based on  Walsby (1997) in a modified
 A list containing the following elements:
 - **etr_regression_data**: A `data.table` with the predicted values of ETR to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
-- **etr_max**: The maximum electron transport rate without photoinhibition ($$ETR_max$$).
+- **etr_max**: The maximum electron transport rate without photoinhibition ($$ETR_{max}$$).
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
 - **beta**: The photoinhibition of the light curve ($$\beta$$).
 
