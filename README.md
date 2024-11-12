@@ -101,7 +101,7 @@ $$I_k^\prime = \frac{I_k \cdot p_{opt}}{p_{max}}$$
 
 - **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$p_{opt}$$ and $$I_k$$ to $$I_k^\prime$$ ($$p_{max} / p_{opt}$$). Calculated as:
 
-$$p_max\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I_k^\prime}$$
+$$\\p_max\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I_k^\prime}$$
 
 #### Details
 This function uses non-linear least squares fitting to estimate the parameters for the Vollenweider model, which describes the relationship between PAR and ETR. The model used is:
@@ -140,11 +140,25 @@ A list containing the following elements:
 - **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$). 
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
 - **beta**: The photoinhibition of the light curve ($$\beta$$). 
-- **pm**: The maximum electron transport rate with photoinhibition ($$P_m$$). calculated as $$P_m = P_s \cdot \left(\frac{\alpha}{\alpha + \beta}\right) \cdot \left(\left(\frac{\beta}{\alpha + \beta}\right)^{\frac{\beta}{\alpha}}\right)$$.
-- **ik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition ($$I_k$$). Calculated as $$I_k = \frac{P_m}{\alpha}$$.
-- **is**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition ($$I_s$$). Calculated as $$I_s = \frac{P_s}{\alpha}$$.
-- **im**: The PAR at which the maximum electron transport rate is achieved with photoinhibition ($$I_m$$). Calculated as $$I_m = \left(\frac{P_s}{\alpha}\right) \cdot \log\left(\frac{\alpha + \beta}{\beta}\right)$$.
-- **ib**: ($$I_b$$) Calculated as $$I_b = \frac{P_s}{\beta}$$.
+- **pm**: The maximum electron transport rate with photoinhibition ($$P_m$$). Calculated as:
+
+$$P_m = P_s \cdot \left(\frac{\alpha}{\alpha + \beta}\right) \cdot \left(\left(\frac{\beta}{\alpha + \beta}\right)^{\frac{\beta}{\alpha}}\right)$$
+
+- **ik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition ($$I_k$$). Calculated as:
+
+$$I_k = \frac{P_m}{\alpha}$$
+
+- **is**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition ($$I_s$$). Calculated as:
+
+$$I_s = \frac{P_s}{\alpha}$$
+
+- **im**: The PAR at which the maximum electron transport rate is achieved with photoinhibition ($$I_m$$). Calculated as:
+
+$$I_m = \left(\frac{P_s}{\alpha}\right) \cdot \log\left(\frac{\alpha + \beta}{\beta}\right)$$
+
+- **ib**: ($$I_b$$) Calculated as:
+
+$$I_b = \frac{P_s}{\beta}$$
 
 #### Details
 This function uses non-linear least squares fitting to estimate the parameters for the Platt model, which describes the relationship between PAR and ETR I. The model used is:
