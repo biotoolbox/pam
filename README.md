@@ -59,7 +59,7 @@ This function generates a regression model based on Vollenweider (1965). Origina
 
 #### Parameters
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
-- **etr_type**: A character string specifying the column name of the response variable (in this case: ETR I) to be used in the model.
+- **etr_type**: A character string specifying the column name of the response variable (ETR I or ETR II) to be used in the model.
 - **pmax_start_value_vollenweider**: Numeric. The starting value for the parameter $$p_{max}$$ in the model. Defaults to `pmax_start_values_vollenweider_default`.
 - **a_start_value_vollenweider**: Numeric. The starting value for the parameter $$a$$ in the model. Defaults to `a_start_values_vollenweider_default`.
 - **alpha_start_value**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_values_vollenweider_default`.
@@ -67,9 +67,9 @@ This function generates a regression model based on Vollenweider (1965). Origina
 
 #### Return
 A list containing the following elements:
-- **etr_regression_data**: A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.
+- **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
-- **pmax**: The maximum electron transport rate without photoinhibition.
+- **pmax**: The maximum electron transport rate without photoinhibition ($$p_max$$).
 - **a**: The obtained parameter $$a$$.
 - **alpha**: The obtained parameter $$\alpha$$.
 - **n**: The obtained parameter $$n$$.
