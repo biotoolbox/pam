@@ -161,7 +161,7 @@ $$I_m = \left(\frac{P_s}{\alpha}\right) \cdot \log\left(\frac{\alpha + \beta}{\b
 $$I_b = \frac{P_s}{\beta}$$
 
 #### Details
-This function uses non-linear least squares fitting to estimate the parameters for the Platt model, which describes the relationship between PAR and ETR I. The model used is:
+This function uses non-linear least squares fitting to estimate the parameters for the Platt model, which describes the relationship between PAR and ETR. The model used is:
 
 $$P = P_s \cdot \left(1 - \frac{e^{-\alpha \cdot I}}{P_s}\right) \cdot \left(\frac{e^{-\beta \cdot I}}{P_s}\right)$$
 
@@ -196,11 +196,25 @@ A list containing the following elements:
 - **a**: The obtained parameter $$a$$.
 - **b**: The obtained parameter $$b$$.
 - **c**: The obtained parameter $$c$$.
-- **pm**: The maximum electron transport rate, calculated as $$pm = \frac{1}{b + 2 \sqrt{a \cdot c}}$$.
-- **s**: The initial slope of the light curve, calculated as $$s = \frac{1}{c}$$.
-- **ik**: PAR where the transition point from light limitation to light saturation is achieved, calculated as $$ik = \frac{c}{b + 2 \sqrt{a \cdot c}}$$.
-- **im**: The PAR at which the maximum electron transport rate is achieved, calculated as $$im = \sqrt{\frac{c}{a}}$$.
-- **w**: The sharpness of the peak, calculated as $$w = \frac{b}{\sqrt{a \cdot c}}$$.
+- **pm**: The maximum electron transport rate ($$p_m$$). Calculated as:
+
+$$p_m = \frac{1}{b + 2 \sqrt{a \cdot c}}$$
+
+- **s**: The initial slope of the light curve ($$s$$). Calculated as:
+
+$$s = \frac{1}{c}$$
+
+- **ik**: PAR where the transition point from light limitation to light saturation is achieved ($$I_k$$). Calculated as:
+
+$$I_k = \frac{c}{b + 2 \sqrt{a \cdot c}}$$
+
+- **im**: The PAR at which the maximum electron transport rate is achieved ($$I_m$$). Calculated as:
+
+$$I_m = \sqrt{\frac{c}{a}}$$
+
+- **w**: The sharpness of the peak ($$w$$). Calculated as:
+
+$$w = \frac{b}{\sqrt{a \cdot c}}$$.
 
 #### Details
 This function uses non-linear least squares fitting to estimate the parameters for the Eilers-Peeters model, which describes the relationship between PAR and ETR. The model used is:
