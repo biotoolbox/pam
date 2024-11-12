@@ -503,9 +503,7 @@ test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
       list(color_eilers_peeters, color_platt, color_walsby, color_vollenweider)
     )
 ```
-![Alt text](tests/testthat/test.jpg)
-
-<img src="tests/testthat/test.jpg" alt="Alt text" width="300"/>
+![Alt text](test.jpg)
 
 
 ### write_model_result_csv
