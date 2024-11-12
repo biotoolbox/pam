@@ -33,10 +33,10 @@ $$ ETR = PAR \cdot \textit{ETR–Factor} \cdot P–Ratio \cdot Yield $$
 
 The function processes the provided CSV file by:
 - Reading the CSV data using `read.csv()`.
-- Filtering rows where the column `ID` equals "SP".
+- Filtering rows where the column `ID` equals `SP`.
 - Combining the `Date` and `Time` columns to create a new `DateTime` column.
 - Calculating the ETR values for both `Y.I.` and `Y.II.` using the function `calc_etr()`.
-- Removing rows after the recovery period if `remove_recovery = TRUE`.
+- Removing rows from the recovery period if `remove_recovery = TRUE`.
 
 #### Return
 A `data.table` containing the processed data with additional columns for recalculated ETR values.
@@ -53,7 +53,7 @@ p_ratio = 0.5)
 - Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
 
 
-### vollenweider_generate_regression_ETR_I and vollenweider_generate_regression_ETR_II
+### vollenweider_generate_regression_ETR_I() and vollenweider_generate_regression_ETR_II()
 
 This function generates a regression model based on Vollenweider (1965). Original naming conventions from the publication are used.
 
@@ -123,7 +123,7 @@ result_vollenweider_ETR_II <- vollenweider_generate_regression_ETR_II(data,
 #### References
 Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements*, p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 
-### platt_generate_regression_ETR_I and platt_generate_regression_ETR_II
+### platt_generate_regression_ETR_I() and platt_generate_regression_ETR_II()
 
 This function generates a regression model based on  Platt (1980). Original naming conventions from the publication are used.
 
@@ -234,7 +234,7 @@ c_start_value = 5)
 #### References
 Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
 
-### walsby_generate_regression_ETR_I and walsby_generate_regression_ETR_II
+### walsby_generate_regression_ETR_I() and walsby_generate_regression_ETR_II()
 
 This function generates a regression model based on  Walsby (1997) in a modified version without the respiration term. Naming conventions from Romoth (2019) are used. ETRmax is calculated without taking photoinhibition into account.
 
@@ -266,7 +266,7 @@ Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis thro
 Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
 
 
-### eilers_peeters_modified
+### eilers_peeters_modified()
 
 This function adds parameters that were not originally included in the Eilers and Peeters (1988) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
 
@@ -307,7 +307,7 @@ This function validates the `model_result` input, extracts relevant parameters f
 modified_result <- eilers_peeters_modified(model_result_eilers_peeters)
 ```
 
-### walsby_modified
+### walsby_modified()
 
 This function adds parameters that were not originally included in the Walsby (1997) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
 
@@ -406,7 +406,7 @@ same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |ib         |NA     |ib     |NA           |NA       |
 |etrmax_with_without_ratio   |NA     |ps_pm_ratio  |etr_max_etrmax_with_photoinhibition_ratio |pmax_popt_and_ik_iik_ratio |
 
-### compare_regression_models_ETR_I and compare_regression_models_ETR_II
+### compare_regression_models_ETR_I() and compare_regression_models_ETR_II()
 
 This function compares different regression models.
 
@@ -469,7 +469,7 @@ plot_control_eilers_peeters_ETR_II <- plot_control(
 print(plot_control_eilers_peeters_ETR_II)
 ```
 
-### combo_control_plot
+### combo_control_plot()
 
 The `combo_control_plot` function generates a combined plot of electron transport rate (ETR) data and regression model predictions, along with a customized table summarizing the parameters for each model.
 
