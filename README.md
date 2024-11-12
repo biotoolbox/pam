@@ -95,13 +95,13 @@ A list containing the following elements:
 
 $$I_k = \\frac{1}{a}$$
 
-- **iik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition ($$I`_k$$). Calculated as:
+- **iik**: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition ($$I_k^\prime$$). Calculated as:
 
 $$I_k^\prime = \frac{I_k \cdot p_{opt}}{p_{max}}$$
 
 - **pmax_popt_and_ik_iik_ratio**: Ratio of $$p_{max}$$ to $$p_{opt}$$ and $$I_k$$ to $$I_k^\prime$$ ($$p_{max} / p_{opt}$$). Calculated as:
 
-$$pmax\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I`_k}$$
+$$pmax\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I_k^\prime}$$
 
 #### Details
 This function uses non-linear least squares fitting to estimate the parameters for the Vollenweider model, which describes the relationship between PAR and ETR. The model used is:
