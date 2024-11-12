@@ -506,7 +506,7 @@ test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
 ```
 
 
-### write_model_result_csv
+### write_model_result_csv()
 This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
 
 #### Parameters
