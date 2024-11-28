@@ -43,7 +43,11 @@ combo_control_plot <- function(
   plot <- ggplot(data, aes(x = data$PAR, y = get(etr_type))) +
     geom_point() +
     geom_point(data = data, aes(y = get(yield) * max_etr)) +
-    geom_line(data = data, aes(y = get(yield) * max_etr))
+    geom_line(data = data, aes(y = get(yield) * max_etr)) +
+    labs(x = par_label, y = etr_label, title = eval(title)) +
+    scale_y_continuous(
+      sec.axis = sec_axis(~ . / max_etr, name = "Yield")
+    )
 
   custom_theme <- ttheme_minimal(
     core = list(
