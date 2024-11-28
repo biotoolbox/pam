@@ -265,6 +265,57 @@ Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis thro
 
 Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
 
+### vollenweider_modified()
+
+This function adds parameters that were not originally included in the Vollenweider (1965) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
+
+### Parameters
+
+- **model_result**: A list containing the results of the model, including parameters such as `pmax`, `alpha`, and `ik`.
+
+### Return
+
+Returns a modified model result as a list with the following elements:
+
+- **etr_type**: ETR Type based on the model result.
+- **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
+- **sdiff**: The difference between observed and predicted ETR values.
+- **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
+- **b**: obtained paramter `b`, transfered as `a`
+- **c**: obtained paramter `c`, here transfered as `alpha`
+- **d**: obtained paramter `c`, here transfered as `n`
+- **alpha**: The initial slope of the light curve, calculated as:
+
+$${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_without\\_photoinhibition}}$$
+
+
+- **beta**: Not available, here set to `NA_real_`
+- **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, transfered as `popt`
+- **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, transfered as: `pmax`
+- **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, transfered as: `iik`
+- **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, transfered as: `ik`
+- **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, determined as:
+```r
+ etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
+  im_with_photoinhibition <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ][[PAR_name]]
+```
+- **w**: Not available, here set to `NA_real_`
+- **ib**: Transfered unchange as: `ib`
+- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
+
+$${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
+
+### Details
+
+This function validates the `model_result` input and processes relevant parameters for the Vollenweider model, creating a structured list using `create_modified_model_result`. This standardized output allows for consistent analysis and comparison across different models.
+
+### Examples
+
+```r
+modified_result_vollenweider <- vollenweider_modified(model_result_vollenweider)
+```
+
+
 
 ### eilers_peeters_modified()
 
@@ -367,7 +418,7 @@ modified_result <- walsby_modified(model_result_walsby)
 
 ### platt_modified()
 
-This function adds parameters that were not originally included in the Platt (1997) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
+This function adds parameters that were not originally included in the Platt (1980) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
 
 ### Parameters
 
