@@ -597,7 +597,7 @@ test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
     )
 ```
 
-![combo Plott] (test_combo_control_plot.jpg)
+![combo Plot](test_combo_control_plot.jpg)
 
 
 ### write_model_result_csv()
