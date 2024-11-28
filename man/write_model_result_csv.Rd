@@ -7,27 +7,27 @@
 write_model_result_csv(dest_dir, name, data, model_result)
 }
 \arguments{
-\item{dest_dir}{A character string specifying the directory where CSV files 
+\item{dest_dir}{A character string specifying the directory where CSV files
 will be saved.}
 
 \item{name}{A character string specifying the base name for the output files.}
 
 \item{data}{A data frame containing the raw input data used in the model.}
 
-\item{model_result}{A list containing the model results, including parameter 
+\item{model_result}{A list containing the model results, including parameter
 values and regression data.}
 }
 \description{
-This function writes the raw data, regression data, and model parameters 
+This function writes the raw data, regression data, and model parameters
 into separate CSV files.
 }
 \details{
 Three CSV files are created:
 \enumerate{
   \item \code{name_raw_data.csv}: contains the original raw data.
-  \item \code{name_regression_data.csv}: contains the regression data with 
+  \item \code{name_regression_data.csv}: contains the regression data with
   predictions for ETR.
-  \item \code{name_model_result.csv}: contains the parameter values from the 
+  \item \code{name_model_result.csv}: contains the parameter values from the
   model results (excluding regression data).
 }
 }
@@ -41,6 +41,6 @@ write_model_result_csv(
 )
 }
 \seealso{
-\code{\link{create_modified_model_result}}, 
+\code{\link{create_modified_model_result}},
 \code{\link{plot_control}}
 }

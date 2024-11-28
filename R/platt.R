@@ -2,52 +2,37 @@ platt_default_start_value_alpha <- 0.3
 platt_default_start_value_beta <- 0.01
 platt_default_start_value_ps <- 30
 
-#' @title Generate Regression for ETR I using the Platt Model (1980)
+#' Platt Regression for ETR I
 #'
-#' @description This function generates a regression model based on the Platt
-#' formula. Original naming conventions from the publication are used.
+#' Fits the Platt (1980) regression model using original naming conventions.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
-#' @param etr_type A character string specifying the column name of the
-#' response variable (in this case: ETR I) to be used in the model.
-#' @param alpha_start_value_platt Numeric. The starting value for the parameter \eqn{alpha}
-#' in the model. Defaults to \code{alpha_start_value_platt_default}.
-#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta}
-#' in the model. Defaults to \code{beta_start_value_platt_default}.
-#' @param ps_start_value_platt Numeric. The starting value for the parameter \eqn{ps}
-#' in the model. Defaults to \code{ps_start_value_platt_default}.
+#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param alpha_start_value_platt Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.
+#' @param beta_start_value_platt Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.
+#' @param ps_start_value_platt Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.
 #'
-#' @return A list containing the following elements:
-#' \describe{
-#'   \item{etr_regression_data}{A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.}
-#'   \item{sdiff}{The deviation between the actual and predicted ETR values.}
-#'   \item{ps}{The maximum electron transport rate without photoinhibition.}
-#'   \item{alpha}{The initial slope of the light curve.}
-#'   \item{beta}{The photoinhibition of the light curve.}
-#'   \item{pm}{The maximum electron transport rate with photoinhibition, calculated as \eqn(pm = ps * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha)))}
-#'   \item{ik}{PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as \eqn(ik = pm / alpha)}
-#'   \item{is}{PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as \eqn(is = ps / alpha)}
-#'   \item{im}{The PAR at which the maximum electron transport rate is achieved with photoinhibition, calculated as \eqn(im = (ps / alpha) * log((alpha + beta) / beta)).}
-#'   \item{ib}{ib, calculated as \eqn(ib = ps / beta).}
+#' @return A list containing:
+#' \itemize{
+#'   \item \code{etr_regression_data}: Predicted ETR values.
+#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
+#'   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
+#'   \item \code{beta}: Photoinhibition (\eqn{\beta}).
+#'   \item \code{pm}: Maximum electron transport rate with photoinhibition (\eqn{P_m}). 
+#'   \item \code{ik}: Transition PAR with photoinhibition (\eqn{I_k}).
+#'   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
+#'   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
+#'   \item \code{ib}: (\eqn{I_b})
 #' }
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters
-#' for the Platt model, which describes the relationship between PAR and
-#' ETR I. The model used is:
+#' A detailed documentation can be found in the README.
 #'
-#' \eqn{p = ps * (1 - e^(-alpha * I) / ps) * (e^(-beta * I) / ps)}
+#' @references{
+#'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.} 
+#'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 #'
-#' It is valid: I = PAR; p = ETR
-#'
-#' @references
-#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.
-#' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
-
-#'
-#' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
-#' @importFrom minpack.lm nlsLM
-#' @importFrom data.table data.table
+#' }
 #' @export
 platt_generate_regression_ETR_I <- function(
     data,
@@ -63,52 +48,37 @@ platt_generate_regression_ETR_I <- function(
   ))
 }
 
-#' @title Generate Regression for ETR II using the Platt Model (1980)
+#' Platt Regression for ETR II
 #'
-#' @description This function generates a regression model based on the Platt
-#' formula. Original naming conventions from the publication are used.
+#' Fits the Platt (1980) regression model using original naming conventions.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
-#' @param etr_type A character string specifying the column name of the
-#' response variable (in this case: ETR II) to be used in the model.
-#' @param alpha_start_value_platt Numeric. The starting value for the parameter \eqn{alpha}
-#' in the model. Defaults to \code{alpha_start_value_platt_default}.
-#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta}
-#' in the model. Defaults to \code{beta_start_value_platt_default}.
-#' @param ps_start_value_platt Numeric. The starting value for the parameter \eqn{ps}
-#' in the model. Defaults to \code{ps_start_value_platt_default}.
+#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param alpha_start_value_platt Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.
+#' @param beta_start_value_platt Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.
+#' @param ps_start_value_platt Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.
 #'
-#' @return A list containing the following elements:
-#' \describe{
-#'   \item{etr_regression_data}{A `data.table` with the predicted values of ETR II to each PAR based on the fitted model.}
-#'   \item{sdiff}{The deviation between the actual and predicted ETR values.}
-#'   \item{ps}{The maximum electron transport rate without photoinhibition.}
-#'   \item{alpha}{The initial slope of the light curve.}
-#'   \item{beta}{The photoinhibition of the light curve.}
-#'   \item{pm}{The maximum electron transport rate with photoinhibition, calculated as \eqn{(pm = ps * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha)))}.}
-#'   \item{ik}{PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as \eqn{(ik = pm / alpha)}.}
-#'   \item{is}{PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as \eqn(is = ps / alpha)}
-#'   \item{im}{The PAR at which the maximum electron transport rate is achieved with photoinhibition, calculated as \eqn(im = (ps / alpha) * log((alpha + beta) / beta)).}
-#'   \item{ib}{ib, calculated as \eqn(ib = ps / beta).}
+#' @return A list containing:
+#' \itemize{
+#'   \item \code{etr_regression_data}: Predicted ETR values.
+#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
+#'   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
+#'   \item \code{beta}: Photoinhibition (\eqn{\beta}).
+#'   \item \code{pm}: Maximum electron transport rate with photoinhibition (\eqn{P_m}). 
+#'   \item \code{ik}: Transition PAR with photoinhibition (\eqn{I_k}).
+#'   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
+#'   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
+#'   \item \code{ib}: (\eqn{I_b})
 #' }
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters
-#' for the Platt model, which describes the relationship between PAR and
-#' ETR. The model used is:
+#' A detailed documentation can be found in the README.
 #'
-#' \eqn{p = ps * (1 - e^(-alpha * I) / ps) * (e^(-beta * I) / ps)}
+#' @references{
+#'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.} 
+#'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 #'
-#' It is valid: I = PAR; p = ETR
-#'
-#' @references
-#' Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.
-#' Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
-
-#'
-#' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
-#' @importFrom minpack.lm nlsLM
-#' @importFrom data.table data.table
+#' }
 #' @export
 platt_generate_regression_ETR_II <- function(
     data,

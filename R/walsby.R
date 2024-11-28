@@ -2,55 +2,37 @@ walsby_default_start_value_etr_max <- 100
 walsby_default_start_value_alpha <- 0.4
 walsby_default_start_value_beta <- -0.01
 
-#' @title Generate Regression for ETR I using the Walsby Model (1997) modified by Romoth (2019)
+#' Walsby Regression for ETR I
 #'
-#' @description This function generates a regression model based on the Walsby Model
-#' formula in a modified version without respiration term.
-#' Naming conventions from Romoth (2019) are used. ETRmax is calculated without
-#' taking photoinhibition into account.
+#' Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions. 
+#' Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
-#' @param etr_type A character string specifying the column name of the
-#' response variable (in this case: ETR I) to be used in the model.
-#' @param etr_max_start_value_walsby Numeric. The starting value for the parameter \eqn{etr_max}
-#' in the model. Defaults to \code{etr_max_start_value_walsby_default}.
-#' @param alpha_start_value_walsby Numeric. The starting value for the parameter \eqn{alpha}
-#' in the model. Defaults to \code{alpha_start_value_walsby_default}.
-#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta}
-#' in the model. Defaults to \code{beta_start_value_walsby_default}.
-#'
-#' @return A list containing the following elements:
-#' \describe{
-#'   \item{etr_regression_data}{A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.}
-#'   \item{sdiff}{The deviation between the actual and predicted ETR values.}
-#'   \item{etr_max}{The maximum electron transport rate without photoinhibition.}
-#'   \item{alpha}{The initial slope of the light curve.}
-#'   \item{beta}{The photoinhibition of the light curve.}
-#' }
+#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param etr_max_start_value_walsby Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.
+#' @param alpha_start_value_walsby Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.
+#' @param beta_start_value_walsby Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters
-#' for the Platt model, which describes the relationship between PAR and
-#' ETR I. The model used is:
+#' A detailed documentation can be found in the README.
+#' 
+#' @return A list containing:
+#' \itemize{
+#'   \item \code{etr_regression_data}: Predicted ETR values.
+#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
+#'   \item \code{alpha}: Initial slope (\eqn{\alpha}).
+#'   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
+#' }
 #'
-#' \eqn{ETR = etr_max * (1 - e^((-alpha * I) / etr_max)) + beta * I}
-#'
-#' It is valid: I = PAR
-#'
-#' @references
-#' Walsby, A. E. (2007). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
-#' *New Phytologist*, 173(1), 95-105. https://doi.org/10.1111/j.1469-8137.2006.01982.x
-
-#'
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
-#'
-#'
-#' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
-#' @importFrom minpack.lm nlsLM
-#' @importFrom data.table data.table
-#' @export
+#' @references{
+#'   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. 
+#'   \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
+#' 
+#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
+#'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea. 
+#'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
+#' }
+#' @export 
 walsby_generate_regression_ETR_I <- function(
     data,
     etr_max_start_value = walsby_default_start_value_etr_max,
@@ -67,55 +49,37 @@ walsby_generate_regression_ETR_I <- function(
   )
 }
 
-#' @title Generate Regression for ETR II using the Walsby Model (1997) modified by Romoth (2019)
+#' Walsby Regression for ETR II
 #'
-#' @description This function generates a regression model based on the Walsby Model
-#' formula in a modified version without respiration term.
-#' Naming conventions from Romoth (2019) are used. ETRmax is calculated without
-#' taking photoinhibition into account.
+#' Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions. 
+#' Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
-#' @param etr_type A character string specifying the column name of the
-#' response variable (in this case: ETR II) to be used in the model.
-#' @param etr_max_start_value_walsby Numeric. The starting value for the parameter \eqn{etr_max}
-#' in the model. Defaults to \code{etr_max_start_value_walsby_default}.
-#' @param alpha_start_value_walsby Numeric. The starting value for the parameter \eqn{alpha}
-#' in the model. Defaults to \code{alpha_start_value_walsby_default}.
-#' @param beta_start_value_platt Numeric. The starting value for the parameter \eqn{beta}
-#' in the model. Defaults to \code{beta_start_value_walsby_default}.
-#'
-#' @return A list containing the following elements:
-#' \describe{
-#'   \item{etr_regression_data}{A `data.table` with the predicted values of ETR II to each PAR based on the fitted model.}
-#'   \item{sdiff}{The deviation between the actual and predicted ETR values.}
-#'   \item{etr_max}{The maximum electron transport rate without photoinhibition.}
-#'   \item{alpha}{The initial slope of the light curve.}
-#'   \item{beta}{The photoinhibition of the light curve.}
-#' }
+#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param etr_max_start_value_walsby Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.
+#' @param alpha_start_value_walsby Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.
+#' @param beta_start_value_walsby Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters
-#' for the Platt model, which describes the relationship between PAR and
-#' ETR I. The model used is:
+#' A detailed documentation can be found in the README.
+#' 
+#' @return A list containing:
+#' \itemize{
+#'   \item \code{etr_regression_data}: Predicted ETR values.
+#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
+#'   \item \code{alpha}: Initial slope (\eqn{\alpha}).
+#'   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
+#' }
 #'
-#' \eqn{ETR = etr_max * (1 - e^((-alpha * I) / etr_max)) + beta * I}
-#'
-#' It is valid: I = PAR
-#'
-#' @references
-#' Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis
-#' through time and depth in a water column. *Journal of Plankton Research*,
-#' 19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487
-#'
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
-#' Acclimation limits of *Fucus evanescens* along the salinity gradient of the
-#' southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
-#'
-#'
-#' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
-#' @importFrom minpack.lm nlsLM
-#' @importFrom data.table data.table
-#' @export
+#' @references{
+#'   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. 
+#'   \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
+#' 
+#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
+#'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea. 
+#'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
+#' }
+#' @export 
 walsby_generate_regression_ETR_II <- function(
     data,
     etr_max_start_value = walsby_default_start_value_etr_max,

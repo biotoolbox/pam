@@ -4,7 +4,7 @@
 \alias{plot_control}
 \title{Control Plot}
 \usage{
-plot_control(data, model_result, title, color)
+plot_control(data, model_result, title, color = "black")
 }
 \arguments{
 \item{data}{A `data.table` containing the original ETR and yield data for the plot.}

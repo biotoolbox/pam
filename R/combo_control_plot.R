@@ -1,3 +1,19 @@
+#' Combined ETR Plot and Summary Table
+#'
+#' Generates a plot of ETR data with different regression model predictions and a summary table.
+#'
+#' @param title Character. Plot title.
+#' @param data Data frame. ETR and PAR data.
+#' @param model_results List. Regression data and parameters.
+#' @param name_list List. Names for models (legend and table).
+#' @param color_list List. Colors for model lines.
+#' 
+#' @details
+#' A detailed documentation can be found in the README.
+#' 
+#' @return A plot with ETR data, regression results, and a summary table.
+#'
+#' @export
 combo_control_plot <- function(
     title,
     data,
