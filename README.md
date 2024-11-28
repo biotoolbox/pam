@@ -460,7 +460,7 @@ modified_result <- walsby_modified(model_result_walsby)
 
 ### Naming overview
 #### Publication-accurate naming and the respective homogenisation
-same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
+homogenised        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
 |a         |a     |ps     |etr_max         |pmax      |
 |b         |b     |alpha    |alpha          |a       |
@@ -480,7 +480,7 @@ same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 
 #### Publication-accurate naming and the respective homogenisation with additional calculations not included in the original publication
 
-|same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
+|homogenised       |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
 |sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
 |a         |a     |ps     |etr_max         |pmax      |
@@ -596,6 +596,8 @@ test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
       list(color_eilers_peeters, color_platt, color_walsby, color_vollenweider)
     )
 ```
+
+![combo Plott] (test_combo_control_plot.jpg)
 
 
 ### write_model_result_csv()
