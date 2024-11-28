@@ -365,6 +365,48 @@ This function validates the `model_result` input and processes relevant paramete
 modified_result <- walsby_modified(model_result_walsby)
 ```
 
+### platt_modified()
+
+This function adds parameters that were not originally included in the Platt (1997) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
+
+### Parameters
+
+- **model_result**: A list containing the results of the model, including parameters such as `etr_max`, `alpha`, and `beta`.
+
+### Return
+
+Returns a modified model result as a list with the following elements:
+
+- **etr_type**: ETR Type based on the model result.
+- **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
+- **sdiff**: The difference between observed and predicted ETR values.
+- **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
+- **b**: obtained paramter `b`, here equal to `alpha`
+- **c**: obtained paramter `c`, here equal to `beta`
+- **d**: not available, here set to `NA_real_`
+- **alpha**: The initial slope of the light curve, transfered unchanged as `alpha`
+- **beta**: The photoinhibition of the light curve, transfered unchanged as `beta`
+- **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, transfered as `pm`
+- **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, transfered as: `ps`
+- **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, transfered as: `ik`
+- **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, transfered as: `is`
+- **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, transfered as: `im`
+- **w**: Not available, here set to `NA_real_`
+- **ib**: Transfered unchange as: `ib`
+- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
+
+$${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
+
+### Details
+
+This function validates the `model_result` input and processes relevant parameters for the Platt model, creating a structured list using `create_modified_model_result`. This standardized output allows for consistent analysis and comparison across different models.
+
+### Examples
+
+```r
+modified_result_platt <- platt_modified(model_result_platt)
+```
+
 
 
 ### Naming overview
@@ -387,7 +429,7 @@ same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
 |sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
 
-#### Publication-accurate naming and the respective homogenisation with additional calculations not included in the paper
+#### Publication-accurate naming and the respective homogenisation with additional calculations not included in the original publication
 
 |same        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
