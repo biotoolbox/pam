@@ -560,6 +560,7 @@ plot_control_eilers_peeters_ETR_II <- plot_control(
 )
 print(plot_control_eilers_peeters_ETR_II)
 ```
+![Plot](eilers_peeters_ETR_II.jpg)
 
 ### combo_control_plot()
 
