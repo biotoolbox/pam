@@ -28,7 +28,7 @@ A list containing:
   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
   \item \code{beta}: Photoinhibition (\eqn{\beta}).
-  \item \code{pm}: Maximum electron transport rate with photoinhibition (\eqn{P_m}).
+  \item \code{pm}: Maximum electron transport rate with photoinhibition (\eqn{P_m}). 
   \item \code{ik}: Transition PAR with photoinhibition (\eqn{I_k}).
   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
@@ -43,7 +43,7 @@ A detailed documentation can be found in the README.
 }
 \references{
 {
-  Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
+  Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.} 
   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 
 }

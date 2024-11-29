@@ -7,46 +7,47 @@
 compare_regression_models_ETR_I(data_dir)
 }
 \arguments{
-\item{data_dir}{A character string specifying the directory
-where the input data files are located.}
+\item{data_dir}{A character string specifying the directory containing input data files.}
 }
 \value{
-A vector containing the total points assigned to
-each regression model based on their performance. Models are ranked
-based on the calculated deviation of the difference between
-observed and predicted values. Rating: 1st: 3 points; 2nd: 2 points;
-3rd: 1 point; 4th: 0 points.
+A vector with total points assigned to each regression model based on their performance. Models are ranked as follows:
+\itemize{
+  \item 1st place: 3 points
+  \item 2nd place: 2 points
+  \item 3rd place: 1 point
+  \item 4th place: 0 points
+}
+If regression is not possible for a model, no points are awarded for any of the models for the respective file.
 }
 \description{
-This function compares different regression models for the
-ETR I.
+Compares multiple regression models for electron transport rate (ETR) data using predefined performance metrics.
 }
 \details{
-This function calls the \code{compare_regression_models} function,
-passing the directory of the data and the specified model type for ETR I.
-This allows for a straightforward comparison of the models:
-Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997).
-The results can guide users in selecting
-the most appropriate model for their data.
+This function compares the performance of the following models:
+\itemize{
+  \item Eilers-Peeters (1988)
+  \item Platt (1980)
+  \item Vollenweider (1965)
+  \item Walsby (1997)
+}
+Models are ranked based on the deviation between observed and predicted values. The results guide users in selecting the most appropriate model for their dataset. Start values for parameters cannot be adjusted within this function.
+A detailed documentation can be found in the README.
 }
 \references{
-Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
-between light intensity and the rate of photosynthesis in phytoplankton.
-Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
+{
+  Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.} 
+  Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
 
-Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.
-Journal of Marine Research, 38(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
+  Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.} 
+  Journal of Marine Research, 38(4). Available at: \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 
-Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
-Acclimation limits of Fucus evanescens along the salinity gradient of the
-southwestern Baltic Sea. Botanica Marina, 62(1), 1-12. \doi{10.1515/bot-2018-0098}.
+  Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). \emph{Acclimation limits of Fucus evanescens along the salinity gradient of the southwestern Baltic Sea.} 
+  Botanica Marina, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}.
 
-Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves
-and some implications regarding day rate estimates in primary production measurements,
-p. 427-457. In C. R. Goldman [ed.], Primary Productivity in Aquatic Environments.
-Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
+  Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements.} 
+  In C. R. Goldman (Ed.), \emph{Primary Productivity in Aquatic Environments} (pp. 427-457). Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 
-Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis
-through time and depth in a water column. New Phytologist, 136(2), 189-209.
-\doi{10.1046/j.1469-8137.1997.00736.x}.
+  Walsby, A. E. (1997). \emph{Numerical integration of phytoplankton photosynthesis through time and depth in a water column.} 
+  New Phytologist, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}.
+}
 }
