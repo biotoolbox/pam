@@ -178,6 +178,36 @@ walsby_generate_regression_internal <- function(
   )
 }
 
+#' Walsby Model Modification
+#'
+#' Enhances the Walsby (1997) model by adding parameters from other models and standardizing parameter names.
+#'
+#' @param model_result A list of model results including \code{etr_max}, \code{alpha}, and \code{beta}.
+#'
+#' @return A list containing:
+#' \itemize{
+#'   \item \code{etr_type}: ETR Type based on the model result.
+#'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
+#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{a}: Obtained parameter \code{a}, equal to \code{etrmax_without_photoinhibition}.
+#'   \item \code{b}: Obtained parameter \code{b}, equal to \code{alpha}.
+#'   \item \code{c}: Obtained parameter \code{c}, equal to \code{beta}.
+#'   \item \code{d}: Not available, set to \code{NA_real_}.
+#'   \item \code{alpha}: The initial slope of the light curve, transferred unchanged as \code{alpha}.
+#'   \item \code{beta}: The photoinhibition of the light curve, transferred unchanged as \code{beta}.
+#'   \item \code{etrmax_with_photoinhibition}: The maximum electron transport rate with photoinhibition.
+#'   \item \code{etrmax_without_photoinhibition}: The maximum electron transport rate without photoinhibition, transferred as \code{etr_max}.
+#'   \item \code{ik_with_photoinhibition}: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition.
+#'   \item \code{ik_without_photoinhibition}: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition.
+#'   \item \code{im_with_photoinhibition}: PAR at the maximum ETR with photoinhibition.
+#'   \item \code{w}: Not available, set to \code{NA_real_}.
+#'   \item \code{ib}: Not available, set to \code{NA_real_}.
+#'   \item \code{etrmax_with_without_ratio}: Ratio of \code{etrmax_with_photoinhibition} to \code{etrmax_without_photoinhibition}.
+#' }
+#'
+#' @details
+#' A detailed documentation can be found in the README.
+#' @export
 walsby_modified <- function(model_result) {
   validate_model_result(model_result)
 

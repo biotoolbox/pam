@@ -247,6 +247,37 @@ platt_generate_regression_internal <- function(
   )
 }
 
+#' Platt Model Modification
+#'
+#' This function enhances the Platt (1980) model by adding parameters not originally included in the model, which were introduced by other models. It also renames parameters to a standardized naming convention used across all models.
+#'
+#' @param model_result A list containing the results of the model, including parameters such as \code{etr_max}, \code{alpha}, and \code{beta}.
+#'
+#' @return A modified model result as a list with the following elements:
+#' \itemize{
+#'   \item \code{etr_type}: ETR Type based on the model result.
+#'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
+#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{a}: Obtained parameter \code{a}, equal to \code{etrmax_without_photoinhibition}.
+#'   \item \code{b}: Obtained parameter \code{b}, equal to \code{alpha}.
+#'   \item \code{c}: Obtained parameter \code{c}, equal to \code{beta}.
+#'   \item \code{d}: Not available, set to \code{NA_real_}.
+#'   \item \code{alpha}: The initial slope of the light curve, transferred unchanged as \code{alpha}.
+#'   \item \code{beta}: The photoinhibition of the light curve, transferred unchanged as \code{beta}.
+#'   \item \code{etrmax_with_photoinhibition}: The maximum electron transport rate with photoinhibition, transferred as \code{pm}.
+#'   \item \code{etrmax_without_photoinhibition}: The maximum electron transport rate without photoinhibition, transferred as \code{ps}.
+#'   \item \code{ik_with_photoinhibition}: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, transferred as \code{ik}.
+#'   \item \code{ik_without_photoinhibition}: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, transferred as \code{is}.
+#'   \item \code{im_with_photoinhibition}: The PAR at which the maximum electron transport rate is achieved with photoinhibition, transferred as \code{im}.
+#'   \item \code{w}: Not available, set to \code{NA_real_}.
+#'   \item \code{ib}: Transferred unchanged as \code{ib}.
+#'   \item \code{etrmax_with_without_ratio}: Ratio of \code{etrmax_with_photoinhibition} to \code{etrmax_without_photoinhibition}, and \code{ik_with_photoinhibition} to \code{ik_without_photoinhibition}.
+#' }
+#'
+#' @details
+#' For further details, refer to the accompanying documentation or README file.
+#'
+#' @export
 platt_modified <- function(model_result) {
   validate_model_result(model_result)
   result <- create_modified_model_result(

@@ -281,12 +281,11 @@ create_modified_model_result <- function(
 #'
 #' @details
 #' This function generates three CSV files:
-#' \itemize{
-#' \item{raw_data.csv:} Contains the original raw data used in the model.
-#' \item{regression_data.csv:} Includes the regression data with predicted electron transport rate (ETR) values.
-#' \item{model_result.csv:} Summarizes the parameter values derived from the model results (excluding regression data), such as 'alpha', 'beta', and 'etr_max'.
+#' \enumerate{
+#' \item \strong{raw_data.csv:} Contains the original raw data used in the model.
+#' \item \strong{regression_data.csv:} Includes the regression data with predicted electron transport rate (ETR) values.
+#' \item \strong{model_result.csv:} Summarizes the parameter values derived from the model results (excluding regression data), such as \code{alpha} or \code{beta}.
 #' }
-#'
 #' The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory. 
 #' For more comprehensive guidance, refer to the package README file.
 #' @export
