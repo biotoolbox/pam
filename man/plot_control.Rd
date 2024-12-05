@@ -2,7 +2,7 @@
 % Please edit documentation in R/util.R
 \name{plot_control}
 \alias{plot_control}
-\title{Control Plot}
+\title{Plot Control}
 \usage{
 plot_control(data, model_result, title, color = "black")
 }

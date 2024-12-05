@@ -152,7 +152,7 @@ plot_table <- function(model_result, entries_per_row) {
   return(tbl)
 }
 
-#' @title Control Plot
+#' @title Plot Control
 #' @description This function creates a control plot for the used model based on the provided data and model results.
 #'
 #' @param data A `data.table` containing the original ETR and yield data for the plot.

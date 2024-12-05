@@ -14,7 +14,7 @@
 #' @return A plot with ETR data, regression results, and a summary table.
 #'
 #' @export
-combo_control_plot <- function(
+combo_plot_control <- function(
     title,
     data,
     model_results,
