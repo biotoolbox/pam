@@ -211,7 +211,7 @@ vollenweider_generate_regression_internal <- function(
   )
 }
 
-#' Vollenweider Modified Model
+#' Vollenweider Model Modification
 #'
 #' This function adds parameters that were not originally included in the Vollenweider (1965) model, but were introduced by other models, and renames the parameters to a standardized one for all models.
 #'

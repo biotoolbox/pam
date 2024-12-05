@@ -2,7 +2,7 @@
 % Please edit documentation in R/vollenweider.R
 \name{vollenweider_modified}
 \alias{vollenweider_modified}
-\title{Vollenweider Modified Model}
+\title{Vollenweider Model Modification}
 \usage{
 vollenweider_modified(model_result)
 }
