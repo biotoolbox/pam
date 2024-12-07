@@ -10,8 +10,8 @@ eilers_peeters_default_start_value_c <- 5
 #' @param a_start_value Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.
 #' @param b_start_value Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
-#' 
-#'@details
+#'
+#' @details
 #' A detailed documentation can be found in the README.
 #'
 #' @return A list containing:
@@ -27,10 +27,10 @@ eilers_peeters_default_start_value_c <- 5
 #' }
 #'
 #' @references{
-#'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.} 
+#'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
 #'   Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
 #' }
-#' @export 
+#' @export
 eilers_peeters_generate_regression_ETR_I <- function(
     data,
     a_start_value = eilers_peeters_default_start_value_a,
@@ -53,7 +53,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #' @param a_start_value Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.
 #' @param b_start_value Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
-#' 
+#'
 #' @details
 #' A detailed documentation can be found in the README.
 #'
@@ -70,10 +70,10 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #' }
 #'
 #' @references{
-#'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.} 
+#'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
 #'   Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
 #' }
-#' @export 
+#' @export
 eilers_peeters_generate_regression_ETR_II <- function(
     data,
     a_start_value = eilers_peeters_default_start_value_a,
@@ -131,10 +131,10 @@ eilers_peeters_generate_regression_internal <- function(
           pm <- 1 / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
-          message("failed to calculate etr_max: Warning:", w)
+          warning("failed to calculate etr_max: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate etr_max: Error:", e)
+          warning("failed to calculate etr_max: error: ", e)
         }
       )
 
@@ -144,10 +144,10 @@ eilers_peeters_generate_regression_internal <- function(
           s <- 1 / c
         },
         warning = function(w) {
-          message("failed to calculate alpha: Warning:", w)
+          warning("failed to calculate alpha: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate alpha: Error:", e)
+          warning("failed to calculate alpha: error: ", e)
         }
       )
 
@@ -157,10 +157,10 @@ eilers_peeters_generate_regression_internal <- function(
           ik <- c / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
-          message("failed to calculate Ik: Warning:", w)
+          warning("failed to calculate Ik: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate Ik: Error:", e)
+          warning("failed to calculate Ik: error: ", e)
         }
       )
 
@@ -170,22 +170,23 @@ eilers_peeters_generate_regression_internal <- function(
           im <- sqrt(c / a)
         },
         warning = function(w) {
-          message("failed to calculate Im: Warning:", w)
+          warning("failed to calculate Im: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate Im: Error:", e)
+          warning("failed to calculate Im: error: ", e)
         }
       )
+      
       w <- NA_real_
       tryCatch(
         {
           w <- b / sqrt(a * c)
         },
         warning = function(w) {
-          message("failed to calculate w: Warning:", w)
+          warning("failed to calculate w: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate w: Error:", e)
+          warning("failed to calculate w: error: ", e)
         }
       )
 
@@ -203,10 +204,10 @@ eilers_peeters_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          message("failed to calculate sdiff: Warning:", w)
+          warning("failed to calculate sdiff: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate  sdiff: Error:", e)
+          warning("failed to calculate sdiff: error: ", e)
         }
       )
 
@@ -228,10 +229,10 @@ eilers_peeters_generate_regression_internal <- function(
       return(result)
     },
     warning = function(w) {
-      stop("Warning while calculating eilers peeters model: ", w)
+      warning("warning while calculating eilers peeters model: ", w)
     },
     error = function(e) {
-      stop("Error while calculating eilers peeters model: ", e)
+      stop("error while calculating eilers peeters model: ", e)
     }
   )
 }

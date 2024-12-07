@@ -4,7 +4,7 @@ walsby_default_start_value_beta <- -0.01
 
 #' Walsby Regression for ETR I
 #'
-#' Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions. 
+#' Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions.
 #' Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
@@ -14,7 +14,7 @@ walsby_default_start_value_beta <- -0.01
 #'
 #' @details
 #' A detailed documentation can be found in the README.
-#' 
+#'
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
@@ -25,14 +25,14 @@ walsby_default_start_value_beta <- -0.01
 #' }
 #'
 #' @references{
-#'   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. 
+#'   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
 #'   \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
-#' 
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
-#'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea. 
+#'
+#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
+#'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
 #'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
 #' }
-#' @export 
+#' @export
 walsby_generate_regression_ETR_I <- function(
     data,
     etr_max_start_value = walsby_default_start_value_etr_max,
@@ -51,7 +51,7 @@ walsby_generate_regression_ETR_I <- function(
 
 #' Walsby Regression for ETR II
 #'
-#' Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions. 
+#' Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions.
 #' Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
@@ -61,7 +61,7 @@ walsby_generate_regression_ETR_I <- function(
 #'
 #' @details
 #' A detailed documentation can be found in the README.
-#' 
+#'
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
@@ -72,14 +72,14 @@ walsby_generate_regression_ETR_I <- function(
 #' }
 #'
 #' @references{
-#'   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. 
+#'   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
 #'   \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
-#' 
-#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
-#'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea. 
+#'
+#' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
+#'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
 #'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
 #' }
-#' @export 
+#' @export
 walsby_generate_regression_ETR_II <- function(
     data,
     etr_max_start_value = walsby_default_start_value_etr_max,
@@ -151,10 +151,10 @@ walsby_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          message("failed to calculate sdiff: Warning:", w)
+          warning("failed to calculate sdiff: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate  sdiff: Error:", e)
+          warning("failed to calculate sdiff: error: ", e)
         }
       )
 
@@ -170,10 +170,10 @@ walsby_generate_regression_internal <- function(
       return(result)
     },
     warning = function(w) {
-      stop("Warning while calculating walsby model: ", w)
+      warning("warning while calculating walsby model: ", w)
     },
     error = function(e) {
-      stop("Error while calculating walsby model: ", e)
+      stop("error while calculating walsby model: ", e)
     }
   )
 }

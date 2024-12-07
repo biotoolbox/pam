@@ -1,5 +1,5 @@
-test_that("test-vollenweider_etr_II generate regression 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-vollenweider_etr_II generate regression 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- vollenweider_generate_regression_ETR_II(data)
 
@@ -13,8 +13,8 @@ test_that("test-vollenweider_etr_II generate regression 20231122_01_W3_T20_HL.cs
   expect_equal(model_result[["iik"]], 343.844)
 })
 
-test_that("test-vollenweider_etr_II control plot 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-vollenweider_etr_II control plot 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- vollenweider_generate_regression_ETR_II(data)
 
@@ -23,7 +23,7 @@ test_that("test-vollenweider_etr_II control plot 20231122_01_W3_T20_HL.csv", {
       plot_control(
         data,
         model_result,
-        "vollenweider ETR II 20231122_01_W3_T20_HL.csv",
+        "vollenweider ETR II 20231122_01.csv",
         color_vollenweider
       )
     )

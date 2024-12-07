@@ -7,10 +7,10 @@
 #' @param model_results List. Regression data and parameters.
 #' @param name_list List. Names for models (legend and table).
 #' @param color_list List. Colors for model lines.
-#' 
+#'
 #' @details
 #' A detailed documentation can be found in the README.
-#' 
+#'
 #' @return A plot with ETR data, regression results, and a summary table.
 #'
 #' @export
@@ -144,7 +144,7 @@ combo_plot_control <- function(
   row_count <- 1
   entries_per_row <- 4
   count <- 1
-  col_names <- c("name")
+  col_names <- c("model")
 
   for (i in seq_len(ncol(tbl))) {
     col <- tbl[, i]
@@ -167,7 +167,7 @@ combo_plot_control <- function(
       row <- NULL
       row_count <- row_count + 1
       count <- 0
-      col_names <- c("name")
+      col_names <- c("model")
     }
 
     count <- count + 1

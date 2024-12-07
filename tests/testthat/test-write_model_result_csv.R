@@ -1,5 +1,5 @@
-test_that("test-write_model_result_csv 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-write_model_result_csv 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- walsby_generate_regression_ETR_II(data)
   model_result <- walsby_modified(model_result)

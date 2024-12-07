@@ -18,7 +18,7 @@ platt_default_start_value_ps <- 30
 #'   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
 #'   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition (\eqn{\beta}).
-#'   \item \code{pm}: Maximum electron transport rate with photoinhibition (\eqn{P_m}). 
+#'   \item \code{pm}: Maximum electron transport rate with photoinhibition (\eqn{P_m}).
 #'   \item \code{ik}: Transition PAR with photoinhibition (\eqn{I_k}).
 #'   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
 #'   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
@@ -29,7 +29,7 @@ platt_default_start_value_ps <- 30
 #' A detailed documentation can be found in the README.
 #'
 #' @references{
-#'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.} 
+#'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
 #'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 #'
 #' }
@@ -64,7 +64,7 @@ platt_generate_regression_ETR_I <- function(
 #'   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
 #'   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition (\eqn{\beta}).
-#'   \item \code{pm}: Maximum electron transport rate with photoinhibition (\eqn{P_m}). 
+#'   \item \code{pm}: Maximum electron transport rate with photoinhibition (\eqn{P_m}).
 #'   \item \code{ik}: Transition PAR with photoinhibition (\eqn{I_k}).
 #'   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
 #'   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
@@ -75,7 +75,7 @@ platt_generate_regression_ETR_I <- function(
 #' A detailed documentation can be found in the README.
 #'
 #' @references{
-#'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.} 
+#'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
 #'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 #'
 #' }
@@ -142,10 +142,10 @@ platt_generate_regression_internal <- function(
           pm <- ps * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
         },
         warning = function(w) {
-          message("failed to calculate pm: Warning:", w)
+          warning("failed to calculate pm: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate pm: Error:", e)
+          warning("failed to calculate pm: error: ", e)
         }
       )
 
@@ -155,10 +155,10 @@ platt_generate_regression_internal <- function(
           ik <- pm / alpha
         },
         warning = function(w) {
-          message("failed to calculate ik: Warning:", w)
+          warning("failed to calculate ik: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate ik: Error:", e)
+          warning("failed to calculate ik: error: ", e)
         }
       )
 
@@ -168,10 +168,10 @@ platt_generate_regression_internal <- function(
           is <- ps / alpha
         },
         warning = function(w) {
-          message("failed to calculate is: Warning:", w)
+          warning("failed to calculate is: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate is: Error:", e)
+          warning("failed to calculate is: error: ", e)
         }
       )
 
@@ -181,10 +181,10 @@ platt_generate_regression_internal <- function(
           ib <- ps / beta
         },
         warning = function(w) {
-          message("failed to calculate ib: Warning:", w)
+          warning("failed to calculate ib: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate ib: Error:", e)
+          warning("failed to calculate ib: error: ", e)
         }
       )
 
@@ -194,10 +194,10 @@ platt_generate_regression_internal <- function(
           im <- (ps / alpha) * log((alpha + beta) / beta)
         },
         warning = function(w) {
-          message("failed to calculate im: Warning:", w)
+          warning("failed to calculate im: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate im: Error:", e)
+          warning("failed to calculate im: error: ", e)
         }
       )
 
@@ -215,10 +215,10 @@ platt_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          message("failed to calculate sdiff: Warning:", w)
+          warning("failed to calculate sdiff: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate  sdiff: Error:", e)
+          warning("failed to calculate sdiff: error: ", e)
         }
       )
 
@@ -239,10 +239,10 @@ platt_generate_regression_internal <- function(
       return(result)
     },
     warning = function(w) {
-      stop("Warning while calculating platt model: ", w)
+      warning("warning while calculating platt model: ", w)
     },
     error = function(e) {
-      stop("Error while calculating platt model: ", e)
+      stop("error while calculating platt model: ", e)
     }
   )
 }

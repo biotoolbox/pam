@@ -5,7 +5,7 @@ vollenweider_default_start_value_n <- 350
 
 #' Vollenweider Regression for ETR I
 #'
-#' Fits the Vollenweider (1965) regression model using original naming conventions from the publication. 
+#' Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
 #' @param etr_type A character string specifying the response variable column (ETR I or ETR II).
@@ -16,7 +16,7 @@ vollenweider_default_start_value_n <- 350
 #'
 #' @details
 #' A detailed documentation can be found in the README.
-#' 
+#'
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
@@ -32,11 +32,11 @@ vollenweider_default_start_value_n <- 350
 #' }
 #'
 #' @references{
-#'   Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements}, 
+#'   Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements},
 #'   p. 427-457. In C. R. Goldman [ed.], \emph{Primary Productivity in Aquatic Environments}. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 #'
 #' }
-#' @export 
+#' @export
 vollenweider_generate_regression_ETR_I <- function(
     data,
     pmax_start_value = vollenweider_default_start_value_a,
@@ -55,7 +55,7 @@ vollenweider_generate_regression_ETR_I <- function(
 
 #' Vollenweider Regression for ETR II
 #'
-#' Fits the Vollenweider (1965) regression model using original naming conventions from the publication. 
+#' Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
 #' @param etr_type A character string specifying the response variable column (ETR I or ETR II).
@@ -66,7 +66,7 @@ vollenweider_generate_regression_ETR_I <- function(
 #'
 #' @details
 #' A detailed documentation can be found in the README.
-#' 
+#'
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
@@ -82,11 +82,11 @@ vollenweider_generate_regression_ETR_I <- function(
 #' }
 #'
 #' @references{
-#'   Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements}, 
+#'   Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements},
 #'   p. 427-457. In C. R. Goldman [ed.], \emph{Primary Productivity in Aquatic Environments}. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 #'
 #' }
-#' @export 
+#' @export
 vollenweider_generate_regression_ETR_II <- function(
     data,
     pmax_start_value = vollenweider_default_start_value_pmax,
@@ -151,7 +151,19 @@ vollenweider_generate_regression_internal <- function(
       a <- abc[["a"]]
       alpha <- abc[["alpha"]]
       n <- abc[["n"]]
-      ik <- 1 / a
+
+      ik <- NA_real_
+      tryCatch(
+        {
+          ik <- 1 / a
+        },
+        warning = function(w) {
+          warning("failed to calculate ik: warning: ", w)
+        },
+        error = function(e) {
+          warning("failed to calculate ik: error: ", e)
+        }
+      )
 
       popt <- 0
       pars <- c()
@@ -170,8 +182,31 @@ vollenweider_generate_regression_internal <- function(
       }
       etr_regression_data <- create_regression_data(pars, predictions)
 
-      iik <- (ik * popt) / pmax
-      pmax_popt_and_ik_iik_ratio <- ik / iik
+      iik <- NA_real_
+      tryCatch(
+        {
+          iik <- (ik * popt) / pmax
+        },
+        warning = function(w) {
+          warning("failed to calculate iik: warning: ", w)
+        },
+        error = function(e) {
+          warning("failed to calculate iik: error: ", e)
+        }
+      )
+
+      pmax_popt_and_ik_iik_ratio <- NA_real_
+      tryCatch(
+        {
+          pmax_popt_and_ik_iik_ratio <- ik / iik
+        },
+        warning = function(w) {
+          warning("failed to calculate pmax_popt_and_ik_iik_ratio: warning: ", w)
+        },
+        error = function(e) {
+          warning("failed to calculate pmax_popt_and_ik_iik_ratio: error: ", e)
+        }
+      )
 
       sdiff <- NA_real_
       tryCatch(
@@ -179,10 +214,10 @@ vollenweider_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          message("failed to calculate sdiff: Warning:", w)
+          warning("failed to calculate sdiff: warning:", w)
         },
         error = function(e) {
-          message("failed to calculate sdiff: Error:", e)
+          warning("failed to calculate sdiff: error:", e)
         }
       )
 
@@ -203,10 +238,10 @@ vollenweider_generate_regression_internal <- function(
       return(result)
     },
     warning = function(w) {
-      stop("Warning while calculating vollenweider model: ", w)
+      warning("warning while calculating vollenweider model: ", w)
     },
     error = function(e) {
-      stop("Error while calculating vollenweider model: ", e)
+      stop("error while calculating vollenweider model: ", e)
     }
   )
 }

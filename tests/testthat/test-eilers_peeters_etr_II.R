@@ -1,5 +1,5 @@
-test_that("test-eilers_peeters_etr_II generate regression 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-eilers_peeters_etr_II generate regression 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
 
@@ -14,8 +14,8 @@ test_that("test-eilers_peeters_etr_II generate regression 20231122_01_W3_T20_HL.
   expect_equal(model_result[["w"]], 0.8201537)
 })
 
-test_that("test-eilers_peeters_etr_II control plot 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-eilers_peeters_etr_II control plot 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
 
@@ -24,15 +24,15 @@ test_that("test-eilers_peeters_etr_II control plot 20231122_01_W3_T20_HL.csv", {
       plot_control(
         data,
         model_result,
-        "eilers_peeters ETR II 20231122_01_W3_T20_HL.csv",
+        "eilers_peeters ETR II 20231122_01.csv",
         color_eilers_peeters
       )
     )
   )
 })
 
-test_that("test-eilers_peeters_etr_II modified 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-eilers_peeters_etr_II modified 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
   expect_no_warning(
@@ -56,8 +56,8 @@ test_that("test-eilers_peeters_etr_II modified 20231122_01_W3_T20_HL.csv", {
   expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
 })
 
-test_that("test-eilers_peeters_etr_II modified control plot 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-eilers_peeters_etr_II modified control plot 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
   model_result <- model_result <- eilers_peeters_modified(model_result)
@@ -67,10 +67,9 @@ test_that("test-eilers_peeters_etr_II modified control plot 20231122_01_W3_T20_H
       plot_control(
         data,
         model_result,
-        "eilers_peeters ETR II modified 20231122_01_W3_T20_HL.csv",
+        "eilers_peeters ETR II modified 20231122_01.csv",
         color_eilers_peeters
       )
     )
   )
 })
-

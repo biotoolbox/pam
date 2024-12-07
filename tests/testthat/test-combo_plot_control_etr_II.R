@@ -1,5 +1,5 @@
-test_that("test-combo_plot_control 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-combo_plot_control 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
 
   expect_no_error({
     data <- read_dual_pam_data(test_data_file)
@@ -10,7 +10,7 @@ test_that("test-combo_plot_control 20231122_01_W3_T20_HL.csv", {
     vollenweider <- vollenweider_modified(vollenweider_generate_regression_ETR_II(data))
 
     plot <- combo_plot_control(
-      "test-combo_plot_control_20231122_01_W3_T20_HL.csv",
+      "etr II test-combo_plot_control_20231122_01.csv",
       data,
       list(eilers_peeters, platt, walsby, vollenweider),
       list("eilers_peeters", "platt", "walsby", "vollenweider"),

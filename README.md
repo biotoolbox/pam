@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The library ‘pam’ was developed to process PAM raw data (chlorophyll fluorometry to analyze photosystem II and dual wavelength absorbance spectrometry to analyze photosystem I), for example from the DUAL PAM of the manufacturer WALZ. 
+The library ‘pam’ was developed to process PAM raw data (chlorophyll fluorometry to analyze photosystem II and dual wavelength absorbance spectrometry to analyze photosystem I), for example from the DUAL PAM of the manufacturer WALZ.
 Four different models are provided for the regression of the light curve (Vollenweider (1965), Platt (1980), Eilers and Peeters (1988) and Walsby (1997)).
 To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as ETRmax, it is possible to output both with publication-compliant naming and with homogenised naming.
 Generated control plots make it possible to check each individual regression fit.
@@ -12,11 +12,13 @@ Generated control plots make it possible to check each individual regression fit
 ### read_dual_pam_data()
 
 #### Description
+
 This function reads the original CSV file as created by the DualPAM software, processes it by calculating ETR values, and returns a cleaned dataset.
 Functionality with raw data from other PAM devices cannot be guaranteed.
-Individual customisation may be necessary when reading data. 
+Individual customisation may be necessary when reading data.
 
 #### Parameters
+
 - **csv_path**: A string representing the file path to the CSV file.
 - **remove_recovery**: Automatic removal of recovery measurements after the actual Pi curve for an accurate regression. Default is `TRUE`.
 - **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.
@@ -24,14 +26,14 @@ Individual customisation may be necessary when reading data.
 
 $$\textit{P–Ratio} = \frac{PPS2}{PPS1+2}$$
 
-
 #### Details
+
 ETR values are calculated using the following formula:
 
 $$ ETR = PAR \cdot \textit{ETR–Factor} \cdot P–Ratio \cdot Yield $$
 
-
 The function processes the provided CSV file by:
+
 - Reading the CSV data using `read.csv()`.
 - Filtering rows where the column `ID` equals `SP`.
 - Combining the `Date` and `Time` columns to create a new `DateTime` column.
@@ -39,9 +41,11 @@ The function processes the provided CSV file by:
 - Removing rows from the recovery period if `remove_recovery = TRUE`.
 
 #### Return
+
 A `data.table` containing the processed data with additional columns for recalculated ETR values.
 
 #### Example
+
 ```r
 data <- read_dual_pam_data("path/to/data.csv",
 remove_recovery = TRUE,
@@ -50,14 +54,15 @@ p_ratio = 0.5)
 ```
 
 #### References
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
 
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
 
 ### vollenweider_generate_regression_ETR_I() and vollenweider_generate_regression_ETR_II()
 
 This function generates a regression model based on Vollenweider (1965). Original naming conventions from the publication are used.
 
 #### Parameters
+
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
 - **etr_type**: A character string specifying the column name of the response variable (ETR I or ETR II) to be used in the model.
 - **pmax_start_value_vollenweider**: Numeric. The starting value for the parameter $$p_{max}$$ in the model. Defaults to `pmax_start_values_vollenweider_default`.
@@ -66,7 +71,9 @@ This function generates a regression model based on Vollenweider (1965). Origina
 - **n_start_value**: Numeric. The starting value for the parameter $$n$$ in the model. Defaults to `n_start_values_vollenweider_default`.
 
 #### Return
+
 A list containing the following elements:
+
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
 - **pmax**: The maximum electron transport rate without photoinhibition ($$p_{max}$$).
@@ -74,6 +81,7 @@ A list containing the following elements:
 - **alpha**: The obtained parameter $$\alpha$$.
 - **n**: The obtained parameter $$n$$.
 - **popt**: The maximum electron transport rate with photoinhibition ($$p_{opt}$$). A function computes predicted photosynthetic rates for each PAR value and tracks the maximum rate observed:
+
 ```r
   popt <- 0
       pars <- c()
@@ -91,6 +99,7 @@ A list containing the following elements:
         }
       }
 ```
+
 - **ik**: PAR where the transition point from light limitation to light saturation is achieved without photoinhibition ($$I_k$$). Calculated as:
 
 $$I_k = \\frac{1}{a}$$
@@ -104,14 +113,15 @@ $$I_k^\prime = \frac{I_k \cdot p_{opt}}{p_{max}}$$
 $$\\p_max\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I_k^\prime}$$
 
 #### Details
+
 This function uses non-linear least squares fitting to estimate the parameters for the Vollenweider model, which describes the relationship between PAR and ETR. The model used is:
 
 $$p = p_{max} \cdot \frac{a \cdot i}{\sqrt{1 + (a \cdot i)^2}} \cdot \frac{1}{\left(\sqrt{1 + (\alpha \cdot i)^2}\right)^n}$$
 
-
 It is valid: $$i = PAR; p = ETR$$
 
 #### Example
+
 ```r
 result_vollenweider_ETR_II <- vollenweider_generate_regression_ETR_II(data, 
     pmax_start_value_vollenweider = 40, 
@@ -121,6 +131,7 @@ result_vollenweider_ETR_II <- vollenweider_generate_regression_ETR_II(data,
 ```
 
 #### References
+
 Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements*, p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 
 ### platt_generate_regression_ETR_I() and platt_generate_regression_ETR_II()
@@ -128,18 +139,21 @@ Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves a
 This function generates a regression model based on  Platt (1980). Original naming conventions from the publication are used.
 
 #### Parameters
+
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
 - **alpha_start_value_platt**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_platt_default`.
 - **beta_start_value_platt**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_platt_default`.
 - **ps_start_value_platt**: Numeric. The starting value for the parameter $$p_s$$ in the model. Defaults to `ps_start_value_platt_default`.
 
 #### Return
+
 A list containing the following elements:
+
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
-- **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$). 
+- **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$).
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
-- **beta**: The photoinhibition of the light curve ($$\beta$$). 
+- **beta**: The photoinhibition of the light curve ($$\beta$$).
 - **pm**: The maximum electron transport rate with photoinhibition ($$P_m$$). Calculated as:
 
 $$P_m = P_s \cdot \left(\frac{\alpha}{\alpha + \beta}\right) \cdot \left(\left(\frac{\beta}{\alpha + \beta}\right)^{\frac{\beta}{\alpha}}\right)$$
@@ -161,6 +175,7 @@ $$I_m = \left(\frac{P_s}{\alpha}\right) \cdot \log\left(\frac{\alpha + \beta}{\b
 $$I_b = \frac{P_s}{\beta}$$
 
 #### Details
+
 This function uses non-linear least squares fitting to estimate the parameters for the Platt model, which describes the relationship between PAR and ETR. The model used is:
 
 $$P = P_s \cdot \left(1 - \frac{e^{-\alpha \cdot I}}{P_s}\right) \cdot \left(\frac{e^{-\beta \cdot I}}{P_s}\right)$$
@@ -168,6 +183,7 @@ $$P = P_s \cdot \left(1 - \frac{e^{-\alpha \cdot I}}{P_s}\right) \cdot \left(\fr
 It is valid: $$I = PAR; p = ETR$$
 
 #### Example
+
 ```r
 result_platt_ETR_II <- platt_generate_regression_ETR_II(data, 
     alpha_start_value_platt = 0.3, 
@@ -176,21 +192,24 @@ result_platt_ETR_II <- platt_generate_regression_ETR_II(data,
 ```
 
 #### References
-Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from https://elischolar.library.yale.edu/journal_of_marine_research/1525.
 
+Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from <https://elischolar.library.yale.edu/journal_of_marine_research/1525>.
 
 ### eilers_peeters_generate_regression_ETR_I() and eilers_peeters_generate_regression_ETR_II()
 
 This function generates a regression model based on  Eilers-Peeters (1988). Original naming conventions from the publication are used. All parameters are calculated taking photoinhibition into account.
 
 #### Parameters
+
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
 - **a_start_value**: Numeric. The starting value for the parameter $$a$$ in the model. Defaults to `a_start_values_eilers_peeters_default`.
 - **b_start_value**: Numeric. The starting value for the parameter $$b$$ in the model. Defaults to `b_start_values_eilers_peeters_default`.
 - **c_start_value**: Numeric. The starting value for the parameter $$c$$ in the model. Defaults to `c_start_values_eilers_peeters_default`.
 
 #### Return
+
 A list containing the following elements:
+
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
 - **a**: The obtained parameter $$a$$.
@@ -217,6 +236,7 @@ $$I_m = \sqrt{\frac{c}{a}}$$
 $$w = \frac{b}{\sqrt{a \cdot c}}$$
 
 #### Details
+
 This function uses non-linear least squares fitting to estimate the parameters for the Eilers-Peeters model, which describes the relationship between PAR and ETR. The model used is:
 
 $$ p = \frac{I}{a \cdot I^2 + b \cdot I + c} $$
@@ -224,6 +244,7 @@ $$ p = \frac{I}{a \cdot I^2 + b \cdot I + c} $$
 It is valid: $$I = PAR$$; $$p = ETR$$
 
 #### Example
+
 ```r
 result_eilers_peeters_ETR_II <- eilers_peeters_generate_regression_ETR_II(data,
 a_start_value = 0.00004,
@@ -232,6 +253,7 @@ c_start_value = 5)
 ```
 
 #### References
+
 Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
 
 ### walsby_generate_regression_ETR_I() and walsby_generate_regression_ETR_II()
@@ -239,13 +261,16 @@ Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship betw
 This function generates a regression model based on  Walsby (1997) in a modified version without the respiration term. Naming conventions from Romoth (2019) are used. ETRmax is calculated without taking photoinhibition into account.
 
 #### Parameters
+
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
 - **etr_max_start_value_walsby**: Numeric. The starting value for the parameter $$ETR_{max}$$ in the model. Defaults to `etr_max_start_value_walsby_default`.
 - **alpha_start_value_walsby**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_walsby_default`.
 - **beta_start_value_walsby**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_walsby_default`.
 
 #### Return
+
 A list containing the following elements:
+
 - **etr_regression_data**: A `data.table` with the predicted values of ETR to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
 - **etr_max**: The maximum electron transport rate without photoinhibition ($$ETR_{max}$$).
@@ -253,6 +278,7 @@ A list containing the following elements:
 - **beta**: The photoinhibition of the light curve ($$\beta$$).
 
 #### Details
+
 This function uses non-linear least squares fitting to estimate the parameters for the Walsby model, which describes the relationship between PAR and ETR I. The model used is:
 
 $$ETR = ETR_{max} \cdot \left(1 - e^{\left(-\frac{\alpha \cdot I}{ETR_{max}}\right)}\right) + \beta \cdot I$$
@@ -260,10 +286,10 @@ $$ETR = ETR_{max} \cdot \left(1 - e^{\left(-\frac{\alpha \cdot I}{ETR_{max}}\rig
 It is valid: $$I = PAR$$
 
 #### References
-Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. https://doi.org/10.1046/j.1469-8137.1997.00736.x
 
+Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. <https://doi.org/10.1046/j.1469-8137.1997.00736.x>
 
-Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
+Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. <https://doi.org/10.1515/bot-2018-0098>
 
 ### vollenweider_modified()
 
@@ -288,17 +314,18 @@ Returns a modified model result as a list with the following elements:
 
 $${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_without\\_photoinhibition}}$$
 
-
 - **beta**: Not available, here set to `NA_real_`
 - **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, transfered as `popt`
 - **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, transfered as: `pmax`
 - **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, transfered as: `iik`
 - **ik_without_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved not taking photoinhibition into account, transfered as: `ik`
 - **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, determined as:
+
 ```r
  etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
   im_with_photoinhibition <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ][[PAR_name]]
 ```
+
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Transfered unchange as: `ib`
 - **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
@@ -420,11 +447,13 @@ Returns a modified model result as a list with the following elements:
 - **alpha**: The initial slope of the light curve, transfered unchanged as `alpha`
 - **beta**: The photoinhibition of the light curve, transfered unchanged as `beta`
 - **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, determined as:
+
 ```r
   etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
   etr_max_row <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ]
   etrmax_with_photoinhibition <- etr_max_row[[prediction_name]]
 ```
+
 - **etrmax_without_photoinhibition**: The maximum electron transport rate without photoinhibition, transfered as: `etr_max`
 - **ik_with_photoinhibition**: PAR where the transition point from light limitation to light saturation is achieved taking photoinhibition into account, calculated as:
 
@@ -435,11 +464,13 @@ $$ik\\_with\\_photoinhibition = \frac{etrmax\\_with\\_photoinhibition}{alpha}$$
 $$ik\\_without\\_photoinhibition = \frac{etrmax\\_without\\_photoinhibition}{alpha}$$
 
 - **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, calculated as:
+
 ```r
   etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
   etr_max_row <- etr_regression_data[etr_regression_data[[prediction_name]] == max(etr_regression_data[[prediction_name]]), ]
   im_with_photoinhibition <- etr_max_row[[PAR_name]]
 ```
+
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Not available, here set to `NA_real_`
 - **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
@@ -456,10 +487,10 @@ This function validates the `model_result` input and processes relevant paramete
 modified_result <- walsby_modified(model_result_walsby)
 ```
 
-
-
 ### Naming overview
+
 #### Publication-accurate naming and the respective homogenisation
+
 homogenised        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
 |a         |a     |ps     |etr_max         |pmax      |
@@ -503,19 +534,24 @@ homogenised        |Eilers and Peeters |Platt    |Walsby          |Vollenweider 
 This function compares different regression models.
 
 #### Parameters
+
 - **data_dir**: A character string specifying the directory where the input data files are located.
 
 #### Return
-A vector containing the total points assigned to each regression model based on their performance. Models are ranked based on the calculated deviation of the difference between observed and predicted values. Rating: 
+
+A vector containing the total points assigned to each regression model based on their performance. Models are ranked based on the calculated deviation of the difference between observed and predicted values. Rating:
+
 - 1st: 3 points
 - 2nd: 2 points
 - 3rd: 1 point
 - 4th: 0 points
 
 #### Details
+
 This function allows a straightforward comparison of the models: Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997). The results can guide users in selecting the most appropriate model for their data. If regression is not possible for a model, no points are awarded for the file for any of the models. Start values cannot be adjusted in this function.
 
 #### Example
+
 ```r
 #raw data file directory
 data_dir_compare <- file.path(getwd(), "data")
@@ -526,31 +562,34 @@ print(compare_regression_models_ETR_II)
 ```
 
 #### References
+
 Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
 
-Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from https://elischolar.library.yale.edu/journal_of_marine_research/1525.
+Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from <https://elischolar.library.yale.edu/journal_of_marine_research/1525>.
 
-Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
+Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. <https://doi.org/10.1515/bot-2018-0098>
 
 Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements*, p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 
-Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. https://doi.org/10.1046/j.1469-8137.1997.00736.x
-
-
+Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. <https://doi.org/10.1046/j.1469-8137.1997.00736.x>
 
 ### plot_control()
+
 This function creates a control plot for the used model based on the provided data and model results.
 
 #### Parameters
+
 - **data**: A `data.table` containing the original ETR and yield data for the plot.
 - **model_result**: A list containing the fitting results of the used model and the calculated parameters (alpha, ik, etc.).
 - **title**: A character string that specifies the title of the plot.
 - **color**: A color specification for the regression line in the plot.
 
 #### Return
+
 A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik, etc.).
 
 #### Example
+
 ```r
 plot_control_eilers_peeters_ETR_II <- plot_control(
   data = pam_data,
@@ -560,6 +599,7 @@ plot_control_eilers_peeters_ETR_II <- plot_control(
 )
 print(plot_control_eilers_peeters_ETR_II)
 ```
+
 ![Plot](eilers_peeters_ETR_II.jpg)
 
 ### combo_control_plot()
@@ -581,7 +621,7 @@ A plot displaying the original ETR and Yield values and the regression data from
 #### Examples
 
 ```r
-test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
     data <- read_dual_pam_data(test_data_file)
 
     eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_II(data))
@@ -590,7 +630,7 @@ test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
     vollenweider <- vollenweider_modified(vollenweider_generate_regression_ETR_II(data))
 
     plot <- combo_control_plot(
-      "test-combo_control_plot_20231122_01_W3_T20_HL.csv",
+      "test-combo_control_plot_20231122_01.csv",
       data,
       list(eilers_peeters, platt, walsby, vollenweider),
       list("eilers_peeters", "platt", "walsby", "vollenweider"),
@@ -600,18 +640,21 @@ test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
 
 ![combo Plot](test_combo_control_plot.jpg)
 
-
 ### write_model_result_csv()
+
 This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
 
 #### Parameters
+
 - **dest_dir**: A character string specifying the directory where the CSV files will be saved.
 - **name**: A character string specifying the base name for the output files.
 - **data**: A data frame containing the raw input data used in the model.
 - **model_result**: A list containing the model results, including parameter values and regression data.
 
 #### Details
+
 This function creates three CSV files:
+
 1. **`name_raw_data.csv`**: Contains the original raw data used in the model.
 2. **`name_regression_data.csv`**: Contains the regression data with predictions for electron transport rate (ETR).
 3. **`name_model_result.csv`**: Contains the parameter values from the model results (excluding regression data), including parameters like `alpha`, `beta`, and `etr_max`.
@@ -629,25 +672,17 @@ write_model_result_csv(
 )
 ```
 
-
-
-
-
-
-
 ###
 
-## Features
+## known issues
 
-### wrapper pdf
+### subscript out of bounds
 
-- create test for data that produces NA
+```
+Skipped file: 20231214_14_W6_T5_ML.csv because of error: Error in eilers_peeters[["sdiff"]]: subscript out of bounds
+```
 
-## waiting
-
-- legende für kombidiagramm das mit den vielen linien
-
-## Test
+This could indicate that Pm lable in the Action column is at the wrong position in the csv raw data file. Error could be caused by WALZ-Software.
 
 ### test all
 
@@ -686,4 +721,3 @@ install.packages("minpack.lm")
 install.packages("SciViews")
 install.packages("ggthemes")
 install.packages("gridExtra")
-
