@@ -592,7 +592,7 @@ A plot displaying the original ETR and Yield values and the regression data. A t
 plot_control_eilers_peeters_ETR_II <- plot_control(
   data = pam_data,
   model_result = modified_model_result_eilers_peeters_ETR_II,
-  title = "ETR II - Eilers-Peeters",
+  title = "eilers_peeters ETR II modified 20231122_01.csv",
   color = "purple"
 )
 print(plot_control_eilers_peeters_ETR_II)
