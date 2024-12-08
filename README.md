@@ -683,6 +683,16 @@ Skipped file: 20231214_14_W6_T5_ML.csv because of error: Error in eilers_peeters
 
 This could indicate that Pm lable in the Action column is at the wrong position in the csv raw data file. Error could be caused by WALZ-Software.
 
+### Removed rows in combo_plot_control
+
+```
+Warnings:
+1: Removed 1 row containing missing values or values outside the scale range (`geom_point()`). 
+2: Removed 1 row containing missing values or values outside the scale range (`geom_point()`). 
+3: Removed 1 row containing missing values or values outside the scale range (`geom_line()`).
+```
+All points and lines present. Reason for warning messages unknown. Possibly a problem in the library ggplot2.
+
 ### test all
 
 ```
