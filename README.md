@@ -600,7 +600,7 @@ plot_control_eilers_peeters_ETR_II <- plot_control(
 print(plot_control_eilers_peeters_ETR_II)
 ```
 
-![Plot](eilers_peeters_ETR_II.jpg)
+![Plot](eeilers_peeters ETR II modified.jpg)
 
 ### combo_control_plot()
 
@@ -638,7 +638,7 @@ test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
     )
 ```
 
-![combo Plot](test_combo_control_plot.jpg)
+![combo Plot](test_combo_plot_control_doku.jpg)
 
 ### write_model_result_csv()
 
