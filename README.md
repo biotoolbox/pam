@@ -327,10 +327,8 @@ $${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_without\\_photoinhibi
 ```
 
 - **w**: Not available, here set to `NA_real_`
-- **ib**: Transfered unchange as: `ib`
-- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
-
-$${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
+- **ib**: Not available, here set to `NA_real_`
+- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`,  transfered as: `pmax_popt_and_ik_iik_ratio`
 
 ### Details
 
@@ -489,9 +487,9 @@ modified_result <- walsby_modified(model_result_walsby)
 
 ### Naming overview
 
-#### Publication-accurate naming and the respective homogenisation
+#### Publication-accurate naming and the respective modified naming
 
-homogenised        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
+modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
 |a         |a     |ps     |etr_max         |pmax      |
 |b         |b     |alpha    |alpha          |a       |
@@ -509,9 +507,9 @@ homogenised        |Eilers and Peeters |Platt    |Walsby          |Vollenweider 
 |etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
 |sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
 
-#### Publication-accurate naming and the respective homogenisation with additional calculations not included in the original publication
+#### Publication-accurate naming and the respective modified naming with additional calculations not included in the original publication
 
-|homogenised       |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
+|modified      |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
 |sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
 |a         |a     |ps     |etr_max         |pmax      |
@@ -527,7 +525,7 @@ homogenised        |Eilers and Peeters |Platt    |Walsby          |Vollenweider 
 |im_with_photoinhibition   |im     |im     |im_with_photoinhibition     |im_with_photoinhibition |
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |ps_pm_ratio  |etr_max_etrmax_with_photoinhibition_ratio |pmax_popt_and_ik_iik_ratio |
+|etrmax_with_without_ratio   |NA     |etrmax_with_without_ratio  |etrmax_with_without_ratio |pmax_popt_and_ik_iik_ratio |
 
 ### compare_regression_models_ETR_I() and compare_regression_models_ETR_II()
 
@@ -593,9 +591,9 @@ A plot displaying the original ETR and Yield values and the regression data. A t
 ```r
 plot_control_eilers_peeters_ETR_II <- plot_control(
   data = pam_data,
-  model_result = model_result_eilers_peeters_ETR_II,
+  model_result = modified_model_result_eilers_peeters_ETR_II,
   title = "ETR II - Eilers-Peeters",
-  color = "black"
+  color = "purple"
 )
 print(plot_control_eilers_peeters_ETR_II)
 ```
