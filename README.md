@@ -629,10 +629,10 @@ test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
     vollenweider <- vollenweider_modified(vollenweider_generate_regression_ETR_II(data))
 
     plot <- combo_control_plot(
-      "test-combo_control_plot_20231122_01.csv",
+      "etr II test-combo_plot_control_20231122_01.csv",
       data,
       list(eilers_peeters, platt, walsby, vollenweider),
-      list("eilers_peeters", "platt", "walsby", "vollenweider"),
+      list("purple", "blue", "green", "red"),
       list(color_eilers_peeters, color_platt, color_walsby, color_vollenweider)
     )
 ```
