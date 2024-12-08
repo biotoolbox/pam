@@ -81,8 +81,11 @@ plot_table <- function(model_result, entries_per_row) {
     core = list(
       fg_params = list(
         cex = 0.7,
-        fontface = 3,
-        col = "darkblue"
+        fontface = 3
+      ),
+      bg_params = list(
+        fill = "lightgray",
+        col = "black"
       )
     ), # font size for cell text
     colhead = list(
@@ -286,7 +289,7 @@ create_modified_model_result <- function(
 #' \item \strong{regression_data.csv:} Includes the regression data with predicted electron transport rate (ETR) values.
 #' \item \strong{model_result.csv:} Summarizes the parameter values derived from the model results (excluding regression data), such as \code{alpha} or \code{beta}.
 #' }
-#' The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory. 
+#' The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory.
 #' For more comprehensive guidance, refer to the package README file.
 #' @export
 write_model_result_csv <- function(dest_dir, name, data, model_result) {

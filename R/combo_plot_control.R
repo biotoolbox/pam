@@ -69,8 +69,11 @@ combo_plot_control <- function(
     core = list(
       fg_params = list(
         cex = 0.7,
-        fontface = 3,
-        col = "darkblue"
+        fontface = 3
+      ),
+      bg_params = list(
+        fill = "lightgray",
+        col = "black"
       )
     ), # font size for cell text
     colhead = list(
@@ -206,86 +209,4 @@ combo_plot_control <- function(
   )
 
   return(plot)
-}
-
-plot_combo_control_plot_table <- function() {
-  library(ggthemes)
-  library(gridExtra)
-  library(cowplot)
-
-  validate_model_result(model_result)
-
-  custom_theme <- ttheme_minimal(
-    core = list(
-      fg_params = list(
-        cex = 0.7,
-        fontface = 3,
-        col = "darkblue"
-      )
-    ), # font size for cell text
-    colhead = list(
-      fg_params = list(cex = 0.7),
-      bg_params = list(
-        fill = "lightgray",
-        col = "black"
-      )
-    ), # font size for column headers
-    rowhead = list(
-      fg_params = list(cex = 0.7),
-      bg_params = list(
-        fill = "lightgray",
-        col = "black"
-      )
-    ), # font size for row headers
-  )
-
-  tbl_list <- list()
-  row <- NULL
-
-  row_count <- 1
-  count <- 1
-
-  for (i in names(model_result)) {
-    if (i == "etr_type" || i == "etr_regression_data") {
-      next()
-    }
-
-    value <- model_result[[i]]
-
-    if (is.null(row)) {
-      row <- data.frame(tmp = NA)
-    }
-
-    row[[i]] <- c(value)
-
-    if (count == entries_per_row) {
-      row$tmp <- NULL
-      tbl_list[[row_count]] <- tableGrob(
-        row,
-        rows = NULL,
-        theme = custom_theme
-      )
-
-      row <- NULL
-      row_count <- row_count + 1
-      count <- 1
-    } else {
-      count <- count + 1
-    }
-  }
-
-  if (is.null(row) == FALSE) {
-    row$tmp <- NULL
-    tbl_list[[row_count]] <- tableGrob(
-      row,
-      rows = NULL,
-      theme = custom_theme
-    )
-  }
-
-  tbl <- plot_grid(
-    plotlist = tbl_list,
-    ncol = 1
-  )
-  return(tbl)
 }
