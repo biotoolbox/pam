@@ -295,11 +295,11 @@ Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (20
 
 This function adds parameters that were not originally included in the Vollenweider (1965) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
 
-### Parameters
+#### Parameters
 
 - **model_result**: A list containing the results of the model, including parameters such as `pmax`, `alpha`, and `ik`.
 
-### Return
+#### Return
 
 Returns a modified model result as a list with the following elements:
 
@@ -330,11 +330,11 @@ $${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_without\\_photoinhibi
 - **ib**: Not available, here set to `NA_real_`
 - **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`,  transfered as: `pmax_popt_and_ik_iik_ratio`
 
-### Details
+#### Details
 
 This function validates the `model_result` input and processes relevant parameters for the Vollenweider model, creating a structured list using `create_modified_model_result`. This standardized output allows for consistent analysis and comparison across different models.
 
-### Examples
+#### Examples
 
 ```r
 modified_result_vollenweider <- vollenweider_modified(model_result_vollenweider)
@@ -344,11 +344,11 @@ modified_result_vollenweider <- vollenweider_modified(model_result_vollenweider)
 
 This function adds parameters that were not originally included in the Platt (1980) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
 
-### Parameters
+#### Parameters
 
 - **model_result**: A list containing the results of the model, including parameters such as `etr_max`, `alpha`, and `beta`.
 
-### Return
+#### Return
 
 Returns a modified model result as a list with the following elements:
 
@@ -372,11 +372,11 @@ Returns a modified model result as a list with the following elements:
 
 $${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
 
-### Details
+#### Details
 
 This function validates the `model_result` input and processes relevant parameters for the Platt model, creating a structured list using `create_modified_model_result`. This standardized output allows for consistent analysis and comparison across different models.
 
-### Examples
+#### Examples
 
 ```r
 modified_result_platt <- platt_modified(model_result_platt)
@@ -386,11 +386,11 @@ modified_result_platt <- platt_modified(model_result_platt)
 
 This function adds parameters that were not originally included in the Eilers and Peeters (1988) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
 
-### Parameters
+#### Parameters
 
 - **model_result**: A list containing the results of the model, including parameters such as `a`, `b`, `c`, `s`, `pm`, `ik`, `im`, and `w`.
 
-### Return
+#### Return
 
 Returns a modified model result as a list with the following elements:
 
@@ -412,11 +412,11 @@ Returns a modified model result as a list with the following elements:
 - **ib**: Not available, here set to `NA_real_`
 - **etrmax_with_without_ratio**: Not available, here set to `NA_real_`
 
-### Details
+#### Details
 
 This function validates the `model_result` input, extracts relevant parameters for the modified Eilers-Peeters model, and creates a structured list using `create_modified_model_result`. The list serves as a standardized output format for further analysis.
 
-### Examples
+#### Examples
 
 ```r
 # Example usage for eilers_peeters_modified
@@ -427,11 +427,11 @@ modified_result <- eilers_peeters_modified(model_result_eilers_peeters)
 
 This function adds parameters that were not originally included in the Walsby (1997) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
 
-### Parameters
+#### Parameters
 
 - **model_result**: A list containing the results of the model, including parameters such as `etr_max`, `alpha`, and `beta`.
 
-### Return
+#### Return
 
 Returns a modified model result as a list with the following elements:
 
@@ -475,11 +475,11 @@ $$ik\\_without\\_photoinhibition = \frac{etrmax\\_without\\_photoinhibition}{alp
 
 $${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
 
-### Details
+#### Details
 
 This function validates the `model_result` input and processes relevant parameters for the Walsby model, creating a structured list using `create_modified_model_result`. This standardized output allows for consistent analysis and comparison across different photosynthesis models.
 
-### Examples
+#### Examples
 
 ```r
 modified_result <- walsby_modified(model_result_walsby)
@@ -671,11 +671,9 @@ write_model_result_csv(
 )
 ```
 
-###
+### known issues
 
-## known issues
-
-### subscript out of bounds
+#### subscript out of bounds
 
 ```
 Skipped file: 20231214_14_W6_T5_ML.csv because of error: Error in eilers_peeters[["sdiff"]]: subscript out of bounds
@@ -683,7 +681,7 @@ Skipped file: 20231214_14_W6_T5_ML.csv because of error: Error in eilers_peeters
 
 This could indicate that Pm lable in the Action column is at the wrong position in the csv raw data file. Error could be caused by WALZ-Software.
 
-### Removed rows in combo_plot_control
+#### Removed rows in combo_plot_control
 
 ```
 Warnings:
