@@ -5,7 +5,7 @@
 The library ‘pam’ was developed to process PAM raw data (chlorophyll fluorometry to analyze photosystem II and dual wavelength absorbance spectrometry to analyze photosystem I), for example from the DUAL PAM of the manufacturer WALZ.
 Four different models are provided for the regression of the light curve (Vollenweider (1965), Platt (1980), Eilers and Peeters (1988) and Walsby (1997)).
 To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as $$ETR_{max}$$, it is possible to output both with publication-compliant naming and with homogenised naming.
-Generated control plots make it possible to check each individual regression fit.
+Generated control plots make it possible to check each individual regression fit and calculated data.
 
 ## Functions
 
@@ -149,7 +149,7 @@ This function generates a regression model based on  Platt (1980). Original nami
 
 A list containing the following elements:
 
-- **etr_regression_data**: A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.
+- **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
 - **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$).
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
@@ -210,7 +210,7 @@ This function generates a regression model based on  Eilers-Peeters (1988). Orig
 
 A list containing the following elements:
 
-- **etr_regression_data**: A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.
+- **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
 - **a**: The obtained parameter $$a$$.
 - **b**: The obtained parameter $$b$$.
@@ -271,7 +271,7 @@ This function generates a regression model based on  Walsby (1997) in a modified
 
 A list containing the following elements:
 
-- **etr_regression_data**: A `data.table` with the predicted values of ETR to each PAR based on the fitted model.
+- **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
 - **sdiff**: The deviation between the actual and predicted ETR values.
 - **etr_max**: The maximum electron transport rate without photoinhibition ($$ETR_{max}$$).
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
