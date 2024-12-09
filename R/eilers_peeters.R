@@ -1,5 +1,10 @@
+#' @export
 eilers_peeters_default_start_value_a <- 0.00004
+
+#' @export
 eilers_peeters_default_start_value_b <- 0.004
+
+#' @export
 eilers_peeters_default_start_value_c <- 5
 
 #' Eilers-Peeters Regression for  ETR I
@@ -176,7 +181,7 @@ eilers_peeters_generate_regression_internal <- function(
           warning("failed to calculate Im: error: ", e)
         }
       )
-      
+
       w <- NA_real_
       tryCatch(
         {

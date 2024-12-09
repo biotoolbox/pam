@@ -1,5 +1,10 @@
+#' @export
 platt_default_start_value_alpha <- 0.3
+
+#' @export
 platt_default_start_value_beta <- 0.01
+
+#' @export
 platt_default_start_value_ps <- 30
 
 #' Platt Regression for ETR I

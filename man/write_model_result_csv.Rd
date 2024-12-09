@@ -25,6 +25,6 @@ This function generates three CSV files:
 \item \strong{regression_data.csv:} Includes the regression data with predicted electron transport rate (ETR) values.
 \item \strong{model_result.csv:} Summarizes the parameter values derived from the model results (excluding regression data), such as \code{alpha} or \code{beta}.
 }
-The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory. 
+The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory.
 For more comprehensive guidance, refer to the package README file.
 }

@@ -21,12 +21,3 @@ A plot displaying the original ETR and Yield values and the regression data. A t
 \description{
 This function creates a control plot for the used model based on the provided data and model results.
 }
-\examples{
-plot_control_eilers_peeters <- plot_control(
-  data = pam_data,
-  model_result = model_result_eilers_peeters,
-  title = "ETR II - Eilers-Peeters",
-  color = "black"
-)
-print(plot_control_eilers_peeters)
-}

@@ -165,14 +165,6 @@ plot_table <- function(model_result, entries_per_row) {
 #'
 #' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
 #'
-#' @examples
-#' plot_control_eilers_peeters <- plot_control(
-#'   data = pam_data,
-#'   model_result = model_result_eilers_peeters,
-#'   title = "ETR II - Eilers-Peeters",
-#'   color = "black"
-#' )
-#' print(plot_control_eilers_peeters)
 #' @export
 plot_control <- function(
     data,

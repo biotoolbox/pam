@@ -1,6 +1,13 @@
+#' @export
 vollenweider_default_start_value_pmax <- 40
+
+#' @export
 vollenweider_default_start_value_a <- 0.1
+
+#' @export
 vollenweider_default_start_value_alpha <- -0.0001
+
+#' @export
 vollenweider_default_start_value_n <- 350
 
 #' Vollenweider Regression for ETR I

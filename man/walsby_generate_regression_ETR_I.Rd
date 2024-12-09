@@ -31,7 +31,7 @@ A list containing:
 }
 }
 \description{
-Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions. 
+Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions.
 Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 }
 \details{
@@ -39,11 +39,11 @@ A detailed documentation can be found in the README.
 }
 \references{
 {
-  Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. 
+  Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
   \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
 
-Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). 
-  Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea. 
+Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
+  Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
   \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
 }
 }

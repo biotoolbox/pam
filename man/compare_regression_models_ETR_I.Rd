@@ -35,19 +35,19 @@ A detailed documentation can be found in the README.
 }
 \references{
 {
-  Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.} 
+  Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
   Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
 
-  Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.} 
+  Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
   Journal of Marine Research, 38(4). Available at: \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
 
-  Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). \emph{Acclimation limits of Fucus evanescens along the salinity gradient of the southwestern Baltic Sea.} 
+  Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). \emph{Acclimation limits of Fucus evanescens along the salinity gradient of the southwestern Baltic Sea.}
   Botanica Marina, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}.
 
-  Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements.} 
+  Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements.}
   In C. R. Goldman (Ed.), \emph{Primary Productivity in Aquatic Environments} (pp. 427-457). Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 
-  Walsby, A. E. (1997). \emph{Numerical integration of phytoplankton photosynthesis through time and depth in a water column.} 
+  Walsby, A. E. (1997). \emph{Numerical integration of phytoplankton photosynthesis through time and depth in a water column.}
   New Phytologist, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}.
 }
 }
