@@ -4,7 +4,7 @@
 
 The library ‘pam’ was developed to process PAM raw data (chlorophyll fluorometry to analyze photosystem II and dual wavelength absorbance spectrometry to analyze photosystem I), for example from the DUAL PAM of the manufacturer WALZ.
 Four different models are provided for the regression of the light curve (Vollenweider (1965), Platt (1980), Eilers and Peeters (1988) and Walsby (1997)).
-To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as ETRmax, it is possible to output both with publication-compliant naming and with homogenised naming.
+To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as $$ETR_{max}$$, it is possible to output both with publication-compliant naming and with homogenised naming.
 Generated control plots make it possible to check each individual regression fit.
 
 ## Functions
@@ -13,7 +13,7 @@ Generated control plots make it possible to check each individual regression fit
 
 #### Description
 
-This function reads the original CSV file as created by the DualPAM software, processes it by calculating ETR values, and returns a cleaned dataset.
+This function reads the original CSV file as created by the DualPAM software, processes it by calculating $$ETR$$ values, and returns a cleaned dataset.
 Functionality with raw data from other PAM devices cannot be guaranteed.
 Individual customisation may be necessary when reading data.
 
