@@ -1,6 +1,4 @@
 validate_data <- function(data) {
-  library(data.table)
-
   if (is.null(data)) {
     stop("data is null")
   }
@@ -43,8 +41,6 @@ validate_data <- function(data) {
 }
 
 validate_etr_regression_data <- function(regression_data) {
-  library(data.table)
-
   if (is.null(regression_data)) {
     stop("is null")
   }

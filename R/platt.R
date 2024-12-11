@@ -105,10 +105,6 @@ platt_generate_regression_internal <- function(
     alpha_start_value = platt_default_start_value_alpha,
     beta_start_value = platt_default_start_value_beta,
     ps_start_value = platt_default_start_value_ps) {
-  library(minpack.lm)
-  library(SciViews)
-  library(data.table)
-
   tryCatch(
     {
       validate_data(data)
@@ -126,7 +122,7 @@ platt_generate_regression_internal <- function(
 
       data <- remove_det_row_by_etr(data, etr_type)
 
-      model <- nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * PAR) / ps))) * exp(-((beta * PAR) / ps)),
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * PAR) / ps))) * exp(-((beta * PAR) / ps)),
         data = data,
         start = list(
           alpha = alpha_start_value,

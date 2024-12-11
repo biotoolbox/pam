@@ -105,10 +105,6 @@ walsby_generate_regression_internal <- function(
     etr_max_start_value = walsby_default_start_value_etr_max,
     alpha_start_value = walsby_default_start_value_alpha,
     beta_start_value = walsby_default_start_value_beta) {
-  library(data.table)
-  library(minpack.lm)
-  library(SciViews)
-
   tryCatch(
     {
       validate_data(data)
@@ -126,7 +122,7 @@ walsby_generate_regression_internal <- function(
 
       data <- remove_det_row_by_etr(data, etr_type)
 
-      model <- nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
         data = data,
         start = list(
           etr_max = etr_max_start_value,

@@ -99,9 +99,6 @@ eilers_peeters_generate_regression_internal <- function(
     a_start_value = eilers_peeters_default_start_value_a,
     b_start_value = eilers_peeters_default_start_value_b,
     c_start_value = eilers_peeters_default_start_value_c) {
-  library(minpack.lm)
-  library(data.table)
-
   tryCatch(
     {
       validate_data(data)
@@ -119,10 +116,10 @@ eilers_peeters_generate_regression_internal <- function(
 
       data <- remove_det_row_by_etr(data, etr_type)
 
-      model <- nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
         data = data,
         start = list(a = a_start_value, b = b_start_value, c = c_start_value),
-        control = nls.lm.control(maxiter = 1000)
+        control = minpack.lm::nls.lm.control(maxiter = 1000)
       )
 
       abc <- coef(model)

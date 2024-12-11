@@ -20,11 +20,6 @@ combo_plot_control <- function(
     model_results,
     name_list,
     color_list) {
-  library(ggplot2)
-  library(ggthemes)
-  library(gridExtra)
-  library(cowplot)
-
   validate_data(data)
 
   if (length(model_results) <= 0) {
@@ -56,16 +51,16 @@ combo_plot_control <- function(
     yield <- "Y.II."
   }
 
-  plot <- ggplot(data, aes(x = data$PAR, y = get(etr_type))) +
-    geom_point() +
-    geom_point(data = data, aes(y = get(yield) * max_etr)) +
-    geom_line(data = data, aes(y = get(yield) * max_etr)) +
-    labs(x = par_label, y = etr_label, title = eval(title)) +
-    scale_y_continuous(
-      sec.axis = sec_axis(~ . / max_etr, name = "Yield")
+  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$PAR, y = get(etr_type))) +
+    ggplot2::geom_point() +
+    ggplot2::geom_point(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::geom_line(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::labs(x = par_label, y = etr_label, title = eval(title)) +
+    ggplot2::scale_y_continuous(
+      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = "Yield")
     )
 
-  custom_theme <- ttheme_minimal(
+  custom_theme <- gridExtra::ttheme_minimal(
     core = list(
       fg_params = list(
         cex = 0.7,
@@ -107,9 +102,9 @@ combo_plot_control <- function(
     reg_data <- get_etr_regression_data_from_model_result(model_result)
     reg_data <- cbind(reg_data, names = name)
 
-    plot <- plot + geom_line(
+    plot <- plot + ggplot2::geom_line(
       data = reg_data,
-      aes(
+      ggplot2::aes(
         x = PAR,
         y = prediction,
         color = names
@@ -162,7 +157,7 @@ combo_plot_control <- function(
 
     if (count == entries_per_row) {
       colnames(row) <- col_names
-      tbl_list[[row_count]] <- tableGrob(
+      tbl_list[[row_count]] <- gridExtra::tableGrob(
         row,
         rows = NULL,
         theme = custom_theme
@@ -178,7 +173,7 @@ combo_plot_control <- function(
 
   if (is.null(row) == FALSE) {
     colnames(row) <- col_names
-    tbl_list[[row_count]] <- tableGrob(
+    tbl_list[[row_count]] <- gridExtra::tableGrob(
       row,
       rows = NULL,
       theme = custom_theme
@@ -186,22 +181,22 @@ combo_plot_control <- function(
   }
 
   plot <- plot +
-    scale_color_manual(
+    ggplot2::scale_color_manual(
       values = setNames(
         unlist(color_list),
         unlist(name_list)
       )
     ) +
-    labs(x = par_label, y = etr_label, title = eval(title), color = NULL) +
-    theme_base() +
-    theme(legend.position = "bottom")
+    ggplot2::labs(x = par_label, y = etr_label, title = eval(title), color = NULL) +
+    ggthemes::theme_base() +
+    ggplot2::theme(legend.position = "bottom")
 
-  tbl <- plot_grid(
+  tbl <- cowplot::plot_grid(
     plotlist = tbl_list,
     ncol = 1
   )
 
-  plot <- plot_grid(
+  plot <- cowplot::plot_grid(
     plot,
     tbl,
     ncol = 1,

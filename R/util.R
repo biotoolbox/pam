@@ -17,17 +17,16 @@ calculate_sdiff <- function(data, etr_regression_data, etr_type) {
 }
 
 remove_det_row_by_etr <- function(data, etr_type) {
-  library(dplyr)
   validate_data(data)
   validate_etr_type(etr_type)
 
   if (etr_type == etr_I_type) {
-    data <- data %>% filter(data$Action != "Fm-Det.")
+    data <- data %>% dplyr::filter(data$Action != "Fm-Det.")
     if (length(data[data$Action == "Pm.-Det.", ]) == 0) {
       stop("Pm.-Det. is required but not present")
     }
   } else {
-    data <- data %>% filter(data$Action != "Pm.-Det.")
+    data <- data %>% dplyr::filter(data$Action != "Pm.-Det.")
     if (length(data[data$Action == "Fm-Det.", ]) == 0) {
       stop("Fm-Det. is required but not present")
     }
@@ -37,8 +36,6 @@ remove_det_row_by_etr <- function(data, etr_type) {
 }
 
 create_regression_data <- function(pars, predictions) {
-  library(data.table)
-
   if (!is.vector(pars)) {
     stop("pars is not a valid vector")
   }
@@ -71,13 +68,9 @@ get_sdiff_from_model_result <- function(model_result) {
 }
 
 plot_table <- function(model_result, entries_per_row) {
-  library(ggthemes)
-  library(gridExtra)
-  library(cowplot)
-
   validate_model_result(model_result)
 
-  custom_theme <- ttheme_minimal(
+  custom_theme <- gridExtra::ttheme_minimal(
     core = list(
       fg_params = list(
         cex = 0.7,
@@ -125,7 +118,7 @@ plot_table <- function(model_result, entries_per_row) {
 
     if (count == entries_per_row) {
       row$tmp <- NULL
-      tbl_list[[row_count]] <- tableGrob(
+      tbl_list[[row_count]] <- gridExtra::tableGrob(
         row,
         rows = NULL,
         theme = custom_theme
@@ -141,14 +134,14 @@ plot_table <- function(model_result, entries_per_row) {
 
   if (is.null(row) == FALSE) {
     row$tmp <- NULL
-    tbl_list[[row_count]] <- tableGrob(
+    tbl_list[[row_count]] <- gridExtra::tableGrob(
       row,
       rows = NULL,
       theme = custom_theme
     )
   }
 
-  tbl <- plot_grid(
+  tbl <- cowplot::plot_grid(
     plotlist = tbl_list,
     ncol = 1
   )
@@ -171,11 +164,6 @@ plot_control <- function(
     model_result,
     title,
     color = "black") {
-  library(ggplot2)
-  library(ggthemes)
-  library(gridExtra)
-  library(cowplot)
-
   validate_data(data)
   validate_model_result(model_result)
 
@@ -195,27 +183,27 @@ plot_control <- function(
 
   max_etr <- max(etr_regression_data$prediction)
 
-  plot <- ggplot(data, aes(x = data$PAR, y = get(etr_type))) +
-    geom_point() +
-    geom_line(
+  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$PAR, y = get(etr_type))) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line(
       data = etr_regression_data,
-      aes(
+      ggplot2::aes(
         x = etr_regression_data$PAR,
         y = etr_regression_data$prediction
       ),
       color = color
     ) +
-    geom_point(data = data, aes(y = get(yield) * max_etr)) +
-    geom_line(data = data, aes(y = get(yield) * max_etr)) +
-    labs(x = par_label, y = etr_label, title = eval(title)) +
-    scale_y_continuous(
-      sec.axis = sec_axis(~ . / max_etr, name = "Yield")
+    ggplot2::geom_point(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::geom_line(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::labs(x = par_label, y = etr_label, title = eval(title)) +
+    ggplot2::scale_y_continuous(
+      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = "Yield")
     ) +
-    theme_base()
+    ggthemes::theme_base()
 
   tbl <- plot_table(model_result, 4)
 
-  plot <- plot_grid(
+  plot <- cowplot::plot_grid(
     plot,
     tbl,
     ncol = 1,

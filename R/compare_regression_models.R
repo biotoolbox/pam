@@ -94,7 +94,6 @@ compare_regression_models_ETR_II <- function(data_dir) {
 }
 
 compare_regression_models <- function(data_dir, etr_type) {
-  library(data.table)
   csv_files <- list.files(data_dir, pattern = ".csv", full.names = TRUE)
 
   eilers_peeters_points <- 0

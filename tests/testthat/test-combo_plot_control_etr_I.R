@@ -17,6 +17,6 @@ test_that("test-combo_plot_control 20231122_01.csv", {
       list(color_eilers_peeters, color_platt, color_walsby, color_vollenweider)
     )
 
-    ggsave("test_combo_plot_control.jpg", plot = plot, units = "px", width = 1000, height = 1600, dpi = 100, limitsize = FALSE)
+    ggplot2::ggsave("test_combo_plot_control.jpg", plot = plot, units = "px", width = 1000, height = 1600, dpi = 100, limitsize = FALSE)
   })
 })

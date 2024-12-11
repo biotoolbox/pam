@@ -117,9 +117,6 @@ vollenweider_generate_regression_internal <- function(
     a_start_value = vollenweider_default_start_value_a,
     alpha_start_value = vollenweider_default_start_value_alpha,
     n_start_value = vollenweider_default_start_value_n) {
-  library(data.table)
-  library(minpack.lm)
-
   tryCatch(
     {
       validate_etr_type(etr_type)
@@ -140,7 +137,7 @@ vollenweider_generate_regression_internal <- function(
 
       data <- remove_det_row_by_etr(data, etr_type)
 
-      model <- nlsLM(
+      model <- minpack.lm::nlsLM(
         data[[etr_type]] ~
           pmax * (((a * PAR) / (sqrt(1 + (a * PAR)^2))) * (1 / (sqrt(1 + (alpha * PAR)^2)^n))),
         data = data,
