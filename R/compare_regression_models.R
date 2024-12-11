@@ -144,10 +144,10 @@ compare_regression_models <- function(data_dir, etr_type) {
           stop("failed to calculate sdiff with walsby")
         }
 
-        data1 <- data.table(group = "eilers_peeters", value = eilers_peeters_sdiff)
-        data2 <- data.table(group = "platt", value = platt_sdiff)
-        data3 <- data.table(group = "vollenweider", value = vollenweider_sdiff)
-        data4 <- data.table(group = "walsby", value = walsby_sdiff)
+        data1 <- data.table::data.table(group = "eilers_peeters", value = eilers_peeters_sdiff)
+        data2 <- data.table::data.table(group = "platt", value = platt_sdiff)
+        data3 <- data.table::data.table(group = "vollenweider", value = vollenweider_sdiff)
+        data4 <- data.table::data.table(group = "walsby", value = walsby_sdiff)
 
         combined_data <- rbind(data1, data2, data3, data4)
         combined_data <- combined_data[order(combined_data$value), ]

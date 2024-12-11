@@ -1,9 +1,12 @@
+#' Default start value
 #' @export
 walsby_default_start_value_etr_max <- 100
 
+#' Default start value
 #' @export
 walsby_default_start_value_alpha <- 0.4
 
+#' Default start value
 #' @export
 walsby_default_start_value_beta <- -0.01
 
@@ -13,9 +16,9 @@ walsby_default_start_value_beta <- -0.01
 #' Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
-#' @param etr_max_start_value_walsby Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.
-#' @param alpha_start_value_walsby Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.
-#' @param beta_start_value_walsby Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
+#' @param etr_max_start_value Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.
+#' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.
+#' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
 #'
 #' @details
 #' A detailed documentation can be found in the README.
@@ -60,9 +63,9 @@ walsby_generate_regression_ETR_I <- function(
 #' Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
-#' @param etr_max_start_value_walsby Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.
-#' @param alpha_start_value_walsby Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.
-#' @param beta_start_value_walsby Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
+#' @param etr_max_start_value Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.
+#' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.
+#' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
 #'
 #' @details
 #' A detailed documentation can be found in the README.

@@ -48,7 +48,7 @@ create_regression_data <- function(pars, predictions) {
     stop("pars and predictions need to be of the same length")
   }
 
-  regression_data <- data.table(
+  regression_data <- data.table::data.table(
     "PAR" = pars,
     "prediction" = predictions
   )

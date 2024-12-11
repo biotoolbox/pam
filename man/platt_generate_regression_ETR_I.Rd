@@ -14,11 +14,11 @@ platt_generate_regression_ETR_I(
 \arguments{
 \item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
 
-\item{alpha_start_value_platt}{Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.}
+\item{alpha_start_value}{Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.}
 
-\item{beta_start_value_platt}{Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.}
+\item{beta_start_value}{Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.}
 
-\item{ps_start_value_platt}{Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.}
+\item{ps_start_value}{Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.}
 }
 \value{
 A list containing:

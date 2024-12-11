@@ -3,7 +3,7 @@ validate_data <- function(data) {
     stop("data is null")
   }
 
-  if (!is.data.table(data)) {
+  if (!data.table::is.data.table(data)) {
     stop("data is not a valid data.table")
   }
 
@@ -45,7 +45,7 @@ validate_etr_regression_data <- function(regression_data) {
     stop("is null")
   }
 
-  if (!is.data.table(regression_data)) {
+  if (!data.table::is.data.table(regression_data)) {
     stop("not a valid data.table")
   }
 

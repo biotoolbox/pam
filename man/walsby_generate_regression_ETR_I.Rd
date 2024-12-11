@@ -14,11 +14,11 @@ walsby_generate_regression_ETR_I(
 \arguments{
 \item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
 
-\item{etr_max_start_value_walsby}{Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.}
+\item{etr_max_start_value}{Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.}
 
-\item{alpha_start_value_walsby}{Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.}
+\item{alpha_start_value}{Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.}
 
-\item{beta_start_value_walsby}{Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.}
+\item{beta_start_value}{Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.}
 }
 \value{
 A list containing:

@@ -34,8 +34,8 @@ A detailed documentation can be found in the README.
 }
 \references{
 {
-  Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).} 
-  Heinz Walz GmbH, Effeltrich, Germany.  
+  Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).}
+  Heinz Walz GmbH, Effeltrich, Germany.
   Available at: \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf}
 }
 }

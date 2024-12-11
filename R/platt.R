@@ -1,9 +1,12 @@
+#' Default start value
 #' @export
 platt_default_start_value_alpha <- 0.3
 
+#' Default start value
 #' @export
 platt_default_start_value_beta <- 0.01
 
+#' Default start value
 #' @export
 platt_default_start_value_ps <- 30
 
@@ -12,9 +15,9 @@ platt_default_start_value_ps <- 30
 #' Fits the Platt (1980) regression model using original naming conventions.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
-#' @param alpha_start_value_platt Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.
-#' @param beta_start_value_platt Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.
-#' @param ps_start_value_platt Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.
+#' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.
+#' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.
+#' @param ps_start_value Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -58,9 +61,9 @@ platt_generate_regression_ETR_I <- function(
 #' Fits the Platt (1980) regression model using original naming conventions.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
-#' @param alpha_start_value_platt Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.
-#' @param beta_start_value_platt Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.
-#' @param ps_start_value_platt Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.
+#' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.
+#' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.
+#' @param ps_start_value Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.
 #'
 #' @return A list containing:
 #' \itemize{

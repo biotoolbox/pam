@@ -15,15 +15,13 @@ vollenweider_generate_regression_ETR_II(
 \arguments{
 \item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
 
+\item{pmax_start_value}{Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.}
+
+\item{a_start_value}{Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.}
+
 \item{alpha_start_value}{Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_values_vollenweider_default}.}
 
 \item{n_start_value}{Numeric. Initial value for \eqn{n}. Default: \code{n_start_values_vollenweider_default}.}
-
-\item{etr_type}{A character string specifying the response variable column (ETR I or ETR II).}
-
-\item{pmax_start_value_vollenweider}{Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.}
-
-\item{a_start_value_vollenweider}{Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.}
 }
 \value{
 A list containing:

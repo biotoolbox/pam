@@ -1,12 +1,16 @@
+#' Default start value
 #' @export
 vollenweider_default_start_value_pmax <- 40
 
+#' Default start value
 #' @export
 vollenweider_default_start_value_a <- 0.1
 
+#' Default start value
 #' @export
 vollenweider_default_start_value_alpha <- -0.0001
 
+#' Default start value
 #' @export
 vollenweider_default_start_value_n <- 350
 
@@ -15,9 +19,8 @@ vollenweider_default_start_value_n <- 350
 #' Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
-#' @param etr_type A character string specifying the response variable column (ETR I or ETR II).
-#' @param pmax_start_value_vollenweider Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.
-#' @param a_start_value_vollenweider Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.
+#' @param pmax_start_value Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.
+#' @param a_start_value Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.
 #' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_values_vollenweider_default}.
 #' @param n_start_value Numeric. Initial value for \eqn{n}. Default: \code{n_start_values_vollenweider_default}.
 #'
@@ -65,9 +68,8 @@ vollenweider_generate_regression_ETR_I <- function(
 #' Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 #'
 #' @param data A \code{data.table} from \code{read_dual_pam_data}.
-#' @param etr_type A character string specifying the response variable column (ETR I or ETR II).
-#' @param pmax_start_value_vollenweider Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.
-#' @param a_start_value_vollenweider Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.
+#' @param pmax_start_value Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.
+#' @param a_start_value Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.
 #' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_values_vollenweider_default}.
 #' @param n_start_value Numeric. Initial value for \eqn{n}. Default: \code{n_start_values_vollenweider_default}.
 #'

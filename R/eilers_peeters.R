@@ -1,9 +1,12 @@
+#' Default start value
 #' @export
 eilers_peeters_default_start_value_a <- 0.00004
 
+#' Default start value
 #' @export
 eilers_peeters_default_start_value_b <- 0.004
 
+#' Default start value
 #' @export
 eilers_peeters_default_start_value_c <- 5
 

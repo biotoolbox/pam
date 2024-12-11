@@ -10,14 +10,14 @@
 #' @details
 #' Calculates ETR using:
 #' \deqn{\text{ETR} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{P-Ratio} \cdot \text{Yield}}
-#' 
+#'
 #' A detailed documentation can be found in the README.
 #'
 #' @return A `data.table` with processed data and calculated ETR values.
-#' 
+#'
 #' @references{
-#'   Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).} 
-#'   Heinz Walz GmbH, Effeltrich, Germany.  
+#'   Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).}
+#'   Heinz Walz GmbH, Effeltrich, Germany.
 #'   Available at: \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf}
 #' }
 #' @export
@@ -26,13 +26,10 @@ read_dual_pam_data <- function(
     remove_recovery = TRUE,
     etr_factor = 0.84,
     p_ratio = 0.5) {
-  library(data.table)
-  library(dplyr)
-
   tryCatch(
     {
       data <- read.csv(csv_path, sep = ";", dec = ".")
-      data <- as.data.table(data)
+      data <- data.table::as.data.table(data)
 
       validate_data(data)
       data <- data[data$ID == "SP", ]
@@ -49,11 +46,11 @@ read_dual_pam_data <- function(
       }
 
       data <- data %>%
-        mutate(DateTime = date_time_col_values) %>%
-        select(DateTime, everything())
+        dplyr::mutate(DateTime = date_time_col_values) %>%
+        dplyr::select(DateTime, everything())
       data <- data[order(data$DateTime), ]
 
-      result <- data.table()
+      result <- data.table::data.table()
       last_par <- as.numeric(0)
       for (i in seq_len(nrow(data))) {
         row <- data[i, ]
@@ -66,12 +63,12 @@ read_dual_pam_data <- function(
         yield_I <- row$Y.I.
         recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, p_ratio)
         row <- cbind(row, etr_I_col_name = recalc_ETRI)
-        setnames(row, old = "etr_I_col_name", new = etr_I_type)
+        data.table::setnames(row, old = "etr_I_col_name", new = etr_I_type)
 
         yield_II <- row$Y.II.
         recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, p_ratio)
         row <- cbind(row, etr_II_col_name = recalc_ETRII)
-        setnames(row, old = "etr_II_col_name", new = etr_II_type)
+        data.table::setnames(row, old = "etr_II_col_name", new = etr_II_type)
 
         result <- rbind(result, row)
 
@@ -79,13 +76,13 @@ read_dual_pam_data <- function(
       }
 
       result <- result %>%
-        select(!!etr_II_type, everything())
+        dplyr::select(!!etr_II_type, dplyr::everything())
 
       result <- result %>%
-        select(!!etr_I_type, everything())
+        dplyr::select(!!etr_I_type, dplyr::everything())
 
       result <- result %>%
-        select(DateTime, everything())
+        dplyr::select(DateTime, dplyr::everything())
 
       return(result)
     },
