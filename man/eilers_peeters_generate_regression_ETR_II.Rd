@@ -2,7 +2,7 @@
 % Please edit documentation in R/eilers_peeters.R
 \name{eilers_peeters_generate_regression_ETR_II}
 \alias{eilers_peeters_generate_regression_ETR_II}
-\title{Generate Regression for ETR II using the Eilers-Peeters Model (1988)}
+\title{Eilers-Peeters Regression for  ETR II}
 \usage{
 eilers_peeters_generate_regression_ETR_II(
   data,
@@ -12,54 +12,36 @@ eilers_peeters_generate_regression_ETR_II(
 )
 }
 \arguments{
-\item{data}{A `data.table` containing the input data from \link[pam]{read_dual_pam_data}}
+\item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
 
-\item{a_start_value}{Numeric. The starting value for the parameter \eqn{a}
-in the model. Defaults to \code{a_start_values_eilers_peeters_default}.}
+\item{a_start_value}{Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.}
 
-\item{b_start_value}{Numeric. The starting value for the parameter \eqn{b}
-in the model. Defaults to \code{b_start_values_eilers_peeters_default}.}
+\item{b_start_value}{Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.}
 
-\item{c_start_value}{Numeric. The starting value for the parameter \eqn{c}
-in the model. Defaults to \code{c_start_values_eilers_peeters_default}.}
-
-\item{etr_type}{A character string specifying the column name of the
-response variable (in this case: ETR II) to be used in the model.}
+\item{c_start_value}{Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.}
 }
 \value{
-A list containing the following elements:
-\describe{
-  \item{etr_regression_data}{A `data.table` with the predicted values of ETR II to each PAR based on the fitted model.}
-  \item{sdiff}{The deviation between the actual and predicted ETR values.}
-  \item{a}{The obtained parameter \eqn{a}.}
-  \item{b}{The obtained parameter \eqn{b}.}
-  \item{c}{The obtained parameter \eqn{c}.}
-  \item{pm}{The maximum electron transport rate, calculated as \eqn{pm = 1 / (b + 2 * \sqrt(a * c))}.}
-  \item{s}{The initial slope of the light curve, calculated as \eqn{s = 1 / c}.}
-  \item{ik}{PAR where the transition point from light limitation to light saturation is achieved, calculated as \eqn{ik = c / (b + 2 \sqrt(a * c))}.}
-  \item{im}{The PAR at which the maximum electron transport rate is achieved, calculated as \eqn{ im = \sqrt(c / a)}.}
-  \item{w}{The sharpness of the peak, calculated as \eqn{w = b / \sqrt(a * c)}.}
+A list containing:
+\itemize{
+  \item \code{etr_regression_data}: Predicted ETR values.
+  \item \code{sdiff}: Deviation between actual and predicted values.
+  \item \code{a}, \code{b}, \code{c}: Fitted parameters.
+  \item \code{pm}: Maximum ETR (\eqn{p_m}).
+  \item \code{s}: Initial slope (\eqn{s}).
+  \item \code{ik}: Transition point from light limitation to light saturation (\eqn{I_k}).
+  \item \code{im}: PAR at maximum ETR (\eqn{I_m}).
+  \item \code{w}: Peak sharpness (\eqn{w}).
 }
 }
 \description{
-This function generates a regression model based on the Eilers-Peeters
-formula. Original naming conventions from the publication are used.
-All parameters are calculated taking photoinhibition into account.
+Fits a regression model for ETR II based on Eilers-Peeters (1988), considering photoinhibition.
 }
 \details{
-This function uses non-linear least squares fitting to estimate the parameters
-for the Eilers-Peeters model, which describes the relationship between PAR and
-ETR. The model used is:
-
-\eqn{p = I / (a * I^2 + b * I + c)}
-
-It is valid: I = PAR; p = ETR
+A detailed documentation can be found in the README.
 }
 \references{
-Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
-between light intensity and the rate of photosynthesis in phytoplankton.
-Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
+{
+  Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
+  Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
 }
-\seealso{
-\code{\link{nlsLM}}, \code{\link{minpack.lm}}
 }

@@ -6,3 +6,4 @@ test-eilers_peeters_etr_II_bulk_plot.pdf
 .Rhistory
 .RData
 results/
+tests/testthat/*.jpg

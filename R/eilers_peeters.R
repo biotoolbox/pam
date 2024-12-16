@@ -1,37 +1,43 @@
+#' Default start value
+#' @export
 eilers_peeters_default_start_value_a <- 0.00004
+
+#' Default start value
+#' @export
 eilers_peeters_default_start_value_b <- 0.004
+
+#' Default start value
+#' @export
 eilers_peeters_default_start_value_c <- 5
 
-#' Generate Regression for ETR I using the Eilers-Peeters Model (1988)
+#' Eilers-Peeters Regression for  ETR I
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
-#' @param etr_type A character string specifying the column name of the
-#' response variable (in this case: ETR I) to be used in the model.
-#' @param a_start_value Numeric. The starting value for the parameter \eqn{a}
-#' in the model. Defaults to \code{a_start_values_eilers_peeters_default}.
-#' @param b_start_value Numeric. The starting value for the parameter \eqn{b}
-#' in the model. Defaults to \code{b_start_values_eilers_peeters_default}.
-#' @param c_start_value Numeric. The starting value for the parameter \eqn{c}
-#' in the model. Defaults to \code{c_start_values_eilers_peeters_default}.
+#' Fits a regression model for ETR I based on Eilers-Peeters (1988), considering photoinhibition.
 #'
-#' @return A list containing the following elements:
-#' \describe{
-#'   \item{etr_regression_data}{A `data.table` with the predicted values of ETR I to each PAR based on the fitted model.}
-#'   \item{sdiff}{The deviation between the actual and predicted ETR values.}
-#'   \item{a}{The obtained parameter \eqn{a}.}
-#'   \item{b}{The obtained parameter \eqn{b}.}
-#'   \item{c}{The obtained parameter \eqn{c}.}
-#'   \item{pm}{The maximum electron transport rate, calculated as \eqn{pm = 1 / (b + 2 * \sqrt(a * c))}.}
-#'   \item{s}{The initial slope of the light curve, calculated as \eqn{s = 1 / c}.}
-#'   \item{ik}{PAR where the transition point from light limitation to light saturation is achieved, calculated as \eqn{ik = c / (b + 2 \sqrt(a * c))}.}
-#'   \item{im}{The PAR at which the maximum electron transport rate is achieved, calculated as \eqn{ im = \sqrt(c / a)}.}
-#'   \item{w}{The sharpness of the peak, calculated as \eqn{w = b / \sqrt(a * c)}.}
+#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param a_start_value Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.
+#' @param b_start_value Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.
+#' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
+#'
+#' @details
+#' A detailed documentation can be found in the README.
+#'
+#' @return A list containing:
+#' \itemize{
+#'   \item \code{etr_regression_data}: Predicted ETR values.
+#'   \item \code{sdiff}: Deviation between actual and predicted values.
+#'   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
+#'   \item \code{pm}: Maximum ETR (\eqn{p_m}).
+#'   \item \code{s}: Initial slope (\eqn{s}).
+#'   \item \code{ik}: Transition point from light limitation to light saturation (\eqn{I_k}).
+#'   \item \code{im}: PAR at maximum ETR (\eqn{I_m}).
+#'   \item \code{w}: Peak sharpness (\eqn{w}).
 #' }
 #'
-#' @references
-#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
-#' between light intensity and the rate of photosynthesis in phytoplankton.
-#' Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
+#' @references{
+#'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
+#'   Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
+#' }
 #' @export
 eilers_peeters_generate_regression_ETR_I <- function(
     data,
@@ -47,53 +53,34 @@ eilers_peeters_generate_regression_ETR_I <- function(
   ))
 }
 
-#' @title Generate Regression for ETR II using the Eilers-Peeters Model (1988)
+#' Eilers-Peeters Regression for  ETR II
 #'
-#' @description This function generates a regression model based on the Eilers-Peeters
-#' formula. Original naming conventions from the publication are used.
-#' All parameters are calculated taking photoinhibition into account.
+#' Fits a regression model for ETR II based on Eilers-Peeters (1988), considering photoinhibition.
 #'
-#' @param data A `data.table` containing the input data from \link[pam]{read_dual_pam_data}
-#' @param etr_type A character string specifying the column name of the
-#' response variable (in this case: ETR II) to be used in the model.
-#' @param a_start_value Numeric. The starting value for the parameter \eqn{a}
-#' in the model. Defaults to \code{a_start_values_eilers_peeters_default}.
-#' @param b_start_value Numeric. The starting value for the parameter \eqn{b}
-#' in the model. Defaults to \code{b_start_values_eilers_peeters_default}.
-#' @param c_start_value Numeric. The starting value for the parameter \eqn{c}
-#' in the model. Defaults to \code{c_start_values_eilers_peeters_default}.
-#'
-#' @return A list containing the following elements:
-#' \describe{
-#'   \item{etr_regression_data}{A `data.table` with the predicted values of ETR II to each PAR based on the fitted model.}
-#'   \item{sdiff}{The deviation between the actual and predicted ETR values.}
-#'   \item{a}{The obtained parameter \eqn{a}.}
-#'   \item{b}{The obtained parameter \eqn{b}.}
-#'   \item{c}{The obtained parameter \eqn{c}.}
-#'   \item{pm}{The maximum electron transport rate, calculated as \eqn{pm = 1 / (b + 2 * \sqrt(a * c))}.}
-#'   \item{s}{The initial slope of the light curve, calculated as \eqn{s = 1 / c}.}
-#'   \item{ik}{PAR where the transition point from light limitation to light saturation is achieved, calculated as \eqn{ik = c / (b + 2 \sqrt(a * c))}.}
-#'   \item{im}{The PAR at which the maximum electron transport rate is achieved, calculated as \eqn{ im = \sqrt(c / a)}.}
-#'   \item{w}{The sharpness of the peak, calculated as \eqn{w = b / \sqrt(a * c)}.}
-#' }
+#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param a_start_value Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.
+#' @param b_start_value Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.
+#' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
 #'
 #' @details
-#' This function uses non-linear least squares fitting to estimate the parameters
-#' for the Eilers-Peeters model, which describes the relationship between PAR and
-#' ETR. The model used is:
+#' A detailed documentation can be found in the README.
 #'
-#' \eqn{p = I / (a * I^2 + b * I + c)}
+#' @return A list containing:
+#' \itemize{
+#'   \item \code{etr_regression_data}: Predicted ETR values.
+#'   \item \code{sdiff}: Deviation between actual and predicted values.
+#'   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
+#'   \item \code{pm}: Maximum ETR (\eqn{p_m}).
+#'   \item \code{s}: Initial slope (\eqn{s}).
+#'   \item \code{ik}: Transition point from light limitation to light saturation (\eqn{I_k}).
+#'   \item \code{im}: PAR at maximum ETR (\eqn{I_m}).
+#'   \item \code{w}: Peak sharpness (\eqn{w}).
+#' }
 #'
-#' It is valid: I = PAR; p = ETR
-#'
-#' @references
-#' Eilers, P. H. C., & Peeters, J. C. H. (1988). A model for the relationship
-#' between light intensity and the rate of photosynthesis in phytoplankton.
-#' Ecological Modelling, 42(3-4), 199-215. \doi{10.1016/0304-3800(88)90057-9}.
-#'
-#' @seealso \code{\link{nlsLM}}, \code{\link{minpack.lm}}
-#' @importFrom minpack.lm nlsLM
-#' @importFrom data.table data.table
+#' @references{
+#'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
+#'   Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
+#' }
 #' @export
 eilers_peeters_generate_regression_ETR_II <- function(
     data,
@@ -115,9 +102,6 @@ eilers_peeters_generate_regression_internal <- function(
     a_start_value = eilers_peeters_default_start_value_a,
     b_start_value = eilers_peeters_default_start_value_b,
     c_start_value = eilers_peeters_default_start_value_c) {
-  library(minpack.lm)
-  library(data.table)
-
   tryCatch(
     {
       validate_data(data)
@@ -135,10 +119,10 @@ eilers_peeters_generate_regression_internal <- function(
 
       data <- remove_det_row_by_etr(data, etr_type)
 
-      model <- nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
         data = data,
         start = list(a = a_start_value, b = b_start_value, c = c_start_value),
-        control = nls.lm.control(maxiter = 1000)
+        control = minpack.lm::nls.lm.control(maxiter = 1000)
       )
 
       abc <- coef(model)
@@ -152,10 +136,10 @@ eilers_peeters_generate_regression_internal <- function(
           pm <- 1 / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
-          message("failed to calculate etr_max: Warning:", w)
+          warning("failed to calculate etr_max: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate etr_max: Error:", e)
+          warning("failed to calculate etr_max: error: ", e)
         }
       )
 
@@ -165,10 +149,10 @@ eilers_peeters_generate_regression_internal <- function(
           s <- 1 / c
         },
         warning = function(w) {
-          message("failed to calculate alpha: Warning:", w)
+          warning("failed to calculate alpha: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate alpha: Error:", e)
+          warning("failed to calculate alpha: error: ", e)
         }
       )
 
@@ -178,10 +162,10 @@ eilers_peeters_generate_regression_internal <- function(
           ik <- c / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
-          message("failed to calculate Ik: Warning:", w)
+          warning("failed to calculate Ik: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate Ik: Error:", e)
+          warning("failed to calculate Ik: error: ", e)
         }
       )
 
@@ -191,22 +175,23 @@ eilers_peeters_generate_regression_internal <- function(
           im <- sqrt(c / a)
         },
         warning = function(w) {
-          message("failed to calculate Im: Warning:", w)
+          warning("failed to calculate Im: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate Im: Error:", e)
+          warning("failed to calculate Im: error: ", e)
         }
       )
+
       w <- NA_real_
       tryCatch(
         {
           w <- b / sqrt(a * c)
         },
         warning = function(w) {
-          message("failed to calculate w: Warning:", w)
+          warning("failed to calculate w: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate w: Error:", e)
+          warning("failed to calculate w: error: ", e)
         }
       )
 
@@ -224,10 +209,10 @@ eilers_peeters_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          message("failed to calculate sdiff: Warning:", w)
+          warning("failed to calculate sdiff: warning: ", w)
         },
         error = function(e) {
-          message("failed to calculate  sdiff: Error:", e)
+          warning("failed to calculate sdiff: error: ", e)
         }
       )
 
@@ -249,14 +234,45 @@ eilers_peeters_generate_regression_internal <- function(
       return(result)
     },
     warning = function(w) {
-      stop("Warning while calculating eilers peeters model: ", w)
+      warning("warning while calculating eilers peeters model: ", w)
     },
     error = function(e) {
-      stop("Error while calculating eilers peeters model: ", e)
+      stop("error while calculating eilers peeters model: ", e)
     }
   )
 }
 
+#' Eilers & Peeters Model Modification
+#'
+#' This function enhances the Eilers and Peeters (1988) model by adding parameters not originally included in the model, which were introduced by other models. It also renames parameters to a standardized naming convention used across all models.
+#'
+#' @param model_result A list containing the results of the model, including parameters such as \code{a}, \code{b}, \code{c}, \code{s}, \code{pm}, \code{ik}, \code{im}, and \code{w}.
+#'
+#' @return A modified model result as a list with the following elements:
+#' \itemize{
+#'   \item \code{etr_type}: ETR Type based on the model result.
+#'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
+#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{a}: The obtained parameter \code{a}.
+#'   \item \code{b}: The obtained parameter \code{b}.
+#'   \item \code{c}: The obtained parameter \code{c}.
+#'   \item \code{d}: Not available, set to \code{NA_real_}.
+#'   \item \code{alpha}: The initial slope of the light curve, transferred unchanged as \code{s}.
+#'   \item \code{beta}: Not available, set to \code{NA_real_}.
+#'   \item \code{etrmax_with_photoinhibition}: The maximum electron transport rate with photoinhibition, transferred as \code{pm}.
+#'   \item \code{etrmax_without_photoinhibition}: Not available, set to \code{NA_real_}.
+#'   \item \code{ik_with_photoinhibition}: PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, transferred as \code{ik}.
+#'   \item \code{ik_without_photoinhibition}: Not available, set to \code{NA_real_}.
+#'   \item \code{im_with_photoinhibition}: The PAR at which the maximum electron transport rate is achieved with photoinhibition, transferred as \code{im}.
+#'   \item \code{w}: The sharpness of the peak, transferred as \code{w}.
+#'   \item \code{ib}: Not available, set to \code{NA_real_}.
+#'   \item \code{etrmax_with_without_ratio}: Not available, set to \code{NA_real_}.
+#' }
+#'
+#' @details
+#' For further details, refer to the accompanying documentation or README file.
+#'
+#' @export
 eilers_peeters_modified <- function(model_result) {
   validate_model_result(model_result)
   result <- create_modified_model_result(

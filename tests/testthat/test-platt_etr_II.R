@@ -1,5 +1,5 @@
-test_that("test-platt_etr_II generate regression 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-platt_etr_II generate regression 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_II(data)
 
@@ -14,8 +14,8 @@ test_that("test-platt_etr_II generate regression 20231122_01_W3_T20_HL.csv", {
   expect_equal(model_result[["im"]], 906.60042)
 })
 
-test_that("test-platt_etr_II control plot 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-platt_etr_II control plot 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_II(data)
 
@@ -24,15 +24,15 @@ test_that("test-platt_etr_II control plot 20231122_01_W3_T20_HL.csv", {
       plot_control(
         data,
         model_result,
-        "platt ETR II 20231122_01_W3_T20_HL.csv",
+        "platt ETR II 20231122_01.csv",
         color_platt
       )
     )
   )
 })
 
-test_that("test-platt_etr_II generate regression modified 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-platt_etr_II generate regression modified 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_II(data)
   model_result <- platt_modified(model_result)
@@ -54,8 +54,8 @@ test_that("test-platt_etr_II generate regression modified 20231122_01_W3_T20_HL.
   expect_equal(model_result[["etrmax_with_without_ratio"]], 58.592426 / 31.049374)
 })
 
-test_that("test-platt_etr_II modified control plot 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-platt_etr_II modified control plot 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_II(data)
   model_result <- platt_modified(model_result)
@@ -65,7 +65,7 @@ test_that("test-platt_etr_II modified control plot 20231122_01_W3_T20_HL.csv", {
       plot_control(
         data,
         model_result,
-        "platt ETR II modified 20231122_01_W3_T20_HL.csv",
+        "platt ETR II modified 20231122_01.csv",
         color_platt
       )
     )

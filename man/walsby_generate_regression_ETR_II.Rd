@@ -2,7 +2,7 @@
 % Please edit documentation in R/walsby.R
 \name{walsby_generate_regression_ETR_II}
 \alias{walsby_generate_regression_ETR_II}
-\title{Generate Regression for ETR II using the Walsby Model (1997) modified by Romoth (2019)}
+\title{Walsby Regression for ETR II}
 \usage{
 walsby_generate_regression_ETR_II(
   data,
@@ -12,54 +12,38 @@ walsby_generate_regression_ETR_II(
 )
 }
 \arguments{
-\item{data}{A `data.table` containing the input data from \link[pam]{read_dual_pam_data}}
+\item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
 
-\item{etr_type}{A character string specifying the column name of the
-response variable (in this case: ETR II) to be used in the model.}
+\item{etr_max_start_value}{Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.}
 
-\item{etr_max_start_value_walsby}{Numeric. The starting value for the parameter \eqn{etr_max}
-in the model. Defaults to \code{etr_max_start_value_walsby_default}.}
+\item{alpha_start_value}{Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.}
 
-\item{alpha_start_value_walsby}{Numeric. The starting value for the parameter \eqn{alpha}
-in the model. Defaults to \code{alpha_start_value_walsby_default}.}
-
-\item{beta_start_value_platt}{Numeric. The starting value for the parameter \eqn{beta}
-in the model. Defaults to \code{beta_start_value_walsby_default}.}
+\item{beta_start_value}{Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.}
 }
 \value{
-A list containing the following elements:
-\describe{
-  \item{etr_regression_data}{A `data.table` with the predicted values of ETR II to each PAR based on the fitted model.}
-  \item{sdiff}{The deviation between the actual and predicted ETR values.}
-  \item{etr_max}{The maximum electron transport rate without photoinhibition.}
-  \item{alpha}{The initial slope of the light curve.}
-  \item{beta}{The photoinhibition of the light curve.}
+A list containing:
+\itemize{
+  \item \code{etr_regression_data}: Predicted ETR values.
+  \item \code{sdiff}: Deviation between actual and predicted ETR.
+  \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
+  \item \code{alpha}: Initial slope (\eqn{\alpha}).
+  \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
 }
 }
 \description{
-This function generates a regression model based on the Walsby Model
-formula in a modified version without respiration term.
-Naming conventions from Romoth (2019) are used. ETRmax is calculated without
-taking photoinhibition into account.
+Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions.
+Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 }
 \details{
-This function uses non-linear least squares fitting to estimate the parameters
-for the Platt model, which describes the relationship between PAR and
-ETR I. The model used is:
-
-\eqn{ETR = etr_max * (1 - e^((-alpha * I) / etr_max)) + beta * I}
-
-It is valid: I = PAR
+A detailed documentation can be found in the README.
 }
 \references{
-Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis
-through time and depth in a water column. *Journal of Plankton Research*,
-19(3), 487-502. https://doi.org/10.1093/plankt/19.3.487
+{
+  Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
+  \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
 
 Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
-Acclimation limits of *Fucus evanescens* along the salinity gradient of the
-southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. https://doi.org/10.1515/bot-2018-0098
+  Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
+  \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
 }
-\seealso{
-\code{\link{nlsLM}}, \code{\link{minpack.lm}}
 }
