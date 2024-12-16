@@ -1,9 +1,8 @@
 .vscode/
 Rplots.pdf
-test-eilers_peeters_etr_I_bulk_plot.pdf
-test-eilers_peeters_etr_II_bulk_plot.pdf
+src/tests/testthat/*.pdf
+src/tests/testthat/*.jpg
+src/tests/testthatresults/
 .Rproj.user
 .Rhistory
 .RData
-results/
-tests/testthat/*.jpg
