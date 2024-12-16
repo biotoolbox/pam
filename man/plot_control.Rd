@@ -2,9 +2,9 @@
 % Please edit documentation in R/util.R
 \name{plot_control}
 \alias{plot_control}
-\title{Control Plot}
+\title{Plot Control}
 \usage{
-plot_control(data, model_result, title, color)
+plot_control(data, model_result, title, color = "black")
 }
 \arguments{
 \item{data}{A `data.table` containing the original ETR and yield data for the plot.}
@@ -20,13 +20,4 @@ A plot displaying the original ETR and Yield values and the regression data. A t
 }
 \description{
 This function creates a control plot for the used model based on the provided data and model results.
-}
-\examples{
-plot_control_eilers_peeters <- plot_control(
-  data = pam_data,
-  model_result = model_result_eilers_peeters,
-  title = "ETR II - Eilers-Peeters",
-  color = "black"
-)
-print(plot_control_eilers_peeters)
 }

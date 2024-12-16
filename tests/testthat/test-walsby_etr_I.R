@@ -1,5 +1,5 @@
-test_that("test-walsby_etr_I generate regression 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-walsby_etr_I generate regression 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- walsby_generate_regression_ETR_I(data)
 
@@ -9,8 +9,8 @@ test_that("test-walsby_etr_I generate regression 20231122_01_W3_T20_HL.csv", {
   expect_equal(model_result[["beta"]], -27.4705392)
 })
 
-test_that("test-walsby_etr_I control plot 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-walsby_etr_I control plot 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- walsby_generate_regression_ETR_I(data)
 
@@ -19,15 +19,15 @@ test_that("test-walsby_etr_I control plot 20231122_01_W3_T20_HL.csv", {
       plot_control(
         data,
         model_result,
-        "walsby ETR I 20231122_01_W3_T20_HL.csv",
+        "walsby ETR I 20231122_01.csv",
         color_platt
       )
     )
   )
 })
 
-test_that("test-walsby_etr_I generate regression modified 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-walsby_etr_I generate regression modified 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- walsby_generate_regression_ETR_I(data)
   model_result <- walsby_modified(model_result)
@@ -49,8 +49,8 @@ test_that("test-walsby_etr_I generate regression modified 20231122_01_W3_T20_HL.
   expect_equal(model_result[["etrmax_with_without_ratio"]], 31687.22)
 })
 
-test_that("test-walsby_etr_I modified control plot 20231122_01_W3_T20_HL.csv", {
-  test_data_file <- file.path(getwd(), "data", "20231122_01_W3_T20_HL.csv")
+test_that("test-walsby_etr_I modified control plot 20231122_01.csv", {
+  test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- walsby_generate_regression_ETR_I(data)
   model_result <- walsby_modified(model_result)
@@ -60,7 +60,7 @@ test_that("test-walsby_etr_I modified control plot 20231122_01_W3_T20_HL.csv", {
       plot_control(
         data,
         model_result,
-        "walsby ETR I modified 20231122_01_W3_T20_HL.csv",
+        "walsby ETR I modified 20231122_01.csv",
         color_platt
       )
     )

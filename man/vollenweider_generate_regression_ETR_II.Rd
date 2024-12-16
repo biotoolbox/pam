@@ -2,7 +2,7 @@
 % Please edit documentation in R/vollenweider.R
 \name{vollenweider_generate_regression_ETR_II}
 \alias{vollenweider_generate_regression_ETR_II}
-\title{Generate Regression for ETR II using the Vollenweider Model (1965)}
+\title{Vollenweider Regression for ETR II}
 \usage{
 vollenweider_generate_regression_ETR_II(
   data,
@@ -13,55 +13,41 @@ vollenweider_generate_regression_ETR_II(
 )
 }
 \arguments{
-\item{data}{A `data.table` containing the input data from \link[pam]{read_dual_pam_data}}
+\item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
 
-\item{alpha_start_value}{Numeric. The starting value for the parameter \eqn{alpha}
-in the model. Defaults to \code{alpha_start_values_vollenweider_default}.
-#' @param n_start_value Numeric. The starting value for the parameter \eqn{n}
-in the model. Defaults to \code{n_start_values_vollenweider_default}.}
+\item{pmax_start_value}{Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.}
 
-\item{etr_type}{A character string specifying the column name of the
-response variable (in this case: ETR II) to be used in the model.}
+\item{a_start_value}{Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.}
 
-\item{pmax_start_value_vollenweider}{Numeric. The starting value for the parameter \eqn{pmax}
-in the model. Defaults to \code{pmax_start_values_vollenweider_default}.}
+\item{alpha_start_value}{Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_values_vollenweider_default}.}
 
-\item{a_start_value_vollenweider}{Numeric. The starting value for the parameter \eqn{a}
-in the model. Defaults to \code{a_start_values_vollenweider_default}.}
+\item{n_start_value}{Numeric. Initial value for \eqn{n}. Default: \code{n_start_values_vollenweider_default}.}
 }
 \value{
-A list containing the following elements:
-\describe{
-  \item{etr_regression_data}{A `data.table` with the predicted values of ETR II to each PAR based on the fitted model.}
-  \item{sdiff}{The deviation between the actual and predicted ETR values.}
-  \item{pmax}{The maximum electron transport rate without photoinhibition.}
-  \item{a}{The obtained parameter \eqn{a}.}
-  \item{alpha}{The obtained parameter \eqn{alpha}.}
-  \item{n}}{The obtained parameter \eqn{n}.}
-  \item{popt}{The maximum electron transport rate with photoinhibition. A function computes predicted photosynthetic rates for each PAR value and tracks the maximum rate observed. This eliminates the need to determine the partitioning factor for each value of n in advance.}
-  \item{ik}{PAR where the transition point from light limitation to light saturation is achieved without photoinhibition, calculated as \eqn(ik = 1 / a)}
-  \item{iik}{PAR where the transition point from light limitation to light saturation is achieved with photoinhibition, calculated as \eqn(iik = (ik * popt) / pmax)}
-  \item{pmax_popt_and_ik_iik_ratio}{Ratio of pmax to popt and ik to iik, calculated as \eqn(pmax_popt_and_ik_iik_ratio = ik / iik)}
+A list containing:
+\itemize{
+  \item \code{etr_regression_data}: Predicted ETR values.
+  \item \code{sdiff}: Deviation between actual and predicted ETR.
+  \item \code{pmax}: Maximum electron transport rate (\eqn{p_{max}}).
+  \item \code{a}: Parameter \eqn{a}.
+  \item \code{alpha}: Parameter \eqn{\alpha}.
+  \item \code{n}: Parameter \eqn{n}.
+  \item \code{popt}: Maximum electron transport rate with photoinhibition (\eqn{p_{opt}}).
+  \item \code{ik}: Transition point from light limitation to light saturation without photoinhibition (\eqn{I_k}).
+  \item \code{iik}: Transition point from light limitation to light saturation with photoinhibition (\eqn{I_k^\prime}).
+  \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} to \eqn{p_{opt}} and \eqn{I_k} to \eqn{I_k^\prime}.
+}
 }
 \description{
-This function generates a regression model based on the Vollenweider
-formula. Original naming conventions from the publication are used.
+Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 }
 \details{
-This function uses non-linear least squares fitting to estimate the parameters
-for the Vollenweider model, which describes the relationship between PAR and
-ETR. The model used is:
-
-\eqn{p = pmax * (((a * i) / (sqrt(1 + (a * i)^2))) * (1 / (sqrt(1 + (alpha * i)^2)^n))}
-
-It is valid: i = PAR; p = ETR
+A detailed documentation can be found in the README.
 }
 \references{
-Vollenweider, R. A. (1965). Calculation models of photosynthesis-depth curves
-and some implications regarding day rate estimates in primary production measurements,
-p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*.
-Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
+{
+  Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements},
+  p. 427-457. In C. R. Goldman [ed.], \emph{Primary Productivity in Aquatic Environments}. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
+
 }
-\seealso{
-\code{\link{nlsLM}}, \code{\link{minpack.lm}}
 }

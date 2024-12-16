@@ -17,17 +17,16 @@ calculate_sdiff <- function(data, etr_regression_data, etr_type) {
 }
 
 remove_det_row_by_etr <- function(data, etr_type) {
-  library(dplyr)
   validate_data(data)
   validate_etr_type(etr_type)
 
   if (etr_type == etr_I_type) {
-    data <- data %>% filter(data$Action != "Fm-Det.")
+    data <- data %>% dplyr::filter(data$Action != "Fm-Det.")
     if (length(data[data$Action == "Pm.-Det.", ]) == 0) {
       stop("Pm.-Det. is required but not present")
     }
   } else {
-    data <- data %>% filter(data$Action != "Pm.-Det.")
+    data <- data %>% dplyr::filter(data$Action != "Pm.-Det.")
     if (length(data[data$Action == "Fm-Det.", ]) == 0) {
       stop("Fm-Det. is required but not present")
     }
@@ -37,8 +36,6 @@ remove_det_row_by_etr <- function(data, etr_type) {
 }
 
 create_regression_data <- function(pars, predictions) {
-  library(data.table)
-
   if (!is.vector(pars)) {
     stop("pars is not a valid vector")
   }
@@ -51,7 +48,7 @@ create_regression_data <- function(pars, predictions) {
     stop("pars and predictions need to be of the same length")
   }
 
-  regression_data <- data.table(
+  regression_data <- data.table::data.table(
     "PAR" = pars,
     "prediction" = predictions
   )
@@ -71,18 +68,17 @@ get_sdiff_from_model_result <- function(model_result) {
 }
 
 plot_table <- function(model_result, entries_per_row) {
-  library(ggthemes)
-  library(gridExtra)
-  library(cowplot)
-
   validate_model_result(model_result)
 
-  custom_theme <- ttheme_minimal(
+  custom_theme <- gridExtra::ttheme_minimal(
     core = list(
       fg_params = list(
         cex = 0.7,
-        fontface = 3,
-        col = "darkblue"
+        fontface = 3
+      ),
+      bg_params = list(
+        fill = "lightgray",
+        col = "black"
       )
     ), # font size for cell text
     colhead = list(
@@ -122,7 +118,7 @@ plot_table <- function(model_result, entries_per_row) {
 
     if (count == entries_per_row) {
       row$tmp <- NULL
-      tbl_list[[row_count]] <- tableGrob(
+      tbl_list[[row_count]] <- gridExtra::tableGrob(
         row,
         rows = NULL,
         theme = custom_theme
@@ -138,21 +134,21 @@ plot_table <- function(model_result, entries_per_row) {
 
   if (is.null(row) == FALSE) {
     row$tmp <- NULL
-    tbl_list[[row_count]] <- tableGrob(
+    tbl_list[[row_count]] <- gridExtra::tableGrob(
       row,
       rows = NULL,
       theme = custom_theme
     )
   }
 
-  tbl <- plot_grid(
+  tbl <- cowplot::plot_grid(
     plotlist = tbl_list,
     ncol = 1
   )
   return(tbl)
 }
 
-#' @title Control Plot
+#' @title Plot Control
 #' @description This function creates a control plot for the used model based on the provided data and model results.
 #'
 #' @param data A `data.table` containing the original ETR and yield data for the plot.
@@ -162,25 +158,12 @@ plot_table <- function(model_result, entries_per_row) {
 #'
 #' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
 #'
-#' @examples
-#' plot_control_eilers_peeters <- plot_control(
-#'   data = pam_data,
-#'   model_result = model_result_eilers_peeters,
-#'   title = "ETR II - Eilers-Peeters",
-#'   color = "black"
-#' )
-#' print(plot_control_eilers_peeters)
 #' @export
 plot_control <- function(
     data,
     model_result,
     title,
     color = "black") {
-  library(ggplot2)
-  library(ggthemes)
-  library(gridExtra)
-  library(cowplot)
-
   validate_data(data)
   validate_model_result(model_result)
 
@@ -200,27 +183,27 @@ plot_control <- function(
 
   max_etr <- max(etr_regression_data$prediction)
 
-  plot <- ggplot(data, aes(x = data$PAR, y = get(etr_type))) +
-    geom_point() +
-    geom_line(
+  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$PAR, y = get(etr_type))) +
+    ggplot2::geom_point() +
+    ggplot2::geom_line(
       data = etr_regression_data,
-      aes(
+      ggplot2::aes(
         x = etr_regression_data$PAR,
         y = etr_regression_data$prediction
       ),
       color = color
     ) +
-    geom_point(data = data, aes(y = get(yield) * max_etr)) +
-    geom_line(data = data, aes(y = get(yield) * max_etr)) +
-    labs(x = par_label, y = etr_label, title = eval(title)) +
-    scale_y_continuous(
-      sec.axis = sec_axis(~ . / max_etr, name = "Yield")
+    ggplot2::geom_point(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::geom_line(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::labs(x = par_label, y = etr_label, title = eval(title)) +
+    ggplot2::scale_y_continuous(
+      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = "Yield")
     ) +
-    theme_base()
+    ggthemes::theme_base()
 
   tbl <- plot_table(model_result, 4)
 
-  plot <- plot_grid(
+  plot <- cowplot::plot_grid(
     plot,
     tbl,
     ncol = 1,
@@ -270,40 +253,24 @@ create_modified_model_result <- function(
   return(result)
 }
 
-#' @title Write result data to csv files
+#' Write Model Result CSV
+#' @description
+#' This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
 #'
-#' @description This function writes the raw data, regression data, and model parameters
-#' into separate CSV files.
-#'
-#' @param dest_dir A character string specifying the directory where CSV files
-#' will be saved.
+#' @param dest_dir A character string specifying the directory where the CSV files will be saved.
 #' @param name A character string specifying the base name for the output files.
 #' @param data A data frame containing the raw input data used in the model.
-#' @param model_result A list containing the model results, including parameter
-#' values and regression data.
+#' @param model_result A list containing the model results, including parameter values and regression data.
 #'
 #' @details
-#' Three CSV files are created:
+#' This function generates three CSV files:
 #' \enumerate{
-#'   \item \code{name_raw_data.csv}: contains the original raw data.
-#'   \item \code{name_regression_data.csv}: contains the regression data with
-#'   predictions for ETR.
-#'   \item \code{name_model_result.csv}: contains the parameter values from the
-#'   model results (excluding regression data).
+#' \item \strong{raw_data.csv:} Contains the original raw data used in the model.
+#' \item \strong{regression_data.csv:} Includes the regression data with predicted electron transport rate (ETR) values.
+#' \item \strong{model_result.csv:} Summarizes the parameter values derived from the model results (excluding regression data), such as \code{alpha} or \code{beta}.
 #' }
-#'
-#' @seealso
-#' \code{\link{create_modified_model_result}},
-#' \code{\link{plot_control}}
-#'
-#' @examples
-#' # Usage example for write_model_result_csv
-#' write_model_result_csv(
-#'   dest_dir = "output",
-#'   name = "eilers_peeters_experiment_001",
-#'   data = raw_data,
-#'   model_result = model_result_eilers_peeters
-#' )
+#' The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory.
+#' For more comprehensive guidance, refer to the package README file.
 #' @export
 write_model_result_csv <- function(dest_dir, name, data, model_result) {
   data_dest <- file.path(dest_dir, paste(name, "_raw_data.csv"))

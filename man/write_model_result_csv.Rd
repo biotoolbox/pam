@@ -2,45 +2,29 @@
 % Please edit documentation in R/util.R
 \name{write_model_result_csv}
 \alias{write_model_result_csv}
-\title{Write result data to csv files}
+\title{Write Model Result CSV}
 \usage{
 write_model_result_csv(dest_dir, name, data, model_result)
 }
 \arguments{
-\item{dest_dir}{A character string specifying the directory where CSV files 
-will be saved.}
+\item{dest_dir}{A character string specifying the directory where the CSV files will be saved.}
 
 \item{name}{A character string specifying the base name for the output files.}
 
 \item{data}{A data frame containing the raw input data used in the model.}
 
-\item{model_result}{A list containing the model results, including parameter 
-values and regression data.}
+\item{model_result}{A list containing the model results, including parameter values and regression data.}
 }
 \description{
-This function writes the raw data, regression data, and model parameters 
-into separate CSV files.
+This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
 }
 \details{
-Three CSV files are created:
+This function generates three CSV files:
 \enumerate{
-  \item \code{name_raw_data.csv}: contains the original raw data.
-  \item \code{name_regression_data.csv}: contains the regression data with 
-  predictions for ETR.
-  \item \code{name_model_result.csv}: contains the parameter values from the 
-  model results (excluding regression data).
+\item \strong{raw_data.csv:} Contains the original raw data used in the model.
+\item \strong{regression_data.csv:} Includes the regression data with predicted electron transport rate (ETR) values.
+\item \strong{model_result.csv:} Summarizes the parameter values derived from the model results (excluding regression data), such as \code{alpha} or \code{beta}.
 }
-}
-\examples{
-# Usage example for write_model_result_csv
-write_model_result_csv(
-  dest_dir = "output",
-  name = "eilers_peeters_experiment_001",
-  data = raw_data,
-  model_result = model_result_eilers_peeters
-)
-}
-\seealso{
-\code{\link{create_modified_model_result}}, 
-\code{\link{plot_control}}
+The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory.
+For more comprehensive guidance, refer to the package README file.
 }
