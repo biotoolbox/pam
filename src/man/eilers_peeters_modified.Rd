@@ -35,5 +35,5 @@ A modified model result as a list with the following elements:
 This function enhances the Eilers and Peeters (1988) model by adding parameters not originally included in the model, which were introduced by other models. It also renames parameters to a standardized naming convention used across all models.
 }
 \details{
-For further details, refer to the accompanying documentation or README file.
+A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#eilers_peeters_modified}
 }

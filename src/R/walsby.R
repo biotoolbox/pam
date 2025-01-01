@@ -21,7 +21,7 @@ walsby_default_start_value_beta <- -0.01
 #' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
 #'
 #' @details
-#' A detailed documentation can be found in the README.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#walsby_generate_regression_etr_i-and-walsby_generate_regression_etr_ii}.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -68,7 +68,7 @@ walsby_generate_regression_ETR_I <- function(
 #' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
 #'
 #' @details
-#' A detailed documentation can be found in the README.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#walsby_generate_regression_etr_i-and-walsby_generate_regression_etr_ii}.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -210,7 +210,7 @@ walsby_generate_regression_internal <- function(
 #' }
 #'
 #' @details
-#' A detailed documentation can be found in the README.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#walsby_modified}
 #' @export
 walsby_modified <- function(model_result) {
   validate_model_result(model_result)

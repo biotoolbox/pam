@@ -156,6 +156,9 @@ plot_table <- function(model_result, entries_per_row) {
 #' @param title A character string that specifies the title of the plot.
 #' @param color A color specification for the regression line in the plot.
 #'
+#' @details
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#plot_control}
+#'
 #' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
 #'
 #' @export
@@ -270,7 +273,7 @@ create_modified_model_result <- function(
 #' \item \strong{model_result.csv:} Summarizes the parameter values derived from the model results (excluding regression data), such as \code{alpha} or \code{beta}.
 #' }
 #' The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory.
-#' For more comprehensive guidance, refer to the package README file.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#write_model_result_csv}
 #' @export
 write_model_result_csv <- function(dest_dir, name, data, model_result) {
   data_dest <- file.path(dest_dir, paste(name, "_raw_data.csv", sep = ""))

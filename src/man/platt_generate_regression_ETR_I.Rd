@@ -39,7 +39,7 @@ A list containing:
 Fits the Platt (1980) regression model using original naming conventions.
 }
 \details{
-A detailed documentation can be found in the README.
+A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#platt_generate_regression_etr_i-and-platt_generate_regression_etr_ii} .
 }
 \references{
 {

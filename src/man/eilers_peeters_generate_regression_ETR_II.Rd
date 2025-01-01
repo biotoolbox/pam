@@ -37,7 +37,7 @@ A list containing:
 Fits a regression model for ETR II based on Eilers-Peeters (1988), considering photoinhibition.
 }
 \details{
-A detailed documentation can be found in the README.
+A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#eilers_peeters_generate_regression_etr_i-and-eilers_peeters_generate_regression_etr_ii}.
 }
 \references{
 {
