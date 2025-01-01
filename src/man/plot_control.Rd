@@ -21,3 +21,6 @@ A plot displaying the original ETR and Yield values and the regression data. A t
 \description{
 This function creates a control plot for the used model based on the provided data and model results.
 }
+\details{
+A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#plot_control}
+}

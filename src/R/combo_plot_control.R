@@ -9,7 +9,7 @@
 #' @param color_list List. Colors for model lines.
 #'
 #' @details
-#' A detailed documentation can be found in the README.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#combo_control_plot}.
 #'
 #' @return A plot with ETR data, regression results, and a summary table.
 #'

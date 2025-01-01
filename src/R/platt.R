@@ -34,7 +34,7 @@ platt_default_start_value_ps <- 30
 #' }
 #'
 #' @details
-#' A detailed documentation can be found in the README.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#platt_generate_regression_etr_i-and-platt_generate_regression_etr_ii} .
 #'
 #' @references{
 #'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
@@ -80,7 +80,7 @@ platt_generate_regression_ETR_I <- function(
 #' }
 #'
 #' @details
-#' A detailed documentation can be found in the README.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#platt_generate_regression_etr_i-and-platt_generate_regression_etr_ii}.
 #'
 #' @references{
 #'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
@@ -279,7 +279,7 @@ platt_generate_regression_internal <- function(
 #' }
 #'
 #' @details
-#' For further details, refer to the accompanying documentation or README file.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#platt_modified}
 #'
 #' @export
 platt_modified <- function(model_result) {

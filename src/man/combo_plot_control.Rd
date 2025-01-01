@@ -24,5 +24,5 @@ A plot with ETR data, regression results, and a summary table.
 Generates a plot of ETR data with different regression model predictions and a summary table.
 }
 \details{
-A detailed documentation can be found in the README.
+A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#combo_control_plot}.
 }

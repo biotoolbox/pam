@@ -21,7 +21,7 @@
 #'   \item Walsby (1997)
 #' }
 #' Models are ranked based on the deviation between observed and predicted values. The results guide users in selecting the most appropriate model for their dataset. Start values for parameters cannot be adjusted within this function.
-#' A detailed documentation can be found in the README.
+#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#walsby_modified}
 #'
 #'
 #' @references{
