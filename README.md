@@ -7,6 +7,10 @@ Four different models are provided for the regression of the light curve (Vollen
 To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as $$ETR_{max}$$, it is possible to output both with publication-compliant naming and with homogenised naming.
 Generated control plots make it possible to check each individual regression fit and calculated data.
 
+## Examples
+
+Examples of usage can be found in the examples directory.
+
 ## Functions
 
 ### read_dual_pam_data()
