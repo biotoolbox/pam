@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Böhm"
+  given-names: "Julien"
+  orcid: "https://orcid.org/0009-0002-2704-2289"
+- family-names: "Schrag"
+  given-names: "Philipp"
+  orcid: "https://orcid.org/0009-0002-7697-5536"
+title: "pam"
+version: 1.0.0
+date-released: 2025-01-02
+url: "https://github.com/Phi-S/pam"
