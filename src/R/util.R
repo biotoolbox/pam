@@ -21,12 +21,12 @@ remove_det_row_by_etr <- function(data, etr_type) {
   validate_etr_type(etr_type)
 
   if (etr_type == etr_I_type) {
-    data <- data %>% dplyr::filter(data$Action != "Fm-Det.")
+    data <- dplyr::filter(data, data$Action != "Fm-Det.")
     if (length(data[data$Action == "Pm.-Det.", ]) == 0) {
       stop("Pm.-Det. is required but not present")
     }
   } else {
-    data <- data %>% dplyr::filter(data$Action != "Pm.-Det.")
+    data <- dplyr::filter(data, data$Action != "Pm.-Det.")
     if (length(data[data$Action == "Fm-Det.", ]) == 0) {
       stop("Fm-Det. is required but not present")
     }
