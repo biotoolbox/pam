@@ -1,8 +1,7 @@
 .vscode/
-Rplots.pdf
 src/tests/testthat/*.pdf
 src/tests/testthat/*.jpg
-src/tests/testthatresults/
+src/tests/testthat/results/
 .Rproj.user
 .Rhistory
 .RData
