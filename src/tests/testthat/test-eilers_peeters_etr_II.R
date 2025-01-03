@@ -72,5 +72,4 @@ test_that("test-eilers_peeters_etr_II modified control plot 20231122_01.csv", {
       )
     )
   )
-  ggplot2::ggsave("eilers_peeters ETR II modified.jpg", plot = plot, units = "px", width = 1000, height = 1200, dpi = 100, limitsize = FALSE)
 })

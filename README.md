@@ -11,7 +11,7 @@ Generated control plots make it possible to check each individual regression fit
 
 ### GitHub
 
-```
+```r
 install.packages("remotes")
 remotes::install_github("Phi-S/pam", subdir = "src")
 ```
@@ -613,7 +613,6 @@ print(plot_control_eilers_peeters_ETR_II)
 
 ![Plot](eilers_peeters_ETR_II_modified.jpg)
 
-
 ### combo_control_plot()
 
 The `combo_control_plot` function generates a combined plot of electron transport rate (ETR) data and regression model predictions, along with a customized table summarizing the parameters for each model.
@@ -702,18 +701,23 @@ Warnings:
 2: Removed 1 row containing missing values or values outside the scale range (`geom_point()`). 
 3: Removed 1 row containing missing values or values outside the scale range (`geom_line()`).
 ```
+
 All points and lines present. Reason for warning messages unknown. Possibly a problem in the library ggplot2.
 
 ### test all
 
-```
+> Tests will only run on Linux
+
+> Expected: `[ FAIL 0 | WARN 16 | SKIP 0 | PASS 199 ]`
+
+```r
 library(devtools);
 devtools::test();
 ```
 
 ### test specific file
 
-```
+```R
 library(devtools);
 devtools::load_all();
 library(testthat);
