@@ -1,7 +1,9 @@
 .vscode/
+pam.Rcheck/
 src/tests/testthat/*.pdf
 src/tests/testthat/*.jpg
 src/tests/testthat/results/
 .Rproj.user
 .Rhistory
 .RData
+pam_1.0.0.tar.gz

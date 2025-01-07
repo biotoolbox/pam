@@ -149,10 +149,10 @@ vollenweider_generate_regression_internal <- function(
           alpha = alpha_start_value,
           n = n_start_value
         ),
-        control = nls.control(maxiter = 1000)
+        control = stats::nls.control(maxiter = 1000)
       )
 
-      abc <- coef(model)
+      abc <- stats::coef(model)
       pmax <- abc[["pmax"]]
       a <- abc[["a"]]
       alpha <- abc[["alpha"]]

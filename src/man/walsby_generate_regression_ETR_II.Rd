@@ -40,10 +40,10 @@ A detailed documentation can be found under \url{https://github.com/Phi-S/pam?ta
 \references{
 {
   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
-  \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
+  \emph{New Phytologist}, 136(2), 189-209. Available at: \doi{10.1046/j.1469-8137.1997.00736.x}
 
 Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
-  \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
+  \emph{Botanica Marina}, 62(1), 1-12. Available at: \doi{10.1515/bot-2018-0098}
 }
 }
