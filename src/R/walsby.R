@@ -34,11 +34,11 @@ walsby_default_start_value_beta <- -0.01
 #'
 #' @references{
 #'   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
-#'   \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
+#'   \emph{New Phytologist}, 136(2), 189-209. Available at: \doi{10.1046/j.1469-8137.1997.00736.x}
 #'
 #' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
 #'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
-#'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
+#'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \doi{10.1515/bot-2018-0098}
 #' }
 #' @export
 walsby_generate_regression_ETR_I <- function(
@@ -81,11 +81,11 @@ walsby_generate_regression_ETR_I <- function(
 #'
 #' @references{
 #'   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.
-#'   \emph{New Phytologist}, 136(2), 189-209. Available at: \url{https://doi.org/10.1046/j.1469-8137.1997.00736.x}
+#'   \emph{New Phytologist}, 136(2), 189-209. Available at: \doi{10.1046/j.1469-8137.1997.00736.x}
 #'
 #' Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019).
 #'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
-#'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \url{https://doi.org/10.1515/bot-2018-0098}
+#'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \doi{10.1515/bot-2018-0098}
 #' }
 #' @export
 walsby_generate_regression_ETR_II <- function(
@@ -132,10 +132,10 @@ walsby_generate_regression_internal <- function(
           alpha = alpha_start_value,
           beta = beta_start_value
         ),
-        control = nls.control(maxiter = 1000)
+        control = stats::nls.control(maxiter = 1000)
       )
 
-      abc <- coef(model)
+      abc <- stats::coef(model)
       etr_max <- abc[["etr_max"]]
       alpha <- abc[["alpha"]]
       beta <- abc[["beta"]]

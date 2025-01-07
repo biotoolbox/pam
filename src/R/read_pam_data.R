@@ -28,7 +28,7 @@ read_dual_pam_data <- function(
     p_ratio = 0.5) {
   tryCatch(
     {
-      data <- read.csv(csv_path, sep = ";", dec = ".")
+      data <- utils::read.csv(csv_path, sep = ";", dec = ".")
       data <- data.table::as.data.table(data)
 
       validate_data(data)
@@ -46,7 +46,7 @@ read_dual_pam_data <- function(
       }
 
       data <- dplyr::mutate(data, DateTime = date_time_col_values)
-       data <- dplyr::select(data, DateTime, everything())
+      data <- dplyr::select(data, DateTime, dplyr::everything())
       data <- data[order(data$DateTime), ]
 
       result <- data.table::data.table()

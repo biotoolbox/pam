@@ -280,14 +280,14 @@ write_model_result_csv <- function(dest_dir, name, data, model_result) {
   regression_data_dest <- file.path(dest_dir, paste(name, "_regression_data.csv", sep = ""))
   model_result_dest <- file.path(dest_dir, paste(name, "_model_result.csv", sep = ""))
 
-  write.csv(
+  utils::write.csv(
     data,
     file = data_dest,
     quote = TRUE,
     row.names = FALSE
   )
 
-  write.csv(
+  utils::write.csv(
     get_etr_regression_data_from_model_result(model_result),
     file = regression_data_dest,
     quote = TRUE,
@@ -303,7 +303,7 @@ write_model_result_csv <- function(dest_dir, name, data, model_result) {
     }
 
     entry <- data.frame(
-      setNames(
+      stats::setNames(
         list(
           c(model_result[[n]])
         ),
@@ -314,7 +314,7 @@ write_model_result_csv <- function(dest_dir, name, data, model_result) {
     df <- cbind(df, NewCol = entry)
   }
 
-  write.csv(
+  utils::write.csv(
     df,
     file = model_result_dest,
     quote = TRUE,

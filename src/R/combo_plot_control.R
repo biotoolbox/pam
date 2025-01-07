@@ -105,8 +105,8 @@ combo_plot_control <- function(
     plot <- plot + ggplot2::geom_line(
       data = reg_data,
       ggplot2::aes(
-        x = PAR,
-        y = prediction,
+        x = reg_data$PAR,
+        y = reg_data$prediction,
         color = names
       )
     )
@@ -182,7 +182,7 @@ combo_plot_control <- function(
 
   plot <- plot +
     ggplot2::scale_color_manual(
-      values = setNames(
+      values = stats::setNames(
         unlist(color_list),
         unlist(name_list)
       )

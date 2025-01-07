@@ -38,7 +38,7 @@ platt_default_start_value_ps <- 30
 #'
 #' @references{
 #'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
-#'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
+#'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525/}.
 #'
 #' }
 #' @export
@@ -84,7 +84,7 @@ platt_generate_regression_ETR_I <- function(
 #'
 #' @references{
 #'   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
-#'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525}.
+#'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525/}.
 #'
 #' }
 #' @export
@@ -132,10 +132,10 @@ platt_generate_regression_internal <- function(
           beta = beta_start_value,
           ps = ps_start_value
         ),
-        control = nls.control(maxiter = 1000)
+        control = stats::nls.control(maxiter = 1000)
       )
 
-      abc <- coef(model)
+      abc <- stats::coef(model)
       alpha <- abc[["alpha"]]
       beta <- abc[["beta"]]
       ps <- abc[["ps"]]

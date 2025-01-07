@@ -36,7 +36,7 @@ eilers_peeters_default_start_value_c <- 5
 #'
 #' @references{
 #'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
-#'   Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
+#'   Ecological Modelling, 42(3-4), 199-215. Available at: \doi{10.1016/0304-3800(88)90057-9}
 #' }
 #' @export
 eilers_peeters_generate_regression_ETR_I <- function(
@@ -79,7 +79,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #'
 #' @references{
 #'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
-#'   Ecological Modelling, 42(3-4), 199-215. Available at: \url{https://doi.org/10.1016/0304-3800(88)90057-9}
+#'   Ecological Modelling, 42(3-4), 199-215. Available at: \doi{10.1016/0304-3800(88)90057-9}
 #' }
 #' @export
 eilers_peeters_generate_regression_ETR_II <- function(
@@ -125,7 +125,7 @@ eilers_peeters_generate_regression_internal <- function(
         control = minpack.lm::nls.lm.control(maxiter = 1000)
       )
 
-      abc <- coef(model)
+      abc <- stats::coef(model)
       a <- abc[["a"]]
       b <- abc[["b"]]
       c <- abc[["c"]]
