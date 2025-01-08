@@ -35,7 +35,7 @@ Fits a modified Walsby (1997) regression model without the respiration term, usi
 Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 }
 \details{
-A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#walsby_generate_regression_etr_i-and-walsby_generate_regression_etr_ii}.
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#walsby_generate_regression_etr_i-and-walsby_generate_regression_etr_ii}.
 }
 \references{
 {

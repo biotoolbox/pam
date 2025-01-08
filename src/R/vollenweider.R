@@ -25,7 +25,7 @@ vollenweider_default_start_value_n <- 350
 #' @param n_start_value Numeric. Initial value for \eqn{n}. Default: \code{n_start_values_vollenweider_default}.
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#vollenweider_generate_regression_etr_i-and-vollenweider_generate_regression_etr_ii}.
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#vollenweider_generate_regression_etr_i-and-vollenweider_generate_regression_etr_ii}.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -74,7 +74,7 @@ vollenweider_generate_regression_ETR_I <- function(
 #' @param n_start_value Numeric. Initial value for \eqn{n}. Default: \code{n_start_values_vollenweider_default}.
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#vollenweider_generate_regression_etr_i-and-vollenweider_generate_regression_etr_ii}.
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#vollenweider_generate_regression_etr_i-and-vollenweider_generate_regression_etr_ii}.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -280,7 +280,7 @@ vollenweider_generate_regression_internal <- function(
 #' }
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#vollenweider_modified}
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#vollenweider_modified}
 #'
 #' @export
 vollenweider_modified <- function(model_result) {

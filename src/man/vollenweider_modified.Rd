@@ -35,5 +35,5 @@ A modified model result as a list containing the following elements:
 This function adds parameters that were not originally included in the Vollenweider (1965) model, but were introduced by other models, and renames the parameters to a standardized one for all models.
 }
 \details{
-A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#vollenweider_modified}
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#vollenweider_modified}
 }

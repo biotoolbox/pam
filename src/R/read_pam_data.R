@@ -11,7 +11,7 @@
 #' Calculates ETR using:
 #' \deqn{\text{ETR} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{P-Ratio} \cdot \text{Yield}}
 #'
-#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#read_dual_pam_data}
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#read_dual_pam_data}
 #'
 #' @return A `data.table` with processed data and calculated ETR values.
 #'

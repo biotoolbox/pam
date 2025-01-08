@@ -35,5 +35,5 @@ A list containing:
 Enhances the Walsby (1997) model by adding parameters from other models and standardizing parameter names.
 }
 \details{
-A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#walsby_modified}
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#walsby_modified}
 }
