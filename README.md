@@ -13,7 +13,7 @@ Generated control plots make it possible to check each individual regression fit
 
 ```r
 install.packages("remotes")
-remotes::install_github("Phi-S/pam", subdir = "src")
+remotes::install_github("biotoolbox/pam", subdir = "src")
 ```
 
 ## Examples

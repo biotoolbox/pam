@@ -20,7 +20,7 @@ eilers_peeters_default_start_value_c <- 5
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#eilers_peeters_generate_regression_etr_i-and-eilers_peeters_generate_regression_etr_ii}.
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#eilers_peeters_generate_regression_etr_i-and-eilers_peeters_generate_regression_etr_ii}.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -63,7 +63,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#eilers_peeters_generate_regression_etr_i-and-eilers_peeters_generate_regression_etr_ii}.
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#eilers_peeters_generate_regression_etr_i-and-eilers_peeters_generate_regression_etr_ii}.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -270,7 +270,7 @@ eilers_peeters_generate_regression_internal <- function(
 #' }
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#eilers_peeters_modified}
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#eilers_peeters_modified}
 #'
 #' @export
 eilers_peeters_modified <- function(model_result) {

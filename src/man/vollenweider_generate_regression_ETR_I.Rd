@@ -42,7 +42,7 @@ A list containing:
 Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 }
 \details{
-A detailed documentation can be found under \url{https://github.com/Phi-S/pam?tab=readme-ov-file#vollenweider_generate_regression_etr_i-and-vollenweider_generate_regression_etr_ii}.
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#vollenweider_generate_regression_etr_i-and-vollenweider_generate_regression_etr_ii}.
 }
 \references{
 {
