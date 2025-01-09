@@ -46,7 +46,6 @@ read_dual_pam_data <- function(
       }
 
       data <- dplyr::mutate(data, DateTime = date_time_col_values)
-      data <- dplyr::select(data, DateTime, dplyr::everything())
       data <- data[order(data$DateTime), ]
 
       result <- data.table::data.table()
@@ -73,12 +72,6 @@ read_dual_pam_data <- function(
 
         last_par <- current_par
       }
-
-      result <- dplyr::select(result, !!etr_II_type, dplyr::everything())
-
-      result <- dplyr::select(result, !!etr_I_type, dplyr::everything())
-
-      result <- dplyr::select(result, DateTime, dplyr::everything())
 
       return(result)
     },
