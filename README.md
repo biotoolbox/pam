@@ -706,10 +706,6 @@ All points and lines present. Reason for warning messages unknown. Possibly a pr
 
 ### test all
 
-> Tests will only run on Linux
-
-> Expected: `[ FAIL 0 | WARN 16 | SKIP 0 | PASS 199 ]`
-
 ```r
 library(devtools);
 devtools::test();
