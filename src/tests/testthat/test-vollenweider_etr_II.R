@@ -3,15 +3,31 @@ test_that("test-vollenweider_etr_II generate regression 20240925.csv", {
   data <- read_dual_pam_data(test_data_file)
   model_result <- vollenweider_generate_regression_ETR_II(data)
 
-  expect_equal(model_result[["sdiff"]], 2.5104818)
-  expect_equal(model_result[["pmax"]], 53.404027)
-  #expect_equal(model_result[["a"]], 0.002845961)
-  #expect_equal(model_result[["alpha"]], -0.000378034)
-  expect_equal(model_result[["n"]], 2.34641)
-  expect_equal(model_result[["ik"]], 351.37520)
-  expect_equal(model_result[["popt"]], 44.16714)
-  expect_equal(model_result[["iik"]], 290.60051)
+  os_name <- Sys.info()[["sysname"]]
+
+  if (os_name == "Linux") {
+    expect_equal(model_result[["sdiff"]], 2.5104818)
+    expect_equal(model_result[["pmax"]], 53.404027)
+    #expect_equal(model_result[["a"]], 0.002845961)
+    #expect_equal(model_result[["alpha"]], -0.000378034)
+    expect_equal(model_result[["n"]], 2.34641)
+    expect_equal(model_result[["ik"]], 351.37520)
+    expect_equal(model_result[["popt"]], 44.16714)
+    expect_equal(model_result[["iik"]], 290.60051)
+  } else if (os_name == "Windows") {
+    expect_equal(model_result[["sdiff"]], 2.5104818)
+    expect_equal(model_result[["pmax"]], 53.404027)
+    #expect_equal(model_result[["a"]], 0.002845961)
+    #expect_equal(model_result[["alpha"]], -0.000378034)
+    expect_equal(model_result[["n"]], 2.34641)
+    expect_equal(model_result[["ik"]], 351.37520)
+    expect_equal(model_result[["popt"]], 44.16714)
+    expect_equal(model_result[["iik"]], 290.60051)
+  } else {
+    stop(paste("Unsupported operating system:", os_name))
+  }
 })
+
 
 test_that("test-vollenweider_etr_II control plot 20240925.csv", {
   test_data_file <- file.path(getwd(), "data", "20240925.csv")
