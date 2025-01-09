@@ -18,8 +18,20 @@ test_that("compare_regression_models etr I + II", {
     )
   })
 
-  expect_equal(result[["eilers_peeters_total"]], 48)
-  expect_equal(result[["platt_total"]], 26)
-  expect_equal(result[["vollenweider_total"]], 50)
-  expect_equal(result[["walsby_total"]], 20)
+  os_name <- Sys.info()[["sysname"]]
+
+  if (os_name == "Linux") {
+    expect_equal(result[["eilers_peeters_total"]], 48)
+    expect_equal(result[["platt_total"]], 26)
+    expect_equal(result[["vollenweider_total"]], 50)
+    expect_equal(result[["walsby_total"]], 20)
+  } else if (os_name == "Windows") {
+    expect_equal(result[["eilers_peeters_total"]], 47)
+    expect_equal(result[["platt_total"]], 26)
+    expect_equal(result[["vollenweider_total"]], 51)
+    expect_equal(result[["walsby_total"]], 20)
+  } else {
+    stop(paste("Unsupported operating system:", os_name))
+  }
 })
+

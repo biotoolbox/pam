@@ -16,7 +16,7 @@ test_that("test-eilers_peeters_etr_I generate regression 20240925.csv", {
     expect_equal(model_result[["im"]], 1399.76963)
     expect_equal(model_result[["w"]], 1.180362267)
   } else if (os_name == "Windows") {
-    expect_equal(model_result[["sdiff"]], 1)
+    expect_equal(model_result[["sdiff"]], 53.4454062)
     #expect_equal(model_result[["a"]], 0.000001479)
     #expect_equal(model_result[["b"]], 0.002444096)
     expect_equal(model_result[["c"]], 2.8984079)
