@@ -5,11 +5,12 @@
 #' @param csv_path File path to the CSV file.
 #' @param remove_recovery Logical. Removes recovery measurements if \code{TRUE}. Default is \code{TRUE}.
 #' @param etr_factor Numeric. Factor for ETR calculation. Default is \code{0.84}.
-#' @param p_ratio Numeric. PS II / PSI ratio for ETR formula. Default is \code{0.5}.
+#' @param fraction_photosystem_I Numeric. Fraction of Photosystem I. Default is \code{0.5}.
+#' @param fraction_photosystem_II Numeric. Fraction of Photosystem II. Default is \code{0.5}.
 #'
 #' @details
 #' Calculates ETR using:
-#' \deqn{\text{ETR} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{P-Ratio} \cdot \text{Yield}}
+#' \deqn{\text{ETR} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{Fraction of Photosystem (I or II)} \cdot \text{Yield (I or II)}}
 #'
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#read_dual_pam_data}
 #'
@@ -28,7 +29,13 @@ read_dual_pam_data <- function(
     csv_path,
     remove_recovery = TRUE,
     etr_factor = 0.84,
-    p_ratio = 0.5) {
+    fraction_photosystem_I = 0.5,
+    fraction_photosystem_II = 0.5) {
+
+  if (!all.equal(fraction_photosystem_I + fraction_photosystem_II, 1)) {
+    stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
+  }
+
   tryCatch(
     {
       data <- utils::read.csv(csv_path, sep = ";", dec = ".")
@@ -62,12 +69,12 @@ read_dual_pam_data <- function(
         }
 
         yield_I <- row$Y.I.
-        recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, p_ratio)
+        recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, fraction_photosystem_I)
         row <- cbind(row, etr_I_col_name = recalc_ETRI)
         data.table::setnames(row, old = "etr_I_col_name", new = etr_I_type)
 
         yield_II <- row$Y.II.
-        recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, p_ratio)
+        recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, fraction_photosystem_II)
         row <- cbind(row, etr_II_col_name = recalc_ETRII)
         data.table::setnames(row, old = "etr_II_col_name", new = etr_II_type)
 
