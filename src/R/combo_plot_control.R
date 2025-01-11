@@ -13,6 +13,16 @@
 #'
 #' @return A plot with ETR data, regression results, and a summary table.
 #'
+#' #' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_I(data)
+#' model_results_platt <- platt_generate_regression_ETR_I(data)
+#' model_results <- list(eilers_peeters_modified(model_results), platt_modified(model_results))
+#' name_list <- c("Eilers-Peeters", "Platt")
+#' color_list <- c("red", "pink")
+#' plot <- combo_plot_control("test", data, model_results, name_list, color_list)
 #' @export
 combo_plot_control <- function(
     title,

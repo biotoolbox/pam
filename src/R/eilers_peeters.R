@@ -38,6 +38,13 @@ eilers_peeters_default_start_value_c <- 5
 #'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
 #'   Ecological Modelling, 42(3-4), 199-215. Available at: \doi{10.1016/0304-3800(88)90057-9}
 #' }
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- eilers_peeters_generate_regression_ETR_I(data)
+#'
 #' @export
 eilers_peeters_generate_regression_ETR_I <- function(
     data,
@@ -81,6 +88,12 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #'   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}
 #'   Ecological Modelling, 42(3-4), 199-215. Available at: \doi{10.1016/0304-3800(88)90057-9}
 #' }
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- eilers_peeters_generate_regression_ETR_II(data)
+#'
 #' @export
 eilers_peeters_generate_regression_ETR_II <- function(
     data,
@@ -271,6 +284,13 @@ eilers_peeters_generate_regression_internal <- function(
 #'
 #' @details
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#eilers_peeters_modified}
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- eilers_peeters_generate_regression_ETR_II(data)
+#' modified_result <- eilers_peeters_modified(result)
 #'
 #' @export
 eilers_peeters_modified <- function(model_result) {

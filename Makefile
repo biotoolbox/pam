@@ -10,3 +10,10 @@ test-%:
 	$(eval ARGS := $(if $(suffix $(*)),$(*),$(*).R))
 	$(eval path := tests/testthat/test-$(ARGS))
 	Rscript -e "setwd('src/'); library(devtools); devtools::load_all(); library(testthat); test_file('$(path)')"
+
+build:
+	Rscript -e "setwd('src/'); library(devtools); devtools::load_all(); devtools::document(); devtools::build()"
+
+buildtest:
+	make build
+	R CMD check pam_1.0.0.tar.gz

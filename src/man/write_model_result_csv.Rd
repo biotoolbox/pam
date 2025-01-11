@@ -15,6 +15,9 @@ write_model_result_csv(dest_dir, name, data, model_result)
 
 \item{model_result}{A list containing the model results, including parameter values and regression data.}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
 }
@@ -27,4 +30,12 @@ This function generates three CSV files:
 }
 The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory.
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#write_model_result_csv}
+}
+\examples{
+path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+data <- read_dual_pam_data(path)
+
+result <- eilers_peeters_generate_regression_ETR_I(data)
+write_model_result_csv(tempdir(), "20240925", data, result)
+
 }

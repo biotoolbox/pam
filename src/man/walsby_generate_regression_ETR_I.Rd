@@ -37,6 +37,13 @@ Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 \details{
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#walsby_generate_regression_etr_i-and-walsby_generate_regression_etr_ii}.
 }
+\examples{
+path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+data <- read_dual_pam_data(path)
+
+result <- walsby_generate_regression_ETR_I(data)
+
+}
 \references{
 {
   Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column.

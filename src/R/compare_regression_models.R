@@ -40,6 +40,10 @@
 #'   Walsby, A. E. (1997). \emph{Numerical integration of phytoplankton photosynthesis through time and depth in a water column.}
 #'   New Phytologist, 136(2), 189-209. Available at: \doi{10.1046/j.1469-8137.1997.00736.x}.
 #' }
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"))
+#' points <- compare_regression_models_ETR_I(path)
+#'
 #' @export
 compare_regression_models_ETR_I <- function(data_dir) {
   return(compare_regression_models(data_dir, etr_I_type))
@@ -88,6 +92,10 @@ compare_regression_models_ETR_I <- function(data_dir) {
 #'   Walsby, A. E. (1997). \emph{Numerical integration of phytoplankton photosynthesis through time and depth in a water column.}
 #'   New Phytologist, 136(2), 189-209. Available at: \doi{10.1046/j.1469-8137.1997.00736.x}.
 #' }
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"))
+#' points <- compare_regression_models_ETR_II(path)
+#'
 #' @export
 compare_regression_models_ETR_II <- function(data_dir) {
   return(compare_regression_models(data_dir, etr_II_type))

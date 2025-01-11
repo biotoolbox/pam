@@ -46,6 +46,13 @@ vollenweider_default_start_value_n <- 350
 #'   p. 427-457. In C. R. Goldman [ed.], \emph{Primary Productivity in Aquatic Environments}. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 #'
 #' }
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- vollenweider_generate_regression_ETR_I(data)
+#'
 #' @export
 vollenweider_generate_regression_ETR_I <- function(
     data,
@@ -93,8 +100,14 @@ vollenweider_generate_regression_ETR_I <- function(
 #' @references{
 #'   Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements},
 #'   p. 427-457. In C. R. Goldman [ed.], \emph{Primary Productivity in Aquatic Environments}. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
-#'
 #' }
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- vollenweider_generate_regression_ETR_II(data)
+#'
 #' @export
 vollenweider_generate_regression_ETR_II <- function(
     data,
@@ -281,6 +294,13 @@ vollenweider_generate_regression_internal <- function(
 #'
 #' @details
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#vollenweider_modified}
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- vollenweider_generate_regression_ETR_II(data)
+#' modified_result <- vollenweider_modified(result)
 #'
 #' @export
 vollenweider_modified <- function(model_result) {

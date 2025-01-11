@@ -41,6 +41,12 @@ platt_default_start_value_ps <- 30
 #'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525/}.
 #'
 #' }
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- platt_generate_regression_ETR_I(data)
+#'
 #' @export
 platt_generate_regression_ETR_I <- function(
     data,
@@ -87,6 +93,12 @@ platt_generate_regression_ETR_I <- function(
 #'   \emph{Journal of Marine Research, 38}(4). Retrieved from \url{https://elischolar.library.yale.edu/journal_of_marine_research/1525/}.
 #'
 #' }
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- platt_generate_regression_ETR_II(data)
+#'
 #' @export
 platt_generate_regression_ETR_II <- function(
     data,
@@ -280,6 +292,13 @@ platt_generate_regression_internal <- function(
 #'
 #' @details
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#platt_modified}
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- platt_generate_regression_ETR_II(data)
+#' modified_result <- platt_modified(result)
 #'
 #' @export
 platt_modified <- function(model_result) {

@@ -41,6 +41,13 @@ Fits the Platt (1980) regression model using original naming conventions.
 \details{
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#platt_generate_regression_etr_i-and-platt_generate_regression_etr_ii} .
 }
+\examples{
+path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+data <- read_dual_pam_data(path)
+
+result <- platt_generate_regression_ETR_I(data)
+
+}
 \references{
 {
   Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). \emph{Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton.}
