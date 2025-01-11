@@ -161,6 +161,13 @@ plot_table <- function(model_result, entries_per_row) {
 #'
 #' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
 #'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- eilers_peeters_generate_regression_ETR_I(data)
+#' plot_control(data, result, "Control Plot")
+#'
 #' @export
 plot_control <- function(
     data,
@@ -274,6 +281,16 @@ create_modified_model_result <- function(
 #' }
 #' The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory.
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#write_model_result_csv}
+#'
+#' @return No return value, called for side effects
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- eilers_peeters_generate_regression_ETR_I(data)
+#' write_model_result_csv(tempdir(), "20240925", data, result)
+#'
 #' @export
 write_model_result_csv <- function(dest_dir, name, data, model_result) {
   data_dest <- file.path(dest_dir, paste(name, "_raw_data.csv", sep = ""))

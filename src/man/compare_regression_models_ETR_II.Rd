@@ -33,6 +33,11 @@ This function compares the performance of the following models:
 Models are ranked based on the deviation between observed and predicted values. The results guide users in selecting the most appropriate model for their dataset. Start values for parameters cannot be adjusted within this function.
 A detailed documentation can be found in the README.
 }
+\examples{
+path <- file.path(system.file("extdata", package = "pam"))
+points <- compare_regression_models_ETR_II(path)
+
+}
 \references{
 {
   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}

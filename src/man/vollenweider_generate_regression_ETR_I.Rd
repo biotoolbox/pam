@@ -44,6 +44,13 @@ Fits the Vollenweider (1965) regression model using original naming conventions 
 \details{
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#vollenweider_generate_regression_etr_i-and-vollenweider_generate_regression_etr_ii}.
 }
+\examples{
+path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+data <- read_dual_pam_data(path)
+
+result <- vollenweider_generate_regression_ETR_I(data)
+
+}
 \references{
 {
   Vollenweider, R. A. (1965). \emph{Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements},

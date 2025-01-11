@@ -39,6 +39,13 @@ Fits a regression model for ETR II based on Eilers-Peeters (1988), considering p
 \details{
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#eilers_peeters_generate_regression_etr_i-and-eilers_peeters_generate_regression_etr_ii}.
 }
+\examples{
+path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+data <- read_dual_pam_data(path)
+
+result <- eilers_peeters_generate_regression_ETR_II(data)
+
+}
 \references{
 {
   Eilers, P. H. C., & Peeters, J. C. H. (1988). \emph{A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.}

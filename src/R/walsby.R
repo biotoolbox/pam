@@ -40,6 +40,13 @@ walsby_default_start_value_beta <- -0.01
 #'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
 #'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \doi{10.1515/bot-2018-0098}
 #' }
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- walsby_generate_regression_ETR_I(data)
+#'
 #' @export
 walsby_generate_regression_ETR_I <- function(
     data,
@@ -87,6 +94,13 @@ walsby_generate_regression_ETR_I <- function(
 #'   Acclimation limits of \emph{Fucus evanescens} along the salinity gradient of the southwestern Baltic Sea.
 #'   \emph{Botanica Marina}, 62(1), 1-12. Available at: \doi{10.1515/bot-2018-0098}
 #' }
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- walsby_generate_regression_ETR_II(data)
+#'
 #' @export
 walsby_generate_regression_ETR_II <- function(
     data,
@@ -211,6 +225,14 @@ walsby_generate_regression_internal <- function(
 #'
 #' @details
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#walsby_modified}
+#'
+#' @examples
+#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' data <- read_dual_pam_data(path)
+#'
+#' result <- walsby_generate_regression_ETR_II(data)
+#' modified_result <- walsby_modified(result)
+#'
 #' @export
 walsby_modified <- function(model_result) {
   validate_model_result(model_result)
