@@ -19,9 +19,9 @@ read_dual_pam_data(
 
 \item{etr_factor}{Numeric. Factor for ETR calculation. Default is \code{0.84}.}
 
-\item{fraction_photosystem_I}{Numeric. Fraction of Photosystem I. Default is \code{0.5}.}
+\item{fraction_photosystem_I}{Numeric. Relative distribution of absorbed PAR to photosystem I. Default is \code{0.5}.}
 
-\item{fraction_photosystem_II}{Numeric. Fraction of Photosystem II. Default is \code{0.5}.}
+\item{fraction_photosystem_II}{Numeric. Relative distribution of absorbed PAR to photosystem II. Default is \code{0.5}.}
 }
 \value{
 A `data.table` with processed data and calculated ETR values.
