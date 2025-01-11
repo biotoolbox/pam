@@ -35,15 +35,16 @@ Individual customisation may be necessary when reading data.
 - **csv_path**: A string representing the file path to the CSV file.
 - **remove_recovery**: Automatic removal of recovery measurements after the actual Pi curve for an accurate regression. Default is `TRUE`.
 - **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.
-- **p_ratio**: A numeric value representing the ratio of PS II / PSI used in the ETR calculation formula. Default is `0.5`. Calculated as:
-
-$$\textit{P–Ratio} = \frac{PPS2}{PPS1+2}$$
+- **fraction_photosystem_I**: A numeric value representing the relative distribution of absorbed PAR to photosystem I used in the ETR calculation formula. Default is `0.5`.
+Calculated as: $$\textit{Fraction of Photosystem I} = \frac{PPS 1}{PPS 1+2}$$
+- **fraction_photosystem_II**: A numeric value representing the relative distribution of absorbed PAR to photosystem II used in the ETR calculation formula. Default is `0.5`.
+Calculated as: $$\textit{Fraction of Photosystem II} = \frac{PPS 2}{PPS 1+2}$$
 
 #### Details
 
 ETR values are calculated using the following formula:
 
-$$ ETR = PAR \cdot \textit{ETR–Factor} \cdot P–Ratio \cdot Yield $$
+$$ \textit{ETR (I or II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of Photosystem (I or II)} \cdot \textit{Yield (I or II)} $$
 
 The function processes the provided CSV file by:
 
@@ -63,7 +64,8 @@ A `data.table` containing the processed data with additional columns for recalcu
 data <- read_dual_pam_data("path/to/data.csv",
 remove_recovery = TRUE,
 etr_factor = 0.84,
-p_ratio = 0.5)
+fraction_photosystem_I = 0.5,
+fraction_photosystem_II = 0.5)
 ```
 
 #### References

@@ -5,8 +5,8 @@
 #' @param csv_path File path to the CSV file.
 #' @param remove_recovery Logical. Removes recovery measurements if \code{TRUE}. Default is \code{TRUE}.
 #' @param etr_factor Numeric. Factor for ETR calculation. Default is \code{0.84}.
-#' @param fraction_photosystem_I Numeric. Fraction of Photosystem I. Default is \code{0.5}.
-#' @param fraction_photosystem_II Numeric. Fraction of Photosystem II. Default is \code{0.5}.
+#' @param fraction_photosystem_I Numeric. Relative distribution of absorbed PAR to photosystem I. Default is \code{0.5}.
+#' @param fraction_photosystem_II Numeric. Relative distribution of absorbed PAR to photosystem II. Default is \code{0.5}.
 #'
 #' @details
 #' Calculates ETR using:
@@ -31,8 +31,7 @@ read_dual_pam_data <- function(
     etr_factor = 0.84,
     fraction_photosystem_I = 0.5,
     fraction_photosystem_II = 0.5) {
-
-  if (!all.equal(fraction_photosystem_I + fraction_photosystem_II, 1)) {
+  if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
 
