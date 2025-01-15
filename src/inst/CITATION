@@ -1,0 +1,9 @@
+citation <- bibentry(
+  bibtype = "Manual",
+  title = "pam: Fast and Efficient Processing of PAM Data",
+  author = c(person("Julien", "Böhm"), person("Philipp", "Schrag")),
+  year = 2025,
+  note = "R package version 1.0.1",
+  url = "https://CRAN.R-project.org/package=pam",
+  doi = "10.32614/CRAN.package.pam"
+)
