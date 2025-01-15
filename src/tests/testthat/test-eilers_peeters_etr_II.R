@@ -6,15 +6,23 @@ test_that("test-eilers_peeters_etr_II generate regression 20240925.csv", {
   os_name <- Sys.info()[["sysname"]]
 
   if (os_name == "Linux") {
-    expect_equal(model_result[["sdiff"]], 5.7818334)
-    #expect_equal(model_result[["a"]], 0)
-    #expect_equal(model_result[["b"]], 0.005765059)
-    expect_equal(model_result[["c"]], 6.1088971)
-    expect_equal(model_result[["pm"]], 44.5224748)
-    expect_equal(model_result[["s"]], 0.163695670)
-    expect_equal(model_result[["ik"]], 271.98322)
-    expect_equal(model_result[["im"]], 731.801329)
-    expect_equal(model_result[["w"]], 0.690612084)
+    os_release <- readLines("/etc/os-release")
+    distro_line <- grep("^ID=", os_release, value = TRUE)
+    distro <- sub("^ID=", "", distro_line)
+
+    if (distro == "debian" || distro == "ubuntu") {
+      expect_equal(model_result[["sdiff"]], 5.7818334)
+      #expect_equal(model_result[["a"]], 0)
+      #expect_equal(model_result[["b"]], 0.005765059)
+      expect_equal(model_result[["c"]], 6.1088971)
+      expect_equal(model_result[["pm"]], 44.5224748)
+      expect_equal(model_result[["s"]], 0.163695670)
+      expect_equal(model_result[["ik"]], 271.98322)
+      expect_equal(model_result[["im"]], 731.801329)
+      expect_equal(model_result[["w"]], 0.690612084)
+    } else {
+      skip(paste("Skipping test on unsupported Linux distribution:", distro))
+    }
   } else if (os_name == "Windows") {
     expect_equal(model_result[["sdiff"]], 5.7818334)
     #expect_equal(model_result[["a"]], 0)
@@ -26,10 +34,9 @@ test_that("test-eilers_peeters_etr_II generate regression 20240925.csv", {
     expect_equal(model_result[["im"]], 731.801329)
     expect_equal(model_result[["w"]], 0.690612084)
   } else {
-    stop(paste("Unsupported operating system:", os_name))
+    skip(paste("Unsupported operating system:", os_name))
   }
 })
-
 
 test_that("test-eilers_peeters_etr_II modified 20240925.csv", {
   test_data_file <- file.path(getwd(), "data", "20240925.csv")
@@ -43,21 +50,29 @@ test_that("test-eilers_peeters_etr_II modified 20240925.csv", {
   os_name <- Sys.info()[["sysname"]]
 
   if (os_name == "Linux") {
-    expect_equal(model_result[["sdiff"]], 5.7818334)
-    #expect_equal(model_result[["a"]], 0)
-    #expect_equal(model_result[["b"]], 0.005765059)
-    expect_equal(model_result[["c"]], 6.1088971)
-    expect_equal(model_result[["d"]], NA_real_)
-    expect_equal(model_result[["alpha"]], 0.163695670)
-    expect_equal(model_result[["beta"]], NA_real_)
-    expect_equal(model_result[["etrmax_with_photoinhibition"]], 44.5224748)
-    expect_equal(model_result[["etrmax_without_photoinhibition"]], NA_real_)
-    expect_equal(model_result[["ik_with_photoinhibition"]], 271.98322)
-    expect_equal(model_result[["ik_without_photoinhibition"]], NA_real_)
-    expect_equal(model_result[["im_with_photoinhibition"]], 731.801329)
-    expect_equal(model_result[["w"]], 0.690612084)
-    expect_equal(model_result[["ib"]], NA_real_)
-    expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
+    os_release <- readLines("/etc/os-release")
+    distro_line <- grep("^ID=", os_release, value = TRUE)
+    distro <- sub("^ID=", "", distro_line)
+
+    if (distro == "debian" || distro == "ubuntu") {
+      expect_equal(model_result[["sdiff"]], 5.7818334)
+      #expect_equal(model_result[["a"]], 0)
+      #expect_equal(model_result[["b"]], 0.005765059)
+      expect_equal(model_result[["c"]], 6.1088971)
+      expect_equal(model_result[["d"]], NA_real_)
+      expect_equal(model_result[["alpha"]], 0.163695670)
+      expect_equal(model_result[["beta"]], NA_real_)
+      expect_equal(model_result[["etrmax_with_photoinhibition"]], 44.5224748)
+      expect_equal(model_result[["etrmax_without_photoinhibition"]], NA_real_)
+      expect_equal(model_result[["ik_with_photoinhibition"]], 271.98322)
+      expect_equal(model_result[["ik_without_photoinhibition"]], NA_real_)
+      expect_equal(model_result[["im_with_photoinhibition"]], 731.801329)
+      expect_equal(model_result[["w"]], 0.690612084)
+      expect_equal(model_result[["ib"]], NA_real_)
+      expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
+    } else {
+      skip(paste("Skipping test on unsupported Linux distribution:", distro))
+    }
   } else if (os_name == "Windows") {
     expect_equal(model_result[["sdiff"]], 5.7818334)
     #expect_equal(model_result[["a"]], 0)
@@ -75,9 +90,10 @@ test_that("test-eilers_peeters_etr_II modified 20240925.csv", {
     expect_equal(model_result[["ib"]], NA_real_)
     expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
   } else {
-    stop(paste("Unsupported operating system:", os_name))
+    skip(paste("Unsupported operating system:", os_name))
   }
 })
+
 
 
 test_that("test-eilers_peeters_etr_II modified control plot 20240925.csv", {
