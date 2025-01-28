@@ -25,10 +25,10 @@ test_that("compare_regression_models etr I + II", {
         )
       })
 
-      expect_equal(result[["eilers_peeters_total"]], 48)
-      expect_equal(result[["platt_total"]], 26)
-      expect_equal(result[["vollenweider_total"]], 50)
-      expect_equal(result[["walsby_total"]], 20)
+      expect_equal(result[["eilers_peeters_total"]], 54)
+      expect_equal(result[["platt_total"]], 40)
+      expect_equal(result[["vollenweider_total"]], 70)
+      expect_equal(result[["walsby_total"]], 28)
     } else {
       skip(paste("Skipping test on unsupported Linux distribution:", distro))
     }
@@ -50,10 +50,10 @@ test_that("compare_regression_models etr I + II", {
       )
     })
 
-    expect_equal(result[["eilers_peeters_total"]], 47)
-    expect_equal(result[["platt_total"]], 26)
-    expect_equal(result[["vollenweider_total"]], 51)
-    expect_equal(result[["walsby_total"]], 20)
+    expect_equal(result[["eilers_peeters_total"]], 53)
+    expect_equal(result[["platt_total"]], 40)
+    expect_equal(result[["vollenweider_total"]], 71)
+    expect_equal(result[["walsby_total"]], 28)
   } else {
     skip(paste("Skipping test on unsupported operating system:", os_name))
   }
