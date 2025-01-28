@@ -114,6 +114,14 @@ platt_generate_regression_ETR_II <- function(
   ))
 }
 
+platt_message <- function(msg) {
+  if (is.character(msg) == FALSE) {
+    message("platt problem")
+  } else {
+    message("platt: ", msg)
+  }
+}
+
 platt_generate_regression_internal <- function(
     data,
     etr_type,
@@ -158,10 +166,10 @@ platt_generate_regression_internal <- function(
           pm <- ps * (alpha / (alpha + beta)) * ((beta / (alpha + beta))^(beta / alpha))
         },
         warning = function(w) {
-          warning("failed to calculate pm: warning: ", w)
+          platt_message(paste("failed to calculate pm: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate pm: error: ", e)
+          platt_message(paste("failed to calculate pm: error:", e))
         }
       )
 
@@ -171,10 +179,10 @@ platt_generate_regression_internal <- function(
           ik <- pm / alpha
         },
         warning = function(w) {
-          warning("failed to calculate ik: warning: ", w)
+          platt_message(paste("failed to calculate ik: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate ik: error: ", e)
+          platt_message(paste("failed to calculate ik: error:", e))
         }
       )
 
@@ -184,10 +192,10 @@ platt_generate_regression_internal <- function(
           is <- ps / alpha
         },
         warning = function(w) {
-          warning("failed to calculate is: warning: ", w)
+          platt_message(paste("failed to calculate is: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate is: error: ", e)
+          platt_message(paste("failed to calculate is: error:", e))
         }
       )
 
@@ -197,10 +205,10 @@ platt_generate_regression_internal <- function(
           ib <- ps / beta
         },
         warning = function(w) {
-          warning("failed to calculate ib: warning: ", w)
+          platt_message(paste("failed to calculate ib: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate ib: error: ", e)
+          platt_message(paste("failed to calculate ib: error:", e))
         }
       )
 
@@ -210,10 +218,10 @@ platt_generate_regression_internal <- function(
           im <- (ps / alpha) * log((alpha + beta) / beta)
         },
         warning = function(w) {
-          warning("failed to calculate im: warning: ", w)
+          platt_message(paste("failed to calculate im: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate im: error: ", e)
+          platt_message(paste("failed to calculate im: error:", e))
         }
       )
 
@@ -231,10 +239,10 @@ platt_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          warning("failed to calculate sdiff: warning: ", w)
+          platt_message(paste("failed to calculate sdiff: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate sdiff: error: ", e)
+          platt_message(paste("failed to calculate sdiff: error:", e))
         }
       )
 

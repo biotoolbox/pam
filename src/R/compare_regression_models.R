@@ -120,11 +120,17 @@ compare_regression_models <- function(data_dir, etr_type) {
         if (!is.numeric(eilers_peeters_sdiff)) {
           stop("eilers_peeters sdiff result is not numeric")
         }
+        if (is.na(eilers_peeters_sdiff)) {
+          stop("failed to calculate sdiff with eilers_peeters")
+        }
 
         platt <- platt_generate_regression_internal(data, etr_type)
         platt_sdiff <- platt[["sdiff"]]
         if (!is.numeric(eilers_peeters_sdiff)) {
           stop("platt sdiff result is not numeric")
+        }
+        if (is.na(platt_sdiff)) {
+          stop("failed to calculate sdiff with platt")
         }
 
         vollenweider <- vollenweider_generate_regression_internal(data, etr_type)
@@ -132,21 +138,14 @@ compare_regression_models <- function(data_dir, etr_type) {
         if (!is.numeric(eilers_peeters_sdiff)) {
           stop("vollenweider sdiff result is not numeric")
         }
+        if (is.na(vollenweider_sdiff)) {
+          stop("failed to calculate sdiff with vollenweider")
+        }
 
         walsby <- walsby_generate_regression_internal(data, etr_type)
         walsby_sdiff <- walsby[["sdiff"]]
         if (!is.numeric(eilers_peeters_sdiff)) {
           stop("walsby sdiff result is not numeric")
-        }
-
-        if (is.na(eilers_peeters_sdiff)) {
-          stop("failed to calculate sdiff with eilers_peeters")
-        }
-        if (is.na(platt_sdiff)) {
-          stop("failed to calculate sdiff with platt")
-        }
-        if (is.na(vollenweider_sdiff)) {
-          stop("failed to calculate sdiff with vollenweider")
         }
         if (is.na(walsby_sdiff)) {
           stop("failed to calculate sdiff with walsby")
@@ -178,7 +177,7 @@ compare_regression_models <- function(data_dir, etr_type) {
         message("file: ", title, " processed with warning: ", w)
       },
       error = function(e) {
-        warning("skipped file: ", title, " because of error: ", e)
+        message("skipped file: ", title, " because of error: ", e)
       }
     )
   }

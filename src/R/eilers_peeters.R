@@ -109,6 +109,14 @@ eilers_peeters_generate_regression_ETR_II <- function(
   ))
 }
 
+eilers_peeters_message <- function(msg) {
+  if (is.character(msg) == FALSE) {
+    message("eilers peeters problem")
+  } else {
+    message("eilers peeters: ", msg)
+  }
+}
+
 eilers_peeters_generate_regression_internal <- function(
     data,
     etr_type,
@@ -121,13 +129,13 @@ eilers_peeters_generate_regression_internal <- function(
       validate_etr_type(etr_type)
 
       if (!is.numeric(a_start_value)) {
-        stop("a start value is not a valid number")
+        stop("eilers peeters: a start value is not a valid number")
       }
       if (!is.numeric(b_start_value)) {
-        stop("b start value is not a valid number")
+        stop("eilers peeters: b start value is not a valid number")
       }
       if (!is.numeric(c_start_value)) {
-        stop("c start value is not a valid number")
+        stop("eilers peeters: c start value is not a valid number")
       }
 
       data <- remove_det_row_by_etr(data, etr_type)
@@ -149,10 +157,10 @@ eilers_peeters_generate_regression_internal <- function(
           pm <- 1 / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
-          warning("failed to calculate etr_max: warning: ", w)
+          eilers_peeters_message(paste("failed to calculate pm: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate etr_max: error: ", e)
+          eilers_peeters_message(paste("failed to calculate pm: error:", w))
         }
       )
 
@@ -162,10 +170,10 @@ eilers_peeters_generate_regression_internal <- function(
           s <- 1 / c
         },
         warning = function(w) {
-          warning("failed to calculate alpha: warning: ", w)
+          eilers_peeters_message(paste("failed to calculate s: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate alpha: error: ", e)
+          eilers_peeters_message(paste("failed to calculate s: error:", w))
         }
       )
 
@@ -175,10 +183,10 @@ eilers_peeters_generate_regression_internal <- function(
           ik <- c / (b + 2 * sqrt(a * c))
         },
         warning = function(w) {
-          warning("failed to calculate Ik: warning: ", w)
+          eilers_peeters_message(paste("failed to calculate ik: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate Ik: error: ", e)
+          eilers_peeters_message(paste("failed to calculate ik: error:", w))
         }
       )
 
@@ -188,10 +196,10 @@ eilers_peeters_generate_regression_internal <- function(
           im <- sqrt(c / a)
         },
         warning = function(w) {
-          warning("failed to calculate Im: warning: ", w)
+          eilers_peeters_message(paste("failed to calculate im: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate Im: error: ", e)
+          eilers_peeters_message(paste("failed to calculate im: error:", w))
         }
       )
 
@@ -201,10 +209,10 @@ eilers_peeters_generate_regression_internal <- function(
           w <- b / sqrt(a * c)
         },
         warning = function(w) {
-          warning("failed to calculate w: warning: ", w)
+          eilers_peeters_message(paste("failed to calculate w: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate w: error: ", e)
+          eilers_peeters_message(paste("failed to calculate w: error:", w))
         }
       )
 
@@ -222,10 +230,10 @@ eilers_peeters_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          warning("failed to calculate sdiff: warning: ", w)
+          eilers_peeters_message(paste("failed to calculate sdiff: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate sdiff: error: ", e)
+          eilers_peeters_message(paste("failed to calculate sdiff: error:", w))
         }
       )
 

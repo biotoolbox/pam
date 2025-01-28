@@ -125,6 +125,14 @@ vollenweider_generate_regression_ETR_II <- function(
   ))
 }
 
+vollenweider_message <- function(msg) {
+  if (is.character(msg) == FALSE) {
+    message("vollenweider problem")
+  } else {
+    message("vollenweider: ", msg)
+  }
+}
+
 vollenweider_generate_regression_internal <- function(
     data,
     etr_type,
@@ -177,10 +185,10 @@ vollenweider_generate_regression_internal <- function(
           ik <- 1 / a
         },
         warning = function(w) {
-          warning("failed to calculate ik: warning: ", w)
+          vollenweider_message(paste("failed to calculate ik: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate ik: error: ", e)
+          vollenweider_message(paste("failed to calculate ik: error:", e))
         }
       )
 
@@ -207,10 +215,10 @@ vollenweider_generate_regression_internal <- function(
           iik <- (ik * popt) / pmax
         },
         warning = function(w) {
-          warning("failed to calculate iik: warning: ", w)
+          vollenweider_message(paste("failed to calculate iik: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate iik: error: ", e)
+          vollenweider_message(paste("failed to calculate iik: error:", e))
         }
       )
 
@@ -220,10 +228,10 @@ vollenweider_generate_regression_internal <- function(
           pmax_popt_and_ik_iik_ratio <- ik / iik
         },
         warning = function(w) {
-          warning("failed to calculate pmax_popt_and_ik_iik_ratio: warning: ", w)
+          vollenweider_message(paste("failed to calculate pmax_popt_and_ik_iik_ratio: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate pmax_popt_and_ik_iik_ratio: error: ", e)
+          vollenweider_message(paste("failed to calculate pmax_popt_and_ik_iik_ratio: error:", e))
         }
       )
 
@@ -233,10 +241,10 @@ vollenweider_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          warning("failed to calculate sdiff: warning:", w)
+          vollenweider_message(paste("failed to calculate sdiff: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate sdiff: error:", e)
+          vollenweider_message(paste("failed to calculate sdiff: error:", e))
         }
       )
 

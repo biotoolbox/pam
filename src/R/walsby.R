@@ -116,6 +116,14 @@ walsby_generate_regression_ETR_II <- function(
   ))
 }
 
+walsby_message <- function(msg) {
+  if (is.character(msg) == FALSE) {
+    message("walsby problem")
+  } else {
+    message("walsby: ", msg)
+  }
+}
+
 walsby_generate_regression_internal <- function(
     data,
     etr_type,
@@ -169,10 +177,10 @@ walsby_generate_regression_internal <- function(
           sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
         },
         warning = function(w) {
-          warning("failed to calculate sdiff: warning: ", w)
+          walsby_message(paste("failed to calculate ik: warning:", w))
         },
         error = function(e) {
-          warning("failed to calculate sdiff: error: ", e)
+          walsby_message(paste("failed to calculate ik: error:", e))
         }
       )
 

@@ -73,6 +73,10 @@ validate_etr_type <- function(etr_type) {
 }
 
 validate_model_result <- function(model_result) {
+  if (is.list(model_result) == FALSE) {
+    stop("model result is not a valid list")
+  }
+
   etr_type <- model_result[["etr_type"]]
   validate_etr_type(etr_type)
 
