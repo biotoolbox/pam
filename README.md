@@ -95,7 +95,7 @@ A list containing the following elements:
 - **a**: The obtained parameter $$a$$.
 - **alpha**: The obtained parameter $$\alpha$$.
 - **n**: The obtained parameter $$n$$.
-- **popt**: The maximum electron transport rate with photoinhibition ($$p_{opt}$$). A function computes predicted photosynthetic rates for each PAR value and tracks the maximum rate observed:
+- **popt**: The maximum electron transport rate with photoinhibition ($$p_{opt}$$). A function computes predicted photosynthetic rates for each PAR value and tracks the maximum rate observed and is therefore modified from the original approach:
 
 ```r
   popt <- 0
