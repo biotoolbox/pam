@@ -1,7 +1,7 @@
 Package: pam
 Type: Package
 Title: Fast and Efficient Processing of PAM Data
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person(
         "Julien",
@@ -28,6 +28,7 @@ Suggests:
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
 Imports: 
+    rlang,
     data.table,
     dplyr,
     ggplot2,
