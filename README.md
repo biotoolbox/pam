@@ -80,8 +80,8 @@ This function generates a regression model based on Vollenweider (1965). Origina
 
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
 - **etr_type**: A character string specifying the column name of the response variable (ETR I or ETR II) to be used in the model.
-- **pmax_start_value_vollenweider**: Numeric. The starting value for the parameter $$p_{max}$$ in the model. Defaults to `pmax_start_values_vollenweider_default`.
-- **a_start_value_vollenweider**: Numeric. The starting value for the parameter $$a$$ in the model. Defaults to `a_start_values_vollenweider_default`.
+- **pmax_start_value**: Numeric. The starting value for the parameter $$p_{max}$$ in the model. Defaults to `pmax_start_values_vollenweider_default`.
+- **a_start_value**: Numeric. The starting value for the parameter $$a$$ in the model. Defaults to `a_start_values_vollenweider_default`.
 - **alpha_start_value**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_values_vollenweider_default`.
 - **n_start_value**: Numeric. The starting value for the parameter $$n$$ in the model. Defaults to `n_start_values_vollenweider_default`.
 
@@ -139,8 +139,8 @@ It is valid: $$i = PAR; p = ETR$$
 
 ```r
 result_vollenweider_ETR_II <- vollenweider_generate_regression_ETR_II(data, 
-    pmax_start_value_vollenweider = 40, 
-    a_start_value_vollenweider = 0.1, 
+    pmax_start_value = 40, 
+    a_start_value = 0.1, 
     alpha_start_value = -0.0001, 
     n_start_value = 350)
 ```
@@ -156,9 +156,9 @@ This function generates a regression model based on  Platt (1980). Original nami
 #### Parameters
 
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
-- **alpha_start_value_platt**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_platt_default`.
-- **beta_start_value_platt**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_platt_default`.
-- **ps_start_value_platt**: Numeric. The starting value for the parameter $$p_s$$ in the model. Defaults to `ps_start_value_platt_default`.
+- **alpha_start_value**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_platt_default`.
+- **beta_start_value**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_platt_default`.
+- **ps_start_value**: Numeric. The starting value for the parameter $$p_s$$ in the model. Defaults to `ps_start_value_platt_default`.
 
 #### Return
 
@@ -201,9 +201,9 @@ It is valid: $$I = PAR; p = ETR$$
 
 ```r
 result_platt_ETR_II <- platt_generate_regression_ETR_II(data, 
-    alpha_start_value_platt = 0.3, 
-    beta_start_value_platt = 0.01, 
-    ps_start_value_platt = 30)
+    alpha_start_value = 0.3, 
+    beta_start_value = 0.01, 
+    ps_start_value = 30)
 ```
 
 #### References
@@ -278,9 +278,9 @@ This function generates a regression model based on  Walsby (1997) in a modified
 #### Parameters
 
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
-- **etr_max_start_value_walsby**: Numeric. The starting value for the parameter $$ETR_{max}$$ in the model. Defaults to `etr_max_start_value_walsby_default`.
-- **alpha_start_value_walsby**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_walsby_default`.
-- **beta_start_value_walsby**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_walsby_default`.
+- **etr_max_start_value**: Numeric. The starting value for the parameter $$ETR_{max}$$ in the model. Defaults to `etr_max_start_value_walsby_default`.
+- **alpha_start_value**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_walsby_default`.
+- **beta_start_value**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_walsby_default`.
 
 #### Return
 
