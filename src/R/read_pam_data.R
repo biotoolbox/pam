@@ -124,14 +124,13 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #' @param csv_path File path to the CSV file.
 #' @param remove_recovery Logical. Removes recovery measurements if \code{TRUE}. Default is \code{TRUE}.
 #' @param etr_factor Numeric. Factor for ETR calculation. Default is \code{0.84}.
-#' @param fraction_photosystem_I Numeric. Relative distribution of absorbed PAR to photosystem I. Default is \code{0.5}.
 #' @param fraction_photosystem_II Numeric. Relative distribution of absorbed PAR to photosystem II. Default is \code{0.5}.
 #'
 #' @details
 #' Calculates ETR II using:
 #' \deqn{\text{ETR II} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{Fraction of Photosystem (II)} \cdot \text{Yield (II)}}
 #'
-#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#read_dual_pam_data}
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file}
 #'
 #' @return A `data.table` with processed data and calculated ETR values.
 #'
@@ -156,12 +155,36 @@ read_junior_pam_data <- function(
 
   tryCatch(
     {
-      data <- utils::read.csv(csv_path, sep = ";", dec = ".")
+      data <- utils::read.csv(csv_path, sep = ";", dec = ".", skip = 1, header = TRUE)
+      if (grepl("Device", data[1, 1], ignore.case = TRUE)) {
+    }
+
       data <- data.table::as.data.table(data)
-      data <- data[-1, ]
+      data.table::setnames(data, old = "Type", new = "ID")
+      data$Action <- data$ID
+
+      par_col <- grep("PAR", names(data), value = TRUE)
+
+if (length(par_col) == 1 && par_col != "PAR") {
+  data.table::setnames(data, old = par_col, new = "PAR")
+}
+
+    yield_II_col <- grep("Y..II.", names(data), value = TRUE)
+
+if (length(yield_II_col) == 1 && yield_II_col != "Y..II.") {
+  data.table::setnames(data, old = yield_II_col, new = "Y.II.")
+}
+
+      data <- data[data$Action == "FO" | data$Action == "F", ]
+      data$Action[data$Action == "FO"] <- "Fm-Det."
+      data$Action[data$Action == "F"] <- "P.+F. SP"
+      data$ID[data$ID == "FO"] <- "SP"
+      data$ID[data$ID == "F"] <- "SP"
+      data$Datetime <- as.POSIXct(data$Datetime, format = "%Y-%m-%d %H:%M:%OS", tz = "GMT")
+      data$Date <- format(data$Datetime, "%Y-%m-%d")
+      data$Time <- format(data$Datetime, "%H:%M:%OS")
 
       validate_data(data)
-      data <- data[data$Type == "FO" | data$Type == "F", ]
 
       date_time_col_values <- c()
       for (i in seq_len(nrow(data))) {
@@ -173,21 +196,20 @@ read_junior_pam_data <- function(
         )
         date_time_col_values <- c(date_time_col_values, date_time_row_value)
       }
-
       data <- dplyr::mutate(data, DateTime = date_time_col_values)
-      data <- data[order(data$DateTime), ]
+      data <- data[order(data$Datetime), ]
 
       result <- data.table::data.table()
       last_par <- as.numeric(0)
       for (i in seq_len(nrow(data))) {
         row <- data[i, ]
-        current_par <- as.numeric(row[[grep("PAR", names(row), value = TRUE)[1]]])
+        current_par <- row$PAR
 
         if (remove_recovery && last_par != 0 && current_par < last_par) {
           break
         }
 
-        yield_II <- as.numeric(row[[grep("Y (II)", names(row), value = TRUE)[1]]])
+        yield_II <- row$Y.II.
         recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, fraction_photosystem_II)
         row <- cbind(row, etr_II_col_name = recalc_ETRII)
         data.table::setnames(row, old = "etr_II_col_name", new = etr_II_type)
