@@ -72,6 +72,57 @@ fraction_photosystem_II = 0.5)
 
 - Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
 
+### read_junior_pam_data()
+
+#### Description
+
+This function reads the original CSV file as created by the WinControl software, processes it by calculating $$ETR$$ values, and returns a cleaned dataset.
+Functionality with raw data from other PAM devices cannot be guaranteed.
+Individual customisation may be necessary when reading data.
+
+#### Parameters
+
+- **csv_path**: A string representing the file path to the CSV file.
+- **remove_recovery**: Automatic removal of recovery measurements after the actual Pi curve for an accurate regression. Default is `TRUE`.
+- **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.
+- **fraction_photosystem_I**: A numeric value representing the relative distribution of absorbed PAR to photosystem I used in the ETR calculation formula. Default is `0.5`.
+Calculated as: $$\textit{Fraction of Photosystem I} = \frac{PPS 1}{PPS 1+2}$$
+- **fraction_photosystem_II**: A numeric value representing the relative distribution of absorbed PAR to photosystem II used in the ETR calculation formula. Default is `0.5`.
+Calculated as: $$\textit{Fraction of Photosystem II} = \frac{PPS 2}{PPS 1+2}$$
+
+#### Details
+
+ETR values are calculated using the following formula:
+
+$$ \textit{ETR (II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of Photosystem (II)} \cdot \textit{Yield (II)} $$
+
+The function processes the provided CSV file by:
+
+- Reading the CSV data using `read.csv()`.
+- Standardizing column names to match the Dual-PAM CSV format, due to inconsistent naming conventions across Walz devices. 
+- Filtering rows where the column `ID` equals `SP`.
+- Combining the `Date` and `Time` columns to create a new `DateTime` column.
+- Calculating the ETR values for `Y.II.` using the function `calc_etr()`.
+- Removing rows from the recovery period if `remove_recovery = TRUE`.
+
+#### Return
+
+A `data.table` containing the processed data with additional columns for recalculated ETR values.
+
+#### Example
+
+```r
+data <- read_junior_pam_data("path/to/data.csv",
+remove_recovery = TRUE,
+etr_factor = 0.84,
+fraction_photosystem_I = 0.5,
+fraction_photosystem_II = 0.5)
+```
+
+#### References
+
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+
 ### vollenweider_generate_regression_ETR_I() and vollenweider_generate_regression_ETR_II()
 
 This function generates a regression model based on Vollenweider (1965). Original naming conventions from the publication are used.
@@ -725,17 +776,12 @@ test_file('$$path')"
 ## Linux dependencies for devtools
 
 Ubuntu:
-libxml2-dev
-libssl-dev
-libcurl4-openssl-dev
-libfontconfig1-dev
-libharfbuzz-dev
-libfribidi-dev
-libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
 Debian:
 libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libjpeg-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
+R Packages:
 install.packages("data.table")
 install.packages("dplyr")
 install.packages("ggplot2")
@@ -743,3 +789,7 @@ install.packages("minpack.lm")
 install.packages("SciViews")
 install.packages("ggthemes")
 install.packages("gridExtra")
+install.packages("cowplot")
+
+packages <- readLines("packages.txt")
+install.packages(packages)

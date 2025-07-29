@@ -1,5 +1,8 @@
 .PHONY: test
 
+install:
+	Rscript -e 'packages <- readLines("packages.txt"); install.packages(packages)'
+
 test:
 	rm -rf src/tests/testthat/results
 	Rscript -e "setwd('src/'); library(devtools); test()"
@@ -16,4 +19,4 @@ build:
 
 buildtest:
 	make build
-	R CMD check pam_1.0.1.tar.gz
+	R CMD check pam_1.0.3.tar.gz
