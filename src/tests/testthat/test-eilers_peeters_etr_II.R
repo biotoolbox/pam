@@ -7,10 +7,10 @@ test_that("test-eilers_peeters_etr_II generate regression 20240925.csv", {
 
   if (os_name == "Linux") {
     os_release <- readLines("/etc/os-release")
-    distro_line <- grep("^ID=", os_release, value = TRUE)
-    distro <- sub("^ID=", "", distro_line)
+    distro_line <- grep("^ID_LIKE=", os_release, value = TRUE)
+    distro <- sub("^ID_LIKE=", "", distro_line)
 
-    if (distro == "debian" || distro == "ubuntu") {
+    if (grepl("ubuntu", distro) || grepl("debian", distro)) {
       expect_equal(model_result[["sdiff"]], 5.7818334)
       #expect_equal(model_result[["a"]], 0)
       #expect_equal(model_result[["b"]], 0.005765059)
@@ -51,10 +51,10 @@ test_that("test-eilers_peeters_etr_II modified 20240925.csv", {
 
   if (os_name == "Linux") {
     os_release <- readLines("/etc/os-release")
-    distro_line <- grep("^ID=", os_release, value = TRUE)
-    distro <- sub("^ID=", "", distro_line)
+    distro_line <- grep("^ID_LIKE=", os_release, value = TRUE)
+    distro <- sub("^ID_LIKE=", "", distro_line)
 
-    if (distro == "debian" || distro == "ubuntu") {
+    if (grepl("ubuntu", distro) || grepl("debian", distro)) {
       expect_equal(model_result[["sdiff"]], 5.7818334)
       #expect_equal(model_result[["a"]], 0)
       #expect_equal(model_result[["b"]], 0.005765059)

@@ -19,6 +19,8 @@ read_junior_pam_data(
 
 \item{etr_factor}{Numeric. Factor for ETR calculation. Default is \code{0.84}.}
 
+\item{fraction_photosystem_I}{Numeric. Relative distribution of absorbed PAR to photosystem I. Default is \code{0.5}.}
+
 \item{fraction_photosystem_II}{Numeric. Relative distribution of absorbed PAR to photosystem II. Default is \code{0.5}.}
 }
 \value{
@@ -34,8 +36,8 @@ Calculates ETR II using:
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file}
 }
 \examples{
-path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
-data <- read_dual_pam_data(path)
+path <- file.path(system.file("extdata/junior_pam", package = "pam"), "junior_pam_20250613.csv")
+data <- read_junior_pam_data(path)
 }
 \references{
 {

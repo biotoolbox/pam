@@ -725,17 +725,12 @@ test_file('$$path')"
 ## Linux dependencies for devtools
 
 Ubuntu:
-libxml2-dev
-libssl-dev
-libcurl4-openssl-dev
-libfontconfig1-dev
-libharfbuzz-dev
-libfribidi-dev
-libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
 Debian:
 libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libjpeg-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
+R Packages:
 install.packages("data.table")
 install.packages("dplyr")
 install.packages("ggplot2")
@@ -743,3 +738,7 @@ install.packages("minpack.lm")
 install.packages("SciViews")
 install.packages("ggthemes")
 install.packages("gridExtra")
+install.packages("cowplot")
+
+packages <- readLines("packages.txt")
+install.packages(packages)

@@ -1,5 +1,8 @@
 .PHONY: test
 
+install:
+	Rscript -e 'packages <- readLines("packages.txt"); install.packages(packages)'
+
 test:
 	rm -rf src/tests/testthat/results
 	Rscript -e "setwd('src/'); library(devtools); test()"

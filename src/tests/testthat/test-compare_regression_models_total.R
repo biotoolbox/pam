@@ -4,10 +4,10 @@ test_that("compare_regression_models etr I + II", {
 
   if (os_name == "Linux") {
     os_release <- readLines("/etc/os-release")
-    distro_line <- grep("^ID=", os_release, value = TRUE)
-    distro <- sub("^ID=", "", distro_line)
+    distro_line <- grep("^ID_LIKE=", os_release, value = TRUE)
+    distro <- sub("^ID_LIKE=", "", distro_line)
 
-    if (distro == "debian" || distro == "ubuntu") {
+    if (grepl("ubuntu", distro) || grepl("debian", distro)) {
       expect_no_error({
         model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir)
         model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir)

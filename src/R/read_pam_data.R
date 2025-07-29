@@ -124,6 +124,7 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #' @param csv_path File path to the CSV file.
 #' @param remove_recovery Logical. Removes recovery measurements if \code{TRUE}. Default is \code{TRUE}.
 #' @param etr_factor Numeric. Factor for ETR calculation. Default is \code{0.84}.
+#' @param fraction_photosystem_I Numeric. Relative distribution of absorbed PAR to photosystem I. Default is \code{0.5}.
 #' @param fraction_photosystem_II Numeric. Relative distribution of absorbed PAR to photosystem II. Default is \code{0.5}.
 #'
 #' @details
@@ -140,8 +141,8 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #'   Available at: \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
-#' data <- read_dual_pam_data(path)
+#' path <- file.path(system.file("extdata/junior_pam", package = "pam"), "junior_pam_20250613.csv")
+#' data <- read_junior_pam_data(path)
 #' @export
 read_junior_pam_data <- function(
     csv_path,
@@ -156,8 +157,6 @@ read_junior_pam_data <- function(
   tryCatch(
     {
       data <- utils::read.csv(csv_path, sep = ";", dec = ".", skip = 1, header = TRUE)
-      if (grepl("Device", data[1, 1], ignore.case = TRUE)) {
-    }
 
       data <- data.table::as.data.table(data)
       data.table::setnames(data, old = "Type", new = "ID")
@@ -165,15 +164,15 @@ read_junior_pam_data <- function(
 
       par_col <- grep("PAR", names(data), value = TRUE)
 
-if (length(par_col) == 1 && par_col != "PAR") {
-  data.table::setnames(data, old = par_col, new = "PAR")
-}
+      if (length(par_col) == 1 && par_col != "PAR") {
+        data.table::setnames(data, old = par_col, new = "PAR")
+      }
 
-    yield_II_col <- grep("Y..II.", names(data), value = TRUE)
+      yield_II_col <- grep("Y..II.", names(data), value = TRUE)
 
-if (length(yield_II_col) == 1 && yield_II_col != "Y..II.") {
-  data.table::setnames(data, old = yield_II_col, new = "Y.II.")
-}
+      if (length(yield_II_col) == 1 && yield_II_col != "Y..II.") {
+        data.table::setnames(data, old = yield_II_col, new = "Y.II.")
+      }
 
       data <- data[data$Action == "FO" | data$Action == "F", ]
       data$Action[data$Action == "FO"] <- "Fm-Det."
@@ -228,28 +227,4 @@ if (length(yield_II_col) == 1 && yield_II_col != "Y..II.") {
       stop("Error in file: ", csv_path, " Error: ", e)
     }
   )
-}
-
-calc_etr <- function(yield, par, etr_factor, p_ratio) {
-  if (is.na(yield)) {
-    return(NA_real_)
-  }
-
-  if (!is.numeric(yield)) {
-    stop("yield is not numeric")
-  }
-
-  if (!is.numeric(par)) {
-    stop("par is not numeric")
-  }
-
-  if (!is.numeric(etr_factor)) {
-    stop("etr_factor is not numeric")
-  }
-
-  if (!is.numeric(p_ratio)) {
-    stop("p_ratio is not numeric")
-  }
-
-  return(yield * par * etr_factor * p_ratio)
 }

@@ -7,10 +7,10 @@ test_that("test-vollenweider_etr_II generate regression 20240925.csv", {
 
   if (os_name == "Linux") {
     os_release <- readLines("/etc/os-release")
-    distro_line <- grep("^ID=", os_release, value = TRUE)
-    distro <- sub("^ID=", "", distro_line)
+    distro_line <- grep("^ID_LIKE=", os_release, value = TRUE)
+    distro <- sub("^ID_LIKE=", "", distro_line)
 
-    if (distro == "debian" || distro == "ubuntu") {
+    if (grepl("ubuntu", distro) || grepl("debian", distro)) {
       expect_equal(model_result[["sdiff"]], 2.5104818)
       expect_equal(model_result[["pmax"]], 53.404027)
       #expect_equal(model_result[["a"]], 0.002845961)
@@ -65,10 +65,10 @@ test_that("test-vollenweider_etr_II generate regression modified 20240925.csv", 
 
   if (os_name == "Linux") {
     os_release <- readLines("/etc/os-release")
-    distro_line <- grep("^ID=", os_release, value = TRUE)
-    distro <- sub("^ID=", "", distro_line)
+    distro_line <- grep("^ID_LIKE=", os_release, value = TRUE)
+    distro <- sub("^ID_LIKE=", "", distro_line)
 
-    if (distro == "debian" || distro == "ubuntu") {
+    if (grepl("ubuntu", distro) || grepl("debian", distro)) {
       expect_equal(model_result[["sdiff"]], 2.5104818)
       expect_equal(model_result[["a"]], 53.404027)
       #expect_equal(model_result[["b"]], 0.002845961)

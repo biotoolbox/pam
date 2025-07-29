@@ -7,10 +7,10 @@ test_that("test-walsby_etr_I generate regression 20240925.csv", {
 
   if (os_name == "Linux") {
     os_release <- readLines("/etc/os-release")
-    distro_line <- grep("^ID=", os_release, value = TRUE)
-    distro <- sub("^ID=", "", distro_line)
+    distro_line <- grep("^ID_LIKE=", os_release, value = TRUE)
+    distro <- sub("^ID_LIKE=", "", distro_line)
 
-    if (distro == "debian" || distro == "ubuntu") {
+    if (grepl("ubuntu", distro) || grepl("debian", distro)) {
       expect_equal(model_result[["sdiff"]], 55.5823146)
       expect_equal(model_result[["etr_max"]], 221.23782)
       expect_equal(model_result[["alpha"]], 0.387249932)
@@ -55,10 +55,10 @@ test_that("test-walsby_etr_I generate regression modified 20240925.csv", {
 
   if (os_name == "Linux") {
     os_release <- readLines("/etc/os-release")
-    distro_line <- grep("^ID=", os_release, value = TRUE)
-    distro <- sub("^ID=", "", distro_line)
+    distro_line <- grep("^ID_LIKE=", os_release, value = TRUE)
+    distro <- sub("^ID_LIKE=", "", distro_line)
 
-    if (distro == "debian" || distro == "ubuntu") {
+    if (grepl("ubuntu", distro) || grepl("debian", distro)) {
       expect_equal(model_result[["sdiff"]], 55.5823146)
       expect_equal(model_result[["a"]], 221.23782)
       expect_equal(model_result[["b"]], 0.387249932)
