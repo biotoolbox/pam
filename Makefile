@@ -19,4 +19,4 @@ build:
 
 buildtest:
 	make build
-	R CMD check pam_1.0.3.tar.gz
+	R CMD check pam_1.0.4.tar.gz
