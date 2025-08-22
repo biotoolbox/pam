@@ -1,6 +1,7 @@
 #####example for compare regression models####
 #install library pam
-install.packages("pam_1.0.0.tar.gz", repos = NULL, type = "source")
+install.packages("remotes")
+remotes::install_github("biotoolbox/pam", subdir = "src")
 library("pam")
 
 ####read_dual_pam_data()####
