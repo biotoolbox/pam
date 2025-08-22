@@ -1,5 +1,10 @@
 # library 'pam'
 
+[![CRAN status](https://www.r-pkg.org/badges/version/pam)](https://cran.r-project.org/package=pam)
+[![CRAN checks](https://badges.cranchecks.info/summary/pam.svg)](https://cran.r-project.org/web/checks/check_results_pam.html)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/last-month/pam)](https://cran.r-project.org/package=pam)
+[![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/pam)](https://cran.r-project.org/package=pam)
+
 ## Introduction
 
 The library ‘pam’ was developed to process PAM raw data (chlorophyll fluorometry to analyze photosystem II and dual wavelength absorbance spectrometry to analyze photosystem I), for example from the DUAL PAM of the manufacturer WALZ.
