@@ -7,6 +7,14 @@ Four different models are provided for the regression of the light curve (Vollen
 To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as $$ETR_{max}$$, it is possible to output both with publication-compliant naming and with homogenised naming.
 Generated control plots make it possible to check each individual regression fit and calculated data.
 
+## Test coverage
+
+```r
+cov <- covr::package_coverage()
+covr::percent_coverage(cov)
+```
+90.12146 %
+
 ## Install
 
 ### GitHub
