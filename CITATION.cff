@@ -8,7 +8,7 @@ authors:
   given-names: "Philipp"
   orcid: "https://orcid.org/0009-0002-7697-5536"
 title: "pam"
-version: 1.0.4
+version: 1.0.5
 date-released: 2025-07-29
 url: "https://github.com/biotoolbox/pam"
 doi: "10.32614/CRAN.package.pam"
