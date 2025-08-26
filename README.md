@@ -396,7 +396,7 @@ Returns a modified model result as a list with the following elements:
 - **d**: obtained paramter `c`, here transfered as `n`
 - **alpha**: The initial slope of the light curve, calculated as:
 
-$${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_without\\_photoinhibition}}$$
+$${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_with\\_photoinhibition}}$$
 
 - **beta**: Not available, here set to `NA_real_`
 - **etrmax_with_photoinhibition**: The maximum electron transport rate with photoinhibition, transfered as `popt`
