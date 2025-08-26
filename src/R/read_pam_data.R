@@ -19,7 +19,7 @@
 #' @references{
 #'   Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).}
 #'   Heinz Walz GmbH, Effeltrich, Germany.
-#'   Available at: \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf}
+#'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
 #' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
@@ -138,7 +138,7 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #' @references{
 #'   Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).}
 #'   Heinz Walz GmbH, Effeltrich, Germany.
-#'   Available at: \url{https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf}
+#'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
 #' path <- file.path(system.file("extdata/junior_pam", package = "pam"), "junior_pam_20250613.csv")
