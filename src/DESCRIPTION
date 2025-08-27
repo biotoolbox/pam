@@ -1,7 +1,7 @@
 Package: pam
 Type: Package
 Title: Fast and Efficient Processing of PAM Data
-Version: 1.0.5
+Version: 1.0.6
 Authors@R: c(
     person(
         "Julien",
