@@ -1,18 +1,18 @@
 #' Default start value
 #' @export
-vollenweider_default_start_value_pmax <- 40
+vollenweider_default_start_value_pmax <- 50
 
 #' Default start value
 #' @export
-vollenweider_default_start_value_a <- 0.1
+vollenweider_default_start_value_a <- 0.002
 
 #' Default start value
 #' @export
-vollenweider_default_start_value_alpha <- -0.0001
+vollenweider_default_start_value_alpha <- 0.00001
 
 #' Default start value
 #' @export
-vollenweider_default_start_value_n <- 350
+vollenweider_default_start_value_n <- 100
 
 #' Vollenweider Regression for ETR I
 #'

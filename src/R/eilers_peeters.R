@@ -1,14 +1,14 @@
 #' Default start value
 #' @export
-eilers_peeters_default_start_value_a <- 0.00004
+eilers_peeters_default_start_value_a <- 1.550175e-06
 
 #' Default start value
 #' @export
-eilers_peeters_default_start_value_b <- 0.004
+eilers_peeters_default_start_value_b <- 0.01419034
 
 #' Default start value
 #' @export
-eilers_peeters_default_start_value_c <- 5
+eilers_peeters_default_start_value_c <- 7.012012
 
 #' Eilers-Peeters Regression for  ETR I
 #'
