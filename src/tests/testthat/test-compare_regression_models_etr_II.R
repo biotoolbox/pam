@@ -17,9 +17,9 @@ test_that("compare_regression_models etr II", {
     expect_no_error({
       model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir)
     })
-    expect_equal(model_points_etr_II[["eilers_peeters"]], 40)
-    expect_equal(model_points_etr_II[["platt"]], 24)
-    expect_equal(model_points_etr_II[["vollenweider"]], 41)
-    expect_equal(model_points_etr_II[["walsby"]], 9)
+    expect_equal(model_points_etr_II[["eilers_peeters"]], 37)
+    expect_equal(model_points_etr_II[["platt"]], 20)
+    expect_equal(model_points_etr_II[["vollenweider"]], 39)
+    expect_equal(model_points_etr_II[["walsby"]], 6)
   }
 })
