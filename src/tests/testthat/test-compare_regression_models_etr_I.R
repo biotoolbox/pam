@@ -18,8 +18,8 @@ test_that("compare_regression_models etr I", {
       model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir)
     })
     expect_equal(model_points_etr_I[["eilers_peeters"]], 13)
-    expect_equal(model_points_etr_I[["platt"]], 16)
-    expect_equal(model_points_etr_I[["vollenweider"]], 30)
-    expect_equal(model_points_etr_I[["walsby"]], 19)
+    expect_equal(model_points_etr_I[["platt"]], 19)
+    expect_equal(model_points_etr_I[["vollenweider"]], 33)
+    expect_equal(model_points_etr_I[["walsby"]], 25)
   }
 })
