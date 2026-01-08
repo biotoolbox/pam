@@ -55,19 +55,22 @@ combo_plot_control <- function(
   validate_etr_type(etr_type)
 
   yield <- NA_real_
+  yield_name <- ""
   if (etr_type == etr_I_type) {
-    yield <- "Y.I."
+    yield <- "yield_1"
+    yield_name <- "Y(I)"
   } else {
-    yield <- "Y.II."
+    yield <- "yield_2"
+    yield_name <- "Y(II)"
   }
 
-  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$PAR, y = get(etr_type))) +
+  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$par, y = get(etr_type))) +
     ggplot2::geom_point() +
     ggplot2::geom_point(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::geom_line(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::labs(x = par_label, y = etr_label, title = eval(title)) +
     ggplot2::scale_y_continuous(
-      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = "Yield")
+      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = yield_name)
     )
 
   custom_theme <- gridExtra::ttheme_minimal(
@@ -115,7 +118,7 @@ combo_plot_control <- function(
     plot <- plot + ggplot2::geom_line(
       data = reg_data,
       ggplot2::aes(
-        x = !!rlang::sym("PAR"),
+        x = !!rlang::sym("par"),
         y = !!rlang::sym("prediction"),
         color = names
       )

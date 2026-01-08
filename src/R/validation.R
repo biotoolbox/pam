@@ -7,6 +7,58 @@ validate_data <- function(data) {
     stop("data is not a valid data.table")
   }
 
+  if (!"par" %in% colnames(data)) {
+    stop("required col 'par' not found")
+  }
+
+  if (!"yield_1" %in% colnames(data)) {
+    stop("required col 'yield_1' not found")
+  }
+
+  if (!"yield_2" %in% colnames(data)) {
+    stop("required col 'yield_2' not found")
+  }
+
+  if (!"etr_1" %in% colnames(data)) {
+    stop("required col 'etr_1' not found")
+  }
+
+  if (!"etr_2" %in% colnames(data)) {
+    stop("required col 'etr_2' not found")
+  }
+}
+
+validate_raw_intermediate_csv <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
+  if (!"par" %in% colnames(data)) {
+    stop("required col 'par' not found")
+  }
+
+  if (!"yield_1" %in% colnames(data)) {
+    stop("required col 'yield_1' not found")
+  }
+
+  if (!"yield_2" %in% colnames(data)) {
+    stop("required col 'yield_2' not found")
+  }
+}
+
+validate_dual_pam_data <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
   if (nrow(data) < 2) {
     stop("no data rows")
   }
@@ -57,8 +109,8 @@ validate_etr_regression_data <- function(regression_data) {
     stop("regression data got more or less then two columns")
   }
 
-  if (!"PAR" %in% colnames(regression_data)) {
-    stop("required col 'PAR' not found")
+  if (!"par" %in% colnames(regression_data)) {
+    stop("required col 'par' not found")
   }
 
   if (!"prediction" %in% colnames(regression_data)) {

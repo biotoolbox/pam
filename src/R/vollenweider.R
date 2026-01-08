@@ -158,11 +158,10 @@ vollenweider_generate_regression_internal <- function(
         stop("n start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
 
       model <- minpack.lm::nlsLM(
         data[[etr_type]] ~
-          pmax * (((a * PAR) / (sqrt(1 + (a * PAR)^2))) * (1 / (sqrt(1 + (alpha * PAR)^2)^n))),
+          pmax * (((a * par) / (sqrt(1 + (a * par)^2))) * (1 / (sqrt(1 + (alpha * par)^2)^n))),
         data = data,
         start = list(
           pmax = pmax_start_value,
@@ -195,7 +194,7 @@ vollenweider_generate_regression_internal <- function(
       popt <- 0
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         prediction <- pmax * (((a * p) / (sqrt(1 + (a * p)^2))) * (1 / (sqrt(1 + (alpha * p)^2)^n)))
         predictions <- c(

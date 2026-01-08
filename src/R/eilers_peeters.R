@@ -138,9 +138,7 @@ eilers_peeters_generate_regression_internal <- function(
         stop("eilers peeters: c start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
-
-      model <- minpack.lm::nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ (par / ((a * par^2) + (b * par) + c)),
         data = data,
         start = list(a = a_start_value, b = b_start_value, c = c_start_value),
         control = minpack.lm::nls.lm.control(maxiter = 1000)
@@ -218,7 +216,7 @@ eilers_peeters_generate_regression_internal <- function(
 
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         predictions <- c(predictions, p / ((a * p^2) + (b * p) + c))
       }

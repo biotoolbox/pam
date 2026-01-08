@@ -143,9 +143,7 @@ platt_generate_regression_internal <- function(
         stop("ps start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
-
-      model <- minpack.lm::nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * PAR) / ps))) * exp(-((beta * PAR) / ps)),
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * par) / ps))) * exp(-((beta * par) / ps)),
         data = data,
         start = list(
           alpha = alpha_start_value,
@@ -227,7 +225,7 @@ platt_generate_regression_internal <- function(
 
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         predictions <- c(predictions, ps * (1 - exp((-alpha * p) / ps)) * exp((-beta * p) / ps))
       }

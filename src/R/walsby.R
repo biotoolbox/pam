@@ -145,9 +145,7 @@ walsby_generate_regression_internal <- function(
         stop("beta start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
-
-      model <- minpack.lm::nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * par) / etr_max)) + beta * par,
         data = data,
         start = list(
           etr_max = etr_max_start_value,
@@ -164,7 +162,7 @@ walsby_generate_regression_internal <- function(
 
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         predictions <- c(predictions, etr_max * (1 - exp((-alpha * p) / etr_max)) + beta * p)
       }

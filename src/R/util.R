@@ -7,32 +7,13 @@ calculate_sdiff <- function(data, etr_regression_data, etr_type) {
   for (i in seq_len(nrow(data))) {
     row <- data[i, ]
     real_etr <- row[[etr_type]]
-    predicted_etr <- etr_regression_data[etr_regression_data$PAR == row$PAR, ][[prediction_name]]
+    predicted_etr <- etr_regression_data[etr_regression_data$par == row$par, ][[prediction_name]]
 
     sdiff <- (predicted_etr - real_etr)^2
     final_sdiff <- final_sdiff + sdiff
   }
 
   return(final_sdiff)
-}
-
-remove_det_row_by_etr <- function(data, etr_type) {
-  validate_data(data)
-  validate_etr_type(etr_type)
-
-  if (etr_type == etr_I_type) {
-    data <- dplyr::filter(data, data$Action != "Fm-Det.")
-    if (length(data[data$Action == "Pm.-Det.", ]) == 0) {
-      stop("Pm.-Det. is required but not present")
-    }
-  } else {
-    data <- dplyr::filter(data, data$Action != "Pm.-Det.")
-    if (length(data[data$Action == "Fm-Det.", ]) == 0) {
-      stop("Fm-Det. is required but not present")
-    }
-  }
-
-  return(data)
 }
 
 create_regression_data <- function(pars, predictions) {
@@ -49,7 +30,7 @@ create_regression_data <- function(pars, predictions) {
   }
 
   regression_data <- data.table::data.table(
-    "PAR" = pars,
+    "par" = pars,
     "prediction" = predictions
   )
   return(regression_data)
@@ -179,13 +160,15 @@ plot_control <- function(
 
   etr_type <- get_etr_type_from_model_result(model_result)
   validate_etr_type(etr_type)
-  data <- remove_det_row_by_etr(data, etr_type)
 
   yield <- NA_real_
+  yield_name = ""
   if (etr_type == etr_I_type) {
-    yield <- "Y.I."
+    yield <- "yield_1"
+    yield_name <- "Y(I)"
   } else {
-    yield <- "Y.II."
+    yield <- "yield_2"
+    yield_name <- "Y(II)"
   }
 
   etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
@@ -193,12 +176,12 @@ plot_control <- function(
 
   max_etr <- max(etr_regression_data$prediction)
 
-  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$PAR, y = get(etr_type))) +
+  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$par, y = get(etr_type))) +
     ggplot2::geom_point() +
     ggplot2::geom_line(
       data = etr_regression_data,
       ggplot2::aes(
-        x = etr_regression_data$PAR,
+        x = etr_regression_data$par,
         y = etr_regression_data$prediction
       ),
       color = color
