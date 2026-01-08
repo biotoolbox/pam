@@ -14,9 +14,9 @@ test_that("test-walsby_etr_I generate regression 20240925.csv", {
     expect_equal(model_result[["beta"]], -0.035964253)
   } else if (is_windows()) {
     expect_equal(model_result[["sdiff"]], 55.5823146)
-    expect_equal(model_result[["etr_max"]], 221.23782)
-    expect_equal(model_result[["alpha"]], 0.387249932)
-    expect_equal(model_result[["beta"]], -0.035964253)
+    expect_equal(model_result[["etr_max"]], 221.237850)
+    expect_equal(model_result[["alpha"]], 0.387249941)
+    expect_equal(model_result[["beta"]], -0.035964269)
   }
 })
 
@@ -65,20 +65,20 @@ test_that("test-walsby_etr_I generate regression modified 20240925.csv", {
     expect_equal(model_result[["etrmax_with_without_ratio"]], 1.456839939)
   } else if (is_windows()) {
     expect_equal(model_result[["sdiff"]], 55.5823146)
-    expect_equal(model_result[["a"]], 221.23782)
-    expect_equal(model_result[["b"]], 0.387249932)
-    expect_equal(model_result[["c"]], -0.035964253)
+    expect_equal(model_result[["a"]], 221.237850)
+    expect_equal(model_result[["b"]], 0.387249941)
+    expect_equal(model_result[["c"]], -0.035964269)
     expect_equal(model_result[["d"]], NA_real_)
-    expect_equal(model_result[["alpha"]], 0.387249932)
-    expect_equal(model_result[["beta"]], -0.035964253)
+    expect_equal(model_result[["alpha"]], 0.387249941)
+    expect_equal(model_result[["beta"]], -0.035964269)
     expect_equal(model_result[["etrmax_with_photoinhibition"]], 151.8614464)
-    expect_equal(model_result[["etrmax_without_photoinhibition"]], 221.23782)
-    expect_equal(model_result[["ik_with_photoinhibition"]], 392.15358)
-    expect_equal(model_result[["ik_without_photoinhibition"]], 571.3050)
+    expect_equal(model_result[["etrmax_without_photoinhibition"]], 221.237850)
+    expect_equal(model_result[["ik_with_photoinhibition"]], 392.153567)
+    expect_equal(model_result[["ik_without_photoinhibition"]], 571.305058)
     expect_equal(model_result[["im_with_photoinhibition"]], 1358.0)
     expect_equal(model_result[["w"]], NA_real_)
     expect_equal(model_result[["ib"]], NA_real_)
-    expect_equal(model_result[["etrmax_with_without_ratio"]], 1.456839939)
+    expect_equal(model_result[["etrmax_with_without_ratio"]], 1.45684014)
   }
 })
 

@@ -25,7 +25,7 @@ test_that("test-eilers_peeters_etr_II generate regression junior_pam_20250613.cs
     expect_equal(model_result[["pm"]], 61.1793644)
     expect_equal(model_result[["s"]], 0.35992320)
     expect_equal(model_result[["ik"]], 169.978939)
-    expect_equal(model_result[["im"]], 1320.3078)
+    expect_equal(model_result[["im"]], 1320.307821)
     expect_equal(model_result[["w"]], 5.7674788)
   }
 })
@@ -71,7 +71,7 @@ test_that("test-eilers_peeters_etr_II junior_pam_20250613.csv.csv", {
     expect_equal(model_result[["etrmax_without_photoinhibition"]], NA_real_)
     expect_equal(model_result[["ik_with_photoinhibition"]], 169.978939)
     expect_equal(model_result[["ik_without_photoinhibition"]], NA_real_)
-    expect_equal(model_result[["im_with_photoinhibition"]], 1320.3078)
+    expect_equal(model_result[["im_with_photoinhibition"]], 1320.307821)
     expect_equal(model_result[["w"]], 5.7674788)
     expect_equal(model_result[["ib"]], NA_real_)
     expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
