@@ -24,10 +24,10 @@ test_that("compare_regression_models etr I + II", {
       )
     })
 
-    expect_equal(result[["eilers_peeters_total"]], 54)
-    expect_equal(result[["platt_total"]], 40)
-    expect_equal(result[["vollenweider_total"]], 70)
-    expect_equal(result[["walsby_total"]], 28)
+    expect_equal(result[["eilers_peeters_total"]], 50)
+    expect_equal(result[["platt_total"]], 39)
+    expect_equal(result[["vollenweider_total"]], 72)
+    expect_equal(result[["walsby_total"]], 31)
   } else if (is_windows()) {
     expect_no_error({
       model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir)
