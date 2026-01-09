@@ -8,7 +8,7 @@ test_that("test-vollenweider_etr_I generate regression 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 57.4445851)
+    expect_equal(model_result[["residual_sum_of_squares"]], 57.4445851)
     expect_equal(model_result[["pmax"]], 165.46686)
     # expect_equal(model_result[["a"]], 0.001864811)
     # expect_equal(model_result[["alpha"]], 0.00001772)
@@ -18,7 +18,7 @@ test_that("test-vollenweider_etr_I generate regression 20240925.csv", {
     expect_equal(model_result[["iik"]], 496.16738)
     expect_equal(model_result[["pmax_popt_and_ik_iik_ratio"]], 1.08077941)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 57.444503)
+    expect_equal(model_result[["residual_sum_of_squares"]], 57.444503)
     expect_equal(model_result[["pmax"]], 165.46706)
     # expect_equal(model_result[["a"]], 0.001864811)
     # expect_equal(model_result[["alpha"]], 0.00001772)
@@ -58,7 +58,7 @@ test_that("test-vollenweider_etr_I generate regression modified 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 57.4445851)
+    expect_equal(model_result[["residual_sum_of_squares"]], 57.4445851)
     expect_equal(model_result[["a"]], 165.46686)
     # expect_equal(model_result[["b"]], 0.001864811)
     # expect_equal(model_result[["c"]], 0.00001772)
@@ -74,7 +74,7 @@ test_that("test-vollenweider_etr_I generate regression modified 20240925.csv", {
     expect_equal(model_result[["ib"]], NA_real_)
     expect_equal(model_result[["etrmax_with_without_ratio"]], 1.08077941)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 57.444503)
+    expect_equal(model_result[["residual_sum_of_squares"]], 57.444503)
     expect_equal(model_result[["a"]], 165.46706)
     # expect_equal(model_result[["b"]], 0.001864811)
     # expect_equal(model_result[["c"]], 0.00001772)

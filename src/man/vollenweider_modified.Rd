@@ -14,7 +14,7 @@ A modified model result as a list containing the following elements:
 \itemize{
   \item \code{etr_type}: ETR Type based on the model result.
   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-  \item \code{sdiff}: The difference between observed and predicted ETR values.
+  \item \code{residual_sum_of_squares}: The difference between observed and predicted ETR values.
   \item \code{a}: Obtained parameter \code{a}, here equal to \code{etrmax_without_photoinhibition}.
   \item \code{b}: Obtained parameter \code{b}, transferred as \code{a}.
   \item \code{c}: Obtained parameter \code{c}, here transferred as \code{alpha}.

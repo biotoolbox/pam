@@ -8,12 +8,12 @@ test_that("test-walsby_etr_II generate regression 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 13.3218134)
+    expect_equal(model_result[["residual_sum_of_squares"]], 13.3218134)
     expect_equal(model_result[["etr_max"]], 64.6205229)
     expect_equal(model_result[["alpha"]], 0.19796623)
     expect_equal(model_result[["beta"]], -0.018109036)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 13.3218134)
+    expect_equal(model_result[["residual_sum_of_squares"]], 13.3218134)
     expect_equal(model_result[["etr_max"]], 64.6205229)
     expect_equal(model_result[["alpha"]], 0.19796623)
     expect_equal(model_result[["beta"]], -0.018109036)
@@ -48,7 +48,7 @@ test_that("test-walsby_etr_II generate regression modified 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 13.3218134)
+    expect_equal(model_result[["residual_sum_of_squares"]], 13.3218134)
     expect_equal(model_result[["a"]], 64.6205229)
     expect_equal(model_result[["b"]], 0.19796623)
     expect_equal(model_result[["c"]], -0.018109036)
@@ -64,7 +64,7 @@ test_that("test-walsby_etr_II generate regression modified 20240925.csv", {
     expect_equal(model_result[["ib"]], NA_real_)
     expect_equal(model_result[["etrmax_with_without_ratio"]], 1.449812727)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 13.3218134)
+    expect_equal(model_result[["residual_sum_of_squares"]], 13.3218134)
     expect_equal(model_result[["a"]], 64.6205229)
     expect_equal(model_result[["b"]], 0.19796623)
     expect_equal(model_result[["c"]], -0.018109036)

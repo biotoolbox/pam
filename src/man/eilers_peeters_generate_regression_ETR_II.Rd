@@ -24,7 +24,7 @@ eilers_peeters_generate_regression_ETR_II(
 A list containing:
 \itemize{
   \item \code{etr_regression_data}: Predicted ETR values.
-  \item \code{sdiff}: Deviation between actual and predicted values.
+  \item \code{residual_sum_of_squares}: Deviation between actual and predicted values.
   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
   \item \code{pm}: Maximum ETR (\eqn{p_m}).
   \item \code{s}: Initial slope (\eqn{s}).

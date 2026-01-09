@@ -8,7 +8,7 @@ test_that("test-eilers_peeters_etr_I generate regression 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 53.4454062)
+    expect_equal(model_result[["residual_sum_of_squares"]], 53.4454062)
     # expect_equal(model_result[["a"]], 0.000001479)
     # expect_equal(model_result[["b"]], 0.002444096)
     expect_equal(model_result[["c"]], 2.8984079)
@@ -18,7 +18,7 @@ test_that("test-eilers_peeters_etr_I generate regression 20240925.csv", {
     expect_equal(model_result[["im"]], 1399.76963)
     expect_equal(model_result[["w"]], 1.180362267)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 53.4454062)
+    expect_equal(model_result[["residual_sum_of_squares"]], 53.4454062)
     # expect_equal(model_result[["a"]], 0.000001479)
     # expect_equal(model_result[["b"]], 0.002444096)
     expect_equal(model_result[["c"]], 2.8984079)
@@ -61,7 +61,7 @@ test_that("test-eilers_peeters_etr_I generate regression modified 20240925.csv",
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 53.4454062)
+    expect_equal(model_result[["residual_sum_of_squares"]], 53.4454062)
     # expect_equal(model_result[["a"]], 0.000001479)
     # expect_equal(model_result[["b"]], 0.002444096)
     expect_equal(model_result[["c"]], 2.8984079)
@@ -77,7 +77,7 @@ test_that("test-eilers_peeters_etr_I generate regression modified 20240925.csv",
     expect_equal(model_result[["ib"]], NA_real_)
     expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 53.4454062)
+    expect_equal(model_result[["residual_sum_of_squares"]], 53.4454062)
     # expect_equal(model_result[["a"]], 0.000001479)
     # expect_equal(model_result[["b"]], 0.002444096)
     expect_equal(model_result[["c"]], 2.8984079)

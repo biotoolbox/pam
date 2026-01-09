@@ -24,7 +24,7 @@ platt_generate_regression_ETR_I(
 A list containing:
 \itemize{
   \item \code{etr_regression_data}: Predicted ETR values.
-  \item \code{sdiff}: Deviation between actual and predicted ETR.
+  \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
   \item \code{beta}: Photoinhibition (\eqn{\beta}).

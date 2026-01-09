@@ -25,7 +25,7 @@ eilers_peeters_default_start_value_c <- 5
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted values.
+#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted values.
 #'   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
 #'   \item \code{pm}: Maximum ETR (\eqn{p_m}).
 #'   \item \code{s}: Initial slope (\eqn{s}).
@@ -75,7 +75,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted values.
+#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted values.
 #'   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
 #'   \item \code{pm}: Maximum ETR (\eqn{p_m}).
 #'   \item \code{s}: Initial slope (\eqn{s}).
@@ -143,6 +143,8 @@ eilers_peeters_generate_regression_internal <- function(
         start = list(a = a_start_value, b = b_start_value, c = c_start_value),
         control = minpack.lm::nls.lm.control(maxiter = 1000)
       )
+
+      residual_sum_of_squares <- model$m$deviance()
 
       abc <- stats::coef(model)
       a <- abc[["a"]]
@@ -222,23 +224,10 @@ eilers_peeters_generate_regression_internal <- function(
       }
       etr_regression_data <- create_regression_data(pars, predictions)
 
-      sdiff <- NA_real_
-      tryCatch(
-        {
-          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-        },
-        warning = function(w) {
-          eilers_peeters_message(paste("failed to calculate sdiff: warning:", w))
-        },
-        error = function(e) {
-          eilers_peeters_message(paste("failed to calculate sdiff: error:", w))
-        }
-      )
-
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
-        sdiff = sdiff,
+        residual_sum_of_squares = residual_sum_of_squares,
         a = a,
         b = b,
         c = c,
@@ -271,7 +260,7 @@ eilers_peeters_generate_regression_internal <- function(
 #' \itemize{
 #'   \item \code{etr_type}: ETR Type based on the model result.
 #'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{residual_sum_of_squares}: The difference between observed and predicted ETR values.
 #'   \item \code{a}: The obtained parameter \code{a}.
 #'   \item \code{b}: The obtained parameter \code{b}.
 #'   \item \code{c}: The obtained parameter \code{c}.

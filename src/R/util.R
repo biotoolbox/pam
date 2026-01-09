@@ -1,21 +1,3 @@
-calculate_sdiff <- function(data, etr_regression_data, etr_type) {
-  validate_data(data)
-  validate_etr_regression_data(etr_regression_data)
-  validate_etr_type(etr_type)
-
-  final_sdiff <- 0
-  for (i in seq_len(nrow(data))) {
-    row <- data[i, ]
-    real_etr <- row[[etr_type]]
-    predicted_etr <- etr_regression_data[etr_regression_data$par == row$par, ][[prediction_name]]
-
-    sdiff <- (predicted_etr - real_etr)^2
-    final_sdiff <- final_sdiff + sdiff
-  }
-
-  return(final_sdiff)
-}
-
 create_regression_data <- function(pars, predictions) {
   if (!is.vector(pars)) {
     stop("pars is not a valid vector")
@@ -45,7 +27,7 @@ get_etr_regression_data_from_model_result <- function(model_result) {
 }
 
 get_sdiff_from_model_result <- function(model_result) {
-  return(model_result[["sdiff"]])
+  return(model_result[["residual_sum_of_squares"]])
 }
 
 plot_table <- function(model_result, entries_per_row) {
@@ -162,7 +144,7 @@ plot_control <- function(
   validate_etr_type(etr_type)
 
   yield <- NA_real_
-  yield_name = ""
+  yield_name <- ""
   if (etr_type == etr_I_type) {
     yield <- "yield_1"
     yield_name <- "Y(I)"
@@ -208,7 +190,7 @@ plot_control <- function(
 create_modified_model_result <- function(
     etr_type,
     etr_regression_data,
-    sdiff,
+    residual_sum_of_squares,
     a,
     b,
     c,
@@ -226,7 +208,7 @@ create_modified_model_result <- function(
   result <- list(
     etr_type = etr_type,
     etr_regression_data = etr_regression_data,
-    sdiff = sdiff,
+    residual_sum_of_squares = residual_sum_of_squares,
     a = a,
     b = b,
     c = c,

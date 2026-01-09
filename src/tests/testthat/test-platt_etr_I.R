@@ -8,7 +8,7 @@ test_that("test-platt_etr_I generate regression 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 55.4812913)
+    expect_equal(model_result[["residual_sum_of_squares"]], 55.4812913)
     expect_equal(model_result[["alpha"]], 0.350792430)
     expect_equal(model_result[["beta"]], 0.056258810)
     expect_equal(model_result[["ps"]], 242.02871)
@@ -18,7 +18,7 @@ test_that("test-platt_etr_I generate regression 20240925.csv", {
     expect_equal(model_result[["ib"]], 4302.05878)
     expect_equal(model_result[["im"]], 1365.3918)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 55.4812913)
+    expect_equal(model_result[["residual_sum_of_squares"]], 55.4812913)
     expect_equal(model_result[["alpha"]], 0.350792430)
     expect_equal(model_result[["beta"]], 0.056258810)
     expect_equal(model_result[["ps"]], 242.02871)
@@ -41,7 +41,7 @@ test_that("test-platt_etr_I generate regression modified 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 55.4812913)
+    expect_equal(model_result[["residual_sum_of_squares"]], 55.4812913)
     expect_equal(model_result[["a"]], 242.02871)
     expect_equal(model_result[["b"]], 0.350792430)
     expect_equal(model_result[["c"]], 0.056258810)
@@ -57,7 +57,7 @@ test_that("test-platt_etr_I generate regression modified 20240925.csv", {
     expect_equal(model_result[["ib"]], 4302.05878)
     expect_equal(model_result[["etrmax_with_without_ratio"]], 1.593806867)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 55.4812913)
+    expect_equal(model_result[["residual_sum_of_squares"]], 55.4812913)
     expect_equal(model_result[["a"]], 242.02871)
     expect_equal(model_result[["b"]], 0.350792430)
     expect_equal(model_result[["c"]], 0.056258810)
