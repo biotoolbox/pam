@@ -17,6 +17,6 @@ test_that("test-intermediate-table", {
             list(color_eilers_peeters, color_platt, color_walsby, color_vollenweider)
         )
 
-        ggplot2::ggsave("results/test_combo_plot_control.jpg", create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 1600, dpi = 100, limitsize = FALSE)
+        ggplot2::ggsave("results/test-intermediate-table.jpg", create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 1600, dpi = 100, limitsize = FALSE)
     })
 })

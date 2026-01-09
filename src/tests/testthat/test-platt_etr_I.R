@@ -81,14 +81,13 @@ test_that("test-platt_etr_I modified control plot 20240925.csv", {
   model_result <- platt_generate_regression_ETR_I(data)
   model_result <- platt_modified(model_result)
 
-  expect_no_warning(
-    print(
-      plot_control(
-        data,
-        model_result,
-        "platt ETR I modified 20240925.csv",
-        color_platt
-      )
+  expect_no_warning({
+    plot <- plot_control(
+      data,
+      model_result,
+      "platt ETR I modified 20240925.csv",
+      color_platt
     )
-  )
+    ggplot2::ggsave("results/test-platt_etr_I modified control plot 20240925.jpg", create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 1000, dpi = 100, limitsize = FALSE)
+  })
 })

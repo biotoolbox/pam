@@ -66,7 +66,7 @@ combo_plot_control <- function(
 
   plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$par, y = get(etr_type))) +
     ggplot2::geom_point() +
-    ggplot2::geom_point(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::geom_point(data = data, shape = 17, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::geom_line(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::labs(x = par_label, y = etr_label, title = eval(title)) +
     ggplot2::scale_y_continuous(

@@ -25,16 +25,15 @@ test_that("test-walsby_etr_II control plot 20240925.csv", {
   data <- read_dual_pam_data(test_data_file)
   model_result <- walsby_generate_regression_ETR_II(data)
 
-  expect_no_warning(
-    print(
-      plot_control(
-        data,
-        model_result,
-        "walsby ETR II 20240925.csv",
-        color_walsby
-      )
+  expect_no_warning({
+    plot <- plot_control(
+      data,
+      model_result,
+      "walsby ETR II 20240925.csv",
+      color_walsby
     )
-  )
+    ggplot2::ggsave("results/test-walsby_etr_II control plot 20240925.jpg", create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 1000, dpi = 100, limitsize = FALSE)
+  })
 })
 
 test_that("test-walsby_etr_II generate regression modified 20240925.csv", {
@@ -88,14 +87,13 @@ test_that("test-walsby_etr_II modified control plot 20240925.csv", {
   model_result <- walsby_generate_regression_ETR_II(data)
   model_result <- walsby_modified(model_result)
 
-  expect_no_warning(
-    print(
-      plot_control(
-        data,
-        model_result,
-        "walsby ETR II modified 20240925.csv",
-        color_walsby
-      )
+  expect_no_warning({
+    plot <- plot_control(
+      data,
+      model_result,
+      "walsby ETR II modified 20240925.csv",
+      color_walsby
     )
-  )
+    ggplot2::ggsave("results/test-walsby_etr_II modified control plot 20240925.jpg", create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 1000, dpi = 100, limitsize = FALSE)
+  })
 })

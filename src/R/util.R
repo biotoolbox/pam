@@ -168,11 +168,11 @@ plot_control <- function(
       ),
       color = color
     ) +
-    ggplot2::geom_point(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::geom_point(data = data, shape = 17, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::geom_line(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::labs(x = par_label, y = etr_label, title = eval(title)) +
     ggplot2::scale_y_continuous(
-      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = "Yield")
+      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = yield_name)
     ) +
     ggthemes::theme_base()
 
