@@ -7,15 +7,15 @@ test_that("compare_regression_models etr II", {
 
   if (is_debian_or_ubuntu()) {
     expect_no_error({
-      model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir)
+      model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir, read_dual_pam_data)
     })
-    expect_equal(model_points_etr_II[["eilers_peeters"]], 41)
-    expect_equal(model_points_etr_II[["platt"]], 24)
-    expect_equal(model_points_etr_II[["vollenweider"]], 40)
-    expect_equal(model_points_etr_II[["walsby"]], 9)
+    expect_equal(model_points_etr_II[["eilers_peeters"]], 40)
+    expect_equal(model_points_etr_II[["platt"]], 23)
+    expect_equal(model_points_etr_II[["vollenweider"]], 43)
+    expect_equal(model_points_etr_II[["walsby"]], 8)
   } else if (is_windows()) {
     expect_no_error({
-      model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir)
+      model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir, read_dual_pam_data)
     })
     expect_equal(model_points_etr_II[["eilers_peeters"]], 40)
     expect_equal(model_points_etr_II[["platt"]], 24)

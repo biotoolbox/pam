@@ -45,8 +45,8 @@
 #' points <- compare_regression_models_ETR_I(path)
 #'
 #' @export
-compare_regression_models_ETR_I <- function(data_dir) {
-  return(compare_regression_models(data_dir, etr_I_type))
+compare_regression_models_ETR_I <- function(data_dir, read_func) {
+  return(compare_regression_models(data_dir, etr_I_type, read_func))
 }
 
 
@@ -97,11 +97,14 @@ compare_regression_models_ETR_I <- function(data_dir) {
 #' points <- compare_regression_models_ETR_II(path)
 #'
 #' @export
-compare_regression_models_ETR_II <- function(data_dir) {
-  return(compare_regression_models(data_dir, etr_II_type))
+compare_regression_models_ETR_II <- function(data_dir, read_func) {
+  return(compare_regression_models(data_dir, etr_II_type, read_func))
 }
 
-compare_regression_models <- function(data_dir, etr_type) {
+compare_regression_models <- function(data_dir, etr_type, read_func) {
+  if (!is.function(read_func)) {
+    stop("'read_func' must be a function, not ", class(read_func))
+  }
   csv_files <- list.files(data_dir, pattern = ".csv", full.names = TRUE)
 
   eilers_peeters_points <- 0
@@ -111,7 +114,8 @@ compare_regression_models <- function(data_dir, etr_type) {
 
   for (file in csv_files) {
     title <- basename(file)
-    data <- read_dual_pam_data(file)
+    data <- do.call(read_func, list(csv_path = file))
+    validate_data(data)
 
     tryCatch(
       {

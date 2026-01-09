@@ -92,6 +92,32 @@ validate_dual_pam_data <- function(data) {
   }
 }
 
+validate_junior_pam_data <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
+  if (nrow(data) < 2) {
+    stop("no data rows")
+  }
+
+  if (ncol(data) == 0) {
+    stop("no cols in data")
+  }
+
+  if (!"PAR" %in% colnames(data)) {
+    stop("required col 'PAR' not found")
+  }
+
+  if (!"Datetime" %in% colnames(data)) {
+    stop("required col 'Datetime' not found")
+  }
+}
+
 validate_etr_regression_data <- function(regression_data) {
   if (is.null(regression_data)) {
     stop("is null")

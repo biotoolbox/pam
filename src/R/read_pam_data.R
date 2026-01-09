@@ -102,8 +102,8 @@ read_dual_pam_data <- function(
       yield_2_first <- data %>%
         dplyr::filter(PAR == 0, Action == "Fm-Det.") %>%
         dplyr::pull(Y.II.)
-      recalc_ETRI <- calc_etr(yield_1_first, 0, etr_factor, fraction_photosystem_I)
-      recalc_ETRII <- calc_etr(yield_2_first, 0, etr_factor, fraction_photosystem_II)
+      recalc_etr_1 <- calc_etr(yield_1_first, 0, etr_factor, fraction_photosystem_I)
+      recalc_etr_2 <- calc_etr(yield_2_first, 0, etr_factor, fraction_photosystem_II)
 
 
       result <- data.table::data.table(
@@ -117,8 +117,8 @@ read_dual_pam_data <- function(
         par = 0,
         yield_1 = yield_1_first,
         yield_2 = yield_2_first,
-        etr_1 = recalc_ETRI,
-        etr_2 = recalc_ETRII
+        etr_1 = recalc_etr_1,
+        etr_2 = recalc_etr_2
       )
       result <- rbind(result, new_row)
 
@@ -135,25 +135,24 @@ read_dual_pam_data <- function(
           break
         }
 
-        yield_I <- row$Y.I.
-        recalc_ETRI <- calc_etr(yield_I, current_par, etr_factor, fraction_photosystem_I)
+        yield_1 <- row$Y.I.
+        recalc_etr_1 <- calc_etr(yield_1, current_par, etr_factor, fraction_photosystem_I)
 
-        yield_II <- row$Y.II.
-        recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, fraction_photosystem_II)
+        yield_2 <- row$Y.II.
+        recalc_etr_2 <- calc_etr(yield_2, current_par, etr_factor, fraction_photosystem_II)
 
         new_row <- list(
           par = current_par,
-          yield_1 = yield_I,
-          yield_2 = yield_II,
-          etr_1 = recalc_ETRI,
-          etr_2 = recalc_ETRII
+          yield_1 = yield_1,
+          yield_2 = yield_2,
+          etr_1 = recalc_etr_1,
+          etr_2 = recalc_etr_2
         )
         result <- rbind(result, new_row)
 
         last_par <- current_par
       }
 
-      print(result)
       validate_data(result)
       return(result)
     },
@@ -230,8 +229,9 @@ read_junior_pam_data <- function(
   tryCatch(
     {
       data <- utils::read.csv(csv_path, sep = ";", dec = ".", skip = 1, header = TRUE)
-
       data <- data.table::as.data.table(data)
+
+      # validate_junior_pam_data(data)
       data.table::setnames(data, old = "Type", new = "ID")
       data$Action <- data$ID
 
@@ -256,7 +256,6 @@ read_junior_pam_data <- function(
       data$Date <- format(data$Datetime, "%Y-%m-%d")
       data$Time <- format(data$Datetime, "%H:%M:%OS")
 
-      validate_data(data)
 
       date_time_col_values <- c()
       for (i in seq_len(nrow(data))) {
@@ -271,7 +270,13 @@ read_junior_pam_data <- function(
       data <- dplyr::mutate(data, DateTime = date_time_col_values)
       data <- data[order(data$Datetime), ]
 
-      result <- data.table::data.table()
+      result <- data.table::data.table(
+        par = numeric(),
+        yield_1 = numeric(),
+        yield_2 = numeric(),
+        etr_1 = numeric(),
+        etr_2 = numeric()
+      )
       last_par <- as.numeric(0)
       for (i in seq_len(nrow(data))) {
         row <- data[i, ]
@@ -281,12 +286,17 @@ read_junior_pam_data <- function(
           break
         }
 
-        yield_II <- row$Y.II.
-        recalc_ETRII <- calc_etr(yield_II, current_par, etr_factor, fraction_photosystem_II)
-        row <- cbind(row, etr_II_col_name = recalc_ETRII)
-        data.table::setnames(row, old = "etr_II_col_name", new = etr_II_type)
+        yield_2 <- row$Y.II.
+        recalc_etr_2 <- calc_etr(yield_2, current_par, etr_factor, fraction_photosystem_II)
 
-        result <- rbind(result, row)
+        new_row <- list(
+          par = current_par,
+          yield_1 = NA_real_,
+          yield_2 = yield_2,
+          etr_1 = NA_real_,
+          etr_2 = recalc_etr_2
+        )
+        result <- rbind(result, new_row)
 
         last_par <- current_par
       }
