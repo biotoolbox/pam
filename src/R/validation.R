@@ -109,8 +109,12 @@ validate_junior_pam_data <- function(data) {
     stop("no cols in data")
   }
 
-  if (!"PAR" %in% colnames(data)) {
+  if (!any(grepl("PAR", colnames(data)))) {
     stop("required col 'PAR' not found")
+  }
+
+  if (!any(grepl("Y..II.", colnames(data)))) {
+    stop("required col 'Y..II.' not found")
   }
 
   if (!"Datetime" %in% colnames(data)) {

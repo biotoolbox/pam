@@ -231,31 +231,20 @@ read_junior_pam_data <- function(
       data <- utils::read.csv(csv_path, sep = ";", dec = ".", skip = 1, header = TRUE)
       data <- data.table::as.data.table(data)
 
-      # validate_junior_pam_data(data)
-      data.table::setnames(data, old = "Type", new = "ID")
-      data$Action <- data$ID
+      validate_junior_pam_data(data)
 
       par_col <- grep("PAR", names(data), value = TRUE)
-
       if (length(par_col) == 1 && par_col != "PAR") {
         data.table::setnames(data, old = par_col, new = "PAR")
       }
 
-      yield_II_col <- grep("Y..II.", names(data), value = TRUE)
-
-      if (length(yield_II_col) == 1 && yield_II_col != "Y..II.") {
-        data.table::setnames(data, old = yield_II_col, new = "Y.II.")
+      yield_2_col <- grep("Y..II.", names(data), value = TRUE)
+      if (length(yield_2_col) == 1 && yield_2_col != "Y..II.") {
+        data.table::setnames(data, old = yield_2_col, new = "Y.II.")
       }
 
-      data <- data[data$Action == "FO" | data$Action == "F", ]
-      data$Action[data$Action == "FO"] <- "Fm-Det."
-      data$Action[data$Action == "F"] <- "P.+F. SP"
-      data$ID[data$ID == "FO"] <- "SP"
-      data$ID[data$ID == "F"] <- "SP"
+      data <- data[data$Type == "FO" | data$Type == "F", ]
       data$Datetime <- as.POSIXct(data$Datetime, format = "%Y-%m-%d %H:%M:%OS", tz = "GMT")
-      data$Date <- format(data$Datetime, "%Y-%m-%d")
-      data$Time <- format(data$Datetime, "%H:%M:%OS")
-
 
       date_time_col_values <- c()
       for (i in seq_len(nrow(data))) {
