@@ -4,7 +4,7 @@
 \alias{compare_regression_models_ETR_I}
 \title{Compare Regression Models for ETR I}
 \usage{
-compare_regression_models_ETR_I(data_dir)
+compare_regression_models_ETR_I(data_dir, read_func)
 }
 \arguments{
 \item{data_dir}{A character string specifying the directory containing input data files.}
