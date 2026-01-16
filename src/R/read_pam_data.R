@@ -96,12 +96,10 @@ read_dual_pam_data <- function(
       data <- dplyr::mutate(data, DateTime = date_time_col_values)
       data <- data[order(data$DateTime), ]
 
-      yield_1_first <- data %>%
-        dplyr::filter(PAR == 0, Action == "Pm.-Det.") %>%
-        dplyr::pull(Y.I.)
-      yield_2_first <- data %>%
-        dplyr::filter(PAR == 0, Action == "Fm-Det.") %>%
-        dplyr::pull(Y.II.)
+      pm_det_row <- dplyr::filter(data, PAR == 0, Action == "Pm.-Det.")
+      yield_1_first <- dplyr::pull(pm_det_row, Y.I.)
+      fm_det_row <- dplyr::filter(data, PAR == 0, Action == "Fm-Det.")
+      yield_2_first <- dplyr::pull(fm_det_row, Y.II.)
       recalc_etr_1 <- calc_etr(yield_1_first, 0, etr_factor, fraction_photosystem_I)
       recalc_etr_2 <- calc_etr(yield_2_first, 0, etr_factor, fraction_photosystem_II)
 
