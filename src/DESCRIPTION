@@ -30,7 +30,6 @@ RoxygenNote: 7.3.2
 Imports: 
     rlang,
     data.table,
-    dplyr,
     ggplot2,
     minpack.lm,
     cowplot,

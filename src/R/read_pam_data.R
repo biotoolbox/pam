@@ -93,14 +93,15 @@ read_dual_pam_data <- function(
         date_time_col_values <- c(date_time_col_values, date_time_row_value)
       }
 
-      data <- dplyr::mutate(data, DateTime = date_time_col_values)
+      data$DateTime <- date_time_col_values
       data <- data[order(data$DateTime), ]
 
-      pm_det_row <- dplyr::filter(data, PAR == 0, Action == "Pm.-Det.")
-      yield_1_first <- dplyr::pull(pm_det_row, Y.I.)
-      fm_det_row <- dplyr::filter(data, PAR == 0, Action == "Fm-Det.")
-      yield_2_first <- dplyr::pull(fm_det_row, Y.II.)
+      pm_det_row <- pm_det_row <- subset(data, data$PAR == 0 & data$Action == "Pm.-Det.")
+      yield_1_first <- pm_det_row$Y.I.
       recalc_etr_1 <- calc_etr(yield_1_first, 0, etr_factor, fraction_photosystem_I)
+
+      fm_det_row <- subset(data, data$PAR == 0 & data$Action == "Fm-Det.")
+      yield_2_first <- fm_det_row$Y.II.
       recalc_etr_2 <- calc_etr(yield_2_first, 0, etr_factor, fraction_photosystem_II)
 
 
@@ -254,7 +255,7 @@ read_junior_pam_data <- function(
         )
         date_time_col_values <- c(date_time_col_values, date_time_row_value)
       }
-      data <- dplyr::mutate(data, DateTime = date_time_col_values)
+      data$DateTime <- date_time_col_values
       data <- data[order(data$Datetime), ]
 
       result <- data.table::data.table(
