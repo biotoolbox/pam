@@ -22,7 +22,7 @@ platt_default_start_value_ps <- 49.76112
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
 #'   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
 #'   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition (\eqn{\beta}).
@@ -74,7 +74,7 @@ platt_generate_regression_ETR_I <- function(
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
 #'   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
 #'   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition (\eqn{\beta}).
@@ -143,9 +143,7 @@ platt_generate_regression_internal <- function(
         stop("ps start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
-
-      model <- minpack.lm::nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * PAR) / ps))) * exp(-((beta * PAR) / ps)),
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * par) / ps))) * exp(-((beta * par) / ps)),
         data = data,
         start = list(
           alpha = alpha_start_value,
@@ -154,6 +152,8 @@ platt_generate_regression_internal <- function(
         ),
         control = stats::nls.control(maxiter = 1000)
       )
+
+      residual_sum_of_squares <- model$m$deviance()
 
       abc <- stats::coef(model)
       alpha <- abc[["alpha"]]
@@ -227,29 +227,16 @@ platt_generate_regression_internal <- function(
 
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         predictions <- c(predictions, ps * (1 - exp((-alpha * p) / ps)) * exp((-beta * p) / ps))
       }
       etr_regression_data <- create_regression_data(pars, predictions)
 
-      sdiff <- NA_real_
-      tryCatch(
-        {
-          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-        },
-        warning = function(w) {
-          platt_message(paste("failed to calculate sdiff: warning:", w))
-        },
-        error = function(e) {
-          platt_message(paste("failed to calculate sdiff: error:", e))
-        }
-      )
-
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
-        sdiff = sdiff,
+        residual_sum_of_squares = residual_sum_of_squares,
         alpha = alpha,
         beta = beta,
         ps = ps,
@@ -281,7 +268,7 @@ platt_generate_regression_internal <- function(
 #' \itemize{
 #'   \item \code{etr_type}: ETR Type based on the model result.
 #'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{residual_sum_of_squares}: The difference between observed and predicted ETR values.
 #'   \item \code{a}: Obtained parameter \code{a}, equal to \code{etrmax_without_photoinhibition}.
 #'   \item \code{b}: Obtained parameter \code{b}, equal to \code{alpha}.
 #'   \item \code{c}: Obtained parameter \code{c}, equal to \code{beta}.
@@ -314,7 +301,7 @@ platt_modified <- function(model_result) {
   result <- create_modified_model_result(
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
-    sdiff = get_sdiff_from_model_result(model_result),
+    residual_sum_of_squares = get_sdiff_from_model_result(model_result),
     a = model_result[["ps"]],
     b = model_result[["alpha"]],
     c = model_result[["beta"]],

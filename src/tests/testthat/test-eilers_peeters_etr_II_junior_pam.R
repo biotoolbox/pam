@@ -8,7 +8,7 @@ test_that("test-eilers_peeters_etr_II generate regression junior_pam_20250613.cs
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 18.5975058)
+    expect_equal(model_result[["residual_sum_of_squares"]], 18.5975058)
     # expect_equal(model_result[["a"]], 0.000001594)
     expect_equal(model_result[["b"]], 0.01213671)
     expect_equal(model_result[["c"]], 2.77837046)
@@ -18,7 +18,7 @@ test_that("test-eilers_peeters_etr_II generate regression junior_pam_20250613.cs
     expect_equal(model_result[["im"]], 1320.307821)
     expect_equal(model_result[["w"]], 5.7674788)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 18.5975058)
+    expect_equal(model_result[["residual_sum_of_squares"]], 18.5975058)
     # expect_equal(model_result[["a"]], 0.000001594)
     expect_equal(model_result[["b"]], 0.01213671)
     expect_equal(model_result[["c"]], 2.77837046)
@@ -44,7 +44,7 @@ test_that("test-eilers_peeters_etr_II junior_pam_20250613.csv.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 18.5975058)
+    expect_equal(model_result[["residual_sum_of_squares"]], 18.5975058)
     # expect_equal(model_result[["a"]], 0.000001594)
     expect_equal(model_result[["b"]], 0.01213671)
     expect_equal(model_result[["c"]], 2.77837046)
@@ -60,7 +60,7 @@ test_that("test-eilers_peeters_etr_II junior_pam_20250613.csv.csv", {
     expect_equal(model_result[["ib"]], NA_real_)
     expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 18.5975058)
+    expect_equal(model_result[["residual_sum_of_squares"]], 18.5975058)
     # expect_equal(model_result[["a"]], 0.000001594)
     expect_equal(model_result[["b"]], 0.01213671)
     expect_equal(model_result[["c"]], 2.77837046)
@@ -84,14 +84,13 @@ test_that("test-eilers_peeters_etr_II modified control plot junior_pam_20250613.
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
   model_result <- model_result <- eilers_peeters_modified(model_result)
 
-  expect_no_warning(
-    print(
-      plot <- plot_control(
-        data,
-        model_result,
-        "eilers_peeters ETR II modified junior_pam_20250613.csv",
-        color_eilers_peeters
-      )
+  expect_no_warning({
+    plot <- plot_control(
+      data,
+      model_result,
+      "eilers_peeters ETR II modified junior_pam_20250613.csv",
+      color_eilers_peeters
     )
-  )
+    ggplot2::ggsave("results/test-eilers_peeters_etr_II modified control plot junior_pam_20250613.jpg", create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 1000, dpi = 100, limitsize = FALSE)
+  })
 })

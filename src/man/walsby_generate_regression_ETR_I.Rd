@@ -24,7 +24,7 @@ walsby_generate_regression_ETR_I(
 A list containing:
 \itemize{
   \item \code{etr_regression_data}: Predicted ETR values.
-  \item \code{sdiff}: Deviation between actual and predicted ETR.
+  \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
   \item \code{alpha}: Initial slope (\eqn{\alpha}).
   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).

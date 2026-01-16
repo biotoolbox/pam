@@ -159,7 +159,7 @@ This function generates a regression model based on Vollenweider (1965). Origina
 A list containing the following elements:
 
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
-- **sdiff**: The deviation between the actual and predicted ETR values.
+- **residual_sum_of_squares**: The deviation between the actual and predicted ETR values.
 - **pmax**: The maximum electron transport rate without photoinhibition ($$p_{max}$$).
 - **a**: The obtained parameter $$a$$.
 - **alpha**: The obtained parameter $$\alpha$$.
@@ -234,7 +234,7 @@ This function generates a regression model based on  Platt (1980). Original nami
 A list containing the following elements:
 
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
-- **sdiff**: The deviation between the actual and predicted ETR values.
+- **residual_sum_of_squares**: The deviation between the actual and predicted ETR values.
 - **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$).
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
 - **beta**: The photoinhibition of the light curve ($$\beta$$).
@@ -295,7 +295,7 @@ This function generates a regression model based on  Eilers-Peeters (1988). Orig
 A list containing the following elements:
 
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
-- **sdiff**: The deviation between the actual and predicted ETR values.
+- **residual_sum_of_squares**: The deviation between the actual and predicted ETR values.
 - **a**: The obtained parameter $$a$$.
 - **b**: The obtained parameter $$b$$.
 - **c**: The obtained parameter $$c$$.
@@ -356,7 +356,7 @@ This function generates a regression model based on  Walsby (1997) in a modified
 A list containing the following elements:
 
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
-- **sdiff**: The deviation between the actual and predicted ETR values.
+- **residual_sum_of_squares**: The deviation between the actual and predicted ETR values.
 - **etr_max**: The maximum electron transport rate without photoinhibition ($$ETR_{max}$$).
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
 - **beta**: The photoinhibition of the light curve ($$\beta$$).
@@ -389,7 +389,7 @@ Returns a modified model result as a list with the following elements:
 
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
-- **sdiff**: The difference between observed and predicted ETR values.
+- **residual_sum_of_squares**: The difference between observed and predicted ETR values.
 - **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
 - **b**: obtained paramter `b`, transfered as `a`
 - **c**: obtained paramter `c`, here transfered as `alpha`
@@ -438,7 +438,7 @@ Returns a modified model result as a list with the following elements:
 
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
-- **sdiff**: The difference between observed and predicted ETR values.
+- **residual_sum_of_squares**: The difference between observed and predicted ETR values.
 - **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
 - **b**: obtained paramter `b`, here equal to `alpha`
 - **c**: obtained paramter `c`, here equal to `beta`
@@ -480,7 +480,7 @@ Returns a modified model result as a list with the following elements:
 
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
-- **sdiff**: The difference between observed and predicted ETR values.
+- **residual_sum_of_squares**: The difference between observed and predicted ETR values.
 - **a**: The obtained parameter $$a$$
 - **b**: The obtained parameter $$b$$
 - **c**: The obtained parameter $$c$$
@@ -521,7 +521,7 @@ Returns a modified model result as a list with the following elements:
 
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
-- **sdiff**: The difference between observed and predicted ETR values.
+- **residual_sum_of_squares**: The difference between observed and predicted ETR values.
 - **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
 - **b**: obtained paramter `b`, here equal to `alpha`
 - **c**: obtained paramter `c`, here equal to `beta`
@@ -589,13 +589,13 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
 |etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
-|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
+|residual_sum_of_squares        |residual_sum_of_squares    |residual_sum_of_squares    |residual_sum_of_squares          |residual_sum_of_squares      |
 
 #### Publication-accurate naming and the respective modified naming with additional calculations not included in the original publication
 
 |modified      |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
-|sdiff        |sdiff    |sdiff    |sdiff          |sdiff      |
+|residual_sum_of_squares        |residual_sum_of_squares    |residual_sum_of_squares    |residual_sum_of_squares          |residual_sum_of_squares      |
 |a         |a     |ps     |etr_max         |pmax      |
 |b         |b     |alpha    |alpha          |a       |
 |c         |c     |beta    |beta          |alpha      |
@@ -759,7 +759,7 @@ write_model_result_csv(
 #### subscript out of bounds
 
 ```
-Skipped file: 20231214_14_W6_T5_ML.csv because of error: Error in eilers_peeters[["sdiff"]]: subscript out of bounds
+Skipped file: 20231214_14_W6_T5_ML.csv because of error: Error in eilers_peeters[["residual_sum_of_squares"]]: subscript out of bounds
 ```
 
 This could indicate that Pm lable in the Action column is at the wrong position in the csv raw data file. Error could be caused by WALZ-Software.

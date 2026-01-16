@@ -5,7 +5,7 @@ test_that("test-write_model_result_csv 20240925.csv", {
   model_result <- walsby_modified(model_result)
 
   result_dir <- file.path(getwd(), "results")
-  dir.create(result_dir)
+  dir.create(result_dir, showWarnings = FALSE)
 
   expect_no_warning(
     write_model_result_csv(

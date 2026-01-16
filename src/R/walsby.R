@@ -26,7 +26,7 @@ walsby_default_start_value_beta <- --0.0008944076
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
 #'   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
 #'   \item \code{alpha}: Initial slope (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
@@ -80,7 +80,7 @@ walsby_generate_regression_ETR_I <- function(
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
 #'   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
 #'   \item \code{alpha}: Initial slope (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
@@ -145,9 +145,7 @@ walsby_generate_regression_internal <- function(
         stop("beta start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
-
-      model <- minpack.lm::nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * PAR) / etr_max)) + beta * PAR,
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ etr_max * (1 - exp((-alpha * par) / etr_max)) + beta * par,
         data = data,
         start = list(
           etr_max = etr_max_start_value,
@@ -157,6 +155,8 @@ walsby_generate_regression_internal <- function(
         control = stats::nls.control(maxiter = 1000)
       )
 
+      residual_sum_of_squares <- model$m$deviance()
+
       abc <- stats::coef(model)
       etr_max <- abc[["etr_max"]]
       alpha <- abc[["alpha"]]
@@ -164,30 +164,17 @@ walsby_generate_regression_internal <- function(
 
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         predictions <- c(predictions, etr_max * (1 - exp((-alpha * p) / etr_max)) + beta * p)
       }
 
       etr_regression_data <- create_regression_data(pars, predictions)
 
-      sdiff <- NA_real_
-      tryCatch(
-        {
-          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-        },
-        warning = function(w) {
-          walsby_message(paste("failed to calculate ik: warning:", w))
-        },
-        error = function(e) {
-          walsby_message(paste("failed to calculate ik: error:", e))
-        }
-      )
-
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
-        sdiff = sdiff,
+        residual_sum_of_squares = residual_sum_of_squares,
         etr_max = etr_max,
         alpha = alpha,
         beta = beta
@@ -214,7 +201,7 @@ walsby_generate_regression_internal <- function(
 #' \itemize{
 #'   \item \code{etr_type}: ETR Type based on the model result.
 #'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{residual_sum_of_squares}: The difference between observed and predicted ETR values.
 #'   \item \code{a}: Obtained parameter \code{a}, equal to \code{etrmax_without_photoinhibition}.
 #'   \item \code{b}: Obtained parameter \code{b}, equal to \code{alpha}.
 #'   \item \code{c}: Obtained parameter \code{c}, equal to \code{beta}.
@@ -253,7 +240,7 @@ walsby_modified <- function(model_result) {
   result <- create_modified_model_result(
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
-    sdiff = get_sdiff_from_model_result(model_result),
+    residual_sum_of_squares = get_sdiff_from_model_result(model_result),
     a = model_result[["etr_max"]],
     b = model_result[["alpha"]],
     c = model_result[["beta"]],

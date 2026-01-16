@@ -8,7 +8,7 @@ test_that("test-vollenweider_etr_I generate regression 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 55.4621712)
+    expect_equal(model_result[["residual_sum_of_squares"]], 55.4621712)
     expect_equal(model_result[["pmax"]], 191.5243754)
     # expect_equal(model_result[["a"]], 0.001864811)
     # expect_equal(model_result[["alpha"]], 0.00001772)
@@ -18,7 +18,7 @@ test_that("test-vollenweider_etr_I generate regression 20240925.csv", {
     expect_equal(model_result[["iik"]], 488.76551)
     expect_equal(model_result[["pmax_popt_and_ik_iik_ratio"]], 1.254945)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 56.4705283)
+    expect_equal(model_result[["residual_sum_of_squares"]], 56.4705283)
     expect_equal(model_result[["pmax"]], 181.19904)
     # expect_equal(model_result[["a"]], 0.001864811)
     # expect_equal(model_result[["alpha"]], 0.00001772)
@@ -35,16 +35,15 @@ test_that("test-vollenweider_etr_I control plot 20240925.csv", {
   data <- read_dual_pam_data(test_data_file)
   model_result <- vollenweider_generate_regression_ETR_I(data)
 
-  expect_no_warning(
-    print(
-      plot_control(
-        data,
-        model_result,
-        "vollenweider ETR I 20240925.csv",
-        color_vollenweider
-      )
+  expect_no_warning({
+    plot <- plot_control(
+      data,
+      model_result,
+      "vollenweider ETR I 20240925.csv",
+      color_vollenweider
     )
-  )
+    ggplot2::ggsave("results/test-vollenweider_etr_I control plot 20240925.jpg", create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 1000, dpi = 100, limitsize = FALSE)
+  })
 })
 
 test_that("test-vollenweider_etr_I generate regression modified 20240925.csv", {
@@ -58,7 +57,7 @@ test_that("test-vollenweider_etr_I generate regression modified 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 55.4621712)
+    expect_equal(model_result[["residual_sum_of_squares"]], 55.4621712)
     expect_equal(model_result[["a"]], 191.5243754)
     # expect_equal(model_result[["b"]], 0.001864811)
     # expect_equal(model_result[["c"]], 0.00001772)
@@ -74,7 +73,7 @@ test_that("test-vollenweider_etr_I generate regression modified 20240925.csv", {
     expect_equal(model_result[["ib"]], NA_real_)
     expect_equal(model_result[["etrmax_with_without_ratio"]], 1.254945)
   } else if (is_windows()) {
-    expect_equal(model_result[["sdiff"]], 56.4705283)
+    expect_equal(model_result[["residual_sum_of_squares"]], 56.4705283)
     expect_equal(model_result[["a"]], 181.19904)
     # expect_equal(model_result[["b"]], 0.001864811)
     # expect_equal(model_result[["c"]], 0.00001772)
@@ -98,14 +97,13 @@ test_that("test-vollenweider_etr_I modified control plot 20240925.csv", {
   model_result <- vollenweider_generate_regression_ETR_I(data)
   model_result <- vollenweider_modified(model_result)
 
-  expect_no_warning(
-    print(
-      plot_control(
-        data,
-        model_result,
-        "vollenweider ETR I modified 20240925.csv",
-        color_vollenweider
-      )
+  expect_no_warning({
+    plot <- plot_control(
+      data,
+      model_result,
+      "vollenweider ETR I modified 20240925.csv",
+      color_vollenweider
     )
-  )
+    ggplot2::ggsave("results/test-vollenweider_etr_I modified control plot 20240925.jpg", create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 1000, dpi = 100, limitsize = FALSE)
+  })
 })

@@ -27,7 +27,7 @@ vollenweider_generate_regression_ETR_I(
 A list containing:
 \itemize{
   \item \code{etr_regression_data}: Predicted ETR values.
-  \item \code{sdiff}: Deviation between actual and predicted ETR.
+  \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
   \item \code{pmax}: Maximum electron transport rate (\eqn{p_{max}}).
   \item \code{a}: Parameter \eqn{a}.
   \item \code{alpha}: Parameter \eqn{\alpha}.

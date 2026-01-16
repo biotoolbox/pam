@@ -8,8 +8,8 @@ test_that("compare_regression_models etr I + II", {
 
   if (is_debian_or_ubuntu()) {
     expect_no_error({
-      model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir)
-      model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir)
+      model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir, read_dual_pam_data)
+      model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir, read_dual_pam_data)
 
       eilers_peeters_total <- model_points_etr_I[["eilers_peeters"]] + model_points_etr_II[["eilers_peeters"]]
       platt_total <- model_points_etr_I[["platt"]] + model_points_etr_II[["platt"]]
@@ -30,8 +30,8 @@ test_that("compare_regression_models etr I + II", {
     expect_equal(result[["walsby_total"]], 31)
   } else if (is_windows()) {
     expect_no_error({
-      model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir)
-      model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir)
+      model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir, read_dual_pam_data)
+      model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir, read_dual_pam_data)
 
       eilers_peeters_total <- model_points_etr_I[["eilers_peeters"]] + model_points_etr_II[["eilers_peeters"]]
       platt_total <- model_points_etr_I[["platt"]] + model_points_etr_II[["platt"]]
