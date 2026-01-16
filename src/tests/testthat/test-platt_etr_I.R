@@ -8,7 +8,7 @@ test_that("test-platt_etr_I generate regression 20240925.csv", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(model_result[["sdiff"]], 55.4812913)
+    expect_equal(model_result[["residual_sum_of_squares"]], 55.4812913)
     expect_equal(model_result[["alpha"]], 0.350792446)
     expect_equal(model_result[["beta"]], 0.056258718)
     expect_equal(model_result[["ps"]], 242.02858)
