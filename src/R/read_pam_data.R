@@ -21,14 +21,14 @@ read_intermediate_data <- function(csv_path,
     recalc_etr_1 <- calc_etr(yield_1, current_par, etr_factor, fraction_photosystem_I)
 
     yield_2 <- row$yield_2
-    recalc_etr_1 <- calc_etr(yield_2, current_par, etr_factor, fraction_photosystem_II)
+    recalc_etr_2 <- calc_etr(yield_2, current_par, etr_factor, fraction_photosystem_II)
 
     new_row <- list(
       par = current_par,
       yield_1 = yield_1,
       yield_2 = yield_2,
       etr_1 = recalc_etr_1,
-      etr_2 = recalc_etr_1
+      etr_2 = recalc_etr_2
     )
     result <- rbind(result, new_row)
   }
