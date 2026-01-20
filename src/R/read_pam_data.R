@@ -1,7 +1,12 @@
+#' @export
 read_intermediate_data <- function(csv_path,
                                    etr_factor = 0.84,
                                    fraction_photosystem_I = 0.5,
                                    fraction_photosystem_II = 0.5) {
+  if (fraction_photosystem_I + fraction_photosystem_II != 1) {
+    stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
+  }
+
   data <- utils::read.csv(csv_path, sep = ";", dec = ".")
   data <- data.table::as.data.table(data)
   validate_raw_intermediate_csv(data)
