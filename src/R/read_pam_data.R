@@ -1,5 +1,5 @@
 #' @export
-read_intermediate_data <- function(csv_path,
+read_universal_data <- function(csv_path,
                                    etr_factor = 0.84,
                                    fraction_photosystem_I = 0.5,
                                    fraction_photosystem_II = 0.5) {

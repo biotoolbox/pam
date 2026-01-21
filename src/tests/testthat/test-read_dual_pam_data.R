@@ -1,6 +1,6 @@
-test_that("test-read-intermediate-table intermediate_table.csv - default", {
-  test_data_file <- file.path(getwd(), "data", "intermediate_table.csv")
-  data <- read_intermediate_data(test_data_file)
+test_that("read_dual_pam_data 20240925.csv - default", {
+  test_data_file <- file.path(getwd(), "data", "20240925.csv")
+  data <- read_dual_pam_data(test_data_file)
 
   par <- data$par
   expect_equal(par[1], 0)
@@ -98,9 +98,9 @@ test_that("test-read-intermediate-table intermediate_table.csv - default", {
   expect_equal(etr_2[17], 38.766)
 })
 
-test_that("test-read-intermediate-table intermediate_table.csv - etr_factor 0.5", {
-  test_data_file <- file.path(getwd(), "data", "intermediate_table.csv")
-  data <- read_intermediate_data(test_data_file, etr_factor = 0.5)
+test_that("read_dual_pam_data 20240925.csv - etr_factor 0.5", {
+  test_data_file <- file.path(getwd(), "data", "20240925.csv")
+  data <- read_dual_pam_data(test_data_file, etr_factor = 0.5)
 
   par <- data$par
   expect_equal(par[1], 0)
@@ -198,15 +198,15 @@ test_that("test-read-intermediate-table intermediate_table.csv - etr_factor 0.5"
   expect_equal(etr_2[17], 23.075)
 })
 
-test_that("test-read-intermediate-table intermediate_table.csv - fraction_photosystem > 1", {
-  test_data_file <- file.path(getwd(), "data", "intermediate_table.csv")
+test_that("read_dual_pam_data 20240925.csv - fraction_photosystem > 1", {
+  test_data_file <- file.path(getwd(), "data", "20240925.csv")
 
-  expect_error(read_intermediate_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
+  expect_error(read_dual_pam_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
 })
 
-test_that("test-read-intermediate-table intermediate_table.csv - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
-  test_data_file <- file.path(getwd(), "data", "intermediate_table.csv")
-  data <- read_intermediate_data(test_data_file, fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8)
+test_that("read_dual_pam_data 20240925.csv - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
+  test_data_file <- file.path(getwd(), "data", "20240925.csv")
+  data <- read_dual_pam_data(test_data_file, fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8)
 
   par <- data$par
   expect_equal(par[1], 0)

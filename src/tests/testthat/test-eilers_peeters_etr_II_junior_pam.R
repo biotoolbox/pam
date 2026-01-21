@@ -1,5 +1,5 @@
 test_that("test-eilers_peeters_etr_II generate regression junior_pam_20250613.csv.csv", {
-  test_data_file <- file.path(getwd(), "data_junior_pam", "junior_pam_20250613.csv")
+  test_data_file <- file.path(getwd(), "data", "junior_pam_20250613.csv")
   data <- read_junior_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
 
@@ -31,7 +31,7 @@ test_that("test-eilers_peeters_etr_II generate regression junior_pam_20250613.cs
 })
 
 test_that("test-eilers_peeters_etr_II junior_pam_20250613.csv.csv", {
-  test_data_file <- file.path(getwd(), "data_junior_pam", "junior_pam_20250613.csv")
+  test_data_file <- file.path(getwd(), "data", "junior_pam_20250613.csv")
   data <- read_junior_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
 
@@ -79,7 +79,7 @@ test_that("test-eilers_peeters_etr_II junior_pam_20250613.csv.csv", {
 })
 
 test_that("test-eilers_peeters_etr_II modified control plot junior_pam_20250613.csv", {
-  test_data_file <- file.path(getwd(), "data_junior_pam", "junior_pam_20250613.csv")
+  test_data_file <- file.path(getwd(), "data", "junior_pam_20250613.csv")
   data <- read_junior_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
   model_result <- model_result <- eilers_peeters_modified(model_result)
