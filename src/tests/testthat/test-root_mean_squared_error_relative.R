@@ -7,10 +7,6 @@ test_that("test-root_mean_squared_error_relative.R", {
     result <- get_etr_data_for_par_values(data, etr_regression_data, etr_2_type)
 
     root_mean_squared_error_relative <- root_mean_squared_error_relative(result)
-
-    dir.create(file.path(getwd(), "results"))
-
-    writeLines(as.character(root_mean_squared_error_relative), file.path(getwd(), "results", "asdf.txt"))
   })
 
   if (is_supported_os() == FALSE) {
