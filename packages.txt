@@ -1,7 +1,7 @@
 data.table
 ggplot2
 minpack.lm
-SciViews
 ggthemes
 gridExtra
 cowplot
+Metrics

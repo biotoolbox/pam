@@ -145,7 +145,7 @@ plot_control <- function(
 
   yield <- NA_real_
   yield_name <- ""
-  if (etr_type == etr_I_type) {
+  if (etr_type == etr_1_type) {
     yield <- "yield_1"
     yield_name <- "Y(I)"
   } else {
@@ -191,6 +191,8 @@ create_modified_model_result <- function(
     etr_type,
     etr_regression_data,
     residual_sum_of_squares,
+    root_mean_squared_error,
+    root_mean_squared_error_relative,
     a,
     b,
     c,
@@ -209,6 +211,8 @@ create_modified_model_result <- function(
     etr_type = etr_type,
     etr_regression_data = etr_regression_data,
     residual_sum_of_squares = residual_sum_of_squares,
+    root_mean_squared_error = root_mean_squared_error,
+    root_mean_squared_error_relative = root_mean_squared_error_relative,
     a = a,
     b = b,
     c = c,
@@ -302,4 +306,37 @@ write_model_result_csv <- function(dest_dir, name, data, model_result) {
     quote = TRUE,
     row.names = FALSE
   )
+}
+
+get_etr_data_for_par_values <- function(data, etr_regression_data, etr_type) {
+  validate_data(data)
+  validate_etr_regression_data(etr_regression_data)
+  validate_etr_type(etr_type)
+
+  result <- data.table::data.table(par = numeric(), measured_etr = numeric(), predicted_etr = numeric())
+
+  for (i in seq_len(nrow(data))) {
+    row <- data[i, ]
+    par <- row$par
+    measured_etr <- row[[etr_type]]
+    predicted_etr <- etr_regression_data[etr_regression_data$par == par, ][[prediction_name]]
+    result_row <- list(par = par, measured_etr = measured_etr, predicted_etr = predicted_etr)
+    result <- rbind(result, result_row)
+  }
+  return(result)
+}
+
+root_mean_squared_error <- function(measured_predicted_etr_data) {
+  measured_etr <- measured_predicted_etr_data$measured_etr
+  predicted_etr <- measured_predicted_etr_data$predicted_etr
+  root_mean_squared_error <- Metrics::rmse(measured_etr, predicted_etr)
+  return(root_mean_squared_error)
+}
+
+root_mean_squared_error_relative <- function(measured_predicted_etr_data) {
+  measured_etr <- measured_predicted_etr_data$measured_etr
+  predicted_etr <- measured_predicted_etr_data$predicted_etr
+  root_mean_squared_error <- Metrics::rmse(measured_etr, predicted_etr)
+  root_mean_squared_error_relative <- root_mean_squared_error / max(predicted_etr)
+  return(root_mean_squared_error_relative)
 }

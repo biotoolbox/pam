@@ -3,8 +3,8 @@ color_platt <- "#2600ff"
 color_vollenweider <- "#029b07"
 color_walsby <- "#ff0000"
 
-etr_I_type <- "etr_1"
-etr_II_type <- "etr_2"
+etr_1_type <- "etr_1"
+etr_2_type <- "etr_2"
 
 PAR_name <- "par"
 prediction_name <- "prediction"

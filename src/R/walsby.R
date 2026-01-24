@@ -56,7 +56,7 @@ walsby_generate_regression_ETR_I <- function(
   return(
     walsby_generate_regression_internal(
       data,
-      etr_I_type,
+      etr_1_type,
       etr_max_start_value,
       alpha_start_value,
       beta_start_value
@@ -109,7 +109,7 @@ walsby_generate_regression_ETR_II <- function(
     beta_start_value = walsby_default_start_value_beta) {
   return(walsby_generate_regression_internal(
     data,
-    etr_II_type,
+    etr_2_type,
     etr_max_start_value,
     alpha_start_value,
     beta_start_value
@@ -171,10 +171,18 @@ walsby_generate_regression_internal <- function(
 
       etr_regression_data <- create_regression_data(pars, predictions)
 
+      measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
+
+      root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
+
+      root_mean_squared_error_relative <- root_mean_squared_error_relative(measured_predicted_etr_par_data)
+
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         residual_sum_of_squares = residual_sum_of_squares,
+        root_mean_squared_error = root_mean_squared_error,
+        root_mean_squared_error_relative = root_mean_squared_error_relative,
         etr_max = etr_max,
         alpha = alpha,
         beta = beta
@@ -241,6 +249,8 @@ walsby_modified <- function(model_result) {
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
     residual_sum_of_squares = get_sdiff_from_model_result(model_result),
+    model_result[["root_mean_squared_error"]],
+    model_result[["root_mean_squared_error_relative"]],
     a = model_result[["etr_max"]],
     b = model_result[["alpha"]],
     c = model_result[["beta"]],

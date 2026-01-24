@@ -53,7 +53,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
     c_start_value = eilers_peeters_default_start_value_c) {
   return(eilers_peeters_generate_regression_internal(
     data,
-    etr_I_type,
+    etr_1_type,
     a_start_value,
     b_start_value,
     c_start_value
@@ -102,7 +102,7 @@ eilers_peeters_generate_regression_ETR_II <- function(
     c_start_value = eilers_peeters_default_start_value_c) {
   return(eilers_peeters_generate_regression_internal(
     data,
-    etr_II_type,
+    etr_2_type,
     a_start_value,
     b_start_value,
     c_start_value
@@ -224,10 +224,18 @@ eilers_peeters_generate_regression_internal <- function(
       }
       etr_regression_data <- create_regression_data(pars, predictions)
 
+      measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
+
+      root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
+
+      root_mean_squared_error_relative <- root_mean_squared_error_relative(measured_predicted_etr_par_data)
+
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         residual_sum_of_squares = residual_sum_of_squares,
+        root_mean_squared_error = root_mean_squared_error,
+        root_mean_squared_error_relative = root_mean_squared_error_relative,
         a = a,
         b = b,
         c = c,
@@ -294,6 +302,8 @@ eilers_peeters_modified <- function(model_result) {
     get_etr_type_from_model_result(model_result),
     get_etr_regression_data_from_model_result(model_result),
     get_sdiff_from_model_result(model_result),
+    model_result[["root_mean_squared_error"]],
+    model_result[["root_mean_squared_error_relative"]],
     model_result[["a"]],
     model_result[["b"]],
     model_result[["c"]],

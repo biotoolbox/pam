@@ -56,7 +56,7 @@ combo_plot_control <- function(
 
   yield <- NA_real_
   yield_name <- ""
-  if (etr_type == etr_I_type) {
+  if (etr_type == etr_1_type) {
     yield <- "yield_1"
     yield_name <- "Y(I)"
   } else {

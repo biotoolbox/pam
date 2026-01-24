@@ -149,7 +149,7 @@ validate_etr_regression_data <- function(regression_data) {
 }
 
 validate_etr_type <- function(etr_type) {
-  if (etr_type != etr_I_type && etr_type != etr_II_type) {
+  if (etr_type != etr_1_type && etr_type != etr_2_type) {
     stop("etr type is not valid")
   }
 }

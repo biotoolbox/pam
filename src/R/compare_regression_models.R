@@ -47,7 +47,7 @@
 #'
 #' @export
 compare_regression_models_ETR_I <- function(data_dir, read_func) {
-  return(compare_regression_models(data_dir, etr_I_type, read_func))
+  return(compare_regression_models(data_dir, etr_1_type, read_func))
 }
 
 
@@ -100,7 +100,7 @@ compare_regression_models_ETR_I <- function(data_dir, read_func) {
 #'
 #' @export
 compare_regression_models_ETR_II <- function(data_dir, read_func) {
-  return(compare_regression_models(data_dir, etr_II_type, read_func))
+  return(compare_regression_models(data_dir, etr_2_type, read_func))
 }
 
 compare_regression_models <- function(data_dir, etr_type, read_func) {
