@@ -12,6 +12,10 @@ Four different models are provided for the regression of the light curve (Vollen
 To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as $$ETR_{max}$$, it is possible to output both with publication-compliant naming and with homogenised naming.
 Generated control plots make it possible to check each individual regression fit and calculated data.
 
+## Publications using this package
+
+- Böhm, J., Blindow, I., Gyllenstrand, N., Diewald, W., & Schubert, H. (2025). Sphaerochara canadensis (Charophyceae): A circumpolar species with a high temperature optimum. Journal of Phycology, 00, 1–11. https://doi.org/10.1111/jpy.70111
+
 ## Test coverage
 
 ```r
