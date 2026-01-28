@@ -1,8 +1,6 @@
 #' Read and Process Universal PAM Data
 #'
-#' Reads a standardized CSV file containing PAR and yield data for photosystem I and/or II, calculates electron transport rates (ETR), and returns
-#' a cleaned and validated dataset. The function is device-agnostic but
-#' requires a predefined column structure.
+#' Reads a standardized CSV file containing PAR and yield data for photosystem I and/or II, calculates electron transport rates (ETR), and returns a cleaned and validated dataset. The function is device-agnostic but requires a predefined column structure.
 #'
 #' @param csv_path File path to the CSV file.
 #' @param etr_factor Numeric. Factor for ETR calculation. Default is \code{0.84}.
@@ -14,11 +12,17 @@
 #' @details
 #' Calculates ETR using:
 #' \deqn{\text{ETR} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{Fraction of Photosystem (I or II)} \cdot \text{Yield (I or II)}}
-#' 
+#'
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#read_universal_data}
 #'
-#' @return A \code{data.table} with processed PAR, yield, and calculated
-#' ETR values.
+#' @return A \code{data.table} containing:
+#' \itemize{
+#'   \item \code{par}: Photosynthetically active radiation.
+#'   \item \code{yield_1}: Yield for photosystem I.
+#'   \item \code{yield_2}: Yield for photosystem II.
+#'   \item \code{etr_1}: Calculated ETR for photosystem I.
+#'   \item \code{etr_2}: Calculated ETR for photosystem II.
+#' }
 #'
 #' @references{
 #'   Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).}
@@ -30,9 +34,9 @@
 #' data <- read_universal_data(path)
 #' @export
 read_universal_data <- function(csv_path,
-                                   etr_factor = 0.84,
-                                   fraction_photosystem_I = 0.5,
-                                   fraction_photosystem_II = 0.5) {
+                                etr_factor = 0.84,
+                                fraction_photosystem_I = 0.5,
+                                fraction_photosystem_II = 0.5) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
@@ -88,7 +92,14 @@ read_universal_data <- function(csv_path,
 #'
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#read_dual_pam_data}
 #'
-#' @return A `data.table` with processed data and calculated ETR values.
+#' @return A \code{data.table} containing:
+#' \itemize{
+#'   \item \code{par}: Photosynthetically active radiation.
+#'   \item \code{yield_1}: Yield for photosystem I.
+#'   \item \code{yield_2}: Yield for photosystem II.
+#'   \item \code{etr_1}: Calculated ETR for photosystem I.
+#'   \item \code{etr_2}: Calculated ETR for photosystem II.
+#' }
 #'
 #' @references{
 #'   Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).}
@@ -239,7 +250,14 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #'
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file}
 #'
-#' @return A `data.table` with processed data and calculated ETR values.
+#' @return A \code{data.table} containing:
+#' \itemize{
+#'   \item \code{par}: Photosynthetically active radiation.
+#'   \item \code{yield_1}: Yield for photosystem I.
+#'   \item \code{yield_2}: Yield for photosystem II.
+#'   \item \code{etr_1}: Calculated ETR for photosystem I.
+#'   \item \code{etr_2}: Calculated ETR for photosystem II.
+#' }
 #'
 #' @references{
 #'   Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).}

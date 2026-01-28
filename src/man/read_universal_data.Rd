@@ -23,13 +23,17 @@ to photosystem I. Default is \code{0.5}.}
 to photosystem II. Default is \code{0.5}.}
 }
 \value{
-A \code{data.table} with processed PAR, yield, and calculated
-ETR values.
+A \code{data.table} containing:
+\itemize{
+  \item \code{par}: Photosynthetically active radiation.
+  \item \code{yield_1}: Yield for photosystem I.
+  \item \code{yield_2}: Yield for photosystem II.
+  \item \code{etr_1}: Calculated ETR for photosystem I.
+  \item \code{etr_2}: Calculated ETR for photosystem II.
+}
 }
 \description{
-Reads a standardized CSV file containing PAR and yield data for photosystem I and/or II, calculates electron transport rates (ETR), and returns
-a cleaned and validated dataset. The function is device-agnostic but
-requires a predefined column structure.
+Reads a standardized CSV file containing PAR and yield data for photosystem I and/or II, calculates electron transport rates (ETR), and returns a cleaned and validated dataset. The function is device-agnostic but requires a predefined column structure.
 }
 \details{
 Calculates ETR using:

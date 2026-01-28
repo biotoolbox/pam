@@ -22,7 +22,7 @@ Generated control plots make it possible to check each individual regression fit
 cov <- covr::package_coverage()
 covr::percent_coverage(cov)
 ```
-90.12146 %
+90.17 %
 
 ## Install
 
@@ -43,6 +43,52 @@ install.packages("pam")
 Examples of usage can be found in the `examples` directory.
 
 ## Functions
+
+### read_universal_data()
+
+#### Description
+
+This function reads a universal CSV file, computes $$ETR$$ values, and returns a processed intermediate table.
+
+#### Parameters
+
+- **csv_path**: A string representing the file path to the CSV file.
+- **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.
+- **fraction_photosystem_I**: A numeric value representing the relative distribution of absorbed PAR to photosystem I used in the ETR calculation formula. Default is `0.5`.
+Calculated as: $$\textit{Fraction of Photosystem I} = \frac{PPS 1}{PPS 1+2}$$
+- **fraction_photosystem_II**: A numeric value representing the relative distribution of absorbed PAR to photosystem II used in the ETR calculation formula. Default is `0.5`.
+Calculated as: $$\textit{Fraction of Photosystem II} = \frac{PPS 2}{PPS 1+2}$$
+
+#### Details
+
+ETR values are calculated using the following formula:
+
+$$ \textit{ETR (I or II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of Photosystem (I or II)} \cdot \textit{Yield (I or II)} $$
+
+The function processes the provided CSV file by:
+
+- Reading the CSV data using `read.csv()`.
+- Converting the data into a `data.table`.
+- Validating the raw data structure with `validate_raw_intermediate_csv()`.
+- Iterating through each row to calculate ETR values for both `yield_1` and `yield_2` using `calc_etr()`.
+
+#### Return
+
+Returning a new table containing the original `par`, `yield_1`, `yield_2`, and the calculated `etr_1` and `etr_2` columns.
+
+#### Example
+
+```r
+data <- read_dual_pam_data("path/to/data.csv",
+etr_factor = 0.84,
+fraction_photosystem_I = 0.5,
+fraction_photosystem_II = 0.5)
+```
+
+#### References
+
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+
 
 ### read_dual_pam_data()
 
@@ -70,15 +116,18 @@ $$ \textit{ETR (I or II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fracti
 
 The function processes the provided CSV file by:
 
-- Reading the CSV data using `read.csv()`.
-- Filtering rows where the column `ID` equals `SP`.
-- Combining the `Date` and `Time` columns to create a new `DateTime` column.
-- Calculating the ETR values for both `Y.I.` and `Y.II.` using the function `calc_etr()`.
-- Removing rows from the recovery period if `remove_recovery = TRUE`.
+- Reading the CSV data using `read.csv()` and converting it to a `data.table`.
+- Validating the raw Dual-PAM data with `validate_dual_pam_data()`.
+- Filtering rows where the column `ID` equals `SP`
+- Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.
+- Calculating initial ETR values from `Pm.-Det.` and `Fm-Det.` rows using `calc_etr()`.
+- Iterating through all rows with `Action == "P.+F. SP"` to calculate ETR values for both `Y.I.` and `Y.II.`
+- Optionally stopping at the recovery period if `remove_recovery = TRUE`.
+
 
 #### Return
 
-A `data.table` containing the processed data with additional columns for recalculated ETR values.
+- Returning a table containing `par`, `yield_1`, `yield_2`, and the calculated `etr_1` and `etr_2` columns.
 
 #### Example
 
@@ -120,16 +169,17 @@ $$ \textit{ETR (II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of
 
 The function processes the provided CSV file by:
 
-- Reading the CSV data using `read.csv()`.
-- Standardizing column names to match the Dual-PAM CSV format, due to inconsistent naming conventions across Walz devices. 
-- Filtering rows where the column `ID` equals `SP`.
-- Combining the `Date` and `Time` columns to create a new `DateTime` column.
-- Calculating the ETR values for `Y.II.` using the function `calc_etr()`.
-- Removing rows from the recovery period if `remove_recovery = TRUE`.
+- Reading the CSV data using `read.csv()` and converting it to a `data.table`.
+- Validating the raw Junior-PAM data with `validate_junior_pam_data()`.
+- Renaming columns to standard names (`PAR`, `Y.II`.) if necessary.
+- Filtering rows where Type equals `"FO"` or `"F"`.
+- Converting and ordering the `DateTime` column.
+- Iterating through all rows to calculate ETR values for `Y.II.` using `calc_etr()`.
+- Optionally stopping at the recovery period if `remove_recovery = TRUE`.
 
 #### Return
 
-A `data.table` containing the processed data with additional columns for recalculated ETR values.
+Returning a table containing `par`, `yield_1` (NA), `yield_2`, `etr_1` (NA), and `etr_2`.
 
 #### Example
 
@@ -151,7 +201,7 @@ This function generates a regression model based on Vollenweider (1965). Origina
 
 #### Parameters
 
-- **data**: A `data.table` containing the input data from `read_dual_pam_data`.
+- **data**: A `data.table` containing the input data, processed according to the corresponding read function (e.g. `read_dual_pam_data`).
 - **etr_type**: A character string specifying the column name of the response variable (ETR I or ETR II) to be used in the model.
 - **pmax_start_value**: Numeric. The starting value for the parameter $$p_{max}$$ in the model. Defaults to `pmax_start_values_vollenweider_default`.
 - **a_start_value**: Numeric. The starting value for the parameter $$a$$ in the model. Defaults to `a_start_values_vollenweider_default`.
@@ -163,6 +213,9 @@ This function generates a regression model based on Vollenweider (1965). Origina
 A list containing the following elements:
 
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
+- **residual_sum_of_squares**: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+- **root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+- **relative_root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 - **residual_sum_of_squares**: The deviation between the actual and predicted ETR values.
 - **pmax**: The maximum electron transport rate without photoinhibition ($$p_{max}$$).
 - **a**: The obtained parameter $$a$$.
@@ -238,7 +291,9 @@ This function generates a regression model based on  Platt (1980). Original nami
 A list containing the following elements:
 
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
-- **residual_sum_of_squares**: The deviation between the actual and predicted ETR values.
+- **residual_sum_of_squares**: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+- **root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+- **relative_root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 - **ps**: The maximum electron transport rate without photoinhibition ($$P_s$$).
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
 - **beta**: The photoinhibition of the light curve ($$\beta$$).
@@ -299,7 +354,9 @@ This function generates a regression model based on  Eilers-Peeters (1988). Orig
 A list containing the following elements:
 
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
-- **residual_sum_of_squares**: The deviation between the actual and predicted ETR values.
+- **residual_sum_of_squares**: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+- **root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+- **relative_root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 - **a**: The obtained parameter $$a$$.
 - **b**: The obtained parameter $$b$$.
 - **c**: The obtained parameter $$c$$.
@@ -360,7 +417,9 @@ This function generates a regression model based on  Walsby (1997) in a modified
 A list containing the following elements:
 
 - **etr_regression_data**: A `data.table` with the predicted values of ETR I or ETR II to each PAR based on the fitted model.
-- **residual_sum_of_squares**: The deviation between the actual and predicted ETR values.
+- **residual_sum_of_squares**: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+- **root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+- **relative_root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 - **etr_max**: The maximum electron transport rate without photoinhibition ($$ETR_{max}$$).
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
 - **beta**: The photoinhibition of the light curve ($$\beta$$).
@@ -393,7 +452,9 @@ Returns a modified model result as a list with the following elements:
 
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
-- **residual_sum_of_squares**: The difference between observed and predicted ETR values.
+- **residual_sum_of_squares**: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+- **root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+- **relative_root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 - **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
 - **b**: obtained paramter `b`, transfered as `a`
 - **c**: obtained paramter `c`, here transfered as `alpha`
@@ -442,7 +503,9 @@ Returns a modified model result as a list with the following elements:
 
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
-- **residual_sum_of_squares**: The difference between observed and predicted ETR values.
+- **residual_sum_of_squares**: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+- **root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+- **relative_root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 - **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
 - **b**: obtained paramter `b`, here equal to `alpha`
 - **c**: obtained paramter `c`, here equal to `beta`
@@ -484,7 +547,9 @@ Returns a modified model result as a list with the following elements:
 
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
-- **residual_sum_of_squares**: The difference between observed and predicted ETR values.
+- **residual_sum_of_squares**: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+- **root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+- **relative_root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 - **a**: The obtained parameter $$a$$
 - **b**: The obtained parameter $$b$$
 - **c**: The obtained parameter $$c$$
@@ -525,7 +590,9 @@ Returns a modified model result as a list with the following elements:
 
 - **etr_type**: ETR Type based on the model result.
 - **etr_regression_data**: Regression data with ETR predictions based on the fitted model.
-- **residual_sum_of_squares**: The difference between observed and predicted ETR values.
+- **residual_sum_of_squares**: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+- **root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+- **relative_root_mean_squared_error**: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 - **a**: obtained paramter `a`, here equal to `etrmax_without_photoinhibition`
 - **b**: obtained paramter `b`, here equal to `alpha`
 - **c**: obtained paramter `c`, here equal to `beta`
@@ -579,6 +646,9 @@ modified_result <- walsby_modified(model_result_walsby)
 
 modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
+|residual_sum_of_squares        |residual_sum_of_squares    |residual_sum_of_squares    |residual_sum_of_squares          |residual_sum_of_squares      |
+|root_mean_squared_error       |root_mean_squared_error    |root_mean_squared_error    |root_mean_squared_error          |root_mean_squared_error     |
+|relative_root_mean_squared_error       |relative_root_mean_squared_error    |relative_root_mean_squared_error    |relative_root_mean_squared_error         |relative_root_mean_squared_error    |
 |a         |a     |ps     |etr_max         |pmax      |
 |b         |b     |alpha    |alpha          |a       |
 |c         |c     |beta    |beta          |alpha      |
@@ -593,13 +663,14 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
 |etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
-|residual_sum_of_squares        |residual_sum_of_squares    |residual_sum_of_squares    |residual_sum_of_squares          |residual_sum_of_squares      |
 
 #### Publication-accurate naming and the respective modified naming with additional calculations not included in the original publication
 
 |modified      |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
 |-|-|-|-|-|
 |residual_sum_of_squares        |residual_sum_of_squares    |residual_sum_of_squares    |residual_sum_of_squares          |residual_sum_of_squares      |
+|root_mean_squared_error       |root_mean_squared_error    |root_mean_squared_error    |root_mean_squared_error          |root_mean_squared_error     |
+|relative_root_mean_squared_error       |relative_root_mean_squared_error    |relative_root_mean_squared_error    |relative_root_mean_squared_error         |relative_root_mean_squared_error    |
 |a         |a     |ps     |etr_max         |pmax      |
 |b         |b     |alpha    |alpha          |a       |
 |c         |c     |beta    |beta          |alpha      |
@@ -622,6 +693,7 @@ This function compares different regression models.
 #### Parameters
 
 - **data_dir**: A character string specifying the directory where the input data files are located.
+- **read_func**: Function used to read the CSV files (e.g., `read_dual_pam_data`)
 
 #### Return
 
@@ -643,7 +715,7 @@ This function allows a straightforward comparison of the models: Eilers-Peeters 
 data_dir_compare <- file.path(getwd(), "data")
 
 #compare regression models
-compare_regression_models_ETR_II <- compare_regression_models_ETR_II(data_dir_compare)
+compare_regression_models_ETR_II <- compare_regression_models_ETR_II(data_dir_compare, read_dual_pam_data)
 print(compare_regression_models_ETR_II)
 ```
 
