@@ -1,4 +1,4 @@
-test_that("test-root_mean_squared_error_relative.R", {
+test_that("test-relative_root_mean_squared_error.R", {
   test_data_file <- file.path(getwd(), "data", "20240925.csv")
   expect_no_error({
     data <- read_dual_pam_data(test_data_file)
@@ -6,7 +6,7 @@ test_that("test-root_mean_squared_error_relative.R", {
     etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
     result <- get_etr_data_for_par_values(data, etr_regression_data, etr_2_type)
 
-    root_mean_squared_error_relative <- root_mean_squared_error_relative(result)
+    relative_root_mean_squared_error <- relative_root_mean_squared_error(result)
   })
 
   if (is_supported_os() == FALSE) {
@@ -14,8 +14,8 @@ test_that("test-root_mean_squared_error_relative.R", {
   }
 
   if (is_debian_or_ubuntu()) {
-    expect_equal(root_mean_squared_error_relative, 0.0198686243914278)
+    expect_equal(relative_root_mean_squared_error, 0.0331529227874065)
   } else if (is_windows()) {
-    expect_equal(root_mean_squared_error_relative, 0.0198686243914278)
+    expect_equal(relative_root_mean_squared_error, 0.0331529227874065)
   }
 })

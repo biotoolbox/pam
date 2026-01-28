@@ -15,7 +15,7 @@ walsby_default_start_value_beta <- --0.0008944076
 #' Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions.
 #' Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from read function (e.g.\code{read_dual_pam_data}).
 #' @param etr_max_start_value Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.
 #' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.
 #' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
@@ -26,7 +26,9 @@ walsby_default_start_value_beta <- --0.0008944076
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
 #'   \item \code{alpha}: Initial slope (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
@@ -69,7 +71,7 @@ walsby_generate_regression_ETR_I <- function(
 #' Fits a modified Walsby (1997) regression model without the respiration term, using Romoth (2019) naming conventions.
 #' Calculates \eqn{ETR_{max}} without accounting for photoinhibition.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from read function (e.g.\code{read_dual_pam_data}).
 #' @param etr_max_start_value Numeric. Initial value for \eqn{ETR_{max}}. Default: \code{etr_max_start_value_walsby_default}.
 #' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_walsby_default}.
 #' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_walsby_default}.
@@ -80,7 +82,9 @@ walsby_generate_regression_ETR_I <- function(
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
 #'   \item \code{alpha}: Initial slope (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
@@ -175,14 +179,14 @@ walsby_generate_regression_internal <- function(
 
       root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
 
-      root_mean_squared_error_relative <- root_mean_squared_error_relative(measured_predicted_etr_par_data)
+      relative_root_mean_squared_error <- relative_root_mean_squared_error(measured_predicted_etr_par_data)
 
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         residual_sum_of_squares = residual_sum_of_squares,
         root_mean_squared_error = root_mean_squared_error,
-        root_mean_squared_error_relative = root_mean_squared_error_relative,
+        relative_root_mean_squared_error = relative_root_mean_squared_error,
         etr_max = etr_max,
         alpha = alpha,
         beta = beta
@@ -209,7 +213,9 @@ walsby_generate_regression_internal <- function(
 #' \itemize{
 #'   \item \code{etr_type}: ETR Type based on the model result.
 #'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-#'   \item \code{residual_sum_of_squares}: The difference between observed and predicted ETR values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}: Obtained parameter \code{a}, equal to \code{etrmax_without_photoinhibition}.
 #'   \item \code{b}: Obtained parameter \code{b}, equal to \code{alpha}.
 #'   \item \code{c}: Obtained parameter \code{c}, equal to \code{beta}.
@@ -250,7 +256,7 @@ walsby_modified <- function(model_result) {
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
     residual_sum_of_squares = get_sdiff_from_model_result(model_result),
     model_result[["root_mean_squared_error"]],
-    model_result[["root_mean_squared_error_relative"]],
+    model_result[["relative_root_mean_squared_error"]],
     a = model_result[["etr_max"]],
     b = model_result[["alpha"]],
     c = model_result[["beta"]],

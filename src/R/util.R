@@ -192,7 +192,7 @@ create_modified_model_result <- function(
     etr_regression_data,
     residual_sum_of_squares,
     root_mean_squared_error,
-    root_mean_squared_error_relative,
+    relative_root_mean_squared_error,
     a,
     b,
     c,
@@ -212,7 +212,7 @@ create_modified_model_result <- function(
     etr_regression_data = etr_regression_data,
     residual_sum_of_squares = residual_sum_of_squares,
     root_mean_squared_error = root_mean_squared_error,
-    root_mean_squared_error_relative = root_mean_squared_error_relative,
+    relative_root_mean_squared_error = relative_root_mean_squared_error,
     a = a,
     b = b,
     c = c,
@@ -333,10 +333,10 @@ root_mean_squared_error <- function(measured_predicted_etr_data) {
   return(root_mean_squared_error)
 }
 
-root_mean_squared_error_relative <- function(measured_predicted_etr_data) {
+relative_root_mean_squared_error <- function(measured_predicted_etr_data) {
   measured_etr <- measured_predicted_etr_data$measured_etr
   predicted_etr <- measured_predicted_etr_data$predicted_etr
   root_mean_squared_error <- Metrics::rmse(measured_etr, predicted_etr)
-  root_mean_squared_error_relative <- root_mean_squared_error / max(predicted_etr)
-  return(root_mean_squared_error_relative)
+  relative_root_mean_squared_error <- root_mean_squared_error / mean(predicted_etr)
+  return(relative_root_mean_squared_error)
 }

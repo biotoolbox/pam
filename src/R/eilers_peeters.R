@@ -14,7 +14,7 @@ eilers_peeters_default_start_value_c <- 7.012012
 #'
 #' Fits a regression model for ETR I based on Eilers-Peeters (1988), considering photoinhibition.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from read function (e.g.\code{read_dual_pam_data}).
 #' @param a_start_value Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.
 #' @param b_start_value Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
@@ -25,7 +25,9 @@ eilers_peeters_default_start_value_c <- 7.012012
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
 #'   \item \code{pm}: Maximum ETR (\eqn{p_m}).
 #'   \item \code{s}: Initial slope (\eqn{s}).
@@ -64,7 +66,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #'
 #' Fits a regression model for ETR II based on Eilers-Peeters (1988), considering photoinhibition.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from from read function (e.g.\code{read_dual_pam_data}).
 #' @param a_start_value Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.
 #' @param b_start_value Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
@@ -75,7 +77,9 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{residual_sum_of_squares}: Deviation between actual and predicted values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
 #'   \item \code{pm}: Maximum ETR (\eqn{p_m}).
 #'   \item \code{s}: Initial slope (\eqn{s}).
@@ -228,14 +232,14 @@ eilers_peeters_generate_regression_internal <- function(
 
       root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
 
-      root_mean_squared_error_relative <- root_mean_squared_error_relative(measured_predicted_etr_par_data)
+      relative_root_mean_squared_error <- relative_root_mean_squared_error(measured_predicted_etr_par_data)
 
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         residual_sum_of_squares = residual_sum_of_squares,
         root_mean_squared_error = root_mean_squared_error,
-        root_mean_squared_error_relative = root_mean_squared_error_relative,
+        relative_root_mean_squared_error = relative_root_mean_squared_error,
         a = a,
         b = b,
         c = c,
@@ -268,7 +272,9 @@ eilers_peeters_generate_regression_internal <- function(
 #' \itemize{
 #'   \item \code{etr_type}: ETR Type based on the model result.
 #'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-#'   \item \code{residual_sum_of_squares}: The difference between observed and predicted ETR values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}: The obtained parameter \code{a}.
 #'   \item \code{b}: The obtained parameter \code{b}.
 #'   \item \code{c}: The obtained parameter \code{c}.
@@ -303,7 +309,7 @@ eilers_peeters_modified <- function(model_result) {
     get_etr_regression_data_from_model_result(model_result),
     get_sdiff_from_model_result(model_result),
     model_result[["root_mean_squared_error"]],
-    model_result[["root_mean_squared_error_relative"]],
+    model_result[["relative_root_mean_squared_error"]],
     model_result[["a"]],
     model_result[["b"]],
     model_result[["c"]],
