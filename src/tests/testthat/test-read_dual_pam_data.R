@@ -303,3 +303,13 @@ test_that("read_dual_pam_data 20240925.csv - fraction_photosystem_I = 0.2, fract
   expect_equal(etr_2[16], 66.8828160)
   expect_equal(etr_2[17], 62.0256)
 })
+
+test_that("20260130_01_efeutute_dual_pam_only_ps_1.csv - expect fm missing", {
+  test_data_file <- file.path(getwd(), "data", "20260130_01_efeutute_dual_pam_only_ps_1.csv")
+  expect_error(read_dual_pam_data(test_data_file))
+})
+
+test_that("20260130_efeutute_dual_pam_only_ps_2.csv - expect pm missing", {
+  test_data_file <- file.path(getwd(), "data", "20260130_efeutute_dual_pam_only_ps_2.csv")
+  expect_error(read_dual_pam_data(test_data_file))
+})

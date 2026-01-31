@@ -42,7 +42,7 @@ Calculates ETR using:
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#read_universal_data}
 }
 \examples{
-path <- file.path(system.file("extdata", package = "pam"), "universal_data.csv")
+path <- file.path(system.file("extdata", package = "pam"), "universal_data", "universal_data.csv")
 data <- read_universal_data(path)
 }
 \references{

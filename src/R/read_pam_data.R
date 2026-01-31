@@ -30,7 +30,7 @@
 #'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "universal_data.csv")
+#' path <- file.path(system.file("extdata", package = "pam"), "universal_data", "universal_data.csv")
 #' data <- read_universal_data(path)
 #' @export
 read_universal_data <- function(csv_path,

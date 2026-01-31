@@ -90,6 +90,14 @@ validate_dual_pam_data <- function(data) {
   if (!"Time" %in% colnames(data)) {
     stop("required col 'Time' not found")
   }
+
+  if (!"Pm.-Det." %in% data[["Action"]]) {
+    stop("required value 'Pm' not found in column 'Action'")
+  }
+
+  if (!"Fm-Det." %in% data[["Action"]]) {
+    stop("required value 'Fm' not found in column 'Action'")
+  }
 }
 
 validate_junior_pam_data <- function(data) {
