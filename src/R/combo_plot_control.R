@@ -118,8 +118,8 @@ combo_plot_control <- function(
     plot <- plot + ggplot2::geom_line(
       data = reg_data,
       ggplot2::aes(
-        x = reg_data[["par"]],
-        y = reg_data[["prediction"]],
+        x = !!rlang::sym("par"),
+        y = !!rlang::sym("prediction"),
         color = names
       )
     )

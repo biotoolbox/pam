@@ -1,3 +1,4 @@
+rlang
 data.table
 ggplot2
 minpack.lm
