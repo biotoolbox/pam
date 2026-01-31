@@ -7,7 +7,7 @@
 eilers_peeters_modified(model_result)
 }
 \arguments{
-\item{model_result}{A list containing the results of the model, including parameters such as \code{a}, \code{b}, \code{c}, \code{s}, \code{pm}, \code{ik}, \code{im}, and \code{w}.}
+\item{model_result}{A list containing the model result (e.g. from eilers_peeters_generate_regression_ETR_II()).}
 }
 \value{
 A modified model result as a list with the following elements:

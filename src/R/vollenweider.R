@@ -276,7 +276,7 @@ vollenweider_generate_regression_internal <- function(
 #'
 #' This function adds parameters that were not originally included in the Vollenweider (1965) model, but were introduced by other models, and renames the parameters to a standardized one for all models.
 #'
-#' @param model_result A list containing the results of the model, including parameters such as \code{pmax}, \code{alpha}, and \code{ik}.
+#' @param model_result A list containing the model result (e.g. from vollenweider_generate_regression_ETR_II()).
 #'
 #' @return A modified model result as a list containing the following elements:
 #' \itemize{

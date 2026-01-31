@@ -7,7 +7,7 @@
 vollenweider_modified(model_result)
 }
 \arguments{
-\item{model_result}{A list containing the results of the model, including parameters such as \code{pmax}, \code{alpha}, and \code{ik}.}
+\item{model_result}{A list containing the model result (e.g. from vollenweider_generate_regression_ETR_II()).}
 }
 \value{
 A modified model result as a list containing the following elements:

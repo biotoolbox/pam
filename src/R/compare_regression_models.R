@@ -3,7 +3,7 @@
 #' Compares multiple regression models for electron transport rate (ETR) data using predefined performance metrics.
 #'
 #' @param data_dir A character string specifying the directory containing input data files.
-#' @param read_func A read function defined in read_pam_data.R depending on the used device
+#' @param read_func A read function defined in read_pam_data.R depending on the used device.
 #'
 #' @return A vector with total points assigned to each regression model based on their performance. Models are ranked as follows:
 #' \itemize{
@@ -56,7 +56,7 @@ compare_regression_models_ETR_I <- function(data_dir, read_func) {
 #' Compares multiple regression models for electron transport rate (ETR) data using predefined performance metrics.
 #'
 #' @param data_dir A character string specifying the directory containing input data files.
-#' @param read_func A read function defined in read_pam_data.R depending on the used device
+#' @param read_func A read function defined in read_pam_data.R depending on the used device.
 #'
 #' @return A vector with total points assigned to each regression model based on their performance. Models are ranked as follows:
 #' \itemize{

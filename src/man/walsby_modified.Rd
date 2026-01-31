@@ -7,7 +7,7 @@
 walsby_modified(model_result)
 }
 \arguments{
-\item{model_result}{A list of model results including \code{etr_max}, \code{alpha}, and \code{beta}.}
+\item{model_result}{A list containing the model result (e.g. from walsby_generate_regression_ETR_II()).}
 }
 \value{
 A list containing:

@@ -115,14 +115,14 @@ plot_table <- function(model_result, entries_per_row) {
 #' @description This function creates a control plot for the used model based on the provided data and model results.
 #'
 #' @param data A `data.table` containing the original ETR and yield data for the plot.
-#' @param model_result A list containing the fitting results of the used model and the calculated paramters (alpha, ik...).
+#' @param model_result A list containing the fitting results of the used model and the calculated parameters.
 #' @param title A character string that specifies the title of the plot.
 #' @param color A color specification for the regression line in the plot.
 #'
 #' @details
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#plot_control}
 #'
-#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
+#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data.
 #'
 #' @examples
 #' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
@@ -239,11 +239,11 @@ create_modified_model_result <- function(
 
 #' Write Model Result CSV
 #' @description
-#' This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
+#' This function exports the intermediate data table, regression data, and model parameters into separate CSV files for easy access and further analysis.
 #'
 #' @param dest_dir A character string specifying the directory where the CSV files will be saved.
 #' @param name A character string specifying the base name for the output files.
-#' @param data A data frame containing the raw input data used in the model.
+#' @param data A data.table containing the intermediate data used in the model.
 #' @param model_result A list containing the model results, including parameter values and regression data.
 #'
 #' @details

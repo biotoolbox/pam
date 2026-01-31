@@ -7,7 +7,7 @@
 platt_modified(model_result)
 }
 \arguments{
-\item{model_result}{A list containing the results of the model, including parameters such as \code{etr_max}, \code{alpha}, and \code{beta}.}
+\item{model_result}{A list containing the model result (e.g. from platt_generate_regression_ETR_II()).}
 }
 \value{
 A modified model result as a list with the following elements:

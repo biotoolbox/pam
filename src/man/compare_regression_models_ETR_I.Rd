@@ -9,7 +9,7 @@ compare_regression_models_ETR_I(data_dir, read_func)
 \arguments{
 \item{data_dir}{A character string specifying the directory containing input data files.}
 
-\item{read_func}{A read function defined in read_pam_data.R depending on the used device}
+\item{read_func}{A read function defined in read_pam_data.R depending on the used device.}
 }
 \value{
 A vector with total points assigned to each regression model based on their performance. Models are ranked as follows:

@@ -274,7 +274,7 @@ platt_generate_regression_internal <- function(
 #'
 #' This function enhances the Platt (1980) model by adding parameters not originally included in the model, which were introduced by other models. It also renames parameters to a standardized naming convention used across all models.
 #'
-#' @param model_result A list containing the results of the model, including parameters such as \code{etr_max}, \code{alpha}, and \code{beta}.
+#' @param model_result A list containing the model result (e.g. from platt_generate_regression_ETR_II()).
 #'
 #' @return A modified model result as a list with the following elements:
 #' \itemize{

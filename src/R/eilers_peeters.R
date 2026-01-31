@@ -266,7 +266,7 @@ eilers_peeters_generate_regression_internal <- function(
 #'
 #' This function enhances the Eilers and Peeters (1988) model by adding parameters not originally included in the model, which were introduced by other models. It also renames parameters to a standardized naming convention used across all models.
 #'
-#' @param model_result A list containing the results of the model, including parameters such as \code{a}, \code{b}, \code{c}, \code{s}, \code{pm}, \code{ik}, \code{im}, and \code{w}.
+#' @param model_result A list containing the model result (e.g. from eilers_peeters_generate_regression_ETR_II()).
 #'
 #' @return A modified model result as a list with the following elements:
 #' \itemize{
