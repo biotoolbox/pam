@@ -174,7 +174,11 @@ plot_control <- function(
     ggplot2::scale_y_continuous(
       sec.axis = ggplot2::sec_axis(~ . / max_etr, name = yield_name)
     ) +
-    ggthemes::theme_base()
+    ggthemes::theme_base() +
+    ggplot2::theme(
+      plot.background  = ggplot2::element_rect(fill = "white", color = NA),
+      panel.background = ggplot2::element_rect(fill = "white", color = NA)
+    )
 
 
   tbl <- plot_table(model_result, 4)
