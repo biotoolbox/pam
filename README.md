@@ -22,7 +22,7 @@ Generated control plots make it possible to check each individual regression fit
 cov <- covr::package_coverage()
 covr::percent_coverage(cov)
 ```
-90.17 %
+90.32984 %
 
 ## Install
 
@@ -752,13 +752,13 @@ A plot displaying the original ETR and Yield values and the regression data. A t
 plot_control_eilers_peeters_ETR_II <- plot_control(
   data = pam_data,
   model_result = modified_model_result_eilers_peeters_ETR_II,
-  title = "eilers_peeters ETR II modified 20231122_01.csv",
+  title = "eilers_peeters ETR II modified 20240925.csv",
   color = "purple"
 )
 print(plot_control_eilers_peeters_ETR_II)
 ```
 
-![Plot](eilers_peeters_ETR_II_modified.jpg)
+![Plot](test-eilers_peeters_etr_II_modified_control_plot_20240925.jpg)
 
 ### combo_control_plot()
 
@@ -779,7 +779,7 @@ A plot displaying the original ETR and Yield values and the regression data from
 #### Examples
 
 ```r
-test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
+test_data_file <- file.path(getwd(), "data", "20240925.csv")
     data <- read_dual_pam_data(test_data_file)
 
     eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_II(data))
@@ -788,7 +788,7 @@ test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
     vollenweider <- vollenweider_modified(vollenweider_generate_regression_ETR_II(data))
 
     plot <- combo_control_plot(
-      "etr II test-combo_plot_control_20231122_01.csv",
+      "etr II test-combo_plot_control_20240925.csv",
       data,
       list(eilers_peeters, platt, walsby, vollenweider),
       list("eilers_peeters", "platt", "walsby", "vollenweider"),
@@ -796,7 +796,7 @@ test_data_file <- file.path(getwd(), "data", "20231122_01.csv")
     )
 ```
 
-![combo Plot](test_combo_plot_control_doku.jpg)
+![combo Plot](test_combo_plot_control_etr_II.jpg)
 
 ### write_model_result_csv()
 
