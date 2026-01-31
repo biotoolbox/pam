@@ -202,7 +202,11 @@ combo_plot_control <- function(
     ) +
     ggplot2::labs(x = par_label, y = etr_label, title = eval(title), color = NULL) +
     ggthemes::theme_base() +
-    ggplot2::theme(legend.position = "bottom")
+    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::theme(
+      plot.background  = ggplot2::element_rect(fill = "white", color = NA),
+      panel.background = ggplot2::element_rect(fill = "white", color = NA)
+    )
 
   tbl <- cowplot::plot_grid(
     plotlist = tbl_list,

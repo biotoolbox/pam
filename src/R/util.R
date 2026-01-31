@@ -176,6 +176,7 @@ plot_control <- function(
     ) +
     ggthemes::theme_base()
 
+
   tbl <- plot_table(model_result, 4)
 
   plot <- cowplot::plot_grid(
