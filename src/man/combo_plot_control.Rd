@@ -19,21 +19,26 @@ combo_plot_control(title, data, model_results, name_list, color_list)
 }
 \value{
 A plot with ETR data, regression results, and a summary table.
-
-#' @examples
-path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
-data <- read_dual_pam_data(path)
-
-model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_I(data)
-model_results_platt <- platt_generate_regression_ETR_I(data)
-model_results <- list(eilers_peeters_modified(model_results), platt_modified(model_results))
-name_list <- c("Eilers-Peeters", "Platt")
-color_list <- c("red", "pink")
-plot <- combo_plot_control("test", data, model_results, name_list, color_list)
 }
 \description{
 Generates a plot of ETR data with different regression model predictions and a summary table.
 }
 \details{
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#combo_control_plot}.
+}
+\examples{
+path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+data <- read_dual_pam_data(path)
+
+model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_II(data)
+model_results_eilers_peeters_modified <- eilers_peeters_modified(model_results_eilers_peeters)
+
+model_results_platt <- platt_generate_regression_ETR_II(data)
+model_results_platt_modified <- platt_modified(model_results_platt)
+
+model_results <- list(model_results_eilers_peeters_modified, model_results_platt_modified)
+name_list <- list("Eilers-Peeters", "Platt")
+color_list <- list("red", "pink")
+plot <- combo_plot_control("test", data, model_results, name_list, color_list)
+
 }

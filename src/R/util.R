@@ -1,40 +1,3 @@
-calculate_sdiff <- function(data, etr_regression_data, etr_type) {
-  validate_data(data)
-  validate_etr_regression_data(etr_regression_data)
-  validate_etr_type(etr_type)
-
-  final_sdiff <- 0
-  for (i in seq_len(nrow(data))) {
-    row <- data[i, ]
-    real_etr <- row[[etr_type]]
-    predicted_etr <- etr_regression_data[etr_regression_data$PAR == row$PAR, ][[prediction_name]]
-
-    sdiff <- (predicted_etr - real_etr)^2
-    final_sdiff <- final_sdiff + sdiff
-  }
-
-  return(final_sdiff)
-}
-
-remove_det_row_by_etr <- function(data, etr_type) {
-  validate_data(data)
-  validate_etr_type(etr_type)
-
-  if (etr_type == etr_I_type) {
-    data <- dplyr::filter(data, data$Action != "Fm-Det.")
-    if (length(data[data$Action == "Pm.-Det.", ]) == 0) {
-      stop("Pm.-Det. is required but not present")
-    }
-  } else {
-    data <- dplyr::filter(data, data$Action != "Pm.-Det.")
-    if (length(data[data$Action == "Fm-Det.", ]) == 0) {
-      stop("Fm-Det. is required but not present")
-    }
-  }
-
-  return(data)
-}
-
 create_regression_data <- function(pars, predictions) {
   if (!is.vector(pars)) {
     stop("pars is not a valid vector")
@@ -49,7 +12,7 @@ create_regression_data <- function(pars, predictions) {
   }
 
   regression_data <- data.table::data.table(
-    "PAR" = pars,
+    "par" = pars,
     "prediction" = predictions
   )
   return(regression_data)
@@ -64,7 +27,7 @@ get_etr_regression_data_from_model_result <- function(model_result) {
 }
 
 get_sdiff_from_model_result <- function(model_result) {
-  return(model_result[["sdiff"]])
+  return(model_result[["residual_sum_of_squares"]])
 }
 
 plot_table <- function(model_result, entries_per_row) {
@@ -152,14 +115,14 @@ plot_table <- function(model_result, entries_per_row) {
 #' @description This function creates a control plot for the used model based on the provided data and model results.
 #'
 #' @param data A `data.table` containing the original ETR and yield data for the plot.
-#' @param model_result A list containing the fitting results of the used model and the calculated paramters (alpha, ik...).
+#' @param model_result A list containing the fitting results of the used model and the calculated parameters.
 #' @param title A character string that specifies the title of the plot.
 #' @param color A color specification for the regression line in the plot.
 #'
 #' @details
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#plot_control}
 #'
-#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
+#' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data.
 #'
 #' @examples
 #' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
@@ -179,13 +142,15 @@ plot_control <- function(
 
   etr_type <- get_etr_type_from_model_result(model_result)
   validate_etr_type(etr_type)
-  data <- remove_det_row_by_etr(data, etr_type)
 
   yield <- NA_real_
-  if (etr_type == etr_I_type) {
-    yield <- "Y.I."
+  yield_name <- ""
+  if (etr_type == etr_1_type) {
+    yield <- "yield_1"
+    yield_name <- "Y(I)"
   } else {
-    yield <- "Y.II."
+    yield <- "yield_2"
+    yield_name <- "Y(II)"
   }
 
   etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
@@ -193,23 +158,28 @@ plot_control <- function(
 
   max_etr <- max(etr_regression_data$prediction)
 
-  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$PAR, y = get(etr_type))) +
+  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$par, y = get(etr_type))) +
     ggplot2::geom_point() +
     ggplot2::geom_line(
       data = etr_regression_data,
       ggplot2::aes(
-        x = etr_regression_data$PAR,
+        x = etr_regression_data$par,
         y = etr_regression_data$prediction
       ),
       color = color
     ) +
-    ggplot2::geom_point(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::geom_point(data = data, shape = 17, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::geom_line(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::labs(x = par_label, y = etr_label, title = eval(title)) +
     ggplot2::scale_y_continuous(
-      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = "Yield")
+      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = yield_name)
     ) +
-    ggthemes::theme_base()
+    ggthemes::theme_base() +
+    ggplot2::theme(
+      plot.background  = ggplot2::element_rect(fill = "white", color = NA),
+      panel.background = ggplot2::element_rect(fill = "white", color = NA)
+    )
+
 
   tbl <- plot_table(model_result, 4)
 
@@ -225,7 +195,9 @@ plot_control <- function(
 create_modified_model_result <- function(
     etr_type,
     etr_regression_data,
-    sdiff,
+    residual_sum_of_squares,
+    root_mean_squared_error,
+    relative_root_mean_squared_error,
     a,
     b,
     c,
@@ -243,7 +215,9 @@ create_modified_model_result <- function(
   result <- list(
     etr_type = etr_type,
     etr_regression_data = etr_regression_data,
-    sdiff = sdiff,
+    residual_sum_of_squares = residual_sum_of_squares,
+    root_mean_squared_error = root_mean_squared_error,
+    relative_root_mean_squared_error = relative_root_mean_squared_error,
     a = a,
     b = b,
     c = c,
@@ -265,11 +239,11 @@ create_modified_model_result <- function(
 
 #' Write Model Result CSV
 #' @description
-#' This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
+#' This function exports the intermediate data table, regression data, and model parameters into separate CSV files for easy access and further analysis.
 #'
 #' @param dest_dir A character string specifying the directory where the CSV files will be saved.
 #' @param name A character string specifying the base name for the output files.
-#' @param data A data frame containing the raw input data used in the model.
+#' @param data A data.table containing the intermediate data used in the model.
 #' @param model_result A list containing the model results, including parameter values and regression data.
 #'
 #' @details
@@ -337,4 +311,37 @@ write_model_result_csv <- function(dest_dir, name, data, model_result) {
     quote = TRUE,
     row.names = FALSE
   )
+}
+
+get_etr_data_for_par_values <- function(data, etr_regression_data, etr_type) {
+  validate_data(data)
+  validate_etr_regression_data(etr_regression_data)
+  validate_etr_type(etr_type)
+
+  result <- data.table::data.table(par = numeric(), measured_etr = numeric(), predicted_etr = numeric())
+
+  for (i in seq_len(nrow(data))) {
+    row <- data[i, ]
+    par <- row$par
+    measured_etr <- row[[etr_type]]
+    predicted_etr <- etr_regression_data[etr_regression_data$par == par, ][[prediction_name]]
+    result_row <- list(par = par, measured_etr = measured_etr, predicted_etr = predicted_etr)
+    result <- rbind(result, result_row)
+  }
+  return(result)
+}
+
+root_mean_squared_error <- function(measured_predicted_etr_data) {
+  measured_etr <- measured_predicted_etr_data$measured_etr
+  predicted_etr <- measured_predicted_etr_data$predicted_etr
+  root_mean_squared_error <- Metrics::rmse(measured_etr, predicted_etr)
+  return(root_mean_squared_error)
+}
+
+relative_root_mean_squared_error <- function(measured_predicted_etr_data) {
+  measured_etr <- measured_predicted_etr_data$measured_etr
+  predicted_etr <- measured_predicted_etr_data$predicted_etr
+  root_mean_squared_error <- Metrics::rmse(measured_etr, predicted_etr)
+  relative_root_mean_squared_error <- root_mean_squared_error / mean(predicted_etr)
+  return(relative_root_mean_squared_error)
 }

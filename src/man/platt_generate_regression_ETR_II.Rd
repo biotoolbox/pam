@@ -12,7 +12,7 @@ platt_generate_regression_ETR_II(
 )
 }
 \arguments{
-\item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
+\item{data}{A \code{data.table} from from read function (e.g.\code{read_dual_pam_data}).}
 
 \item{alpha_start_value}{Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.}
 
@@ -24,7 +24,9 @@ platt_generate_regression_ETR_II(
 A list containing:
 \itemize{
   \item \code{etr_regression_data}: Predicted ETR values.
-  \item \code{sdiff}: Deviation between actual and predicted ETR.
+  \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+  \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+  \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
   \item \code{beta}: Photoinhibition (\eqn{\beta}).

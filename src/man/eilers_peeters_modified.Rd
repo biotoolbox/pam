@@ -7,14 +7,16 @@
 eilers_peeters_modified(model_result)
 }
 \arguments{
-\item{model_result}{A list containing the results of the model, including parameters such as \code{a}, \code{b}, \code{c}, \code{s}, \code{pm}, \code{ik}, \code{im}, and \code{w}.}
+\item{model_result}{A list containing the model result (e.g. from eilers_peeters_generate_regression_ETR_II()).}
 }
 \value{
 A modified model result as a list with the following elements:
 \itemize{
   \item \code{etr_type}: ETR Type based on the model result.
   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-  \item \code{sdiff}: The difference between observed and predicted ETR values.
+  \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+  \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+  \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
   \item \code{a}: The obtained parameter \code{a}.
   \item \code{b}: The obtained parameter \code{b}.
   \item \code{c}: The obtained parameter \code{c}.

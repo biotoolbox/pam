@@ -1,20 +1,20 @@
 #' Default start value
 #' @export
-eilers_peeters_default_start_value_a <- 0.00004
+eilers_peeters_default_start_value_a <- 1.550175e-06
 
 #' Default start value
 #' @export
-eilers_peeters_default_start_value_b <- 0.004
+eilers_peeters_default_start_value_b <- 0.01419034
 
 #' Default start value
 #' @export
-eilers_peeters_default_start_value_c <- 5
+eilers_peeters_default_start_value_c <- 7.012012
 
 #' Eilers-Peeters Regression for  ETR I
 #'
 #' Fits a regression model for ETR I based on Eilers-Peeters (1988), considering photoinhibition.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from read function (e.g.\code{read_dual_pam_data}).
 #' @param a_start_value Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.
 #' @param b_start_value Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
@@ -25,7 +25,9 @@ eilers_peeters_default_start_value_c <- 5
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
 #'   \item \code{pm}: Maximum ETR (\eqn{p_m}).
 #'   \item \code{s}: Initial slope (\eqn{s}).
@@ -53,7 +55,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
     c_start_value = eilers_peeters_default_start_value_c) {
   return(eilers_peeters_generate_regression_internal(
     data,
-    etr_I_type,
+    etr_1_type,
     a_start_value,
     b_start_value,
     c_start_value
@@ -64,7 +66,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #'
 #' Fits a regression model for ETR II based on Eilers-Peeters (1988), considering photoinhibition.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from from read function (e.g.\code{read_dual_pam_data}).
 #' @param a_start_value Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.
 #' @param b_start_value Numeric. Starting value for \eqn{b}. Default: \code{b_start_values_eilers_peeters_default}.
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
@@ -75,7 +77,9 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
 #'   \item \code{pm}: Maximum ETR (\eqn{p_m}).
 #'   \item \code{s}: Initial slope (\eqn{s}).
@@ -102,7 +106,7 @@ eilers_peeters_generate_regression_ETR_II <- function(
     c_start_value = eilers_peeters_default_start_value_c) {
   return(eilers_peeters_generate_regression_internal(
     data,
-    etr_II_type,
+    etr_2_type,
     a_start_value,
     b_start_value,
     c_start_value
@@ -138,13 +142,13 @@ eilers_peeters_generate_regression_internal <- function(
         stop("eilers peeters: c start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
-
-      model <- minpack.lm::nlsLM(data[[etr_type]] ~ (PAR / ((a * PAR^2) + (b * PAR) + c)),
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ (par / ((a * par^2) + (b * par) + c)),
         data = data,
         start = list(a = a_start_value, b = b_start_value, c = c_start_value),
         control = minpack.lm::nls.lm.control(maxiter = 1000)
       )
+
+      residual_sum_of_squares <- model$m$deviance()
 
       abc <- stats::coef(model)
       a <- abc[["a"]]
@@ -218,29 +222,24 @@ eilers_peeters_generate_regression_internal <- function(
 
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         predictions <- c(predictions, p / ((a * p^2) + (b * p) + c))
       }
       etr_regression_data <- create_regression_data(pars, predictions)
 
-      sdiff <- NA_real_
-      tryCatch(
-        {
-          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-        },
-        warning = function(w) {
-          eilers_peeters_message(paste("failed to calculate sdiff: warning:", w))
-        },
-        error = function(e) {
-          eilers_peeters_message(paste("failed to calculate sdiff: error:", w))
-        }
-      )
+      measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
+
+      root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
+
+      relative_root_mean_squared_error <- relative_root_mean_squared_error(measured_predicted_etr_par_data)
 
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
-        sdiff = sdiff,
+        residual_sum_of_squares = residual_sum_of_squares,
+        root_mean_squared_error = root_mean_squared_error,
+        relative_root_mean_squared_error = relative_root_mean_squared_error,
         a = a,
         b = b,
         c = c,
@@ -267,13 +266,15 @@ eilers_peeters_generate_regression_internal <- function(
 #'
 #' This function enhances the Eilers and Peeters (1988) model by adding parameters not originally included in the model, which were introduced by other models. It also renames parameters to a standardized naming convention used across all models.
 #'
-#' @param model_result A list containing the results of the model, including parameters such as \code{a}, \code{b}, \code{c}, \code{s}, \code{pm}, \code{ik}, \code{im}, and \code{w}.
+#' @param model_result A list containing the model result (e.g. from eilers_peeters_generate_regression_ETR_II()).
 #'
 #' @return A modified model result as a list with the following elements:
 #' \itemize{
 #'   \item \code{etr_type}: ETR Type based on the model result.
 #'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}: The obtained parameter \code{a}.
 #'   \item \code{b}: The obtained parameter \code{b}.
 #'   \item \code{c}: The obtained parameter \code{c}.
@@ -307,6 +308,8 @@ eilers_peeters_modified <- function(model_result) {
     get_etr_type_from_model_result(model_result),
     get_etr_regression_data_from_model_result(model_result),
     get_sdiff_from_model_result(model_result),
+    model_result[["root_mean_squared_error"]],
+    model_result[["relative_root_mean_squared_error"]],
     model_result[["a"]],
     model_result[["b"]],
     model_result[["c"]],

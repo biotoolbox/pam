@@ -18,5 +18,6 @@ build:
 	Rscript -e "setwd('src/'); library(devtools); devtools::load_all(); devtools::document(); devtools::build()"
 
 buildtest:
+	rm -rf src/tests/testthat/results
 	make build
-	R CMD check pam_1.0.6.tar.gz
+	R CMD check pam_2.0.0.tar.gz

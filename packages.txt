@@ -1,8 +1,8 @@
+rlang
 data.table
-dplyr
 ggplot2
 minpack.lm
-SciViews
 ggthemes
 gridExtra
 cowplot
+Metrics

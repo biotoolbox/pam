@@ -3,13 +3,13 @@ color_platt <- "#2600ff"
 color_vollenweider <- "#029b07"
 color_walsby <- "#ff0000"
 
-etr_I_type <- "recalc_ETR.I."
-etr_II_type <- "recalc_ETR.II."
+etr_1_type <- "etr_1"
+etr_2_type <- "etr_2"
 
-PAR_name <- "PAR"
+PAR_name <- "par"
 prediction_name <- "prediction"
 
-etr_label <- expression(paste("ETR [", mu, "mol electrons"^{
+etr_label <- expression(paste("ETR [", mu, "mol electrons m"^{
     -2
 } ~ "s"^{
     -1
@@ -21,7 +21,7 @@ par_label <- expression(paste("PAR [", mu, "mol photons m"^{
     -1
 } ~ "]"))
 
-etr_unit_label <- expression(paste("[", mu, "mol electrons"^{
+etr_unit_label <- expression(paste("[", mu, "mol electrons m"^{
     -2
 } ~ "s"^{
     -1

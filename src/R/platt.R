@@ -1,20 +1,20 @@
 #' Default start value
 #' @export
-platt_default_start_value_alpha <- 0.3
+platt_default_start_value_alpha <- 0.1219164
 
 #' Default start value
 #' @export
-platt_default_start_value_beta <- 0.01
+platt_default_start_value_beta <- 0.0009406828
 
 #' Default start value
 #' @export
-platt_default_start_value_ps <- 30
+platt_default_start_value_ps <- 49.76112
 
 #' Platt Regression for ETR I
 #'
 #' Fits the Platt (1980) regression model using original naming conventions.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from from read function (e.g.\code{read_dual_pam_data}).
 #' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.
 #' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.
 #' @param ps_start_value Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.
@@ -22,7 +22,9 @@ platt_default_start_value_ps <- 30
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
 #'   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition (\eqn{\beta}).
@@ -55,7 +57,7 @@ platt_generate_regression_ETR_I <- function(
     ps_start_value = platt_default_start_value_ps) {
   return(platt_generate_regression_internal(
     data,
-    etr_I_type,
+    etr_1_type,
     alpha_start_value,
     beta_start_value,
     ps_start_value
@@ -66,7 +68,7 @@ platt_generate_regression_ETR_I <- function(
 #'
 #' Fits the Platt (1980) regression model using original naming conventions.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from from read function (e.g.\code{read_dual_pam_data}).
 #' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_value_platt_default}.
 #' @param beta_start_value Numeric. Initial value for \eqn{\beta}. Default: \code{beta_start_value_platt_default}.
 #' @param ps_start_value Numeric. Initial value for \eqn{P_s}. Default: \code{ps_start_value_platt_default}.
@@ -74,7 +76,9 @@ platt_generate_regression_ETR_I <- function(
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{ps}: Maximum electron transport rate without photoinhibition (\eqn{P_s}).
 #'   \item \code{alpha}: Initial slope of the light curve (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition (\eqn{\beta}).
@@ -107,7 +111,7 @@ platt_generate_regression_ETR_II <- function(
     ps_start_value = platt_default_start_value_ps) {
   return(platt_generate_regression_internal(
     data,
-    etr_II_type,
+    etr_2_type,
     alpha_start_value,
     beta_start_value,
     ps_start_value
@@ -143,9 +147,7 @@ platt_generate_regression_internal <- function(
         stop("ps start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
-
-      model <- minpack.lm::nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * PAR) / ps))) * exp(-((beta * PAR) / ps)),
+      model <- minpack.lm::nlsLM(data[[etr_type]] ~ ps * (1 - exp(-((alpha * par) / ps))) * exp(-((beta * par) / ps)),
         data = data,
         start = list(
           alpha = alpha_start_value,
@@ -154,6 +156,8 @@ platt_generate_regression_internal <- function(
         ),
         control = stats::nls.control(maxiter = 1000)
       )
+
+      residual_sum_of_squares <- model$m$deviance()
 
       abc <- stats::coef(model)
       alpha <- abc[["alpha"]]
@@ -227,29 +231,24 @@ platt_generate_regression_internal <- function(
 
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         predictions <- c(predictions, ps * (1 - exp((-alpha * p) / ps)) * exp((-beta * p) / ps))
       }
       etr_regression_data <- create_regression_data(pars, predictions)
 
-      sdiff <- NA_real_
-      tryCatch(
-        {
-          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-        },
-        warning = function(w) {
-          platt_message(paste("failed to calculate sdiff: warning:", w))
-        },
-        error = function(e) {
-          platt_message(paste("failed to calculate sdiff: error:", e))
-        }
-      )
+       measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
+
+      root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
+
+      relative_root_mean_squared_error <- relative_root_mean_squared_error(measured_predicted_etr_par_data)
 
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
-        sdiff = sdiff,
+        residual_sum_of_squares = residual_sum_of_squares,
+         root_mean_squared_error = root_mean_squared_error,
+        relative_root_mean_squared_error = relative_root_mean_squared_error,
         alpha = alpha,
         beta = beta,
         ps = ps,
@@ -275,13 +274,15 @@ platt_generate_regression_internal <- function(
 #'
 #' This function enhances the Platt (1980) model by adding parameters not originally included in the model, which were introduced by other models. It also renames parameters to a standardized naming convention used across all models.
 #'
-#' @param model_result A list containing the results of the model, including parameters such as \code{etr_max}, \code{alpha}, and \code{beta}.
+#' @param model_result A list containing the model result (e.g. from platt_generate_regression_ETR_II()).
 #'
 #' @return A modified model result as a list with the following elements:
 #' \itemize{
 #'   \item \code{etr_type}: ETR Type based on the model result.
 #'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}: Obtained parameter \code{a}, equal to \code{etrmax_without_photoinhibition}.
 #'   \item \code{b}: Obtained parameter \code{b}, equal to \code{alpha}.
 #'   \item \code{c}: Obtained parameter \code{c}, equal to \code{beta}.
@@ -314,7 +315,9 @@ platt_modified <- function(model_result) {
   result <- create_modified_model_result(
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
-    sdiff = get_sdiff_from_model_result(model_result),
+    residual_sum_of_squares = get_sdiff_from_model_result(model_result),
+        model_result[["root_mean_squared_error"]],
+    model_result[["relative_root_mean_squared_error"]],
     a = model_result[["ps"]],
     b = model_result[["alpha"]],
     c = model_result[["beta"]],

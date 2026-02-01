@@ -13,16 +13,21 @@
 #'
 #' @return A plot with ETR data, regression results, and a summary table.
 #'
-#' #' @examples
+#' @examples
 #' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
-#' model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_I(data)
-#' model_results_platt <- platt_generate_regression_ETR_I(data)
-#' model_results <- list(eilers_peeters_modified(model_results), platt_modified(model_results))
-#' name_list <- c("Eilers-Peeters", "Platt")
-#' color_list <- c("red", "pink")
+#' model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_II(data)
+#' model_results_eilers_peeters_modified <- eilers_peeters_modified(model_results_eilers_peeters)
+#'
+#' model_results_platt <- platt_generate_regression_ETR_II(data)
+#' model_results_platt_modified <- platt_modified(model_results_platt)
+#'
+#' model_results <- list(model_results_eilers_peeters_modified, model_results_platt_modified)
+#' name_list <- list("Eilers-Peeters", "Platt")
+#' color_list <- list("red", "pink")
 #' plot <- combo_plot_control("test", data, model_results, name_list, color_list)
+#'
 #' @export
 combo_plot_control <- function(
     title,
@@ -55,19 +60,22 @@ combo_plot_control <- function(
   validate_etr_type(etr_type)
 
   yield <- NA_real_
-  if (etr_type == etr_I_type) {
-    yield <- "Y.I."
+  yield_name <- ""
+  if (etr_type == etr_1_type) {
+    yield <- "yield_1"
+    yield_name <- "Y(I)"
   } else {
-    yield <- "Y.II."
+    yield <- "yield_2"
+    yield_name <- "Y(II)"
   }
 
-  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$PAR, y = get(etr_type))) +
+  plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$par, y = get(etr_type))) +
     ggplot2::geom_point() +
-    ggplot2::geom_point(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
+    ggplot2::geom_point(data = data, shape = 17, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::geom_line(data = data, ggplot2::aes(y = get(yield) * max_etr)) +
     ggplot2::labs(x = par_label, y = etr_label, title = eval(title)) +
     ggplot2::scale_y_continuous(
-      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = "Yield")
+      sec.axis = ggplot2::sec_axis(~ . / max_etr, name = yield_name)
     )
 
   custom_theme <- gridExtra::ttheme_minimal(
@@ -115,7 +123,7 @@ combo_plot_control <- function(
     plot <- plot + ggplot2::geom_line(
       data = reg_data,
       ggplot2::aes(
-        x = !!rlang::sym("PAR"),
+        x = !!rlang::sym("par"),
         y = !!rlang::sym("prediction"),
         color = names
       )
@@ -199,7 +207,11 @@ combo_plot_control <- function(
     ) +
     ggplot2::labs(x = par_label, y = etr_label, title = eval(title), color = NULL) +
     ggthemes::theme_base() +
-    ggplot2::theme(legend.position = "bottom")
+    ggplot2::theme(legend.position = "bottom") +
+    ggplot2::theme(
+      plot.background  = ggplot2::element_rect(fill = "white", color = NA),
+      panel.background = ggplot2::element_rect(fill = "white", color = NA)
+    )
 
   tbl <- cowplot::plot_grid(
     plotlist = tbl_list,

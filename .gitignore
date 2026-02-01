@@ -7,3 +7,4 @@ src/tests/testthat/results/
 .Rhistory
 .RData
 pam_*.tar.gz
+output/

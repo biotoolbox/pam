@@ -7,14 +7,16 @@
 vollenweider_modified(model_result)
 }
 \arguments{
-\item{model_result}{A list containing the results of the model, including parameters such as \code{pmax}, \code{alpha}, and \code{ik}.}
+\item{model_result}{A list containing the model result (e.g. from vollenweider_generate_regression_ETR_II()).}
 }
 \value{
 A modified model result as a list containing the following elements:
 \itemize{
   \item \code{etr_type}: ETR Type based on the model result.
   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-  \item \code{sdiff}: The difference between observed and predicted ETR values.
+  \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+  \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+  \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
   \item \code{a}: Obtained parameter \code{a}, here equal to \code{etrmax_without_photoinhibition}.
   \item \code{b}: Obtained parameter \code{b}, transferred as \code{a}.
   \item \code{c}: Obtained parameter \code{c}, here transferred as \code{alpha}.

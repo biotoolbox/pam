@@ -4,10 +4,12 @@
 \alias{compare_regression_models_ETR_I}
 \title{Compare Regression Models for ETR I}
 \usage{
-compare_regression_models_ETR_I(data_dir)
+compare_regression_models_ETR_I(data_dir, read_func)
 }
 \arguments{
 \item{data_dir}{A character string specifying the directory containing input data files.}
+
+\item{read_func}{A read function defined in read_pam_data.R depending on the used device.}
 }
 \value{
 A vector with total points assigned to each regression model based on their performance. Models are ranked as follows:
@@ -35,7 +37,7 @@ A detailed documentation can be found under \url{https://github.com/biotoolbox/p
 }
 \examples{
 path <- file.path(system.file("extdata", package = "pam"))
-points <- compare_regression_models_ETR_I(path)
+points <- compare_regression_models_ETR_I(path, read_dual_pam_data)
 
 }
 \references{

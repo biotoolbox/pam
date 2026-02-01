@@ -3,6 +3,7 @@
 #' Compares multiple regression models for electron transport rate (ETR) data using predefined performance metrics.
 #'
 #' @param data_dir A character string specifying the directory containing input data files.
+#' @param read_func A read function defined in read_pam_data.R depending on the used device.
 #'
 #' @return A vector with total points assigned to each regression model based on their performance. Models are ranked as follows:
 #' \itemize{
@@ -42,11 +43,11 @@
 #' }
 #' @examples
 #' path <- file.path(system.file("extdata", package = "pam"))
-#' points <- compare_regression_models_ETR_I(path)
+#' points <- compare_regression_models_ETR_I(path, read_dual_pam_data)
 #'
 #' @export
-compare_regression_models_ETR_I <- function(data_dir) {
-  return(compare_regression_models(data_dir, etr_I_type))
+compare_regression_models_ETR_I <- function(data_dir, read_func) {
+  return(compare_regression_models(data_dir, etr_1_type, read_func))
 }
 
 
@@ -55,6 +56,7 @@ compare_regression_models_ETR_I <- function(data_dir) {
 #' Compares multiple regression models for electron transport rate (ETR) data using predefined performance metrics.
 #'
 #' @param data_dir A character string specifying the directory containing input data files.
+#' @param read_func A read function defined in read_pam_data.R depending on the used device.
 #'
 #' @return A vector with total points assigned to each regression model based on their performance. Models are ranked as follows:
 #' \itemize{
@@ -94,14 +96,17 @@ compare_regression_models_ETR_I <- function(data_dir) {
 #' }
 #' @examples
 #' path <- file.path(system.file("extdata", package = "pam"))
-#' points <- compare_regression_models_ETR_II(path)
+#' points <- compare_regression_models_ETR_II(path, read_dual_pam_data)
 #'
 #' @export
-compare_regression_models_ETR_II <- function(data_dir) {
-  return(compare_regression_models(data_dir, etr_II_type))
+compare_regression_models_ETR_II <- function(data_dir, read_func) {
+  return(compare_regression_models(data_dir, etr_2_type, read_func))
 }
 
-compare_regression_models <- function(data_dir, etr_type) {
+compare_regression_models <- function(data_dir, etr_type, read_func) {
+  if (!is.function(read_func)) {
+    stop("'read_func' must be a function, not ", class(read_func))
+  }
   csv_files <- list.files(data_dir, pattern = ".csv", full.names = TRUE)
 
   eilers_peeters_points <- 0
@@ -111,44 +116,45 @@ compare_regression_models <- function(data_dir, etr_type) {
 
   for (file in csv_files) {
     title <- basename(file)
-    data <- read_dual_pam_data(file)
+    data <- do.call(read_func, list(csv_path = file))
+    validate_data(data)
 
     tryCatch(
       {
         eilers_peeters <- eilers_peeters_generate_regression_internal(data, etr_type)
-        eilers_peeters_sdiff <- eilers_peeters[["sdiff"]]
+        eilers_peeters_sdiff <- eilers_peeters[["residual_sum_of_squares"]]
         if (!is.numeric(eilers_peeters_sdiff)) {
-          stop("eilers_peeters sdiff result is not numeric")
+          stop("eilers_peeters residual_sum_of_squares result is not numeric")
         }
         if (is.na(eilers_peeters_sdiff)) {
-          stop("failed to calculate sdiff with eilers_peeters")
+          stop("failed to calculate residual_sum_of_squares with eilers_peeters")
         }
 
         platt <- platt_generate_regression_internal(data, etr_type)
-        platt_sdiff <- platt[["sdiff"]]
+        platt_sdiff <- platt[["residual_sum_of_squares"]]
         if (!is.numeric(eilers_peeters_sdiff)) {
-          stop("platt sdiff result is not numeric")
+          stop("platt residual_sum_of_squares result is not numeric")
         }
         if (is.na(platt_sdiff)) {
-          stop("failed to calculate sdiff with platt")
+          stop("failed to calculate residual_sum_of_squares with platt")
         }
 
         vollenweider <- vollenweider_generate_regression_internal(data, etr_type)
-        vollenweider_sdiff <- vollenweider[["sdiff"]]
+        vollenweider_sdiff <- vollenweider[["residual_sum_of_squares"]]
         if (!is.numeric(eilers_peeters_sdiff)) {
-          stop("vollenweider sdiff result is not numeric")
+          stop("vollenweider residual_sum_of_squares result is not numeric")
         }
         if (is.na(vollenweider_sdiff)) {
-          stop("failed to calculate sdiff with vollenweider")
+          stop("failed to calculate residual_sum_of_squares with vollenweider")
         }
 
         walsby <- walsby_generate_regression_internal(data, etr_type)
-        walsby_sdiff <- walsby[["sdiff"]]
+        walsby_sdiff <- walsby[["residual_sum_of_squares"]]
         if (!is.numeric(eilers_peeters_sdiff)) {
-          stop("walsby sdiff result is not numeric")
+          stop("walsby residual_sum_of_squares result is not numeric")
         }
         if (is.na(walsby_sdiff)) {
-          stop("failed to calculate sdiff with walsby")
+          stop("failed to calculate residual_sum_of_squares with walsby")
         }
 
         data1 <- data.table::data.table(group = "eilers_peeters", value = eilers_peeters_sdiff)

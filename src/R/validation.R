@@ -7,6 +7,58 @@ validate_data <- function(data) {
     stop("data is not a valid data.table")
   }
 
+  if (!"par" %in% colnames(data)) {
+    stop("required col 'par' not found")
+  }
+
+  if (!"yield_1" %in% colnames(data)) {
+    stop("required col 'yield_1' not found")
+  }
+
+  if (!"yield_2" %in% colnames(data)) {
+    stop("required col 'yield_2' not found")
+  }
+
+  if (!"etr_1" %in% colnames(data)) {
+    stop("required col 'etr_1' not found")
+  }
+
+  if (!"etr_2" %in% colnames(data)) {
+    stop("required col 'etr_2' not found")
+  }
+}
+
+validate_raw_intermediate_csv <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
+  if (!"par" %in% colnames(data)) {
+    stop("required col 'par' not found")
+  }
+
+  if (!"yield_1" %in% colnames(data)) {
+    stop("required col 'yield_1' not found")
+  }
+
+  if (!"yield_2" %in% colnames(data)) {
+    stop("required col 'yield_2' not found")
+  }
+}
+
+validate_dual_pam_data <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
   if (nrow(data) < 2) {
     stop("no data rows")
   }
@@ -38,6 +90,44 @@ validate_data <- function(data) {
   if (!"Time" %in% colnames(data)) {
     stop("required col 'Time' not found")
   }
+
+  if (!"Pm.-Det." %in% data[["Action"]]) {
+    stop("required value 'Pm' not found in column 'Action'")
+  }
+
+  if (!"Fm-Det." %in% data[["Action"]]) {
+    stop("required value 'Fm' not found in column 'Action'")
+  }
+}
+
+validate_junior_pam_data <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
+  if (nrow(data) < 2) {
+    stop("no data rows")
+  }
+
+  if (ncol(data) == 0) {
+    stop("no cols in data")
+  }
+
+  if (!any(grepl("PAR", colnames(data)))) {
+    stop("required col 'PAR' not found")
+  }
+
+  if (!any(grepl("Y..II.", colnames(data)))) {
+    stop("required col 'Y..II.' not found")
+  }
+
+  if (!"Datetime" %in% colnames(data)) {
+    stop("required col 'Datetime' not found")
+  }
 }
 
 validate_etr_regression_data <- function(regression_data) {
@@ -57,8 +147,8 @@ validate_etr_regression_data <- function(regression_data) {
     stop("regression data got more or less then two columns")
   }
 
-  if (!"PAR" %in% colnames(regression_data)) {
-    stop("required col 'PAR' not found")
+  if (!"par" %in% colnames(regression_data)) {
+    stop("required col 'par' not found")
   }
 
   if (!"prediction" %in% colnames(regression_data)) {
@@ -67,7 +157,7 @@ validate_etr_regression_data <- function(regression_data) {
 }
 
 validate_etr_type <- function(etr_type) {
-  if (etr_type != etr_I_type && etr_type != etr_II_type) {
+  if (etr_type != etr_1_type && etr_type != etr_2_type) {
     stop("etr type is not valid")
   }
 }
@@ -83,9 +173,9 @@ validate_model_result <- function(model_result) {
   etr_regression_data <- model_result[["etr_regression_data"]]
   validate_etr_regression_data(etr_regression_data)
 
-  sdiff <- model_result[["sdiff"]]
-  if (!is.numeric(sdiff)) {
-    stop("sdiff is not a valid number")
+  residual_sum_of_squares <- model_result[["residual_sum_of_squares"]]
+  if (!is.numeric(residual_sum_of_squares)) {
+    stop("residual_sum_of_squares is not a valid number")
   }
 }
 
@@ -94,9 +184,9 @@ validate_modified_model_result <- function(model_result) {
     {
       validate_model_result(model_result)
 
-      if (is.null(model_result[["sdiff"]]) ||
-        !is.numeric(model_result[["sdiff"]])) {
-        stop("sdiff is null or not a valid number")
+      if (is.null(model_result[["residual_sum_of_squares"]]) ||
+        !is.numeric(model_result[["residual_sum_of_squares"]])) {
+        stop("residual_sum_of_squares is null or not a valid number")
       }
 
       if (is.null(model_result[["a"]]) ||

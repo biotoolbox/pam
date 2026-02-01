@@ -11,7 +11,7 @@ write_model_result_csv(dest_dir, name, data, model_result)
 
 \item{name}{A character string specifying the base name for the output files.}
 
-\item{data}{A data frame containing the raw input data used in the model.}
+\item{data}{A data.table containing the intermediate data used in the model.}
 
 \item{model_result}{A list containing the model results, including parameter values and regression data.}
 }
@@ -19,7 +19,7 @@ write_model_result_csv(dest_dir, name, data, model_result)
 No return value, called for side effects
 }
 \description{
-This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
+This function exports the intermediate data table, regression data, and model parameters into separate CSV files for easy access and further analysis.
 }
 \details{
 This function generates three CSV files:

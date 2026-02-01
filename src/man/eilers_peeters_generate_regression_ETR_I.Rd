@@ -12,7 +12,7 @@ eilers_peeters_generate_regression_ETR_I(
 )
 }
 \arguments{
-\item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
+\item{data}{A \code{data.table} from read function (e.g.\code{read_dual_pam_data}).}
 
 \item{a_start_value}{Numeric. Starting value for \eqn{a}. Default: \code{a_start_values_eilers_peeters_default}.}
 
@@ -24,7 +24,9 @@ eilers_peeters_generate_regression_ETR_I(
 A list containing:
 \itemize{
   \item \code{etr_regression_data}: Predicted ETR values.
-  \item \code{sdiff}: Deviation between actual and predicted values.
+  \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+  \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+  \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
   \item \code{a}, \code{b}, \code{c}: Fitted parameters.
   \item \code{pm}: Maximum ETR (\eqn{p_m}).
   \item \code{s}: Initial slope (\eqn{s}).

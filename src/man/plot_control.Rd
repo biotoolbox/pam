@@ -9,14 +9,14 @@ plot_control(data, model_result, title, color = "black")
 \arguments{
 \item{data}{A `data.table` containing the original ETR and yield data for the plot.}
 
-\item{model_result}{A list containing the fitting results of the used model and the calculated paramters (alpha, ik...).}
+\item{model_result}{A list containing the fitting results of the used model and the calculated parameters.}
 
 \item{title}{A character string that specifies the title of the plot.}
 
 \item{color}{A color specification for the regression line in the plot.}
 }
 \value{
-A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik...)
+A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data.
 }
 \description{
 This function creates a control plot for the used model based on the provided data and model results.

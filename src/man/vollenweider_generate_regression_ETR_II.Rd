@@ -13,7 +13,7 @@ vollenweider_generate_regression_ETR_II(
 )
 }
 \arguments{
-\item{data}{A \code{data.table} from \code{read_dual_pam_data}.}
+\item{data}{A \code{data.table} from read function (e.g.\code{read_dual_pam_data}).}
 
 \item{pmax_start_value}{Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.}
 
@@ -27,7 +27,9 @@ vollenweider_generate_regression_ETR_II(
 A list containing:
 \itemize{
   \item \code{etr_regression_data}: Predicted ETR values.
-  \item \code{sdiff}: Deviation between actual and predicted ETR.
+  \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+  \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+  \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
   \item \code{pmax}: Maximum electron transport rate (\eqn{p_{max}}).
   \item \code{a}: Parameter \eqn{a}.
   \item \code{alpha}: Parameter \eqn{\alpha}.

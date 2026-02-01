@@ -1,24 +1,24 @@
 #' Default start value
 #' @export
-vollenweider_default_start_value_pmax <- 40
+vollenweider_default_start_value_pmax <- 50
 
 #' Default start value
 #' @export
-vollenweider_default_start_value_a <- 0.1
+vollenweider_default_start_value_a <- 0.002
 
 #' Default start value
 #' @export
-vollenweider_default_start_value_alpha <- -0.0001
+vollenweider_default_start_value_alpha <- 0.00001
 
 #' Default start value
 #' @export
-vollenweider_default_start_value_n <- 350
+vollenweider_default_start_value_n <- 100
 
 #' Vollenweider Regression for ETR I
 #'
 #' Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from read function (e.g.\code{read_dual_pam_data}).
 #' @param pmax_start_value Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.
 #' @param a_start_value Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.
 #' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_values_vollenweider_default}.
@@ -30,7 +30,9 @@ vollenweider_default_start_value_n <- 350
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{pmax}: Maximum electron transport rate (\eqn{p_{max}}).
 #'   \item \code{a}: Parameter \eqn{a}.
 #'   \item \code{alpha}: Parameter \eqn{\alpha}.
@@ -62,7 +64,7 @@ vollenweider_generate_regression_ETR_I <- function(
     n_start_value = vollenweider_default_start_value_n) {
   return(vollenweider_generate_regression_internal(
     data,
-    etr_I_type,
+    etr_1_type,
     pmax_start_value,
     a_start_value,
     alpha_start_value,
@@ -74,7 +76,7 @@ vollenweider_generate_regression_ETR_I <- function(
 #'
 #' Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 #'
-#' @param data A \code{data.table} from \code{read_dual_pam_data}.
+#' @param data A \code{data.table} from read function (e.g.\code{read_dual_pam_data}).
 #' @param pmax_start_value Numeric. Initial value for \eqn{p_{max}}. Default: \code{pmax_start_values_vollenweider_default}.
 #' @param a_start_value Numeric. Initial value for \eqn{a}. Default: \code{a_start_values_vollenweider_default}.
 #' @param alpha_start_value Numeric. Initial value for \eqn{\alpha}. Default: \code{alpha_start_values_vollenweider_default}.
@@ -86,7 +88,9 @@ vollenweider_generate_regression_ETR_I <- function(
 #' @return A list containing:
 #' \itemize{
 #'   \item \code{etr_regression_data}: Predicted ETR values.
-#'   \item \code{sdiff}: Deviation between actual and predicted ETR.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{pmax}: Maximum electron transport rate (\eqn{p_{max}}).
 #'   \item \code{a}: Parameter \eqn{a}.
 #'   \item \code{alpha}: Parameter \eqn{\alpha}.
@@ -117,7 +121,7 @@ vollenweider_generate_regression_ETR_II <- function(
     n_start_value = vollenweider_default_start_value_n) {
   return(vollenweider_generate_regression_internal(
     data,
-    etr_II_type,
+    etr_2_type,
     pmax_start_value,
     a_start_value,
     alpha_start_value,
@@ -158,11 +162,9 @@ vollenweider_generate_regression_internal <- function(
         stop("n start value is not a valid number")
       }
 
-      data <- remove_det_row_by_etr(data, etr_type)
-
       model <- minpack.lm::nlsLM(
         data[[etr_type]] ~
-          pmax * (((a * PAR) / (sqrt(1 + (a * PAR)^2))) * (1 / (sqrt(1 + (alpha * PAR)^2)^n))),
+          pmax * (((a * par) / (sqrt(1 + (a * par)^2))) * (1 / (sqrt(1 + (alpha * par)^2)^n))),
         data = data,
         start = list(
           pmax = pmax_start_value,
@@ -172,6 +174,8 @@ vollenweider_generate_regression_internal <- function(
         ),
         control = stats::nls.control(maxiter = 1000)
       )
+
+      residual_sum_of_squares <- model$m$deviance()
 
       abc <- stats::coef(model)
       pmax <- abc[["pmax"]]
@@ -195,7 +199,7 @@ vollenweider_generate_regression_internal <- function(
       popt <- 0
       pars <- c()
       predictions <- c()
-      for (p in min(data$PAR):max(data$PAR)) {
+      for (p in min(data$par):max(data$par)) {
         pars <- c(pars, p)
         prediction <- pmax * (((a * p) / (sqrt(1 + (a * p)^2))) * (1 / (sqrt(1 + (alpha * p)^2)^n)))
         predictions <- c(
@@ -208,6 +212,12 @@ vollenweider_generate_regression_internal <- function(
         }
       }
       etr_regression_data <- create_regression_data(pars, predictions)
+
+      measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
+
+      root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
+
+      relative_root_mean_squared_error <- relative_root_mean_squared_error(measured_predicted_etr_par_data)
 
       iik <- NA_real_
       tryCatch(
@@ -235,23 +245,12 @@ vollenweider_generate_regression_internal <- function(
         }
       )
 
-      sdiff <- NA_real_
-      tryCatch(
-        {
-          sdiff <- calculate_sdiff(data, etr_regression_data, etr_type)
-        },
-        warning = function(w) {
-          vollenweider_message(paste("failed to calculate sdiff: warning:", w))
-        },
-        error = function(e) {
-          vollenweider_message(paste("failed to calculate sdiff: error:", e))
-        }
-      )
-
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
-        sdiff = sdiff,
+        residual_sum_of_squares = residual_sum_of_squares,
+        root_mean_squared_error = root_mean_squared_error,
+        relative_root_mean_squared_error = relative_root_mean_squared_error,
         pmax = pmax,
         a = a,
         alpha = alpha,
@@ -277,13 +276,15 @@ vollenweider_generate_regression_internal <- function(
 #'
 #' This function adds parameters that were not originally included in the Vollenweider (1965) model, but were introduced by other models, and renames the parameters to a standardized one for all models.
 #'
-#' @param model_result A list containing the results of the model, including parameters such as \code{pmax}, \code{alpha}, and \code{ik}.
+#' @param model_result A list containing the model result (e.g. from vollenweider_generate_regression_ETR_II()).
 #'
 #' @return A modified model result as a list containing the following elements:
 #' \itemize{
 #'   \item \code{etr_type}: ETR Type based on the model result.
 #'   \item \code{etr_regression_data}: Regression data with ETR predictions based on the fitted model.
-#'   \item \code{sdiff}: The difference between observed and predicted ETR values.
+#'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
+#'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
+#'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
 #'   \item \code{a}: Obtained parameter \code{a}, here equal to \code{etrmax_without_photoinhibition}.
 #'   \item \code{b}: Obtained parameter \code{b}, transferred as \code{a}.
 #'   \item \code{c}: Obtained parameter \code{c}, here transferred as \code{alpha}.
@@ -320,7 +321,9 @@ vollenweider_modified <- function(model_result) {
   result <- create_modified_model_result(
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
-    sdiff = get_sdiff_from_model_result(model_result),
+    residual_sum_of_squares = get_sdiff_from_model_result(model_result),
+    model_result[["root_mean_squared_error"]],
+    model_result[["relative_root_mean_squared_error"]],
     a = model_result[["pmax"]],
     b = model_result[["a"]],
     c = model_result[["alpha"]],
