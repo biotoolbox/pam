@@ -8,7 +8,7 @@ walsby_default_start_value_alpha <- 0.1228559
 
 #' Default start value
 #' @export
-walsby_default_start_value_beta <- --0.0008944076
+walsby_default_start_value_beta <- -0.0008944076
 
 #' Walsby Regression for ETR I
 #'
