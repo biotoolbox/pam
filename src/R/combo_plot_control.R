@@ -17,13 +17,17 @@
 #' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
-#' model_results_eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_II(data))
-#' model_results_platt <- platt_modified(platt_generate_regression_ETR_II(data))
-#' model_results <- list(model_results_eilers_peeters, model_results_platt)
+#' model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_II(data)
+#' model_results_eilers_peeters_modified <- eilers_peeters_modified(model_results_eilers_peeters)
+#'
+#' model_results_platt <- platt_generate_regression_ETR_II(data)
+#' model_results_platt_modified <- platt_modified(model_results_platt)
+#'
+#' model_results <- list(model_results_eilers_peeters_modified, model_results_platt_modified)
 #' name_list <- list("Eilers-Peeters", "Platt")
 #' color_list <- list("red", "pink")
 #' plot <- combo_plot_control("test", data, model_results, name_list, color_list)
-#' 
+#'
 #' @export
 combo_plot_control <- function(
     title,
