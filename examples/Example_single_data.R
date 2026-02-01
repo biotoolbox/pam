@@ -1,7 +1,7 @@
 ##### simple example for one file with eilers and peeters model####
 # install library pam
 install.packages("remotes")
-remotes::install_github("biotoolbox/pam", ref = "v2", subdir = "src")
+remotes::install_github("biotoolbox/pam", subdir = "src")
 library("pam")
 library("ggplot2")
 

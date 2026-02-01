@@ -1,6 +1,6 @@
 ##### example for combo plot control####
 install.packages("remotes")
-remotes::install_github("biotoolbox/pam", ref = "v2", subdir = "src")
+remotes::install_github("biotoolbox/pam", subdir = "src")
 library("pam")
 library("ggplot2")
 
