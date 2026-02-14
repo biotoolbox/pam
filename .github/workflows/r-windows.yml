@@ -24,6 +24,8 @@ jobs:
       matrix:
         r-version: ['4.3.3', 'release', 'devel']
 
+    name: windows ${{ matrix.r-version }}
+
     steps:
       - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
