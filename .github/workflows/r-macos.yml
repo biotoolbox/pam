@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        r-version: ['4.3.3', 'release', 'devel']
+        r-version: ['4.3.3', 'release']
 
     name: macos ${{ matrix.r-version }}
 
