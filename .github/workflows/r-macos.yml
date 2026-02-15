@@ -6,7 +6,7 @@
 # See https://github.com/r-lib/actions/tree/master/examples#readme for
 # additional example workflows available for the R community.
 
-name: r-windows
+name: r-macos
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
       matrix:
         r-version: ['4.3.3', 'release', 'devel']
 
-    name: windows ${{ matrix.r-version }}
+    name: macos ${{ matrix.r-version }}
 
     steps:
       - uses: actions/checkout@v4
