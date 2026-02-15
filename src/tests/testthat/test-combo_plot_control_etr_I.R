@@ -1,5 +1,5 @@
 test_that("test-combo_plot_control 20240925.csv", {
-  test_data_file <- file.path(getwd(), "data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
 
   eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_I(data))

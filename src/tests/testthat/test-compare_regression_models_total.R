@@ -1,6 +1,6 @@
 test_that("compare_regression_models etr I + II - linux", {
   skip_if_not(is_debian_or_ubuntu())
-  test_data_dir <- file.path(getwd(), "data", "bulk")
+  test_data_dir <- testthat::test_path("data", "bulk")
   model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir, read_dual_pam_data)
   model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir, read_dual_pam_data)
 
@@ -16,7 +16,7 @@ test_that("compare_regression_models etr I + II - linux", {
 })
 
 test_that("compare_regression_models etr I + II", {
-  test_data_dir <- file.path(getwd(), "data", "bulk")
+  test_data_dir <- testthat::test_path("data", "bulk")
 
   model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir, read_dual_pam_data)
   expect_named(model_points_etr_I, c("eilers_peeters", "platt", "vollenweider", "walsby"), ignore.order = TRUE)
