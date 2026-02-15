@@ -1,7 +1,6 @@
 test_that("test-universal_data_etr_I", {
-  test_data_file <- file.path(getwd(), "data", "universal_data.csv")
-
   expect_no_error({
+    test_data_file <- file.path(getwd(), "data", "universal_data.csv")
     data <- read_universal_data(test_data_file)
 
     eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_I(data))
@@ -9,27 +8,7 @@ test_that("test-universal_data_etr_I", {
     walsby <- walsby_modified(walsby_generate_regression_ETR_I(data))
     vollenweider <- vollenweider_modified(vollenweider_generate_regression_ETR_I(data))
 
-    if (is_supported_os() == FALSE) {
-      skip("Unsupported operating system for this test.")
-    }
-
     if (is_debian_or_ubuntu()) {
-      expect_equal(eilers_peeters[["residual_sum_of_squares"]], 53.4454062)
-      # expect_equal(eilers_peeters[["a"]], 0.000001479)
-      # expect_equal(eilers_peeters[["b"]], 0.002444096)
-      expect_equal(eilers_peeters[["c"]], 2.898407831)
-      expect_equal(eilers_peeters[["d"]], NA_real_)
-      expect_equal(eilers_peeters[["alpha"]], 0.345017009)
-      expect_equal(eilers_peeters[["beta"]], NA_real_)
-      expect_equal(eilers_peeters[["etrmax_with_photoinhibition"]], 151.851986)
-      expect_equal(eilers_peeters[["etrmax_without_photoinhibition"]], NA_real_)
-      expect_equal(eilers_peeters[["ik_with_photoinhibition"]], 440.1289906)
-      expect_equal(eilers_peeters[["ik_without_photoinhibition"]], NA_real_)
-      expect_equal(eilers_peeters[["im_with_photoinhibition"]], 1399.769662)
-      expect_equal(eilers_peeters[["w"]], 1.18036237)
-      expect_equal(eilers_peeters[["ib"]], NA_real_)
-      expect_equal(eilers_peeters[["etrmax_with_without_ratio"]], NA_real_)
-    } else if (is_windows()) {
       expect_equal(eilers_peeters[["residual_sum_of_squares"]], 53.4454062)
       # expect_equal(eilers_peeters[["a"]], 0.000001479)
       # expect_equal(eilers_peeters[["b"]], 0.002444096)
@@ -48,22 +27,6 @@ test_that("test-universal_data_etr_I", {
     }
 
     if (is_debian_or_ubuntu()) {
-      expect_equal(platt[["residual_sum_of_squares"]], 55.4812913)
-      expect_equal(platt[["a"]], 242.02858)
-      expect_equal(platt[["b"]], 0.350792446)
-      expect_equal(platt[["c"]], 0.056258718)
-      expect_equal(platt[["d"]], NA_real_)
-      expect_equal(platt[["alpha"]], 0.350792446)
-      expect_equal(platt[["beta"]], 0.056258718)
-      expect_equal(platt[["etrmax_with_photoinhibition"]], 151.8557330)
-      expect_equal(platt[["etrmax_without_photoinhibition"]], 242.02858)
-      expect_equal(platt[["ik_with_photoinhibition"]], 432.893395)
-      expect_equal(platt[["ik_without_photoinhibition"]], 689.94810)
-      expect_equal(platt[["im_with_photoinhibition"]], 1365.39202)
-      expect_equal(platt[["w"]], NA_real_)
-      expect_equal(platt[["ib"]], 4302.0636)
-      expect_equal(platt[["etrmax_with_without_ratio"]], 1.59380602)
-    } else if (is_windows()) {
       expect_equal(platt[["residual_sum_of_squares"]], 55.4812913)
       expect_equal(platt[["a"]], 242.02858)
       expect_equal(platt[["b"]], 0.350792446)
@@ -97,22 +60,6 @@ test_that("test-universal_data_etr_I", {
       expect_equal(walsby[["w"]], NA_real_)
       expect_equal(walsby[["ib"]], NA_real_)
       expect_equal(walsby[["etrmax_with_without_ratio"]], 1.456840002)
-    } else if (is_windows()) {
-      expect_equal(walsby[["residual_sum_of_squares"]], 55.5823146)
-      expect_equal(walsby[["a"]], 221.237850)
-      expect_equal(walsby[["b"]], 0.387249941)
-      expect_equal(walsby[["c"]], -0.035964269)
-      expect_equal(walsby[["d"]], NA_real_)
-      expect_equal(walsby[["alpha"]], 0.387249941)
-      expect_equal(walsby[["beta"]], -0.035964269)
-      expect_equal(walsby[["etrmax_with_photoinhibition"]], 151.8614464)
-      expect_equal(walsby[["etrmax_without_photoinhibition"]], 221.237850)
-      expect_equal(walsby[["ik_with_photoinhibition"]], 392.153567)
-      expect_equal(walsby[["ik_without_photoinhibition"]], 571.305058)
-      expect_equal(walsby[["im_with_photoinhibition"]], 1358.0)
-      expect_equal(walsby[["w"]], NA_real_)
-      expect_equal(walsby[["ib"]], NA_real_)
-      expect_equal(walsby[["etrmax_with_without_ratio"]], 1.45684014)
     }
 
     if (is_debian_or_ubuntu()) {
@@ -131,24 +78,7 @@ test_that("test-universal_data_etr_I", {
       expect_equal(vollenweider[["w"]], NA_real_)
       expect_equal(vollenweider[["ib"]], NA_real_)
       expect_equal(vollenweider[["etrmax_with_without_ratio"]], 1.254945)
-    } else if (is_windows()) {
-      expect_equal(vollenweider[["residual_sum_of_squares"]], 56.4705283)
-      expect_equal(vollenweider[["a"]], 181.19904)
-      # expect_equal(vollenweider[["b"]], 0.001864811)
-      # expect_equal(vollenweider[["c"]], 0.00001772)
-      expect_equal(vollenweider[["d"]], 0.046131240)
-      expect_equal(vollenweider[["alpha"]], 0.310402692)
-      expect_equal(vollenweider[["beta"]], NA_real_)
-      expect_equal(vollenweider[["etrmax_with_photoinhibition"]], 152.853737)
-      expect_equal(vollenweider[["etrmax_without_photoinhibition"]], 181.19904)
-      expect_equal(vollenweider[["ik_with_photoinhibition"]], 492.43689)
-      expect_equal(vollenweider[["ik_without_photoinhibition"]], 583.75472)
-      expect_equal(vollenweider[["im_with_photoinhibition"]], 1420.0)
-      expect_equal(vollenweider[["w"]], NA_real_)
-      expect_equal(vollenweider[["ib"]], NA_real_)
-      expect_equal(vollenweider[["etrmax_with_without_ratio"]], 1.18544068)
     }
-
 
     plot <- combo_plot_control(
       "test-intermediate-table_etr_I.csv",

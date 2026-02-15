@@ -1,6 +1,6 @@
 test_that("test-get_etr_data_for_par_values.R", {
-  test_data_file <- file.path(getwd(), "data", "20240925.csv")
   expect_no_error({
+    test_data_file <- file.path(getwd(), "data", "20240925.csv")
     data <- read_dual_pam_data(test_data_file)
     model_result <- walsby_generate_regression_ETR_II(data)
     etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
