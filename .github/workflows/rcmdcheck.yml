@@ -19,7 +19,6 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -34,6 +33,7 @@ jobs:
           { os: windows-latest, r-version: devel },
         ]
         
+    runs-on: ${{ matrix.cases.os }}
     name: ${{ matrix.cases.os }} - ${{ matrix.cases.r-version }}
     
     steps:
