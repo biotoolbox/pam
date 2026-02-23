@@ -20,4 +20,4 @@ build:
 buildtest:
 	rm -rf src/tests/testthat/results
 	make build
-	R CMD check pam_2.0.0.tar.gz
+	R CMD check pam_2.0.1.tar.gz

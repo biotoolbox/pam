@@ -22,7 +22,7 @@ Generated control plots make it possible to check each individual regression fit
 cov <- covr::package_coverage()
 covr::percent_coverage(cov)
 ```
-90.32984 %
+90.05935 %
 
 ## Install
 
