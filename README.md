@@ -712,7 +712,7 @@ This function allows a straightforward comparison of the models: Eilers-Peeters 
 
 ```r
 #raw data file directory
-data_dir_compare <- testthat::test_path("data")
+data_dir_compare <- file.path(getwd(), "data")
 
 #compare regression models
 compare_regression_models_ETR_II <- compare_regression_models_ETR_II(data_dir_compare, read_dual_pam_data)
@@ -779,7 +779,7 @@ A plot displaying the original ETR and Yield values and the regression data from
 #### Examples
 
 ```r
-test_data_file <- testthat::test_path("data", "20240925.csv")
+test_data_file <- file.path(getwd(), "data", "20240925.csv")
     data <- read_dual_pam_data(test_data_file)
 
     eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_II(data))
