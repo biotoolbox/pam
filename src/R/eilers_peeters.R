@@ -149,6 +149,9 @@ eilers_peeters_generate_regression_internal <- function(
       )
 
       residual_sum_of_squares <- model$m$deviance()
+      if (is.na(residual_sum_of_squares)) {
+        eilers_peeters_message("residual_sum_of_squares is NA")
+      }
 
       abc <- stats::coef(model)
       a <- abc[["a"]]

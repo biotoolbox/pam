@@ -6,7 +6,7 @@
 \usage{
 vollenweider_generate_regression_ETR_I(
   data,
-  pmax_start_value = vollenweider_default_start_value_a,
+  pmax_start_value = vollenweider_default_start_value_pmax,
   a_start_value = vollenweider_default_start_value_a,
   alpha_start_value = vollenweider_default_start_value_alpha,
   n_start_value = vollenweider_default_start_value_n

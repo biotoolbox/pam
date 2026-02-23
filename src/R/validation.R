@@ -177,6 +177,10 @@ validate_model_result <- function(model_result) {
   if (!is.numeric(residual_sum_of_squares)) {
     stop("residual_sum_of_squares is not a valid number")
   }
+
+  if (is.na(residual_sum_of_squares)) {
+    stop("residual_sum_of_squares is NA")
+  }
 }
 
 validate_modified_model_result <- function(model_result) {

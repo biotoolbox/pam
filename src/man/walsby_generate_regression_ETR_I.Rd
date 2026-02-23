@@ -8,7 +8,7 @@ walsby_generate_regression_ETR_I(
   data,
   etr_max_start_value = walsby_default_start_value_etr_max,
   alpha_start_value = walsby_default_start_value_alpha,
-  beta_start_value = walsby_default_start_value_alpha
+  beta_start_value = walsby_default_start_value_beta
 )
 }
 \arguments{

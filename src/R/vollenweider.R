@@ -58,7 +58,7 @@ vollenweider_default_start_value_n <- 100
 #' @export
 vollenweider_generate_regression_ETR_I <- function(
     data,
-    pmax_start_value = vollenweider_default_start_value_a,
+    pmax_start_value = vollenweider_default_start_value_pmax,
     a_start_value = vollenweider_default_start_value_a,
     alpha_start_value = vollenweider_default_start_value_alpha,
     n_start_value = vollenweider_default_start_value_n) {
@@ -176,6 +176,9 @@ vollenweider_generate_regression_internal <- function(
       )
 
       residual_sum_of_squares <- model$m$deviance()
+      if (is.na(residual_sum_of_squares)) {
+        vollenweider_message("residual_sum_of_squares is NA")
+      }
 
       abc <- stats::coef(model)
       pmax <- abc[["pmax"]]

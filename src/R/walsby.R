@@ -54,7 +54,7 @@ walsby_generate_regression_ETR_I <- function(
     data,
     etr_max_start_value = walsby_default_start_value_etr_max,
     alpha_start_value = walsby_default_start_value_alpha,
-    beta_start_value = walsby_default_start_value_alpha) {
+    beta_start_value = walsby_default_start_value_beta) {
   return(
     walsby_generate_regression_internal(
       data,
@@ -160,6 +160,9 @@ walsby_generate_regression_internal <- function(
       )
 
       residual_sum_of_squares <- model$m$deviance()
+      if (is.na(residual_sum_of_squares)) {
+        walsby_message("residual_sum_of_squares is NA")
+      }
 
       abc <- stats::coef(model)
       etr_max <- abc[["etr_max"]]
