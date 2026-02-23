@@ -1,5 +1,5 @@
 test_that("read_universal_data universal_data.csv - default", {
-  test_data_file <- file.path(getwd(), "data", "universal_data.csv")
+  test_data_file <- testthat::test_path("data", "universal_data.csv")
   data <- read_universal_data(test_data_file)
 
   par <- data$par
@@ -99,7 +99,7 @@ test_that("read_universal_data universal_data.csv - default", {
 })
 
 test_that("read_universal_data universal_data.csv - etr_factor 0.5", {
-  test_data_file <- file.path(getwd(), "data", "universal_data.csv")
+  test_data_file <- testthat::test_path("data", "universal_data.csv")
   data <- read_universal_data(test_data_file, etr_factor = 0.5)
 
   par <- data$par
@@ -199,13 +199,12 @@ test_that("read_universal_data universal_data.csv - etr_factor 0.5", {
 })
 
 test_that("read_universal_data universal_data.csv - fraction_photosystem > 1", {
-  test_data_file <- file.path(getwd(), "data", "universal_data.csv")
-
+  test_data_file <- testthat::test_path("data", "universal_data.csv")
   expect_error(read_universal_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
 })
 
 test_that("read_universal_data universal_data.csv - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
-  test_data_file <- file.path(getwd(), "data", "universal_data.csv")
+  test_data_file <- testthat::test_path("data", "universal_data.csv")
   data <- read_universal_data(test_data_file, fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8)
 
   par <- data$par

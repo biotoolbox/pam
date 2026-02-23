@@ -1,5 +1,5 @@
 test_that("read_dual_pam_data 20240925.csv - default", {
-  test_data_file <- file.path(getwd(), "data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
 
   par <- data$par
@@ -99,7 +99,7 @@ test_that("read_dual_pam_data 20240925.csv - default", {
 })
 
 test_that("read_dual_pam_data 20240925.csv - etr_factor 0.5", {
-  test_data_file <- file.path(getwd(), "data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file, etr_factor = 0.5)
 
   par <- data$par
@@ -199,13 +199,12 @@ test_that("read_dual_pam_data 20240925.csv - etr_factor 0.5", {
 })
 
 test_that("read_dual_pam_data 20240925.csv - fraction_photosystem > 1", {
-  test_data_file <- file.path(getwd(), "data", "20240925.csv")
-
+  test_data_file <- testthat::test_path("data", "20240925.csv")
   expect_error(read_dual_pam_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
 })
 
 test_that("read_dual_pam_data 20240925.csv - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
-  test_data_file <- file.path(getwd(), "data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file, fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8)
 
   par <- data$par
@@ -305,11 +304,11 @@ test_that("read_dual_pam_data 20240925.csv - fraction_photosystem_I = 0.2, fract
 })
 
 test_that("20260130_01_efeutute_dual_pam_only_ps_1.csv - expect fm missing", {
-  test_data_file <- file.path(getwd(), "data", "20260130_01_efeutute_dual_pam_only_ps_1.csv")
+  test_data_file <- testthat::test_path("data", "20260130_01_efeutute_dual_pam_only_ps_1.csv")
   expect_error(read_dual_pam_data(test_data_file))
 })
 
 test_that("20260130_efeutute_dual_pam_only_ps_2.csv - expect pm missing", {
-  test_data_file <- file.path(getwd(), "data", "20260130_efeutute_dual_pam_only_ps_2.csv")
+  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_ps_2.csv")
   expect_error(read_dual_pam_data(test_data_file))
 })

@@ -1,5 +1,5 @@
 test_that("read_junior_pam_data junior_pam_20250613.csv - default", {
-  test_data_file <- file.path(getwd(), "data", "junior_pam_20250613.csv")
+  test_data_file <- testthat::test_path("data", "junior_pam_20250613.csv")
   data <- read_junior_pam_data(test_data_file)
 
   par <- data$par
@@ -79,7 +79,7 @@ test_that("read_junior_pam_data junior_pam_20250613.csv - default", {
 })
 
 test_that("read_junior_pam_data junior_pam_20250613.csv - etr_factor 0.5", {
-  test_data_file <- file.path(getwd(), "data", "junior_pam_20250613.csv")
+  test_data_file <- testthat::test_path("data", "junior_pam_20250613.csv")
   data <- read_junior_pam_data(test_data_file, etr_factor = 0.5)
 
   par <- data$par
@@ -159,13 +159,12 @@ test_that("read_junior_pam_data junior_pam_20250613.csv - etr_factor 0.5", {
 })
 
 test_that("read_junior_pam_data junior_pam_20250613.csv - fraction_photosystem > 1", {
-  test_data_file <- file.path(getwd(), "data", "junior_pam_20250613.csv")
-
+  test_data_file <- testthat::test_path("data", "junior_pam_20250613.csv")
   expect_error(read_junior_pam_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
 })
 
 test_that("read_junior_pam_data junior_pam_20250613.csv - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
-  test_data_file <- file.path(getwd(), "data", "junior_pam_20250613.csv")
+  test_data_file <- testthat::test_path("data", "junior_pam_20250613.csv")
   data <- read_junior_pam_data(test_data_file, fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8)
 
   par <- data$par
