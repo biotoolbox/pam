@@ -23,12 +23,12 @@ jobs:
       fail-fast: false
       matrix:
         cases: [ 
-          { os: ubuntu-latest, r-version: 4.3.3 },
+          { os: ubuntu-latest, r-version: 4.4.2 },
           { os: ubuntu-latest, r-version: release },
           { os: ubuntu-latest, r-version: devel },
-          { os: macos-latest, r-version: 4.3.3 },
+          { os: macos-latest, r-version: 4.4.2 },
           { os: macos-latest, r-version: release },
-          { os: windows-latest, r-version: 4.3.3 },
+          { os: windows-latest, r-version: 4.4.2 },
           { os: windows-latest, r-version: release },
           { os: windows-latest, r-version: devel },
         ]
