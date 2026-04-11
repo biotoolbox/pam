@@ -291,7 +291,7 @@ eilers_peeters_generate_regression_internal <- function(
 #'   \item \code{im_with_photoinhibition}: The PAR at which the maximum electron transport rate is achieved with photoinhibition, transferred as \code{im}.
 #'   \item \code{w}: The sharpness of the peak, transferred as \code{w}.
 #'   \item \code{ib}: Not available, set to \code{NA_real_}.
-#'   \item \code{etrmax_with_without_ratio}: Not available, set to \code{NA_real_}.
+#'   \item \code{etrmax_without_with_ratio}: Not available, set to \code{NA_real_}.
 #' }
 #'
 #' @details

@@ -299,7 +299,7 @@ platt_generate_regression_internal <- function(
 #'   \item \code{im_with_photoinhibition}: The PAR at which the maximum electron transport rate is achieved with photoinhibition, transferred as \code{im}.
 #'   \item \code{w}: Not available, set to \code{NA_real_}.
 #'   \item \code{ib}: Transferred unchanged as \code{ib}.
-#'   \item \code{etrmax_with_without_ratio}: Ratio of \code{etrmax_with_photoinhibition} to \code{etrmax_without_photoinhibition}, and \code{ik_with_photoinhibition} to \code{ik_without_photoinhibition}.
+#'   \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_without_photoinhibition} / \code{etrmax_with_photoinhibition}, and \code{ik_without_photoinhibition} / \code{ik_with_photoinhibition}.
 #' }
 #'
 #' @details
@@ -334,7 +334,7 @@ platt_modified <- function(model_result) {
     im_with_photoinhibition = model_result[["im"]],
     w = NA_real_,
     ib = model_result[["ib"]],
-    etrmax_with_without_ratio = model_result[["ps"]] / model_result[["pm"]]
+    etrmax_without_with_ratio = model_result[["ps"]] / model_result[["pm"]]
   )
 
   return(result)

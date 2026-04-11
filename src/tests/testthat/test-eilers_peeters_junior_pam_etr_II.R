@@ -44,7 +44,7 @@ test_that("test-eilers_peeters_etr_II modified junior_pam_20250613.csv.csv - lin
   expect_equal(model_result[["im_with_photoinhibition"]], 1320.307821)
   expect_equal(model_result[["w"]], 5.7674788)
   expect_equal(model_result[["ib"]], NA_real_)
-  expect_equal(model_result[["etrmax_with_without_ratio"]], NA_real_)
+  expect_equal(model_result[["etrmax_without_with_ratio"]], NA_real_)
 })
 
 test_that("test-eilers_peeters_etr_II modified junior_pam_20250613.csv.csv", {

@@ -259,9 +259,9 @@ validate_modified_model_result <- function(model_result) {
         stop("ib is null or not a valid number")
       }
 
-      if (is.null(model_result[["etrmax_with_without_ratio"]]) ||
-        !is.numeric(model_result[["etrmax_with_without_ratio"]])) {
-        stop("etrmax_with_without_ratio is null or not a valid number")
+      if (is.null(model_result[["etrmax_without_with_ratio"]]) ||
+        !is.numeric(model_result[["etrmax_without_with_ratio"]])) {
+        stop("etrmax_without_with_ratio is null or not a valid number")
       }
     },
     error = function(e) {

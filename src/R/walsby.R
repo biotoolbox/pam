@@ -232,7 +232,7 @@ walsby_generate_regression_internal <- function(
 #'   \item \code{im_with_photoinhibition}: PAR at the maximum ETR with photoinhibition.
 #'   \item \code{w}: Not available, set to \code{NA_real_}.
 #'   \item \code{ib}: Not available, set to \code{NA_real_}.
-#'   \item \code{etrmax_with_without_ratio}: Ratio of \code{etrmax_with_photoinhibition} to \code{etrmax_without_photoinhibition}.
+#'   \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_without_photoinhibition} / \code{etrmax_with_photoinhibition}.
 #' }
 #'
 #' @details
@@ -273,7 +273,7 @@ walsby_modified <- function(model_result) {
     im_with_photoinhibition = im_with_photoinhibition,
     w = NA_real_,
     ib = NA_real_,
-    etrmax_with_without_ratio = model_result[["etr_max"]] / etrmax_with_photoinhibition
+    etrmax_without_with_ratio = model_result[["etr_max"]] / etrmax_with_photoinhibition
   )
 
   return(result)

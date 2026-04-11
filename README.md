@@ -14,7 +14,9 @@ Generated control plots make it possible to check each individual regression fit
 
 ## Publications using this package
 
-- Böhm, J., Blindow, I., Gyllenstrand, N., Diewald, W., & Schubert, H. (2025). Sphaerochara canadensis (Charophyceae): A circumpolar species with a high temperature optimum. Journal of Phycology, 00, 1–11. https://doi.org/10.1111/jpy.70111
+- J. Böhm, J. Trossen, I. Blindow, and H. Schubert, ‘Impact of temperature and light on the physiology and morphology of *Chara hispida* L. (Charophyceae)’, Aquatic Botany, vol. 206, p. 104022, Sep. 2026, doi: [10.1016/j.aquabot.2026.104022]( https://doi.org/10.1016/j.aquabot.2026.104022).
+
+- J. Böhm, I. Blindow, N. Gyllenstrand, W. Diewald, and H. Schubert, ‘*Sphaerochara canadensis* (Charophyceae): A circumpolar species with a high temperature optimum’, Journal of Phycology, vol. 61, no. 6, pp. 1863–1873, Dec. 2025, doi: [10.1111/jpy.70111]( https://doi.org/10.1111/jpy.70111).
 
 ## Test coverage
 
@@ -87,7 +89,7 @@ fraction_photosystem_II = 0.5)
 
 #### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 
 
 ### read_dual_pam_data()
@@ -141,7 +143,7 @@ fraction_photosystem_II = 0.5)
 
 #### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 
 ### read_junior_pam_data()
 
@@ -193,7 +195,7 @@ fraction_photosystem_II = 0.5)
 
 #### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 
 ### vollenweider_generate_regression_ETR_I() and vollenweider_generate_regression_ETR_II()
 
@@ -477,7 +479,7 @@ $${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_with\\_photoinhibitio
 
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Not available, here set to `NA_real_`
-- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`,  transfered as: `pmax_popt_and_ik_iik_ratio`
+- **etrmax_without_with_ratio**: Ratio of `etrmax_without_photoinhibition` / `etrmax_with_photoinhibition` and  `ik_without_photoinhibition` / `ik_with_photoinhibition`,  transfered as: `pmax_popt_and_ik_iik_ratio`
 
 #### Details
 
@@ -519,9 +521,9 @@ Returns a modified model result as a list with the following elements:
 - **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, transfered as: `im`
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Transfered unchange as: `ib`
-- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
+- **etrmax_without_with_ratio**: Ratio of `etrmax_without_photoinhibition` / `etrmax_with_photoinhibition` and `ik_without_photoinhibition` / `ik_with_photoinhibition`. Calculated as:
 
-$${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
+$${{etrmax\\_without\\_with\\_ratio}} = \frac{{etrmax\\_without\\_photoinhibition}}{{etrmax\\_with\\_photoinhibition}}$$
 
 #### Details
 
@@ -563,7 +565,7 @@ Returns a modified model result as a list with the following elements:
 - **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, transfered as`im`
 - **w**: The sharpness of the peak, transfered as `w`
 - **ib**: Not available, here set to `NA_real_`
-- **etrmax_with_without_ratio**: Not available, here set to `NA_real_`
+- **etrmax_without_with_ratio**: Not available, here set to `NA_real_`
 
 #### Details
 
@@ -626,9 +628,9 @@ $$ik\\_without\\_photoinhibition = \frac{etrmax\\_without\\_photoinhibition}{alp
 
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Not available, here set to `NA_real_`
-- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
+- **etrmax_without_with_ratio**: Ratio of `etrmax_without_photoinhibition` / `etrmax_with_photoinhibition` and `ik_without_photoinhibition` / `ik_with_photoinhibition`. Calculated as:
 
-$${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
+$${{etrmax\\_without\\_with\\_ratio}} = \frac{{etrmax\\_without\\_photoinhibition}}{{etrmax\\_with\\_photoinhibition}}$$
 
 #### Details
 
@@ -662,7 +664,7 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |im_with_photoinhibition   |im     |im     |NA           |NA       |
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
+|etrmax_without_with_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
 
 #### Publication-accurate naming and the respective modified naming with additional calculations not included in the original publication
 
@@ -684,7 +686,7 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |im_with_photoinhibition   |im     |im     |im_with_photoinhibition     |im_with_photoinhibition |
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |etrmax_with_without_ratio  |etrmax_with_without_ratio |pmax_popt_and_ik_iik_ratio |
+|etrmax_without_with_ratio   |NA     |etrmax_without_with_ratio  |etrmax_without_with_ratio |pmax_popt_and_ik_iik_ratio |
 
 ### compare_regression_models_ETR_I() and compare_regression_models_ETR_II()
 

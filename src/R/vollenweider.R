@@ -33,14 +33,14 @@ vollenweider_default_start_value_n <- 100
 #'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
 #'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
 #'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
-#'   \item \code{pmax}: Maximum electron transport rate (\eqn{p_{max}}).
+#'   \item \code{pmax}: Maximum electron transport rate without photoinhibition (\eqn{p_{max}}).
 #'   \item \code{a}: Parameter \eqn{a}.
 #'   \item \code{alpha}: Parameter \eqn{\alpha}.
 #'   \item \code{n}: Parameter \eqn{n}.
 #'   \item \code{popt}: Maximum electron transport rate with photoinhibition (\eqn{p_{opt}}).
 #'   \item \code{ik}: Transition point from light limitation to light saturation without photoinhibition (\eqn{I_k}).
 #'   \item \code{iik}: Transition point from light limitation to light saturation with photoinhibition (\eqn{I_k^\prime}).
-#'   \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} to \eqn{p_{opt}} and \eqn{I_k} to \eqn{I_k^\prime}.
+#'   \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} / \eqn{p_{opt}} and \eqn{I_k} / \eqn{I_k^\prime}.
 #' }
 #'
 #' @references{
@@ -91,14 +91,14 @@ vollenweider_generate_regression_ETR_I <- function(
 #'   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
 #'   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
 #'   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
-#'   \item \code{pmax}: Maximum electron transport rate (\eqn{p_{max}}).
+#'   \item \code{pmax}: Maximum electron transport rate without photoinhibition (\eqn{p_{max}}).
 #'   \item \code{a}: Parameter \eqn{a}.
 #'   \item \code{alpha}: Parameter \eqn{\alpha}.
 #'   \item \code{n}: Parameter \eqn{n}.
 #'   \item \code{popt}: Maximum electron transport rate with photoinhibition (\eqn{p_{opt}}).
 #'   \item \code{ik}: Transition point from light limitation to light saturation without photoinhibition (\eqn{I_k}).
 #'   \item \code{iik}: Transition point from light limitation to light saturation with photoinhibition (\eqn{I_k^\prime}).
-#'   \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} to \eqn{p_{opt}} and \eqn{I_k} to \eqn{I_k^\prime}.
+#'   \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} / \eqn{p_{opt}} and \eqn{I_k} / \eqn{I_k^\prime}.
 #' }
 #'
 #' @references{
@@ -301,7 +301,7 @@ vollenweider_generate_regression_internal <- function(
 #'   \item \code{im_with_photoinhibition}: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, determined using the regression data from the model.
 #'   \item \code{w}: Not available, here set to \code{NA_real_}.
 #'   \item \code{ib}: Transferred unchanged as \code{ib}.
-#'   \item \code{etrmax_with_without_ratio}: Ratio of \code{etrmax_with_photoinhibition} to \code{etrmax_without_photoinhibition} and \code{ik_with_photoinhibition} to \code{ik_without_photoinhibition}.
+#'   \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_without_photoinhibition} / \code{etrmax_with_photoinhibition} and \code{ik_without_photoinhibition} / \code{ik_with_photoinhibition}.
 #' }
 #'
 #' @details
@@ -340,7 +340,7 @@ vollenweider_modified <- function(model_result) {
     im_with_photoinhibition = im_with_photoinhibition,
     w = NA_real_,
     ib = NA_real_,
-    etrmax_with_without_ratio = model_result[["pmax_popt_and_ik_iik_ratio"]]
+    etrmax_without_with_ratio = model_result[["pmax_popt_and_ik_iik_ratio"]]
   )
 
   return(result)
