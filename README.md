@@ -14,7 +14,9 @@ Generated control plots make it possible to check each individual regression fit
 
 ## Publications using this package
 
-- Böhm, J., Blindow, I., Gyllenstrand, N., Diewald, W., & Schubert, H. (2025). Sphaerochara canadensis (Charophyceae): A circumpolar species with a high temperature optimum. Journal of Phycology, 00, 1–11. https://doi.org/10.1111/jpy.70111
+- J. Böhm, J. Trossen, I. Blindow, and H. Schubert, ‘Impact of temperature and light on the physiology and morphology of Chara hispida L. (Charophyceae)’, Aquatic Botany, vol. 206, p. 104022, Sep. 2026, doi: [10.1016/j.aquabot.2026.104022]( https://doi.org/10.1016/j.aquabot.2026.104022).
+
+- J. Böhm, I. Blindow, N. Gyllenstrand, W. Diewald, and H. Schubert, ‘Sphaerochara canadensis (Charophyceae): A circumpolar species with a high temperature optimum’, Journal of Phycology, vol. 61, no. 6, pp. 1863–1873, Dec. 2025, doi: [10.1111/jpy.70111]( https://doi.org/10.1111/jpy.70111).
 
 ## Test coverage
 
@@ -87,7 +89,7 @@ fraction_photosystem_II = 0.5)
 
 #### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 
 
 ### read_dual_pam_data()
@@ -141,7 +143,7 @@ fraction_photosystem_II = 0.5)
 
 #### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 
 ### read_junior_pam_data()
 
@@ -193,7 +195,7 @@ fraction_photosystem_II = 0.5)
 
 #### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/manuals/dual-pam-100/DualPamEd05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 
 ### vollenweider_generate_regression_ETR_I() and vollenweider_generate_regression_ETR_II()
 
