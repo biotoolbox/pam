@@ -30,7 +30,7 @@ A modified model result as a list containing the following elements:
   \item \code{im_with_photoinhibition}: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, determined using the regression data from the model.
   \item \code{w}: Not available, here set to \code{NA_real_}.
   \item \code{ib}: Transferred unchanged as \code{ib}.
-  \item \code{etrmax_with_without_ratio}: Ratio of \code{etrmax_with_photoinhibition} to \code{etrmax_without_photoinhibition} and \code{ik_with_photoinhibition} to \code{ik_without_photoinhibition}.
+  \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_with_photoinhibition} to \code{etrmax_without_photoinhibition} and \code{ik_with_photoinhibition} to \code{ik_without_photoinhibition}.
 }
 }
 \description{

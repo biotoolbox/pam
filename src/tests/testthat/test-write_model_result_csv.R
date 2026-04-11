@@ -36,7 +36,7 @@ test_that("test-write_model_result_csv - walsby_modified - 20240925.csv", {
   expect_equal(model_result_csv$im_with_photoinhibition, model_result$im_with_photoinhibition)
   expect_equal(model_result_csv$w, model_result$w)
   expect_equal(model_result_csv$ib, model_result$ib)
-  expect_equal(model_result_csv$etrmax_with_without_ratio, model_result$etrmax_with_without_ratio)
+  expect_equal(model_result_csv$etrmax_without_with_ratio, model_result$etrmax_without_with_ratio)
 
   raw_data_csv <- read.csv(
     file = raw_data_csv_path,
@@ -88,7 +88,7 @@ test_that("test-write_model_result_csv - walsby - 20240925.csv", {
   expect_equal(model_result_csv$im_with_photoinhibition, model_result$im_with_photoinhibition)
   expect_equal(model_result_csv$w, model_result$w)
   expect_equal(model_result_csv$ib, model_result$ib)
-  expect_equal(model_result_csv$etrmax_with_without_ratio, model_result$etrmax_with_without_ratio)
+  expect_equal(model_result_csv$etrmax_without_with_ratio, model_result$etrmax_without_with_ratio)
 
   raw_data_csv <- read.csv(
     file = raw_data_csv_path,

@@ -64,7 +64,7 @@ test_that("test-platt_etr_II generate regression modified 20240925.csv - linux",
   expect_equal(model_result[["im_with_photoinhibition"]], 769.889813)
   expect_equal(model_result[["w"]], NA_real_)
   expect_equal(model_result[["ib"]], 2149.3914)
-  expect_equal(model_result[["etrmax_with_without_ratio"]], 1.7166423)
+  expect_equal(model_result[["etrmax_without_with_ratio"]], 1.7166423)
 })
 
 test_that("test-platt_etr_II generate regression modified 20240925.csv", {

@@ -23,7 +23,7 @@ test_that("test-universal_data_etr_I - linux", {
   expect_equal(eilers_peeters[["im_with_photoinhibition"]], 1399.769662)
   expect_equal(eilers_peeters[["w"]], 1.18036237)
   expect_equal(eilers_peeters[["ib"]], NA_real_)
-  expect_equal(eilers_peeters[["etrmax_with_without_ratio"]], NA_real_)
+  expect_equal(eilers_peeters[["etrmax_without_with_ratio"]], NA_real_)
 
   expect_equal(platt[["residual_sum_of_squares"]], 55.4812913)
   expect_equal(platt[["a"]], 242.02858)
@@ -39,7 +39,7 @@ test_that("test-universal_data_etr_I - linux", {
   expect_equal(platt[["im_with_photoinhibition"]], 1365.39202)
   expect_equal(platt[["w"]], NA_real_)
   expect_equal(platt[["ib"]], 4302.0636)
-  expect_equal(platt[["etrmax_with_without_ratio"]], 1.59380602)
+  expect_equal(platt[["etrmax_without_with_ratio"]], 1.59380602)
 
   expect_equal(walsby[["residual_sum_of_squares"]], 55.5823146)
   expect_equal(walsby[["a"]], 221.237842)
@@ -55,7 +55,7 @@ test_that("test-universal_data_etr_I - linux", {
   expect_equal(walsby[["im_with_photoinhibition"]], 1358.0)
   expect_equal(walsby[["w"]], NA_real_)
   expect_equal(walsby[["ib"]], NA_real_)
-  expect_equal(walsby[["etrmax_with_without_ratio"]], 1.456840082)
+  expect_equal(walsby[["etrmax_without_with_ratio"]], 1.456840082)
 
   expect_equal(vollenweider[["residual_sum_of_squares"]], 57.4443325)
   expect_equal(vollenweider[["a"]], 165.4671070)
@@ -71,7 +71,7 @@ test_that("test-universal_data_etr_I - linux", {
   expect_equal(vollenweider[["im_with_photoinhibition"]], 1420)
   expect_equal(vollenweider[["w"]], NA_real_)
   expect_equal(vollenweider[["ib"]], NA_real_)
-  expect_equal(vollenweider[["etrmax_with_without_ratio"]], 1.08078520)
+  expect_equal(vollenweider[["etrmax_without_with_ratio"]], 1.08078520)
 })
 
 test_that("test-universal_data_etr_I", {
