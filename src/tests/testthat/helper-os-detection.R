@@ -47,5 +47,5 @@ get_os_distro <- function() {
 
 is_debian_or_ubuntu <- function() {
   os <- get_os_distro()
-  grepl("\\b(debian|ubuntu|fedora)\\b", os, ignore.case = TRUE)
+  grepl("\\b(debian|ubuntu)\\b", os, ignore.case = TRUE)
 }
