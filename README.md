@@ -14,9 +14,9 @@ Generated control plots make it possible to check each individual regression fit
 
 ## Publications using this package
 
-- J. Böhm, J. Trossen, I. Blindow, and H. Schubert, ‘Impact of temperature and light on the physiology and morphology of Chara hispida L. (Charophyceae)’, Aquatic Botany, vol. 206, p. 104022, Sep. 2026, doi: [10.1016/j.aquabot.2026.104022]( https://doi.org/10.1016/j.aquabot.2026.104022).
+- J. Böhm, J. Trossen, I. Blindow, and H. Schubert, ‘Impact of temperature and light on the physiology and morphology of *Chara hispida* L. (Charophyceae)’, Aquatic Botany, vol. 206, p. 104022, Sep. 2026, doi: [10.1016/j.aquabot.2026.104022]( https://doi.org/10.1016/j.aquabot.2026.104022).
 
-- J. Böhm, I. Blindow, N. Gyllenstrand, W. Diewald, and H. Schubert, ‘Sphaerochara canadensis (Charophyceae): A circumpolar species with a high temperature optimum’, Journal of Phycology, vol. 61, no. 6, pp. 1863–1873, Dec. 2025, doi: [10.1111/jpy.70111]( https://doi.org/10.1111/jpy.70111).
+- J. Böhm, I. Blindow, N. Gyllenstrand, W. Diewald, and H. Schubert, ‘*Sphaerochara canadensis* (Charophyceae): A circumpolar species with a high temperature optimum’, Journal of Phycology, vol. 61, no. 6, pp. 1863–1873, Dec. 2025, doi: [10.1111/jpy.70111]( https://doi.org/10.1111/jpy.70111).
 
 ## Test coverage
 
