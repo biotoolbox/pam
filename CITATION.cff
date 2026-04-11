@@ -8,7 +8,11 @@ authors:
   given-names: "Philipp"
   orcid: "https://orcid.org/0009-0002-7697-5536"
 title: "pam"
+<<<<<<< HEAD
 version: 2.0.3
+=======
+version: 2.1.0
+>>>>>>> a691a6c (renamed etrmax_with_without_ratio to etrmax_without_with_ratio)
 date-released: 2026-04-11
 url: "https://github.com/biotoolbox/pam"
 doi: "10.32614/CRAN.package.pam"

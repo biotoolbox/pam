@@ -20,4 +20,8 @@ build:
 buildtest:
 	rm -rf src/tests/testthat/results
 	make build
+<<<<<<< HEAD
 	R CMD check pam_2.0.3.tar.gz
+=======
+	R CMD check pam_2.1.0.tar.gz
+>>>>>>> a691a6c (renamed etrmax_with_without_ratio to etrmax_without_with_ratio)

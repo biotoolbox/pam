@@ -1,7 +1,11 @@
 Package: pam
 Type: Package
 Title: Fast and Efficient Processing of PAM Data
+<<<<<<< HEAD
 Version: 2.0.3
+=======
+Version: 2.1.0
+>>>>>>> a691a6c (renamed etrmax_with_without_ratio to etrmax_without_with_ratio)
 Authors@R: c(
     person(
         "Julien",
