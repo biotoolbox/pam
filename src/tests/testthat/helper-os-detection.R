@@ -45,16 +45,7 @@ get_os_distro <- function() {
   return(tolower(sys_name))
 }
 
-is_supported_os <- function() {
-  os <- get_os_distro()
-  grepl("\\b(ubuntu|debian|windows)\\b", os, ignore.case = TRUE)
-}
-
-is_windows <- function() {
-  tolower(Sys.info()[["sysname"]]) == "windows"
-}
-
 is_debian_or_ubuntu <- function() {
   os <- get_os_distro()
-  grepl("\\b(debian|ubuntu)\\b", os, ignore.case = TRUE)
+  grepl("\\b(debian|ubuntu|fedora)\\b", os, ignore.case = TRUE)
 }

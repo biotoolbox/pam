@@ -211,7 +211,7 @@ create_modified_model_result <- function(
     im_with_photoinhibition,
     w,
     ib,
-    etrmax_with_without_ratio) {
+    etrmax_without_with_ratio) {
   result <- list(
     etr_type = etr_type,
     etr_regression_data = etr_regression_data,
@@ -231,7 +231,7 @@ create_modified_model_result <- function(
     im_with_photoinhibition = im_with_photoinhibition,
     w = w,
     ib = ib,
-    etrmax_with_without_ratio = etrmax_with_without_ratio
+    etrmax_without_with_ratio = etrmax_without_with_ratio
   )
   validate_modified_model_result(result)
   return(result)

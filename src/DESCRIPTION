@@ -1,7 +1,7 @@
 Package: pam
 Type: Package
 Title: Fast and Efficient Processing of PAM Data
-Version: 2.0.2
+Version: 2.0.3
 Authors@R: c(
     person(
         "Julien",
@@ -26,7 +26,7 @@ LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports: 
     rlang,
     data.table,

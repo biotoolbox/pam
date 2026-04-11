@@ -477,7 +477,7 @@ $${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_with\\_photoinhibitio
 
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Not available, here set to `NA_real_`
-- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`,  transfered as: `pmax_popt_and_ik_iik_ratio`
+- **etrmax_without_with_ratio**: Ratio of `etrmax_without_photoinhibition` / `etrmax_with_photoinhibition` and `ik_without_photoinhibition` / `ik_with_photoinhibition`,  transfered as: `pmax_popt_and_ik_iik_ratio`
 
 #### Details
 
@@ -519,9 +519,9 @@ Returns a modified model result as a list with the following elements:
 - **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, transfered as: `im`
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Transfered unchange as: `ib`
-- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
+- **etrmax_without_with_ratio**: Ratio of `etrmax_without_photoinhibition` / `etrmax_with_photoinhibition` and `ik_without_photoinhibition` / `ik_with_photoinhibition`. Calculated as:
 
-$${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
+$${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_without\\_photoinhibition}}{{etrmax\\_with\\_photoinhibition}}$$
 
 #### Details
 
@@ -563,7 +563,7 @@ Returns a modified model result as a list with the following elements:
 - **im_with_photoinhibition**: The PAR at which the maximum electron transport rate is achieved by taking photoinhibition into account, transfered as`im`
 - **w**: The sharpness of the peak, transfered as `w`
 - **ib**: Not available, here set to `NA_real_`
-- **etrmax_with_without_ratio**: Not available, here set to `NA_real_`
+- **etrmax_without_with_ratio**: Not available, here set to `NA_real_`
 
 #### Details
 
@@ -626,7 +626,7 @@ $$ik\\_without\\_photoinhibition = \frac{etrmax\\_without\\_photoinhibition}{alp
 
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Not available, here set to `NA_real_`
-- **etrmax_with_without_ratio**: Ratio of `etrmax_with_photoinhibition` to `etrmax_without_photoinhibition` and `ik_with_photoinhibition` to `ik_without_photoinhibition`. Calculated as:
+- **etrmax_without_with_ratio**: Ratio of `etrmax_without_photoinhibition` / `etrmax_with_photoinhibition`  and `ik_without_photoinhibition` / `ik_with_photoinhibition`. Calculated as:
 
 $${{etrmax\\_with\\_without\\_ratio}} = \frac{{etrmax\\_with\\_photoinhibition}}{{etrmax\\_without\\_photoinhibition}}$$
 
@@ -662,7 +662,7 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |im_with_photoinhibition   |im     |im     |NA           |NA       |
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
+|etrmax_without_with_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
 
 #### Publication-accurate naming and the respective modified naming with additional calculations not included in the original publication
 
@@ -684,7 +684,7 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |im_with_photoinhibition   |im     |im     |im_with_photoinhibition     |im_with_photoinhibition |
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
-|etrmax_with_without_ratio   |NA     |etrmax_with_without_ratio  |etrmax_with_without_ratio |pmax_popt_and_ik_iik_ratio |
+|etrmax_without_with_ratio   |NA     |etrmax_without_with_ratio  |etrmax_without_with_ratio |pmax_popt_and_ik_iik_ratio |
 
 ### compare_regression_models_ETR_I() and compare_regression_models_ETR_II()
 
