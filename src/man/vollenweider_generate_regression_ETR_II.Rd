@@ -30,14 +30,14 @@ A list containing:
   \item \code{residual_sum_of_squares}: Difference between observed and predicted ETR values, expressed as the sum of squared residuals.
   \item \code{root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the root mean squared error.
   \item \code{relative_root_mean_squared_error}: Difference between observed and predicted ETR values, expressed as the relative root mean squared error, normalized by the mean.
-  \item \code{pmax}: Maximum electron transport rate (\eqn{p_{max}}).
+  \item \code{pmax}: Maximum electron transport rate without photoinhibition (\eqn{p_{max}}).
   \item \code{a}: Parameter \eqn{a}.
   \item \code{alpha}: Parameter \eqn{\alpha}.
   \item \code{n}: Parameter \eqn{n}.
   \item \code{popt}: Maximum electron transport rate with photoinhibition (\eqn{p_{opt}}).
   \item \code{ik}: Transition point from light limitation to light saturation without photoinhibition (\eqn{I_k}).
   \item \code{iik}: Transition point from light limitation to light saturation with photoinhibition (\eqn{I_k^\prime}).
-  \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} to \eqn{p_{opt}} and \eqn{I_k} to \eqn{I_k^\prime}.
+  \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} / \eqn{p_{opt}} and \eqn{I_k} / \eqn{I_k^\prime}.
 }
 }
 \description{
