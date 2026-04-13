@@ -762,9 +762,9 @@ print(plot_control_eilers_peeters_ETR_II)
 
 ![Plot](test-eilers_peeters_etr_II_modified_control_plot_20240925.jpg)
 
-### combo_control_plot()
+### combo_plot_control()
 
-The `combo_control_plot` function generates a combined plot of electron transport rate (ETR) data and regression model predictions, along with a customized table summarizing the parameters for each model.
+The `combo_plot_control()` function generates a combined plot of electron transport rate (ETR) data and regression model predictions, along with a customized table summarizing the parameters for each model.
 
 #### Parameters
 
@@ -789,7 +789,7 @@ test_data_file <- file.path(getwd(), "data", "20240925.csv")
     walsby <- walsby_modified(walsby_generate_regression_ETR_II(data))
     vollenweider <- vollenweider_modified(vollenweider_generate_regression_ETR_II(data))
 
-    plot <- combo_control_plot(
+    plot <- combo_plot_control(
       "etr II test-combo_plot_control_20240925.csv",
       data,
       list(eilers_peeters, platt, walsby, vollenweider),
