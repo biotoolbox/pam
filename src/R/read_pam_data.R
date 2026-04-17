@@ -241,7 +241,8 @@ read_dual_pam_data <- function(
 #'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata/dual_pam_single_channel_I_data", package = "pam"), "20260130_01_efeutute_dual_pam_only_ps_1.csv")
+#' path <- file.path(system.file("extdata/dual_pam_single_channel_I_data", package = "pam"),
+#' "20260130_01_efeutute_dual_pam_only_ps_1.csv")
 #' data <- read_dual_pam_single_channel_I_data(path)
 #' @export
 read_dual_pam_single_channel_I_data <- function(
@@ -368,7 +369,8 @@ read_dual_pam_single_channel_I_data <- function(
 #'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata/dual_pam_single_channel_II_data", package = "pam"), "20260130_efeutute_dual_pam_only_ps_2.csv")
+#' path <- file.path(system.file("extdata/dual_pam_single_channel_II_data", package = "pam"),
+#' "20260130_efeutute_dual_pam_only_ps_2.csv")
 #' data <- read_dual_pam_single_channel_II_data(path)
 #' @export
 read_dual_pam_single_channel_II_data <- function(
@@ -521,7 +523,8 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata/junior_pam_data", package = "pam"), "junior_pam_20250613.csv")
+#' path <- file.path(system.file("extdata/junior_pam_data", package = "pam"),
+#' "junior_pam_20250613.csv")
 #' data <- read_junior_pam_data(path)
 #' @export
 read_junior_pam_data <- function(
