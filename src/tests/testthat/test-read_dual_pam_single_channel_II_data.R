@@ -1,4 +1,4 @@
-test_that("read_dual_pam_data 20260130_efeutute_dual_pam_only_ps_2 - default", {
+test_that("read_dual_pam_single_channel_II_data 20260130_efeutute_dual_pam_only_ps_2 - default", {
   test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_ps_2.csv")
   data <- read_dual_pam_single_channel_II_data(test_data_file)
 

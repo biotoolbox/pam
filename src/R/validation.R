@@ -100,7 +100,7 @@ validate_dual_pam_data <- function(data) {
   }
 }
 
-validate_dual_pam_data_single_channel_II <- function(data) {
+validate_dual_pam_single_channel_II_data <- function(data) {
   if (is.null(data)) {
     stop("data is null")
   }
@@ -143,6 +143,122 @@ validate_dual_pam_data_single_channel_II <- function(data) {
 
   if (!"Fm-Det." %in% data[["Action"]]) {
     stop("required value 'Fm' not found in column 'Action'")
+  }
+}
+
+validate_junior_pam_data <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
+  if (nrow(data) < 2) {
+    stop("no data rows")
+  }
+
+  if (ncol(data) == 0) {
+    stop("no cols in data")
+  }
+
+  if (!any(grepl("PAR", colnames(data)))) {
+    stop("required col 'PAR' not found")
+  }
+
+  if (!any(grepl("Y..II.", colnames(data)))) {
+    stop("required col 'Y..II.' not found")
+  }
+
+  if (!"Datetime" %in% colnames(data)) {
+    stop("required col 'Datetime' not found")
+  }
+}
+
+validate_pam_2500_data <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
+  if (nrow(data) < 2) {
+    stop("no data rows")
+  }
+
+  if (ncol(data) == 0) {
+    stop("no cols in data")
+  }
+
+  if (!"No." %in% colnames(data)) {
+    stop("required col 'No.' not found")
+  }
+
+  if (!"PAR" %in% colnames(data)) {
+    stop("required col 'PAR' not found")
+  }
+
+  if (!"Date" %in% colnames(data)) {
+    stop("required col 'Date' not found")
+  }
+
+  if (!"Time" %in% colnames(data)) {
+    stop("required col 'Time' not found")
+  }
+
+   if (!"Y.II." %in% colnames(data)) {
+    stop("required col 'Y(II)' not found")
+  }
+
+}
+
+
+validate_dual_pam_single_channel_I_data <- function(data) {
+  if (is.null(data)) {
+    stop("data is null")
+  }
+
+  if (!data.table::is.data.table(data)) {
+    stop("data is not a valid data.table")
+  }
+
+  if (nrow(data) < 2) {
+    stop("no data rows")
+  }
+
+  if (ncol(data) == 0) {
+    stop("no cols in data")
+  }
+
+  if (!"ID" %in% colnames(data)) {
+    stop("required col 'ID' not found")
+  }
+
+  if (!"PAR" %in% colnames(data)) {
+    stop("required col 'PAR' not found")
+  }
+
+  if (!"Y.I." %in% colnames(data)) {
+    stop("required col 'Y(I)' not found")
+  }
+
+  if (!"Action" %in% colnames(data)) {
+    stop("required col 'Action' not found")
+  }
+
+  if (!"Date" %in% colnames(data)) {
+    stop("required col 'Date' not found")
+  }
+
+  if (!"Time" %in% colnames(data)) {
+    stop("required col 'Time' not found")
+  }
+
+  if (!"Pm.-Det." %in% data[["Action"]]) {
+    stop("required value 'Pm.-Det.' not found in column 'Action'")
   }
 }
 
