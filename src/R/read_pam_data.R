@@ -107,7 +107,7 @@ read_universal_data <- function(csv_path,
 #'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #' @export
 read_dual_pam_data <- function(
@@ -241,7 +241,7 @@ read_dual_pam_data <- function(
 #'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20260130_efeutute_dual_pam_only_ps_2.csv")
+#' path <- file.path(system.file("extdata/dual_pam_single_channel_II_data", package = "pam"), "20260130_efeutute_dual_pam_only_ps_2.csv")
 #' data <- read_dual_pam_data_single_channel_II(path)
 #' @export
 read_dual_pam_data_single_channel_II <- function(
@@ -392,7 +392,7 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata/junior_pam", package = "pam"), "junior_pam_20250613.csv")
+#' path <- file.path(system.file("extdata/junior_pam_data", package = "pam"), "junior_pam_20250613.csv")
 #' data <- read_junior_pam_data(path)
 #' @export
 read_junior_pam_data <- function(

@@ -125,7 +125,7 @@ plot_table <- function(model_result, entries_per_row) {
 #' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data.
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- eilers_peeters_generate_regression_ETR_I(data)
@@ -259,7 +259,7 @@ create_modified_model_result <- function(
 #' @return No return value, called for side effects
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- eilers_peeters_generate_regression_ETR_I(data)

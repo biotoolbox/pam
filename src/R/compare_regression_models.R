@@ -42,7 +42,7 @@
 #'   New Phytologist, 136(2), 189-209. Available at: \doi{10.1046/j.1469-8137.1997.00736.x}.
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"))
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"))
 #' points <- compare_regression_models_ETR_I(path, read_dual_pam_data)
 #'
 #' @export
@@ -95,7 +95,7 @@ compare_regression_models_ETR_I <- function(data_dir, read_func) {
 #'   New Phytologist, 136(2), 189-209. Available at: \doi{10.1046/j.1469-8137.1997.00736.x}.
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"))
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"))
 #' points <- compare_regression_models_ETR_II(path, read_dual_pam_data)
 #'
 #' @export

@@ -27,7 +27,7 @@ Generates a plot of ETR data with different regression model predictions and a s
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#combo_control_plot}.
 }
 \examples{
-path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 data <- read_dual_pam_data(path)
 
 model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_II(data)

@@ -14,7 +14,7 @@
 #' @return A plot with ETR data, regression results, and a summary table.
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_II(data)

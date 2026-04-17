@@ -40,7 +40,7 @@ This function enhances the Eilers and Peeters (1988) model by adding parameters 
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#eilers_peeters_modified}
 }
 \examples{
-path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 data <- read_dual_pam_data(path)
 
 result <- eilers_peeters_generate_regression_ETR_II(data)

@@ -43,7 +43,7 @@ Calculates ETR using:
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#read_dual_pam_data}
 }
 \examples{
-path <- file.path(system.file("extdata", package = "pam"), "20260130_efeutute_dual_pam_only_ps_2.csv")
+path <- file.path(system.file("extdata/dual_pam_single_channel_II_data", package = "pam"), "20260130_efeutute_dual_pam_only_ps_2.csv")
 data <- read_dual_pam_data_single_channel_II(path)
 }
 \references{

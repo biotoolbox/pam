@@ -32,7 +32,7 @@ The `name` parameter serves as a prefix for each file, ensuring clarity and orga
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#write_model_result_csv}
 }
 \examples{
-path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 data <- read_dual_pam_data(path)
 
 result <- eilers_peeters_generate_regression_ETR_I(data)
