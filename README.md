@@ -18,6 +18,8 @@ Generated control plots make it possible to check each individual regression fit
 
 - J. Böhm, I. Blindow, N. Gyllenstrand, W. Diewald, and H. Schubert, ‘*Sphaerochara canadensis* (Charophyceae): A circumpolar species with a high temperature optimum’, Journal of Phycology, vol. 61, no. 6, pp. 1863–1873, Dec. 2025, doi: [10.1111/jpy.70111]( https://doi.org/10.1111/jpy.70111).
 
+- A continuously updated overview of studies using this package can be accessed at [Researchgate](https://www.researchgate.net/publication/395536281_pam_Fast_and_Efficient_Processing_of_PAM_Data/citations)
+
 ## Test coverage
 
 ```r
