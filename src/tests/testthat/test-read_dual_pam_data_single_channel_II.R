@@ -1,6 +1,6 @@
 test_that("read_dual_pam_data 20260130_efeutute_dual_pam_only_ps_2 - default", {
   test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_ps_2.csv")
-  data <- read_dual_pam_data_single_channel_II(test_data_file)
+  data <- read_dual_pam_single_channel_II_data(test_data_file)
 
   par <- data$par
   expect_equal(par[1], 0)

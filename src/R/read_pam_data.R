@@ -242,9 +242,9 @@ read_dual_pam_data <- function(
 #' }
 #' @examples
 #' path <- file.path(system.file("extdata/dual_pam_single_channel_II_data", package = "pam"), "20260130_efeutute_dual_pam_only_ps_2.csv")
-#' data <- read_dual_pam_data_single_channel_II(path)
+#' data <- read_dual_pam_single_channel_II_data(path)
 #' @export
-read_dual_pam_data_single_channel_II <- function(
+read_dual_pam_single_channel_II_data <- function(
     csv_path,
     remove_recovery = TRUE,
     etr_factor = 0.84,
