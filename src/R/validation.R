@@ -258,74 +258,7 @@ validate_pam_2500_data <- function(data) {
   if (!"Y.II." %in% colnames(data)) {
     stop("required col 'Y(II)' not found")
   }
-}
 
-validate_junior_pam_data <- function(data) {
-  if (is.null(data)) {
-    stop("data is null")
-  }
-
-  if (!data.table::is.data.table(data)) {
-    stop("data is not a valid data.table")
-  }
-
-  if (nrow(data) < 2) {
-    stop("no data rows")
-  }
-
-  if (ncol(data) == 0) {
-    stop("no cols in data")
-  }
-
-  if (!any(grepl("PAR", colnames(data)))) {
-    stop("required col 'PAR' not found")
-  }
-
-  if (!any(grepl("Y..II.", colnames(data)))) {
-    stop("required col 'Y..II.' not found")
-  }
-
-  if (!"Datetime" %in% colnames(data)) {
-    stop("required col 'Datetime' not found")
-  }
-}
-
-validate_pam_2500_data <- function(data) {
-  if (is.null(data)) {
-    stop("data is null")
-  }
-
-  if (!data.table::is.data.table(data)) {
-    stop("data is not a valid data.table")
-  }
-
-  if (nrow(data) < 2) {
-    stop("no data rows")
-  }
-
-  if (ncol(data) == 0) {
-    stop("no cols in data")
-  }
-
-  if (!"No." %in% colnames(data)) {
-    stop("required col 'No.' not found")
-  }
-
-  if (!"PAR" %in% colnames(data)) {
-    stop("required col 'PAR' not found")
-  }
-
-  if (!"Date" %in% colnames(data)) {
-    stop("required col 'Date' not found")
-  }
-
-  if (!"Time" %in% colnames(data)) {
-    stop("required col 'Time' not found")
-  }
-
-  if (!"Y.II." %in% colnames(data)) {
-    stop("required col 'Y(II)' not found")
-  }
 }
 
 validate_etr_regression_data <- function(regression_data) {

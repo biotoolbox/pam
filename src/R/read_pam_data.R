@@ -689,7 +689,6 @@ read_pam_2500_data <- function(
       data$DateTime <- date_time_col_values
       data <- data[order(data$DateTime), ]
 
-
       result <- data.table::data.table(
         par = numeric(),
         yield_1 = numeric(),
