@@ -170,7 +170,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate pm: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate pm: error:", w))
+          eilers_peeters_message(paste("failed to calculate pm: error:", e))
         }
       )
 
@@ -183,7 +183,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate s: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate s: error:", w))
+          eilers_peeters_message(paste("failed to calculate s: error:", e))
         }
       )
 
@@ -196,7 +196,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate ik: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate ik: error:", w))
+          eilers_peeters_message(paste("failed to calculate ik: error:", e))
         }
       )
 
@@ -209,7 +209,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate im: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate im: error:", w))
+          eilers_peeters_message(paste("failed to calculate im: error:", e))
         }
       )
 
@@ -222,7 +222,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate w: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate w: error:", w))
+          eilers_peeters_message(paste("failed to calculate w: error:", e))
         }
       )
 

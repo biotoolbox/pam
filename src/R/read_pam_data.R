@@ -143,7 +143,7 @@ read_dual_pam_data <- function(
       data$DateTime <- date_time_col_values
       data <- data[order(data$DateTime), ]
 
-      pm_det_row <- pm_det_row <- subset(data, data$PAR == 0 & data$Action == "Pm.-Det.")
+      pm_det_row <- subset(data, data$PAR == 0 & data$Action == "Pm.-Det.")
       yield_1_first <- pm_det_row$Y.I.
       recalc_etr_1 <- calc_etr(yield_1_first, 0, etr_factor, fraction_photosystem_I)
 
