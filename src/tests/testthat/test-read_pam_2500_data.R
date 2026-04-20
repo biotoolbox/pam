@@ -150,7 +150,6 @@ test_that("read_pam_2500_data 20260311_1(2)_pam_2500.CSV - etr-factor 0.5", {
 
 test_that("read_pam_2500_data 20260311_1(2)_pam_2500.CSV - - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
   test_data_file <- testthat::test_path("data", "20260311_1(2)_pam_2500.CSV")
-  data <- read_pam_2500_data(test_data_file, etr_factor = 0.5)
   expect_error(read_pam_2500_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
 })
 
