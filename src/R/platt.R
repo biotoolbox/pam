@@ -318,7 +318,7 @@ platt_modified <- function(model_result) {
   result <- create_modified_model_result(
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
-    residual_sum_of_squares = get_sdiff_from_model_result(model_result),
+    residual_sum_of_squares = get_residual_sum_of_squares_from_model_result(model_result),
     root_mean_squared_error = model_result[["root_mean_squared_error"]],
     relative_root_mean_squared_error = model_result[["relative_root_mean_squared_error"]],
     a = model_result[["ps"]],
