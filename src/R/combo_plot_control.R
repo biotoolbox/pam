@@ -14,7 +14,7 @@
 #' @return A plot with ETR data, regression results, and a summary table.
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' model_results_eilers_peeters <- eilers_peeters_generate_regression_ETR_II(data)
@@ -30,11 +30,12 @@
 #'
 #' @export
 combo_plot_control <- function(
-    title,
-    data,
-    model_results,
-    name_list,
-    color_list) {
+  title,
+  data,
+  model_results,
+  name_list,
+  color_list
+) {
   validate_data(data)
 
   if (length(model_results) <= 0) {

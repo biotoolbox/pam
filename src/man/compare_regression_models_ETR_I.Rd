@@ -36,7 +36,7 @@ Models are ranked based on the deviation between observed and predicted values. 
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#walsby_modified}
 }
 \examples{
-path <- file.path(system.file("extdata", package = "pam"))
+path <- file.path(system.file("extdata/dual_pam_data", package = "pam"))
 points <- compare_regression_models_ETR_I(path, read_dual_pam_data)
 
 }
