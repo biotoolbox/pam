@@ -111,11 +111,12 @@ read_universal_data <- function(csv_path,
 #' data <- read_dual_pam_data(path)
 #' @export
 read_dual_pam_data <- function(
-    csv_path,
-    remove_recovery = TRUE,
-    etr_factor = 0.84,
-    fraction_photosystem_I = 0.5,
-    fraction_photosystem_II = 0.5) {
+  csv_path,
+  remove_recovery = TRUE,
+  etr_factor = 0.84,
+  fraction_photosystem_I = 0.5,
+  fraction_photosystem_II = 0.5
+) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
@@ -269,11 +270,12 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #' data <- read_junior_pam_data(path)
 #' @export
 read_junior_pam_data <- function(
-    csv_path,
-    remove_recovery = TRUE,
-    etr_factor = 0.84,
-    fraction_photosystem_I = 0.5,
-    fraction_photosystem_II = 0.5) {
+  csv_path,
+  remove_recovery = TRUE,
+  etr_factor = 0.84,
+  fraction_photosystem_I = 0.5,
+  fraction_photosystem_II = 0.5
+) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
@@ -388,11 +390,12 @@ read_junior_pam_data <- function(
 #' data <- read_pam_2500_data(path)
 #' @export
 read_pam_2500_data <- function(
-    csv_path,
-    remove_recovery = TRUE,
-    etr_factor = 0.84,
-    fraction_photosystem_I = 0.5,
-    fraction_photosystem_II = 0.5) {
+  csv_path,
+  remove_recovery = TRUE,
+  etr_factor = 0.84,
+  fraction_photosystem_I = 0.5,
+  fraction_photosystem_II = 0.5
+) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
@@ -418,7 +421,6 @@ read_pam_2500_data <- function(
 
       data$DateTime <- date_time_col_values
       data <- data[order(data$DateTime), ]
-
 
       result <- data.table::data.table(
         par = numeric(),
@@ -461,4 +463,3 @@ read_pam_2500_data <- function(
     }
   )
 }
-

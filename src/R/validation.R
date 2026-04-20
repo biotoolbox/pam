@@ -163,10 +163,9 @@ validate_pam_2500_data <- function(data) {
     stop("required col 'Time' not found")
   }
 
-   if (!"Y.II." %in% colnames(data)) {
+  if (!"Y.II." %in% colnames(data)) {
     stop("required col 'Y(II)' not found")
   }
-
 }
 
 validate_etr_regression_data <- function(regression_data) {
