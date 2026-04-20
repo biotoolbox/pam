@@ -132,7 +132,7 @@ compare_regression_models <- function(data_dir, etr_type, read_func) {
 
         platt <- platt_generate_regression_internal(data, etr_type)
         platt_sdiff <- platt[["residual_sum_of_squares"]]
-        if (!is.numeric(eilers_peeters_sdiff)) {
+        if (!is.numeric(platt_sdiff)) {
           stop("platt residual_sum_of_squares result is not numeric")
         }
         if (is.na(platt_sdiff)) {
@@ -141,7 +141,7 @@ compare_regression_models <- function(data_dir, etr_type, read_func) {
 
         vollenweider <- vollenweider_generate_regression_internal(data, etr_type)
         vollenweider_sdiff <- vollenweider[["residual_sum_of_squares"]]
-        if (!is.numeric(eilers_peeters_sdiff)) {
+        if (!is.numeric(vollenweider_sdiff)) {
           stop("vollenweider residual_sum_of_squares result is not numeric")
         }
         if (is.na(vollenweider_sdiff)) {
@@ -150,7 +150,7 @@ compare_regression_models <- function(data_dir, etr_type, read_func) {
 
         walsby <- walsby_generate_regression_internal(data, etr_type)
         walsby_sdiff <- walsby[["residual_sum_of_squares"]]
-        if (!is.numeric(eilers_peeters_sdiff)) {
+        if (!is.numeric(walsby_sdiff)) {
           stop("walsby residual_sum_of_squares result is not numeric")
         }
         if (is.na(walsby_sdiff)) {
