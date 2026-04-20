@@ -1,6 +1,6 @@
-test_that("read_dual_pam_single_channel_II_data 20260130_efeutute_dual_pam_only_ps_2 - default", {
-  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_ps_2.csv")
-  data <- read_dual_pam_single_channel_II_data(test_data_file)
+test_that("read_dual_pam_single_channel_fluo_data 20260130_efeutute_dual_pam_only_fluo - default", {
+  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_fluo.csv")
+  data <- read_dual_pam_single_channel_fluo_data(test_data_file)
 
   par <- data$par
   expect_equal(par[1], 0)
@@ -68,9 +68,9 @@ test_that("read_dual_pam_single_channel_II_data 20260130_efeutute_dual_pam_only_
   expect_equal(etr_2[11], 12.2052)
 })
 
-test_that("read_dual_pam_single_channel_II_data 20260130_efeutute_dual_pam_only_ps_2 - etr_factor 0.5", {
-  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_ps_2.csv")
-  data <- read_dual_pam_single_channel_II_data(test_data_file, etr_factor = 0.5)
+test_that("read_dual_pam_single_channel_fluo_data 20260130_efeutute_dual_pam_only_fluo - etr_factor 0.5", {
+  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_fluo.csv")
+  data <- read_dual_pam_single_channel_fluo_data(test_data_file, etr_factor = 0.5)
 
   par <- data$par
   expect_equal(par[1], 0)
@@ -138,14 +138,14 @@ test_that("read_dual_pam_single_channel_II_data 20260130_efeutute_dual_pam_only_
   expect_equal(etr_2[11], 7.265)
 })
 
-test_that("read_dual_pam_single_channel_II_data 20260130_efeutute_dual_pam_only_ps_2 - fraction_photosystem > 1", {
-  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_ps_2.csv")
-  expect_error(read_dual_pam_single_channel_II_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
+test_that("read_dual_pam_single_channel_fluo_data 20260130_efeutute_dual_pam_only_fluo - fraction_photosystem > 1", {
+  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_fluo.csv")
+  expect_error(read_dual_pam_single_channel_fluo_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
 })
 
-test_that("read_dual_pam_single_channel_II_data 20260130_efeutute_dual_pam_only_ps_2 - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
-  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_ps_2.csv")
-  data <- read_dual_pam_single_channel_II_data(test_data_file, fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8)
+test_that("read_dual_pam_single_channel_fluo_data 20260130_efeutute_dual_pam_only_fluo - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
+  test_data_file <- testthat::test_path("data", "20260130_efeutute_dual_pam_only_fluo.csv")
+  data <- read_dual_pam_single_channel_fluo_data(test_data_file, fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8)
 
   par <- data$par
   expect_equal(par[1], 0)

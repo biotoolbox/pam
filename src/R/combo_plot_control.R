@@ -30,11 +30,12 @@
 #'
 #' @export
 combo_plot_control <- function(
-    title,
-    data,
-    model_results,
-    name_list,
-    color_list) {
+  title,
+  data,
+  model_results,
+  name_list,
+  color_list
+) {
   validate_data(data)
 
   if (length(model_results) <= 0) {

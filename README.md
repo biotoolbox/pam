@@ -150,11 +150,11 @@ fraction_photosystem_II = 0.5)
 
 ---
 
-### read_dual_pam_single_channel_I_data()
+### read_dual_pam_single_channel_p700_data()
 
 #### Description
 
-This function reads the original CSV file as created by the [DUAL-PAM-100](https://www.walz.com/products/dual-pam-100/) software in single channel mode (Photosystem I), processes it by calculating $$ETR$$ values for Photosystem I, and returns a cleaned dataset.
+This function reads the original CSV file as created by the [DUAL-PAM-100](https://www.walz.com/products/dual-pam-100/) software in single channel mode (P700), processes it by calculating $$ETR$$ values for Photosystem I, and returns a cleaned dataset.
 
 #### Parameters
 
@@ -168,14 +168,14 @@ This function reads the original CSV file as created by the [DUAL-PAM-100](https
 
 #### Details
 
-ETR values for **Photosystem I** are calculated using the following formula:
+ETR values for Photosystem I are calculated using the following formula:
 
 $$ \textit{ETR (I)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of Photosystem I} \cdot \textit{Yield (I)} $$
 
 The function processes the provided CSV file by:
 
 - Reading the CSV data using `read.csv()` and converting it to a `data.table`.  
-- Validating the raw Dual-PAM data with `validate_dual_pam_single_channel_I_data()`.  
+- Validating the raw Dual-PAM data with `validate_dual_pam_single_channel_p700_data()`.  
 - Filtering rows where the column `ID` equals `SP`.  
 - Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.  
 - Extracting the initial Pm.-Det. measurement at `PAR = 0` to calculate the first ETR value.  
@@ -194,7 +194,7 @@ The function processes the provided CSV file by:
 #### Example
 
 ```r
-data <- read_dual_pam_single_channel_I_data(
+data <- read_dual_pam_single_channel_p700_data(
   "path/to/data.csv",
   remove_recovery = TRUE,
   etr_factor = 0.84,
@@ -208,11 +208,11 @@ data <- read_dual_pam_single_channel_I_data(
 - Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 ---
 
-### read_dual_pam_single_channel_II_data()
+### read_dual_pam_single_channel_fluo_data()
 
 #### Description
 
-This function reads the original CSV file as created by the [DUAL-PAM-100](https://www.walz.com/products/dual-pam-100/) software in single channel mode (Photosystem II), processes it by calculating $$ETR$$ values for Photosystem II, and returns a cleaned dataset.
+This function reads the original CSV file as created by the [DUAL-PAM-100](https://www.walz.com/products/dual-pam-100/) software in single channel mode (Fluo), processes it by calculating $$ETR$$ values for Photosystem II, and returns a cleaned dataset.
 
 #### Parameters
 
@@ -232,7 +232,7 @@ $$ \textit{ETR (II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of
 The function processes the provided CSV file by:
 
 - Reading the CSV data using `read.csv()` and converting it to a `data.table`.  
-- Validating the raw Dual-PAM data with `validate_dual_pam_single_channel_II_data()`.  
+- Validating the raw Dual-PAM data with `validate_dual_pam_single_channel_fluo_data()`.  
 - Filtering rows where the column `ID` equals `SP`.  
 - Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.  
 - Extracting the initial **Fm-Det.** measurement at `PAR = 0` to calculate the first ETR value.  
@@ -251,7 +251,7 @@ The function processes the provided CSV file by:
 #### Example
 
 ```r
-data <- read_dual_pam_single_channel_II_data(
+data <- read_dual_pam_single_channel_fluo_data(
   "path/to/data.csv",
   remove_recovery = TRUE,
   etr_factor = 0.84,

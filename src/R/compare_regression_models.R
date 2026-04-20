@@ -50,7 +50,6 @@ compare_regression_models_ETR_I <- function(data_dir, read_func) {
   return(compare_regression_models(data_dir, etr_1_type, read_func))
 }
 
-
 #' Compare Regression Models for ETR II
 #'
 #' Compares multiple regression models for electron transport rate (ETR) data using predefined performance metrics.

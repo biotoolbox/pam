@@ -49,10 +49,11 @@ eilers_peeters_default_start_value_c <- 7.012012
 #'
 #' @export
 eilers_peeters_generate_regression_ETR_I <- function(
-    data,
-    a_start_value = eilers_peeters_default_start_value_a,
-    b_start_value = eilers_peeters_default_start_value_b,
-    c_start_value = eilers_peeters_default_start_value_c) {
+  data,
+  a_start_value = eilers_peeters_default_start_value_a,
+  b_start_value = eilers_peeters_default_start_value_b,
+  c_start_value = eilers_peeters_default_start_value_c
+) {
   return(eilers_peeters_generate_regression_internal(
     data,
     etr_1_type,
@@ -100,10 +101,11 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #'
 #' @export
 eilers_peeters_generate_regression_ETR_II <- function(
-    data,
-    a_start_value = eilers_peeters_default_start_value_a,
-    b_start_value = eilers_peeters_default_start_value_b,
-    c_start_value = eilers_peeters_default_start_value_c) {
+  data,
+  a_start_value = eilers_peeters_default_start_value_a,
+  b_start_value = eilers_peeters_default_start_value_b,
+  c_start_value = eilers_peeters_default_start_value_c
+) {
   return(eilers_peeters_generate_regression_internal(
     data,
     etr_2_type,
@@ -122,11 +124,12 @@ eilers_peeters_message <- function(msg) {
 }
 
 eilers_peeters_generate_regression_internal <- function(
-    data,
-    etr_type,
-    a_start_value = eilers_peeters_default_start_value_a,
-    b_start_value = eilers_peeters_default_start_value_b,
-    c_start_value = eilers_peeters_default_start_value_c) {
+  data,
+  etr_type,
+  a_start_value = eilers_peeters_default_start_value_a,
+  b_start_value = eilers_peeters_default_start_value_b,
+  c_start_value = eilers_peeters_default_start_value_c
+) {
   tryCatch(
     {
       validate_data(data)

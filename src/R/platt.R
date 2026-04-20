@@ -51,10 +51,11 @@ platt_default_start_value_ps <- 49.76112
 #'
 #' @export
 platt_generate_regression_ETR_I <- function(
-    data,
-    alpha_start_value = platt_default_start_value_alpha,
-    beta_start_value = platt_default_start_value_beta,
-    ps_start_value = platt_default_start_value_ps) {
+  data,
+  alpha_start_value = platt_default_start_value_alpha,
+  beta_start_value = platt_default_start_value_beta,
+  ps_start_value = platt_default_start_value_ps
+) {
   return(platt_generate_regression_internal(
     data,
     etr_1_type,
@@ -105,10 +106,11 @@ platt_generate_regression_ETR_I <- function(
 #'
 #' @export
 platt_generate_regression_ETR_II <- function(
-    data,
-    alpha_start_value = platt_default_start_value_alpha,
-    beta_start_value = platt_default_start_value_beta,
-    ps_start_value = platt_default_start_value_ps) {
+  data,
+  alpha_start_value = platt_default_start_value_alpha,
+  beta_start_value = platt_default_start_value_beta,
+  ps_start_value = platt_default_start_value_ps
+) {
   return(platt_generate_regression_internal(
     data,
     etr_2_type,
@@ -127,11 +129,12 @@ platt_message <- function(msg) {
 }
 
 platt_generate_regression_internal <- function(
-    data,
-    etr_type,
-    alpha_start_value = platt_default_start_value_alpha,
-    beta_start_value = platt_default_start_value_beta,
-    ps_start_value = platt_default_start_value_ps) {
+  data,
+  etr_type,
+  alpha_start_value = platt_default_start_value_alpha,
+  beta_start_value = platt_default_start_value_beta,
+  ps_start_value = platt_default_start_value_ps
+) {
   tryCatch(
     {
       validate_data(data)
@@ -240,7 +243,7 @@ platt_generate_regression_internal <- function(
       }
       etr_regression_data <- create_regression_data(pars, predictions)
 
-       measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
+      measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
 
       root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
 
@@ -250,7 +253,7 @@ platt_generate_regression_internal <- function(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         residual_sum_of_squares = residual_sum_of_squares,
-         root_mean_squared_error = root_mean_squared_error,
+        root_mean_squared_error = root_mean_squared_error,
         relative_root_mean_squared_error = relative_root_mean_squared_error,
         alpha = alpha,
         beta = beta,
@@ -319,7 +322,7 @@ platt_modified <- function(model_result) {
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
     residual_sum_of_squares = get_sdiff_from_model_result(model_result),
-        model_result[["root_mean_squared_error"]],
+    model_result[["root_mean_squared_error"]],
     model_result[["relative_root_mean_squared_error"]],
     a = model_result[["ps"]],
     b = model_result[["alpha"]],
