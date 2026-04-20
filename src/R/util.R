@@ -26,7 +26,7 @@ get_etr_regression_data_from_model_result <- function(model_result) {
   return(model_result[["etr_regression_data"]])
 }
 
-get_sdiff_from_model_result <- function(model_result) {
+get_residual_sum_of_squares_from_model_result <- function(model_result) {
   return(model_result[["residual_sum_of_squares"]])
 }
 

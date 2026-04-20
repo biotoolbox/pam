@@ -167,7 +167,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate pm: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate pm: error:", w))
+          eilers_peeters_message(paste("failed to calculate pm: error:", e))
         }
       )
 
@@ -180,7 +180,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate s: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate s: error:", w))
+          eilers_peeters_message(paste("failed to calculate s: error:", e))
         }
       )
 
@@ -193,7 +193,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate ik: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate ik: error:", w))
+          eilers_peeters_message(paste("failed to calculate ik: error:", e))
         }
       )
 
@@ -206,7 +206,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate im: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate im: error:", w))
+          eilers_peeters_message(paste("failed to calculate im: error:", e))
         }
       )
 
@@ -219,7 +219,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate w: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate w: error:", w))
+          eilers_peeters_message(paste("failed to calculate w: error:", e))
         }
       )
 
@@ -310,7 +310,7 @@ eilers_peeters_modified <- function(model_result) {
   result <- create_modified_model_result(
     get_etr_type_from_model_result(model_result),
     get_etr_regression_data_from_model_result(model_result),
-    get_sdiff_from_model_result(model_result),
+    get_residual_sum_of_squares_from_model_result(model_result),
     model_result[["root_mean_squared_error"]],
     model_result[["relative_root_mean_squared_error"]],
     model_result[["a"]],

@@ -122,45 +122,45 @@ compare_regression_models <- function(data_dir, etr_type, read_func) {
     tryCatch(
       {
         eilers_peeters <- eilers_peeters_generate_regression_internal(data, etr_type)
-        eilers_peeters_sdiff <- eilers_peeters[["residual_sum_of_squares"]]
-        if (!is.numeric(eilers_peeters_sdiff)) {
+        eilers_peeters_residual_sum_of_squares <- eilers_peeters[["residual_sum_of_squares"]]
+        if (!is.numeric(eilers_peeters_residual_sum_of_squares)) {
           stop("eilers_peeters residual_sum_of_squares result is not numeric")
         }
-        if (is.na(eilers_peeters_sdiff)) {
+        if (is.na(eilers_peeters_residual_sum_of_squares)) {
           stop("failed to calculate residual_sum_of_squares with eilers_peeters")
         }
 
         platt <- platt_generate_regression_internal(data, etr_type)
-        platt_sdiff <- platt[["residual_sum_of_squares"]]
-        if (!is.numeric(eilers_peeters_sdiff)) {
+        platt_residual_sum_of_squares <- platt[["residual_sum_of_squares"]]
+        if (!is.numeric(platt_residual_sum_of_squares)) {
           stop("platt residual_sum_of_squares result is not numeric")
         }
-        if (is.na(platt_sdiff)) {
+        if (is.na(platt_residual_sum_of_squares)) {
           stop("failed to calculate residual_sum_of_squares with platt")
         }
 
         vollenweider <- vollenweider_generate_regression_internal(data, etr_type)
-        vollenweider_sdiff <- vollenweider[["residual_sum_of_squares"]]
-        if (!is.numeric(eilers_peeters_sdiff)) {
+        vollenweider_residual_sum_of_squares <- vollenweider[["residual_sum_of_squares"]]
+        if (!is.numeric(vollenweider_residual_sum_of_squares)) {
           stop("vollenweider residual_sum_of_squares result is not numeric")
         }
-        if (is.na(vollenweider_sdiff)) {
+        if (is.na(vollenweider_residual_sum_of_squares)) {
           stop("failed to calculate residual_sum_of_squares with vollenweider")
         }
 
         walsby <- walsby_generate_regression_internal(data, etr_type)
-        walsby_sdiff <- walsby[["residual_sum_of_squares"]]
-        if (!is.numeric(eilers_peeters_sdiff)) {
+        walsby_residual_sum_of_squares <- walsby[["residual_sum_of_squares"]]
+        if (!is.numeric(walsby_residual_sum_of_squares)) {
           stop("walsby residual_sum_of_squares result is not numeric")
         }
-        if (is.na(walsby_sdiff)) {
+        if (is.na(walsby_residual_sum_of_squares)) {
           stop("failed to calculate residual_sum_of_squares with walsby")
         }
 
-        data1 <- data.table::data.table(group = "eilers_peeters", value = eilers_peeters_sdiff)
-        data2 <- data.table::data.table(group = "platt", value = platt_sdiff)
-        data3 <- data.table::data.table(group = "vollenweider", value = vollenweider_sdiff)
-        data4 <- data.table::data.table(group = "walsby", value = walsby_sdiff)
+        data1 <- data.table::data.table(group = "eilers_peeters", value = eilers_peeters_residual_sum_of_squares)
+        data2 <- data.table::data.table(group = "platt", value = platt_residual_sum_of_squares)
+        data3 <- data.table::data.table(group = "vollenweider", value = vollenweider_residual_sum_of_squares)
+        data4 <- data.table::data.table(group = "walsby", value = walsby_residual_sum_of_squares)
 
         combined_data <- rbind(data1, data2, data3, data4)
         combined_data <- combined_data[order(combined_data$value), ]
