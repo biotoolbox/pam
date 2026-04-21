@@ -7,10 +7,9 @@
 
 ## Introduction
 
-The library ‘pam’ was developed to process PAM raw data (chlorophyll fluorometry to analyze photosystem II and dual wavelength absorbance spectrometry to analyze photosystem I). For this purpose, both device-specific read functions (e.g., for the WALZ Dual-PAM) and a universal read function for processing generic datasets are provided.
-Four different models are provided for the regression of the light curve (Vollenweider (1965), Platt (1980), Eilers and Peeters (1988) and Walsby (1997)).
-To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as $$ETR_{max}$$, it is possible to output both with publication-compliant naming and with homogenised naming.
-Generated control plots make it possible to check each individual regression fit and calculated data.
+Rapid light curves recorded via the pulse‐amplitude modulation (PAM) technique are widely used to characterize photosynthesis, enabling the determination of key photosynthetic parameters. However, deriving these kinetic parameters from raw data requires fitting to regression models, a process traditionally involving laborious and error‐prone manual steps. Our R package pam streamlines this process by automating regression analysis, enabling fast and reproducible processing of large datasets. It provides the models of Vollenweider (1965), Platt et al. (1980), Eilers and Peeters (1988) and Walsby (1997).
+
+- J. Böhm and P. Schrag, ‘pam: An R Package for Fast and Efficient Processing of Pulse‐Amplitude Modulation Data’, Ecology and Evolution, vol. 16, no. 4, p. e73400, Apr. 2026, doi: [10.1002/ece3.73400](https://www.researchgate.net/publication/404020183_pam_An_R_Package_for_Fast_and_Efficient_Processing_of_Pulse-Amplitude_Modulation_Data).
 
 ## Publications using this package
 
