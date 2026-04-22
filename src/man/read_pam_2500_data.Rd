@@ -43,7 +43,7 @@ Calculates ETR II using:
 A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file}
 }
 \examples{
-path <- file.path(system.file("extdata/pam_2500_data", package = "pam"), "20260311_1(2).CSV")
+path <- file.path(system.file("extdata/pam_2500_data", package = "pam"), "20260422_pam_2500.CSV")
 data <- read_pam_2500_data(path)
 }
 \references{

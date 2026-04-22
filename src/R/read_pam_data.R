@@ -636,7 +636,7 @@ read_junior_pam_data <- function(
 #'   Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata/pam_2500_data", package = "pam"), "20260311_1(2).CSV")
+#' path <- file.path(system.file("extdata/pam_2500_data", package = "pam"), "20260422_pam_2500.CSV")
 #' data <- read_pam_2500_data(path)
 #' @export
 read_pam_2500_data <- function(
@@ -701,7 +701,7 @@ read_pam_2500_data <- function(
 
         last_par <- current_par
       }
-
+      print(result)
       return(result)
     },
     warning = function(w) {
