@@ -126,7 +126,7 @@ The function processes the provided CSV file by:
 - Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.
 - Calculating initial ETR values from `Pm.-Det.` and `Fm-Det.` rows using `calc_etr()`.
 - Iterating through all rows with `Action == "P.+F. SP"` to calculate ETR values for both `Y.I.` and `Y.II.`
-- Optionally stopping at the recovery period if `remove_recovery = TRUE`.
+- Stopping at the recovery period if `remove_recovery = TRUE`.
 
 
 #### Return
@@ -179,7 +179,7 @@ The function processes the provided CSV file by:
 - Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.  
 - Extracting the initial Pm.-Det. measurement at `PAR = 0` to calculate the first ETR value.  
 - Iterating through all rows with `Action == "P700 SP"` to calculate ETR values for Photosystem I (`Y.I.`).  
-- Optionally stopping at the recovery period if `remove_recovery = TRUE`.  
+- Stopping at the recovery period if `remove_recovery = TRUE`.  
 
 #### Return
 
@@ -236,7 +236,7 @@ The function processes the provided CSV file by:
 - Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.  
 - Extracting the initial **Fm-Det.** measurement at `PAR = 0` to calculate the first ETR value.  
 - Iterating through all rows with `Action == "Fluo. SP"` to calculate ETR values for Photosystem II (`Y.II.`).  
-- Optionally stopping at the recovery period if `remove_recovery = TRUE`.  
+- Stopping at the recovery period if `remove_recovery = TRUE`.  
 
 #### Return
 
@@ -292,9 +292,12 @@ The function processes the provided CSV file by:
 - Validating the raw Junior-PAM data with `validate_junior_pam_data()`.
 - Renaming columns to standard names (`PAR`, `Y.II`.) if necessary.
 - Filtering rows where Type equals `"FO"` or `"F"`.
-- Converting and ordering the `DateTime` column.
+- Ordering by `Time (rel/ms)` column.
 - Iterating through all rows to calculate ETR values for `Y.II.` using `calc_etr()`.
-- Optionally stopping at the recovery period if `remove_recovery = TRUE`.
+- Stopping at the recovery period if `remove_recovery = TRUE`.
+
+To ensure the file is imported correctly, please export the CSV file using the default settings:
+![Plot](texport_junior_pam.png)
 
 #### Return
 

@@ -111,12 +111,11 @@ read_universal_data <- function(csv_path,
 #' data <- read_dual_pam_data(path)
 #' @export
 read_dual_pam_data <- function(
-  csv_path,
-  remove_recovery = TRUE,
-  etr_factor = 0.84,
-  fraction_photosystem_I = 0.5,
-  fraction_photosystem_II = 0.5
-) {
+    csv_path,
+    remove_recovery = TRUE,
+    etr_factor = 0.84,
+    fraction_photosystem_I = 0.5,
+    fraction_photosystem_II = 0.5) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
@@ -249,12 +248,11 @@ read_dual_pam_data <- function(
 #' data <- read_dual_pam_single_channel_p700_data(path)
 #' @export
 read_dual_pam_single_channel_p700_data <- function(
-  csv_path,
-  remove_recovery = TRUE,
-  etr_factor = 0.84,
-  fraction_photosystem_I = 0.5,
-  fraction_photosystem_II = 0.5
-) {
+    csv_path,
+    remove_recovery = TRUE,
+    etr_factor = 0.84,
+    fraction_photosystem_I = 0.5,
+    fraction_photosystem_II = 0.5) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
@@ -380,12 +378,11 @@ read_dual_pam_single_channel_p700_data <- function(
 #' data <- read_dual_pam_single_channel_fluo_data(path)
 #' @export
 read_dual_pam_single_channel_fluo_data <- function(
-  csv_path,
-  remove_recovery = TRUE,
-  etr_factor = 0.84,
-  fraction_photosystem_I = 0.5,
-  fraction_photosystem_II = 0.5
-) {
+    csv_path,
+    remove_recovery = TRUE,
+    etr_factor = 0.84,
+    fraction_photosystem_I = 0.5,
+    fraction_photosystem_II = 0.5) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
@@ -532,17 +529,16 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
 #' @examples
 #' path <- file.path(
 #'   system.file("extdata/junior_pam_data", package = "pam"),
-#'   "junior_pam_20250613.csv"
+#'   "2026_04_22_junior_pam.csv"
 #' )
 #' data <- read_junior_pam_data(path)
 #' @export
 read_junior_pam_data <- function(
-  csv_path,
-  remove_recovery = TRUE,
-  etr_factor = 0.84,
-  fraction_photosystem_I = 0.5,
-  fraction_photosystem_II = 0.5
-) {
+    csv_path,
+    remove_recovery = TRUE,
+    etr_factor = 0.84,
+    fraction_photosystem_I = 0.5,
+    fraction_photosystem_II = 0.5) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }
@@ -565,20 +561,7 @@ read_junior_pam_data <- function(
       }
 
       data <- data[data$Type == "FO" | data$Type == "F", ]
-      data$Datetime <- as.POSIXct(data$Datetime, format = "%Y-%m-%d %H:%M:%OS", tz = "GMT")
-
-      date_time_col_values <- c()
-      for (i in seq_len(nrow(data))) {
-        row <- data[i, ]
-
-        date_time_row_value <- as.POSIXct(
-          paste(row$Date, row$Time, sep = " "),
-          tz = "GMT", "%d.%m.%y %H:%M:%S"
-        )
-        date_time_col_values <- c(date_time_col_values, date_time_row_value)
-      }
-      data$DateTime <- date_time_col_values
-      data <- data[order(data$Datetime), ]
+      data <- data[order(data$"Time..rel.ms."), ]
 
       result <- data.table::data.table(
         par = numeric(),
@@ -657,12 +640,11 @@ read_junior_pam_data <- function(
 #' data <- read_pam_2500_data(path)
 #' @export
 read_pam_2500_data <- function(
-  csv_path,
-  remove_recovery = TRUE,
-  etr_factor = 0.84,
-  fraction_photosystem_I = 0.5,
-  fraction_photosystem_II = 0.5
-) {
+    csv_path,
+    remove_recovery = TRUE,
+    etr_factor = 0.84,
+    fraction_photosystem_I = 0.5,
+    fraction_photosystem_II = 0.5) {
   if (fraction_photosystem_I + fraction_photosystem_II != 1) {
     stop("The sum of fraction_photosystem_I and fraction_photosystem_II must be equal 1.")
   }

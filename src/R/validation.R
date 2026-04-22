@@ -217,8 +217,8 @@ validate_junior_pam_data <- function(data) {
     stop("required col 'Y..II.' not found")
   }
 
-  if (!"Datetime" %in% colnames(data)) {
-    stop("required col 'Datetime' not found")
+  if (!"Time..rel.ms." %in% colnames(data)) {
+    stop("required col 'Time (rel/ms)' not found")
   }
 }
 

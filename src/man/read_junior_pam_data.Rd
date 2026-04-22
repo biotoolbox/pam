@@ -45,7 +45,7 @@ A detailed documentation can be found under \url{https://github.com/biotoolbox/p
 \examples{
 path <- file.path(
   system.file("extdata/junior_pam_data", package = "pam"),
-  "junior_pam_20250613.csv"
+  "2026_04_22_junior_pam.csv"
 )
 data <- read_junior_pam_data(path)
 }
