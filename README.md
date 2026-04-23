@@ -7,16 +7,17 @@
 
 ## Introduction
 
-The library ‘pam’ was developed to process PAM raw data (chlorophyll fluorometry to analyze photosystem II and dual wavelength absorbance spectrometry to analyze photosystem I). For this purpose, both device-specific read functions (e.g., for the WALZ Dual-PAM) and a universal read function for processing generic datasets are provided.
-Four different models are provided for the regression of the light curve (Vollenweider (1965), Platt (1980), Eilers and Peeters (1988) and Walsby (1997)).
-To select the most suitable model for the respective data set, the models can be compared with each other. To avoid confusion in the naming of the variables and calculated factors such as $$ETR_{max}$$, it is possible to output both with publication-compliant naming and with homogenised naming.
-Generated control plots make it possible to check each individual regression fit and calculated data.
+Rapid light curves recorded via the pulse‐amplitude modulation (PAM) technique are widely used to characterize photosynthesis, enabling the determination of key photosynthetic parameters. However, deriving these kinetic parameters from raw data requires fitting to regression models, a process traditionally involving laborious and error‐prone manual steps. Our R package pam streamlines this process by automating regression analysis, enabling fast and reproducible processing of large datasets. It provides the models of Vollenweider (1965), Platt et al. (1980), Eilers and Peeters (1988) and Walsby (1997).
+
+- J. Böhm and P. Schrag, ‘pam: An R Package for Fast and Efficient Processing of Pulse‐Amplitude Modulation Data’, Ecology and Evolution, vol. 16, no. 4, p. e73400, Apr. 2026, doi: [10.1002/ece3.73400](https://www.researchgate.net/publication/404020183_pam_An_R_Package_for_Fast_and_Efficient_Processing_of_Pulse-Amplitude_Modulation_Data).
 
 ## Publications using this package
 
-- J. Böhm, J. Trossen, I. Blindow, and H. Schubert, ‘Impact of temperature and light on the physiology and morphology of *Chara hispida* L. (Charophyceae)’, Aquatic Botany, vol. 206, p. 104022, Sep. 2026, doi: [10.1016/j.aquabot.2026.104022]( https://doi.org/10.1016/j.aquabot.2026.104022).
+- J. Böhm, J. Trossen, I. Blindow, and H. Schubert, ‘Impact of temperature and light on the physiology and morphology of *Chara hispida* L. (Charophyceae)’, Aquatic Botany, vol. 206, p. 104022, Sep. 2026, doi: [10.1016/j.aquabot.2026.104022](https://www.researchgate.net/publication/402846331_Impact_of_temperature_and_light_on_the_physiology_and_morphology_of_Chara_hispida_L_Charophyceae).
 
-- J. Böhm, I. Blindow, N. Gyllenstrand, W. Diewald, and H. Schubert, ‘*Sphaerochara canadensis* (Charophyceae): A circumpolar species with a high temperature optimum’, Journal of Phycology, vol. 61, no. 6, pp. 1863–1873, Dec. 2025, doi: [10.1111/jpy.70111]( https://doi.org/10.1111/jpy.70111).
+- J. Böhm, I. Blindow, N. Gyllenstrand, W. Diewald, and H. Schubert, ‘*Sphaerochara canadensis* (Charophyceae): A circumpolar species with a high temperature optimum’, Journal of Phycology, vol. 61, no. 6, pp. 1863–1873, Dec. 2025, doi: [10.1111/jpy.70111](https://www.researchgate.net/publication/398295400_Sphaerochara_canadensis_Charophyceae_A_circumpolar_species_with_a_high_temperature_optimum).
+
+- A continuously updated overview of studies using this package can be accessed via ResearchGate ([publication](https://www.researchgate.net/publication/404020183_pam_An_R_Package_for_Fast_and_Efficient_Processing_of_Pulse-Amplitude_Modulation_Data/citations), [package](https://www.researchgate.net/publication/395536281_pam_Fast_and_Efficient_Processing_of_PAM_Data/citations))
 
 ## Test coverage
 
@@ -43,6 +44,8 @@ install.packages("pam")
 ## Examples
 
 Examples of usage can be found in the `examples` directory.
+
+---
 
 ## Functions
 
@@ -91,14 +94,13 @@ fraction_photosystem_II = 0.5)
 
 - Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 
+---
 
 ### read_dual_pam_data()
 
 #### Description
 
-This function reads the original CSV file as created by the DualPAM software, processes it by calculating $$ETR$$ values, and returns a cleaned dataset.
-Functionality with raw data from other PAM devices cannot be guaranteed.
-Individual customisation may be necessary when reading data.
+This function reads the original CSV file as created by the [DUAL-PAM-100](https://www.walz.com/products/dual-pam-100/) software, processes it by calculating $$ETR$$ values, and returns a cleaned dataset.
 
 #### Parameters
 
@@ -124,7 +126,7 @@ The function processes the provided CSV file by:
 - Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.
 - Calculating initial ETR values from `Pm.-Det.` and `Fm-Det.` rows using `calc_etr()`.
 - Iterating through all rows with `Action == "P.+F. SP"` to calculate ETR values for both `Y.I.` and `Y.II.`
-- Optionally stopping at the recovery period if `remove_recovery = TRUE`.
+- Stopping at the recovery period if `remove_recovery = TRUE`.
 
 
 #### Return
@@ -145,13 +147,128 @@ fraction_photosystem_II = 0.5)
 
 - Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
 
+---
+
+### read_dual_pam_single_channel_p700_data()
+
+#### Description
+
+This function reads the original CSV file as created by the [DUAL-PAM-100](https://www.walz.com/products/dual-pam-100/) software in single channel mode (P700), processes it by calculating $$ETR$$ values for Photosystem I, and returns a cleaned dataset.
+
+#### Parameters
+
+- **csv_path**: A string representing the file path to the CSV file.  
+- **remove_recovery**: Automatic removal of recovery measurements after the actual Pi curve for an accurate regression. Default is `TRUE`.  
+- **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.  
+- **fraction_photosystem_I**: A numeric value representing the relative distribution of absorbed PAR to Photosystem I used in the ETR calculation formula. Default is `0.5`.  
+  Calculated as: $$\textit{Fraction of Photosystem I} = \frac{PPS 1}{PPS 1+2}$$  
+- **fraction_photosystem_II**: A numeric value representing the relative distribution of absorbed PAR to Photosystem II. Default is `0.5`.  
+  (Must sum with Photosystem I fraction to 1.)
+
+#### Details
+
+ETR values for Photosystem I are calculated using the following formula:
+
+$$ \textit{ETR (I)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of Photosystem I} \cdot \textit{Yield (I)} $$
+
+The function processes the provided CSV file by:
+
+- Reading the CSV data using `read.csv()` and converting it to a `data.table`.  
+- Validating the raw Dual-PAM data with `validate_dual_pam_single_channel_p700_data()`.  
+- Filtering rows where the column `ID` equals `SP`.  
+- Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.  
+- Extracting the initial Pm.-Det. measurement at `PAR = 0` to calculate the first ETR value.  
+- Iterating through all rows with `Action == "P700 SP"` to calculate ETR values for Photosystem I (`Y.I.`).  
+- Stopping at the recovery period if `remove_recovery = TRUE`.  
+
+#### Return
+
+- Returning a table containing:
+  - `par`: Photosynthetically active radiation.  
+  - `yield_1`: Yield of Photosystem I.  
+  - `yield_2`: `NA` (not available in single channel PS I mode).  
+  - `etr_1`: Calculated ETR for Photosystem I.  
+  - `etr_2`: `NA` (not available in single channel PS I mode).  
+
+#### Example
+
+```r
+data <- read_dual_pam_single_channel_p700_data(
+  "path/to/data.csv",
+  remove_recovery = TRUE,
+  etr_factor = 0.84,
+  fraction_photosystem_I = 0.5,
+  fraction_photosystem_II = 0.5
+)
+```
+
+#### References
+
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+---
+
+### read_dual_pam_single_channel_fluo_data()
+
+#### Description
+
+This function reads the original CSV file as created by the [DUAL-PAM-100](https://www.walz.com/products/dual-pam-100/) software in single channel mode (Fluo), processes it by calculating $$ETR$$ values for Photosystem II, and returns a cleaned dataset.
+
+#### Parameters
+
+- **csv_path**: A string representing the file path to the CSV file.  
+- **remove_recovery**: Automatic removal of recovery measurements after the actual Pi curve for an accurate regression. Default is `TRUE`.  
+- **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.  
+- **fraction_photosystem_I**: A numeric value representing the relative distribution of absorbed PAR to Photosystem I. Default is `0.5`.  
+- **fraction_photosystem_II**: A numeric value representing the relative distribution of absorbed PAR to Photosystem II used in the ETR calculation formula. Default is `0.5`.  
+  Calculated as: $$\textit{Fraction of Photosystem II} = \frac{PPS 2}{PPS 1+2}$$  
+
+#### Details
+
+ETR values for Photosystem II are calculated using the following formula:
+
+$$ \textit{ETR (II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of Photosystem II} \cdot \textit{Yield (II)} $$
+
+The function processes the provided CSV file by:
+
+- Reading the CSV data using `read.csv()` and converting it to a `data.table`.  
+- Validating the raw Dual-PAM data with `validate_dual_pam_single_channel_fluo_data()`.  
+- Filtering rows where the column `ID` equals `SP`.  
+- Combining the `Date` and `Time` columns to create a `DateTime` column and ordering the data chronologically.  
+- Extracting the initial **Fm-Det.** measurement at `PAR = 0` to calculate the first ETR value.  
+- Iterating through all rows with `Action == "Fluo. SP"` to calculate ETR values for Photosystem II (`Y.II.`).  
+- Stopping at the recovery period if `remove_recovery = TRUE`.  
+
+#### Return
+
+- Returning a table containing:
+  - `par`: Photosynthetically active radiation.  
+  - `yield_1`: `NA` (not available in single channel Photosystem II mode).  
+  - `yield_2`: Yield of Photosystem II.  
+  - `etr_1`: `NA` (not available in single channel Photosystem II mode).  
+  - `etr_2`: Calculated ETR for Photosystem II.  
+
+#### Example
+
+```r
+data <- read_dual_pam_single_channel_fluo_data(
+  "path/to/data.csv",
+  remove_recovery = TRUE,
+  etr_factor = 0.84,
+  fraction_photosystem_I = 0.5,
+  fraction_photosystem_II = 0.5
+)
+```
+
+#### References
+
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+---
+
 ### read_junior_pam_data()
 
 #### Description
 
-This function reads the original CSV file as created by the WinControl software, processes it by calculating $$ETR$$ values, and returns a cleaned dataset.
-Functionality with raw data from other PAM devices cannot be guaranteed.
-Individual customisation may be necessary when reading data.
+This function reads the original CSV file from [JUNIOR-PAM](https://www.walz.com/products/junior-pam/) as created by the WinControl software, processes it by calculating $$ETR$$ values, and returns a cleaned dataset.
 
 #### Parameters
 
@@ -175,9 +292,12 @@ The function processes the provided CSV file by:
 - Validating the raw Junior-PAM data with `validate_junior_pam_data()`.
 - Renaming columns to standard names (`PAR`, `Y.II`.) if necessary.
 - Filtering rows where Type equals `"FO"` or `"F"`.
-- Converting and ordering the `DateTime` column.
+- Ordering by `Time (rel/ms)` column.
 - Iterating through all rows to calculate ETR values for `Y.II.` using `calc_etr()`.
-- Optionally stopping at the recovery period if `remove_recovery = TRUE`.
+- Stopping at the recovery period if `remove_recovery = TRUE`.
+
+To ensure the file is imported correctly, please export the CSV file using the default settings:
+![Plot](img/export_junior_pam.png)
 
 #### Return
 
@@ -196,6 +316,73 @@ fraction_photosystem_II = 0.5)
 #### References
 
 - Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+
+---
+
+### read_pam_2500_data()
+
+#### Description
+
+This function reads the original CSV file generated by the [PAM-2500](https://www.walz.com/products/pam-2500/) software, processes it by calculating $$ETR$$ values for Photosystem II, and returns a cleaned dataset.
+
+#### Parameters
+
+- **csv_path**: A string representing the file path to the CSV file.
+- **remove_recovery**: Logical value indicating whether recovery measurements after the actual Pi curve should be removed. Default is `TRUE`.
+- **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.
+- **fraction_photosystem_I**: A numeric value representing the relative distribution of absorbed PAR to photosystem I. Default is `0.5`.  
+  Calculated as: $$\textit{Fraction of Photosystem I} = \frac{PPS 1}{PPS 1+2}$$
+- **fraction_photosystem_II**: A numeric value representing the relative distribution of absorbed PAR to photosystem II. Default is `0.5`.  
+  Calculated as: $$\textit{Fraction of Photosystem II} = \frac{PPS 2}{PPS 1+2}$$
+
+
+#### Details
+
+ETR values are calculated using the following formula:
+
+$$ \textit{ETR (II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of Photosystem II} \cdot \textit{Yield (II)} $$
+
+The function processes the provided CSV file by:
+
+- Reading the CSV file using `read.csv()` with `;` as separator and converting it to a `data.table`.
+- Validating the dataset using `validate_pam_2500_data()`.
+- Filtering rows where the column `No.` contains numeric entries only.
+- Combining the `Date` and `Time` columns into a `DateTime` column and sorting the dataset chronologically.
+- Iterating through all rows to:
+  - Extract `PAR` and `Y.II.` values.
+  - Calculate ETR for Photosystem II using `calc_etr()`.
+- Optionally stopping at the recovery phase if `remove_recovery = TRUE`, defined as a decrease in PAR values.
+- Constructing a result table with calculated values.
+
+
+#### Return
+
+- A `data.table` containing the following columns:
+
+  - `par`: Photosynthetically active radiation  
+  - `yield_1`: Placeholder column (`NA`)  
+  - `yield_2`: Effective quantum yield of Photosystem II  
+  - `etr_1`: Placeholder column (`NA`)  
+  - `etr_2`: Calculated electron transport rate for Photosystem II  
+
+
+#### Example
+
+```r
+data <- read_pam_2500_data(
+  "path/to/data.csv",
+  remove_recovery = TRUE,
+  etr_factor = 0.84,
+  fraction_photosystem_I = 0.5,
+  fraction_photosystem_II = 0.5
+)
+```
+
+#### References
+
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+
+---
 
 ### vollenweider_generate_regression_ETR_I() and vollenweider_generate_regression_ETR_II()
 
@@ -277,6 +464,8 @@ result_vollenweider_ETR_II <- vollenweider_generate_regression_ETR_II(data,
 
 Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements*, p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 
+---
+
 ### platt_generate_regression_ETR_I() and platt_generate_regression_ETR_II()
 
 This function generates a regression model based on  Platt (1980). Original naming conventions from the publication are used.
@@ -339,6 +528,8 @@ result_platt_ETR_II <- platt_generate_regression_ETR_II(data,
 #### References
 
 Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from <https://elischolar.library.yale.edu/journal_of_marine_research/1525>.
+
+---
 
 ### eilers_peeters_generate_regression_ETR_I() and eilers_peeters_generate_regression_ETR_II()
 
@@ -403,6 +594,8 @@ c_start_value = 5)
 
 Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
 
+---
+
 ### walsby_generate_regression_ETR_I() and walsby_generate_regression_ETR_II()
 
 This function generates a regression model based on  Walsby (1997) in a modified version without the respiration term. Naming conventions from Romoth (2019) are used. ETRmax is calculated without taking photoinhibition into account.
@@ -439,6 +632,8 @@ It is valid: $$I = PAR$$
 Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. <https://doi.org/10.1046/j.1469-8137.1997.00736.x>
 
 Romoth, K., Nowak, P., Kempke, D., Dietrich, A., Porsche, C., & Schubert, H. (2019). Acclimation limits of *Fucus evanescens* along the salinity gradient of the southwestern Baltic Sea. *Botanica Marina*, 62(1), 1-12. <https://doi.org/10.1515/bot-2018-0098>
+
+---
 
 ### vollenweider_modified()
 
@@ -490,6 +685,7 @@ This function validates the `model_result` input and processes relevant paramete
 ```r
 modified_result_vollenweider <- vollenweider_modified(model_result_vollenweider)
 ```
+---
 
 ### platt_modified()
 
@@ -535,6 +731,8 @@ This function validates the `model_result` input and processes relevant paramete
 modified_result_platt <- platt_modified(model_result_platt)
 ```
 
+---
+
 ### eilers_peeters_modified()
 
 This function adds parameters that were not originally included in the Eilers and Peeters (1988) model, but were introduced by other models and renames the parameters to a standardised one for all models. See the table below.
@@ -577,6 +775,7 @@ This function validates the `model_result` input, extracts relevant parameters f
 # Example usage for eilers_peeters_modified
 modified_result <- eilers_peeters_modified(model_result_eilers_peeters)
 ```
+---
 
 ### walsby_modified()
 
@@ -641,6 +840,7 @@ This function validates the `model_result` input and processes relevant paramete
 ```r
 modified_result <- walsby_modified(model_result_walsby)
 ```
+---
 
 ### Naming overview
 
@@ -666,6 +866,8 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |ib         |NA     |ib     |NA           |NA       |
 |etrmax_without_with_ratio   |NA     |NA     |NA           |pmax_popt_and_ik_iik_ratio |
 
+---
+
 #### Publication-accurate naming and the respective modified naming with additional calculations not included in the original publication
 
 |modified      |Eilers and Peeters |Platt    |Walsby          |Vollenweider    |
@@ -687,6 +889,8 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
 |etrmax_without_with_ratio   |NA     |etrmax_without_with_ratio  |etrmax_without_with_ratio |pmax_popt_and_ik_iik_ratio |
+
+---
 
 ### compare_regression_models_ETR_I() and compare_regression_models_ETR_II()
 
@@ -733,6 +937,8 @@ Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves a
 
 Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. <https://doi.org/10.1046/j.1469-8137.1997.00736.x>
 
+---
+
 ### plot_control()
 
 This function creates a control plot for the used model based on the provided data and model results.
@@ -760,7 +966,9 @@ plot_control_eilers_peeters_ETR_II <- plot_control(
 print(plot_control_eilers_peeters_ETR_II)
 ```
 
-![Plot](test-eilers_peeters_etr_II_modified_control_plot_20240925.jpg)
+![Plot](img/test-eilers_peeters_etr_II_modified_control_plot_20240925.jpg)
+
+---
 
 ### combo_plot_control()
 
@@ -781,7 +989,7 @@ A plot displaying the original ETR and Yield values and the regression data from
 #### Examples
 
 ```r
-test_data_file <- file.path(getwd(), "data", "20240925.csv")
+test_data_file <- file.path(getwd(), "data", "dual_pam_data", "20240925.csv")
     data <- read_dual_pam_data(test_data_file)
 
     eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_II(data))
@@ -798,7 +1006,9 @@ test_data_file <- file.path(getwd(), "data", "20240925.csv")
     )
 ```
 
-![combo Plot](test_combo_plot_control_etr_II.jpg)
+![combo Plot](img/test_combo_plot_control_etr_II.jpg)
+
+---
 
 ### write_model_result_csv()
 
@@ -831,6 +1041,7 @@ write_model_result_csv(
   model_result = model_result_eilers_peeters
 )
 ```
+---
 
 ### known issues
 

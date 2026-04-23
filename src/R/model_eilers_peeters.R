@@ -42,17 +42,18 @@ eilers_peeters_default_start_value_c <- 7.012012
 #' }
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- eilers_peeters_generate_regression_ETR_I(data)
 #'
 #' @export
 eilers_peeters_generate_regression_ETR_I <- function(
-    data,
-    a_start_value = eilers_peeters_default_start_value_a,
-    b_start_value = eilers_peeters_default_start_value_b,
-    c_start_value = eilers_peeters_default_start_value_c) {
+  data,
+  a_start_value = eilers_peeters_default_start_value_a,
+  b_start_value = eilers_peeters_default_start_value_b,
+  c_start_value = eilers_peeters_default_start_value_c
+) {
   return(eilers_peeters_generate_regression_internal(
     data,
     etr_1_type,
@@ -93,17 +94,18 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #'   Ecological Modelling, 42(3-4), 199-215. Available at: \doi{10.1016/0304-3800(88)90057-9}
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- eilers_peeters_generate_regression_ETR_II(data)
 #'
 #' @export
 eilers_peeters_generate_regression_ETR_II <- function(
-    data,
-    a_start_value = eilers_peeters_default_start_value_a,
-    b_start_value = eilers_peeters_default_start_value_b,
-    c_start_value = eilers_peeters_default_start_value_c) {
+  data,
+  a_start_value = eilers_peeters_default_start_value_a,
+  b_start_value = eilers_peeters_default_start_value_b,
+  c_start_value = eilers_peeters_default_start_value_c
+) {
   return(eilers_peeters_generate_regression_internal(
     data,
     etr_2_type,
@@ -122,14 +124,15 @@ eilers_peeters_message <- function(msg) {
 }
 
 eilers_peeters_generate_regression_internal <- function(
-    data,
-    etr_type,
-    a_start_value = eilers_peeters_default_start_value_a,
-    b_start_value = eilers_peeters_default_start_value_b,
-    c_start_value = eilers_peeters_default_start_value_c) {
+  data,
+  etr_type,
+  a_start_value = eilers_peeters_default_start_value_a,
+  b_start_value = eilers_peeters_default_start_value_b,
+  c_start_value = eilers_peeters_default_start_value_c
+) {
   tryCatch(
     {
-      validate_data(data)
+      validate_intermediate_data(data)
       validate_etr_type(etr_type)
 
       if (!is.numeric(a_start_value)) {
@@ -167,7 +170,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate pm: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate pm: error:", w))
+          eilers_peeters_message(paste("failed to calculate pm: error:", e))
         }
       )
 
@@ -180,7 +183,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate s: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate s: error:", w))
+          eilers_peeters_message(paste("failed to calculate s: error:", e))
         }
       )
 
@@ -193,7 +196,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate ik: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate ik: error:", w))
+          eilers_peeters_message(paste("failed to calculate ik: error:", e))
         }
       )
 
@@ -206,7 +209,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate im: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate im: error:", w))
+          eilers_peeters_message(paste("failed to calculate im: error:", e))
         }
       )
 
@@ -219,7 +222,7 @@ eilers_peeters_generate_regression_internal <- function(
           eilers_peeters_message(paste("failed to calculate w: warning:", w))
         },
         error = function(e) {
-          eilers_peeters_message(paste("failed to calculate w: error:", w))
+          eilers_peeters_message(paste("failed to calculate w: error:", e))
         }
       )
 
@@ -298,7 +301,7 @@ eilers_peeters_generate_regression_internal <- function(
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#eilers_peeters_modified}
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- eilers_peeters_generate_regression_ETR_II(data)
@@ -310,7 +313,7 @@ eilers_peeters_modified <- function(model_result) {
   result <- create_modified_model_result(
     get_etr_type_from_model_result(model_result),
     get_etr_regression_data_from_model_result(model_result),
-    get_sdiff_from_model_result(model_result),
+    get_residual_sum_of_squares_from_model_result(model_result),
     model_result[["root_mean_squared_error"]],
     model_result[["relative_root_mean_squared_error"]],
     model_result[["a"]],

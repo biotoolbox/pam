@@ -44,17 +44,18 @@ platt_default_start_value_ps <- 49.76112
 #'
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- platt_generate_regression_ETR_I(data)
 #'
 #' @export
 platt_generate_regression_ETR_I <- function(
-    data,
-    alpha_start_value = platt_default_start_value_alpha,
-    beta_start_value = platt_default_start_value_beta,
-    ps_start_value = platt_default_start_value_ps) {
+  data,
+  alpha_start_value = platt_default_start_value_alpha,
+  beta_start_value = platt_default_start_value_beta,
+  ps_start_value = platt_default_start_value_ps
+) {
   return(platt_generate_regression_internal(
     data,
     etr_1_type,
@@ -98,17 +99,18 @@ platt_generate_regression_ETR_I <- function(
 #'
 #' }
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- platt_generate_regression_ETR_II(data)
 #'
 #' @export
 platt_generate_regression_ETR_II <- function(
-    data,
-    alpha_start_value = platt_default_start_value_alpha,
-    beta_start_value = platt_default_start_value_beta,
-    ps_start_value = platt_default_start_value_ps) {
+  data,
+  alpha_start_value = platt_default_start_value_alpha,
+  beta_start_value = platt_default_start_value_beta,
+  ps_start_value = platt_default_start_value_ps
+) {
   return(platt_generate_regression_internal(
     data,
     etr_2_type,
@@ -127,14 +129,15 @@ platt_message <- function(msg) {
 }
 
 platt_generate_regression_internal <- function(
-    data,
-    etr_type,
-    alpha_start_value = platt_default_start_value_alpha,
-    beta_start_value = platt_default_start_value_beta,
-    ps_start_value = platt_default_start_value_ps) {
+  data,
+  etr_type,
+  alpha_start_value = platt_default_start_value_alpha,
+  beta_start_value = platt_default_start_value_beta,
+  ps_start_value = platt_default_start_value_ps
+) {
   tryCatch(
     {
-      validate_data(data)
+      validate_intermediate_data(data)
       validate_etr_type(etr_type)
 
       if (!is.numeric(alpha_start_value)) {
@@ -240,7 +243,7 @@ platt_generate_regression_internal <- function(
       }
       etr_regression_data <- create_regression_data(pars, predictions)
 
-       measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
+      measured_predicted_etr_par_data <- get_etr_data_for_par_values(data, etr_regression_data, etr_type)
 
       root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
 
@@ -250,7 +253,7 @@ platt_generate_regression_internal <- function(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
         residual_sum_of_squares = residual_sum_of_squares,
-         root_mean_squared_error = root_mean_squared_error,
+        root_mean_squared_error = root_mean_squared_error,
         relative_root_mean_squared_error = relative_root_mean_squared_error,
         alpha = alpha,
         beta = beta,
@@ -306,7 +309,7 @@ platt_generate_regression_internal <- function(
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#platt_modified}
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- platt_generate_regression_ETR_II(data)
@@ -318,9 +321,9 @@ platt_modified <- function(model_result) {
   result <- create_modified_model_result(
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
-    residual_sum_of_squares = get_sdiff_from_model_result(model_result),
-        model_result[["root_mean_squared_error"]],
-    model_result[["relative_root_mean_squared_error"]],
+    residual_sum_of_squares = get_residual_sum_of_squares_from_model_result(model_result),
+    root_mean_squared_error = model_result[["root_mean_squared_error"]],
+    relative_root_mean_squared_error = model_result[["relative_root_mean_squared_error"]],
     a = model_result[["ps"]],
     b = model_result[["alpha"]],
     c = model_result[["beta"]],

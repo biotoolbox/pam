@@ -1,4 +1,4 @@
-validate_data <- function(data) {
+validate_intermediate_data <- function(data) {
   if (is.null(data)) {
     stop("data is null")
   }
@@ -28,7 +28,7 @@ validate_data <- function(data) {
   }
 }
 
-validate_raw_intermediate_csv <- function(data) {
+validate_data_not_empty <- function(data) {
   if (is.null(data)) {
     stop("data is null")
   }
@@ -37,96 +37,12 @@ validate_raw_intermediate_csv <- function(data) {
     stop("data is not a valid data.table")
   }
 
-  if (!"par" %in% colnames(data)) {
-    stop("required col 'par' not found")
-  }
-
-  if (!"yield_1" %in% colnames(data)) {
-    stop("required col 'yield_1' not found")
-  }
-
-  if (!"yield_2" %in% colnames(data)) {
-    stop("required col 'yield_2' not found")
-  }
-}
-
-validate_dual_pam_data <- function(data) {
-  if (is.null(data)) {
-    stop("data is null")
-  }
-
-  if (!data.table::is.data.table(data)) {
-    stop("data is not a valid data.table")
-  }
-
-  if (nrow(data) < 2) {
-    stop("no data rows")
+  if (nrow(data) == 0) {
+    stop("no rows in data")
   }
 
   if (ncol(data) == 0) {
     stop("no cols in data")
-  }
-
-  if (!"ID" %in% colnames(data)) {
-    stop("required col 'ID' not found")
-  }
-
-  if (!"PAR" %in% colnames(data)) {
-    stop("required col 'PAR' not found")
-  }
-
-  if (!"Y.I." %in% colnames(data) && !"Y.II." %in% colnames(data)) {
-    stop("required col 'Y(I)' and 'Y(II)' not found")
-  }
-
-  if (!"Action" %in% colnames(data)) {
-    stop("required col 'Action' not found")
-  }
-
-  if (!"Date" %in% colnames(data)) {
-    stop("required col 'Date' not found")
-  }
-
-  if (!"Time" %in% colnames(data)) {
-    stop("required col 'Time' not found")
-  }
-
-  if (!"Pm.-Det." %in% data[["Action"]]) {
-    stop("required value 'Pm' not found in column 'Action'")
-  }
-
-  if (!"Fm-Det." %in% data[["Action"]]) {
-    stop("required value 'Fm' not found in column 'Action'")
-  }
-}
-
-validate_junior_pam_data <- function(data) {
-  if (is.null(data)) {
-    stop("data is null")
-  }
-
-  if (!data.table::is.data.table(data)) {
-    stop("data is not a valid data.table")
-  }
-
-  if (nrow(data) < 2) {
-    stop("no data rows")
-  }
-
-  if (ncol(data) == 0) {
-    stop("no cols in data")
-  }
-
-  if (!any(grepl("PAR", colnames(data)))) {
-    stop("required col 'PAR' not found")
-  }
-
-  if (!any(grepl("Y..II.", colnames(data)))) {
-    stop("required col 'Y..II.' not found")
-  }
-
-  if (!"Datetime" %in% colnames(data)) {
-    stop("required col 'Datetime' not found")
   }
 }
 

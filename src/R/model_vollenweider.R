@@ -50,7 +50,7 @@ vollenweider_default_start_value_n <- 100
 #' }
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- vollenweider_generate_regression_ETR_I(data)
@@ -107,7 +107,7 @@ vollenweider_generate_regression_ETR_I <- function(
 #' }
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- vollenweider_generate_regression_ETR_II(data)
@@ -147,7 +147,7 @@ vollenweider_generate_regression_internal <- function(
   tryCatch(
     {
       validate_etr_type(etr_type)
-      validate_data(data)
+      validate_intermediate_data(data)
 
       if (!is.numeric(pmax_start_value)) {
         stop("pmax start value is not a valid number")
@@ -308,7 +308,7 @@ vollenweider_generate_regression_internal <- function(
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#vollenweider_modified}
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- vollenweider_generate_regression_ETR_II(data)
@@ -324,7 +324,7 @@ vollenweider_modified <- function(model_result) {
   result <- create_modified_model_result(
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
-    residual_sum_of_squares = get_sdiff_from_model_result(model_result),
+    residual_sum_of_squares = get_residual_sum_of_squares_from_model_result(model_result),
     model_result[["root_mean_squared_error"]],
     model_result[["relative_root_mean_squared_error"]],
     a = model_result[["pmax"]],

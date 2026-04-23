@@ -1,9 +1,12 @@
 citation <- bibentry(
-  bibtype = "Manual",
-  title = "pam: Fast and Efficient Processing of PAM Data",
+  bibtype = "Article",
+  title = "pam: An R Package for Fast and Efficient Processing of Pulse-Amplitude Modulation Data",
   author = c(person("Julien", "Böhm"), person("Philipp", "Schrag")),
+  journal = "Ecology and Evolution",
   year = 2026,
-  note = "R package version 2.1.1",
-  url = "https://CRAN.R-project.org/package=pam",
-  doi = "10.32614/CRAN.package.pam"
+  volume = "16",
+  number = "4",
+  pages = "e73400",
+  doi = "10.1002/ece3.73400",
+  url = "https://onlinelibrary.wiley.com/doi/abs/10.1002/ece3.73400"
 )

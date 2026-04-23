@@ -44,7 +44,7 @@ walsby_default_start_value_beta <- -0.0008944076
 #' }
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- walsby_generate_regression_ETR_I(data)
@@ -100,7 +100,7 @@ walsby_generate_regression_ETR_I <- function(
 #' }
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- walsby_generate_regression_ETR_II(data)
@@ -136,7 +136,7 @@ walsby_generate_regression_internal <- function(
     beta_start_value = walsby_default_start_value_beta) {
   tryCatch(
     {
-      validate_data(data)
+      validate_intermediate_data(data)
       validate_etr_type(etr_type)
 
       if (!is.numeric(etr_max_start_value)) {
@@ -239,7 +239,7 @@ walsby_generate_regression_internal <- function(
 #' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#walsby_modified}
 #'
 #' @examples
-#' path <- file.path(system.file("extdata", package = "pam"), "20240925.csv")
+#' path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
 #' data <- read_dual_pam_data(path)
 #'
 #' result <- walsby_generate_regression_ETR_II(data)
@@ -257,7 +257,7 @@ walsby_modified <- function(model_result) {
   result <- create_modified_model_result(
     etr_type = get_etr_type_from_model_result(model_result),
     etr_regression_data = get_etr_regression_data_from_model_result(model_result),
-    residual_sum_of_squares = get_sdiff_from_model_result(model_result),
+    residual_sum_of_squares = get_residual_sum_of_squares_from_model_result(model_result),
     model_result[["root_mean_squared_error"]],
     model_result[["relative_root_mean_squared_error"]],
     a = model_result[["etr_max"]],

@@ -36,7 +36,7 @@ Models are ranked based on the deviation between observed and predicted values. 
 A detailed documentation can be found in the README.
 }
 \examples{
-path <- file.path(system.file("extdata", package = "pam"))
+path <- file.path(system.file("extdata/dual_pam_data", package = "pam"))
 points <- compare_regression_models_ETR_II(path, read_dual_pam_data)
 
 }
