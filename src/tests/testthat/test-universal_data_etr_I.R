@@ -1,7 +1,7 @@
 test_that("test-universal_data_etr_I - linux", {
   skip_if_not(is_debian_or_ubuntu())
 
-  test_data_file <- testthat::test_path("data", "universal_data.csv")
+  test_data_file <- testthat::test_path("data", "universal_data", "universal_data.csv")
   data <- read_universal_data(test_data_file)
 
   eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_I(data))
@@ -75,7 +75,7 @@ test_that("test-universal_data_etr_I - linux", {
 })
 
 test_that("test-universal_data_etr_I", {
-  test_data_file <- testthat::test_path("data", "universal_data.csv")
+  test_data_file <- testthat::test_path("data", "universal_data", "universal_data.csv")
   data <- read_universal_data(test_data_file)
 
   eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_I(data))
@@ -92,7 +92,7 @@ test_that("test-universal_data_etr_I", {
 })
 
 test_that("test-universal_data_etr_I plot", {
-  test_data_file <- testthat::test_path("data", "universal_data.csv")
+  test_data_file <- testthat::test_path("data", "universal_data", "universal_data.csv")
   data <- read_universal_data(test_data_file)
 
   eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_I(data))

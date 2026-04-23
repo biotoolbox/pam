@@ -1,5 +1,5 @@
 test_that("test-write_model_result_csv - walsby_modified - 20240925.csv", {
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- walsby_generate_regression_ETR_II(data)
   model_result <- walsby_modified(model_result)
@@ -52,7 +52,7 @@ test_that("test-write_model_result_csv - walsby_modified - 20240925.csv", {
 })
 
 test_that("test-write_model_result_csv - walsby - 20240925.csv", {
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- walsby_generate_regression_ETR_II(data)
 

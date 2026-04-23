@@ -297,7 +297,7 @@ The function processes the provided CSV file by:
 - Stopping at the recovery period if `remove_recovery = TRUE`.
 
 To ensure the file is imported correctly, please export the CSV file using the default settings:
-![Plot](texport_junior_pam.png)
+![Plot](img/export_junior_pam.png)
 
 #### Return
 
@@ -966,7 +966,7 @@ plot_control_eilers_peeters_ETR_II <- plot_control(
 print(plot_control_eilers_peeters_ETR_II)
 ```
 
-![Plot](test-eilers_peeters_etr_II_modified_control_plot_20240925.jpg)
+![Plot](img/test-eilers_peeters_etr_II_modified_control_plot_20240925.jpg)
 
 ---
 
@@ -989,7 +989,7 @@ A plot displaying the original ETR and Yield values and the regression data from
 #### Examples
 
 ```r
-test_data_file <- file.path(getwd(), "data", "20240925.csv")
+test_data_file <- file.path(getwd(), "data", "dual_pam_data", "20240925.csv")
     data <- read_dual_pam_data(test_data_file)
 
     eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_II(data))
@@ -1006,7 +1006,7 @@ test_data_file <- file.path(getwd(), "data", "20240925.csv")
     )
 ```
 
-![combo Plot](test_combo_plot_control_etr_II.jpg)
+![combo Plot](img/test_combo_plot_control_etr_II.jpg)
 
 ---
 

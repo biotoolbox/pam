@@ -7,7 +7,7 @@ library("pam")
 #### read_dual_pam_data()####
 # raw data file directory
 script_dir <- dirname(sys.frame(1)$ofile)
-data_dir <- file.path(script_dir, "data", "bulk")
+data_dir <- file.path(script_dir, "data", "dual_pam_data", "bulk")
 
 #### compare_regression_models_ETR_II####
 compare_regression_models_ETR_II_result <- compare_regression_models_ETR_II(data_dir, read_dual_pam_data)

@@ -1,5 +1,5 @@
 test_that("read_pam_2500_data 20260422_pam_2500.CSV - default", {
-  test_data_file <- testthat::test_path("data", "20260422_pam_2500.CSV")
+  test_data_file <- testthat::test_path("data", "pam_2500_data", "20260422_pam_2500.CSV")
   data <- read_pam_2500_data(test_data_file)
 
   par <- data$par
@@ -64,7 +64,7 @@ test_that("read_pam_2500_data 20260422_pam_2500.CSV - default", {
 })
 
 test_that("read_pam_2500_data 20260422_pam_2500.CSV - etr-factor 0.5", {
-  test_data_file <- testthat::test_path("data", "20260422_pam_2500.CSV")
+  test_data_file <- testthat::test_path("data", "pam_2500_data", "20260422_pam_2500.CSV")
   data <- read_pam_2500_data(test_data_file, etr_factor = 0.5)
 
   par <- data$par
@@ -129,12 +129,12 @@ test_that("read_pam_2500_data 20260422_pam_2500.CSV - etr-factor 0.5", {
 })
 
 test_that("read_pam_2500_data 20260422_pam_2500.CSV - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
-  test_data_file <- testthat::test_path("data", "20260422_pam_2500.CSV")
+  test_data_file <- testthat::test_path("data", "pam_2500_data", "20260422_pam_2500.CSV")
   expect_error(read_pam_2500_data(test_data_file, fraction_photosystem_I = 0.9, fraction_photosystem_II = 0.2))
 })
 
 test_that("read_pam_2500_data 20260422_pam_2500.CSV - fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8", {
-  test_data_file <- testthat::test_path("data", "20260422_pam_2500.CSV")
+  test_data_file <- testthat::test_path("data", "pam_2500_data", "20260422_pam_2500.CSV")
   data <- read_pam_2500_data(test_data_file, fraction_photosystem_I = 0.2, fraction_photosystem_II = 0.8)
 
   par <- data$par
