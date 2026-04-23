@@ -1,5 +1,5 @@
 test_that("test-universal_data_etr_I - linux", {
-  skip_if_not(is_debian_or_ubuntu())
+  skip_if_not(is_reference_platform())
 
   test_data_file <- testthat::test_path("data", "universal_data", "universal_data.csv")
   data <- read_universal_data(test_data_file)

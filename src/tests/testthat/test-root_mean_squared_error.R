@@ -1,5 +1,5 @@
 test_that("test-root_mean_squared_error - linux", {
-  skip_if_not(is_debian_or_ubuntu())
+  skip_if_not(is_reference_platform())
 
   test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)

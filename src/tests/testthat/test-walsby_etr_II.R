@@ -1,5 +1,5 @@
 test_that("test-walsby_etr_II generate regression 20240925.csv - linux", {
-  skip_if_not(is_debian_or_ubuntu())
+  skip_if_not(is_reference_platform())
 
   test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
@@ -38,7 +38,7 @@ test_that("test-walsby_etr_II control plot 20240925.csv", {
 })
 
 test_that("test-walsby_etr_II generate regression modified 20240925.csv - linux", {
-  skip_if_not(is_debian_or_ubuntu())
+  skip_if_not(is_reference_platform())
 
   test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)

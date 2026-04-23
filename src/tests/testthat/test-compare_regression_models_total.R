@@ -1,5 +1,5 @@
 test_that("compare_regression_models etr I + II - linux", {
-  skip_if_not(is_debian_or_ubuntu())
+  skip_if_not(is_reference_platform())
   test_data_dir <- testthat::test_path("data", "dual_pam_data", "bulk")
   model_points_etr_I <- compare_regression_models_ETR_I(test_data_dir, read_dual_pam_data)
   model_points_etr_II <- compare_regression_models_ETR_II(test_data_dir, read_dual_pam_data)
