@@ -137,7 +137,7 @@ platt_generate_regression_internal <- function(
 ) {
   tryCatch(
     {
-      validate_data(data)
+      validate_intermediate_data(data)
       validate_etr_type(etr_type)
 
       if (!is.numeric(alpha_start_value)) {

@@ -116,7 +116,7 @@ compare_regression_models <- function(data_dir, etr_type, read_func) {
   for (file in csv_files) {
     title <- basename(file)
     data <- do.call(read_func, list(csv_path = file))
-    validate_data(data)
+    validate_intermediate_data(data)
 
     tryCatch(
       {
