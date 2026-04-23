@@ -23,7 +23,7 @@ is_reference_platform <- function() {
   }
 
   blas <- tolower(extSoftVersion()[["BLAS"]])
-  if (!grepl("openblas|mkl|atlas|flexiblas|accelerate", blas)) {
+  if (!grepl("^/usr/lib/.*/blas/libblas\\.so", blas)) {
     return(FALSE)
   }
 
