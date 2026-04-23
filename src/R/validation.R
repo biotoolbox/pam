@@ -209,12 +209,18 @@ validate_junior_pam_data <- function(data) {
     stop("no cols in data")
   }
 
-  if (!any(grepl("PAR", colnames(data)))) {
+  par_cols <- grep("^.+\\.PAR$", names(data), value = TRUE)
+  if (length(par_cols) == 0) {
     stop("required col 'PAR' not found")
+  } else if (length(par_cols) > 1) {
+    stop(paste(length(par_cols), " 'PAR' cols found. Only supporting one 'PAR' column"))
   }
 
-  if (!any(grepl("Y..II.", colnames(data)))) {
-    stop("required col 'Y..II.' not found")
+  yield_cols <- grep("^.+\\.Y\\.\\.II\\.$", names(data), value = TRUE)
+  if (length(yield_cols) == 0) {
+    stop("required col 'Y (II)' not found")
+  } else if (length(yield_cols) > 1) {
+    stop(paste(length(yield_cols), " 'Y (II)' cols found. Only supporting one 'Y (II)' column"))
   }
 
   if (!"Time..rel.ms." %in% colnames(data)) {
