@@ -1,6 +1,6 @@
 test_that("test-eilers_peeters_etr_II generate regression 20240925.csv - linux", {
-  skip_if_not(is_debian_or_ubuntu())
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  skip_if_not(is_reference_platform())
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
 
@@ -16,16 +16,16 @@ test_that("test-eilers_peeters_etr_II generate regression 20240925.csv - linux",
 })
 
 test_that("test-eilers_peeters_etr_II generate regression 20240925.csv", {
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
   expect_no_error(validate_model_result(model_result))
 })
 
 test_that("test-eilers_peeters_etr_II modified 20240925.csv - linux", {
-  skip_if_not(is_debian_or_ubuntu())
+  skip_if_not(is_reference_platform())
 
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
   model_result <- eilers_peeters_modified(model_result)
@@ -48,7 +48,7 @@ test_that("test-eilers_peeters_etr_II modified 20240925.csv - linux", {
 })
 
 test_that("test-eilers_peeters_etr_II modified 20240925.csv", {
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
   expect_no_error(validate_model_result(model_result))
@@ -58,7 +58,7 @@ test_that("test-eilers_peeters_etr_II modified 20240925.csv", {
 })
 
 test_that("test-eilers_peeters_etr_II modified control plot 20240925.csv", {
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- eilers_peeters_generate_regression_ETR_II(data)
   model_result <- model_result <- eilers_peeters_modified(model_result)

@@ -6,7 +6,7 @@ library("pam")
 
 #### raw data file directory####
 script_dir <- dirname(sys.frame(1)$ofile)
-data_dir <- file.path(script_dir, "data", "bulk")
+data_dir <- file.path(script_dir, "data", "dual_pam_data", "bulk")
 output_dir <- file.path(script_dir, "output")
 dir.create(output_dir, showWarnings = FALSE)
 output_path_pdf <- file.path(output_dir, "eilers_peters_plot_control.pdf")

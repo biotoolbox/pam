@@ -1,7 +1,7 @@
 test_that("test-platt_etr_I generate regression 20240925.csv - linux", {
-  skip_if_not(is_debian_or_ubuntu())
+  skip_if_not(is_reference_platform())
 
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_I(data)
 
@@ -17,16 +17,16 @@ test_that("test-platt_etr_I generate regression 20240925.csv - linux", {
 })
 
 test_that("test-platt_etr_I generate regression 20240925.csv", {
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_I(data)
   expect_no_error(validate_model_result(model_result))
 })
 
 test_that("test-platt_etr_I generate regression modified 20240925.csv - linux", {
-  skip_if_not(is_debian_or_ubuntu())
+  skip_if_not(is_reference_platform())
 
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_I(data)
   model_result <- platt_modified(model_result)
@@ -49,7 +49,7 @@ test_that("test-platt_etr_I generate regression modified 20240925.csv - linux", 
 })
 
 test_that("test-platt_etr_I generate regression modified 20240925.csv", {
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
 
   model_result <- platt_generate_regression_ETR_I(data)
@@ -60,7 +60,7 @@ test_that("test-platt_etr_I generate regression modified 20240925.csv", {
 })
 
 test_that("test-platt_etr_I modified control plot 20240925.csv", {
-  test_data_file <- testthat::test_path("data", "20240925.csv")
+  test_data_file <- testthat::test_path("data", "dual_pam_data", "20240925.csv")
   data <- read_dual_pam_data(test_data_file)
   model_result <- platt_generate_regression_ETR_I(data)
   model_result <- platt_modified(model_result)

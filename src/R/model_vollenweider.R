@@ -147,7 +147,7 @@ vollenweider_generate_regression_internal <- function(
   tryCatch(
     {
       validate_etr_type(etr_type)
-      validate_data(data)
+      validate_intermediate_data(data)
 
       if (!is.numeric(pmax_start_value)) {
         stop("pmax start value is not a valid number")

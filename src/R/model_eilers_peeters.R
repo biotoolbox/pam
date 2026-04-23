@@ -132,7 +132,7 @@ eilers_peeters_generate_regression_internal <- function(
 ) {
   tryCatch(
     {
-      validate_data(data)
+      validate_intermediate_data(data)
       validate_etr_type(etr_type)
 
       if (!is.numeric(a_start_value)) {
