@@ -1,11 +1,9 @@
-# library 'pam'
+# library 'pam' <a href="https://www.researchgate.net/publication/404020183_pam_An_R_Package_for_Fast_and_Efficient_Processing_of_Pulse-Amplitude_Modulation_Data"><img src="img/pam_logo.png" align="right" height="138" alt="pam paper" /></a>
 
 [![CRAN status](https://www.r-pkg.org/badges/version/pam)](https://cran.r-project.org/package=pam)
 [![CRAN checks](https://badges.cranchecks.info/summary/pam.svg)](https://cran.r-project.org/web/checks/check_results_pam.html)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/last-month/pam)](https://cran.r-project.org/package=pam)
 [![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/pam)](https://cran.r-project.org/package=pam)
-
-# pam <a href="https://www.researchgate.net/publication/404020183_pam_An_R_Package_for_Fast_and_Efficient_Processing_of_Pulse-Amplitude_Modulation_Data"><img src="img/pam_logo.png" align="right" height="138" alt="pam paper" /></a>
 
 ## Introduction
 
