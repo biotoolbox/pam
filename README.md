@@ -19,29 +19,22 @@ Rapid light curves recorded via the pulse‐amplitude modulation (PAM) technique
 
 - A continuously updated overview of studies using this package can be accessed via ResearchGate ([publication](https://www.researchgate.net/publication/404020183_pam_An_R_Package_for_Fast_and_Efficient_Processing_of_Pulse-Amplitude_Modulation_Data/citations), [package](https://www.researchgate.net/publication/395536281_pam_Fast_and_Efficient_Processing_of_PAM_Data/citations))
 
-## Test coverage
+## Installation
 
 ```r
-cov <- covr::package_coverage()
-covr::percent_coverage(cov)
-```
-90.05935 %
+# The easiest way to install 'pam' is from CRAN:
+install.packages("pam")
 
-## Install
-
-### GitHub
-
-```r
+# Alternatively, you can install it from GitHub:
 install.packages("remotes")
 remotes::install_github("biotoolbox/pam", subdir = "src")
+
+# To install the development version from GitHub:
+install.packages("remotes")
+remotes::install_github("biotoolbox/pam", subdir = "dev")
 ```
 
-### CRAN
-```r
-install.packages("pam")
-```
-
-## Examples
+## Usage
 
 Examples of usage can be found in the `examples` directory.
 
@@ -1042,8 +1035,17 @@ write_model_result_csv(
 )
 ```
 ---
+## Test coverage
 
-### known issues
+```r
+cov <- covr::package_coverage()
+covr::percent_coverage(cov)
+```
+90.05935 %
+
+---
+
+## known issues
 
 #### subscript out of bounds
 
