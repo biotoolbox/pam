@@ -5,6 +5,8 @@
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/last-month/pam)](https://cran.r-project.org/package=pam)
 [![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/pam)](https://cran.r-project.org/package=pam)
 
+# pam <a href="https://www.researchgate.net/publication/404020183_pam_An_R_Package_for_Fast_and_Efficient_Processing_of_Pulse-Amplitude_Modulation_Data"><img src="img/pam_logo.png" align="right" height="138" alt="pam paper" /></a>
+
 ## Introduction
 
 Rapid light curves recorded via the pulse‐amplitude modulation (PAM) technique are widely used to characterize photosynthesis, enabling the determination of key photosynthetic parameters. However, deriving these kinetic parameters from raw data requires fitting to regression models, a process traditionally involving laborious and error‐prone manual steps. Our R package pam streamlines this process by automating regression analysis, enabling fast and reproducible processing of large datasets. It provides the models of Vollenweider (1965), Platt et al. (1980), Eilers and Peeters (1988) and Walsby (1997).
