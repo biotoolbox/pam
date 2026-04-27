@@ -31,7 +31,7 @@ remotes::install_github("biotoolbox/pam", subdir = "src")
 
 # To install the development version from GitHub:
 install.packages("remotes")
-remotes::install_github("biotoolbox/pam", subdir = "dev")
+remotes::install_github("biotoolbox/pam", subdir = "src", ref = "dev")
 ```
 
 ## Usage
