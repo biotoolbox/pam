@@ -29,7 +29,7 @@ This function generates three CSV files:
 \item \strong{model_result.csv:} Summarizes the parameter values derived from the model results (excluding regression data), such as \code{alpha} or \code{beta}.
 }
 The `name` parameter serves as a prefix for each file, ensuring clarity and organization in the output directory.
-A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#write_model_result_csv}
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}
 }
 \examples{
 path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")

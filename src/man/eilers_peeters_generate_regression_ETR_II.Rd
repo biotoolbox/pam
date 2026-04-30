@@ -39,7 +39,7 @@ A list containing:
 Fits a regression model for ETR II based on Eilers-Peeters (1988), considering photoinhibition.
 }
 \details{
-A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#eilers_peeters_generate_regression_etr_i-and-eilers_peeters_generate_regression_etr_ii}.
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}.
 }
 \examples{
 path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")

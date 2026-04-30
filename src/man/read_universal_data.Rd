@@ -39,7 +39,7 @@ Reads a standardized CSV file containing PAR and yield data for photosystem I an
 Calculates ETR using:
 \deqn{\text{ETR} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{Fraction of Photosystem (I or II)} \cdot \text{Yield (I or II)}}
 
-A detailed documentation can be found under \url{https://github.com/biotoolbox/pam?tab=readme-ov-file#read_universal_data}
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}
 }
 \examples{
 path <- file.path(system.file("extdata", package = "pam"), "universal_data", "universal_data.csv")
