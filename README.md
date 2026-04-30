@@ -39,21 +39,21 @@ remotes::install_github("biotoolbox/pam", subdir = "src", ref = "dev")
 
 Examples of usage can be found in the [examples](examples/) directory:
 
-- [Single CSV](examples/example_single_data.R) --> Reads a single CSV, generates regression data using Eilers and Peeters model, modifies the model result, generates control plot and exports the plot as jpg and the result as csv files.
-- [Multiple CSV's](examples/example_multiple_data.R) --> Reads multiple CSV files, generates regression data using Eilers and Peeters model, modifies the model result, generates control plot and exports the plots as pdf and the result as csv files.
-- [Combo control plot](examples/example_combo_plot_control.R) --> Generates one control plot containing all models from a single csv file and exports the plot as jpg.
-- [Compare models](examples/example_compare_models.R) --> Compares all models against each other based on one data set and prints the score.
+- [Single CSV](examples/example_single_data.R) → Reads a single CSV, generates regression data using Eilers and Peeters model, modifies the model result, generates control plot and exports the plot as jpg and the result as csv files.
+- [Multiple CSV's](examples/example_multiple_data.R) → Reads multiple CSV files, generates regression data using Eilers and Peeters model, modifies the model result, generates control plot and exports the plots as pdf and the result as csv files.
+- [Combo control plot](examples/example_combo_plot_control.R) → Generates one control plot containing all models from a single csv file and exports the plot as jpg.
+- [Compare models](examples/example_compare_models.R) → Compares all models against each other based on one data set and prints the score.
 
 ## Functions
 
 For detailed information about these functions, visit the respective documentation:
 
-- [Read CSV Data](docs/functions/read_data.md) --> Reads the raw data CSV files and returns the intermediate table.
-- [Generate Regressions](docs/functions/generate_regressions.md) --> Generates ETR regression data from the chosen model.
-- [Modify Model Results](docs/functions/modify_model_results.md) --> Modifies parameter naming to a standard approach and adds parameters from other models.
-- [Plot Control](docs/functions/plot_control.md) --> Generates control plots for visual fit validation.
-- [Write Model Results](docs/functions/write_model_results.md) --> Exports the regression results as CSV files.
-- [Compare Regression Models](docs/functions/compare_regression_models.md) --> Scores models against each other for one data set.
+- [Read CSV Data](docs/functions/read_data.md) → Reads the raw data CSV files and returns the intermediate table.
+- [Generate Regressions](docs/functions/generate_regressions.md) → Generates ETR regression data from the chosen model.
+- [Modify Model Results](docs/functions/modify_model_results.md) → Modifies parameter naming to a standard approach and adds parameters from other models.
+- [Plot Control](docs/functions/plot_control.md) → Generates control plots for visual fit validation.
+- [Write Model Results](docs/functions/write_model_results.md) → Exports the regression results as CSV files.
+- [Compare Regression Models](docs/functions/compare_regression_models.md) → Scores models against each other for one data set.
 
 <p align="center">
   <img src="img/flow.png" alt="Processing pipeline overview" width="400">
