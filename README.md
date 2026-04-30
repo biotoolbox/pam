@@ -60,7 +60,7 @@ For detailed information about these functions, visit the respective documentati
 </p>
 
 ## Help
-- The current version and patch notes can be found under [Releases](https://github.com/biotoolbox/pam/releases).
-- Bug reports can be posted under [Issues](https://github.com/biotoolbox/pam/issues).
+- The current version and patch notes can be found under [releases](https://github.com/biotoolbox/pam/releases).
+- Bug reports can be posted under [issues](https://github.com/biotoolbox/pam/issues).
 - Deeper insights can be found under [developer documentation](docs/dev.md).
-- A good source for general help can be the [rstats Reddit Community](https://www.reddit.com/r/rstats/).
+- A good source for general help can be the [rstats Reddit community](https://www.reddit.com/r/rstats/).
