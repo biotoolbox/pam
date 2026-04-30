@@ -12,7 +12,7 @@
 #' Calculates ETR II using:
 #' \deqn{\text{ETR II} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{Fraction of Photosystem (II)} \cdot \text{Yield (II)}}
 #'
-#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/main#functions}
 #'
 #' @return A \code{data.table} containing:
 #' \itemize{

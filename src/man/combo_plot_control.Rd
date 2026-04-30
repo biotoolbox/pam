@@ -24,7 +24,7 @@ A plot with ETR data, regression results, and a summary table.
 Generates a plot of ETR data with different regression model predictions and a summary table.
 }
 \details{
-A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}.
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/main#functions}.
 }
 \examples{
 path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")

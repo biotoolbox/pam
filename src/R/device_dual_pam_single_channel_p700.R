@@ -12,7 +12,7 @@
 #' Calculates ETR using:
 #' \deqn{\text{ETR} = \text{PAR} \cdot \text{ETR-Factor} \cdot \text{Fraction of Photosystem (I)} \cdot \text{Yield (I)}}
 #'
-#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/main#functions}
 #'
 #' @return A \code{data.table} containing:
 #' \itemize{

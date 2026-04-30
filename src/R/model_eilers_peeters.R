@@ -20,7 +20,7 @@ eilers_peeters_default_start_value_c <- 7.012012
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}.
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/main#functions}.
 #'
 #' @return A list containing:
 #' \itemize{
@@ -73,7 +73,7 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #' @param c_start_value Numeric. Starting value for \eqn{c}. Default: \code{c_start_values_eilers_peeters_default}.
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}.
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/main#functions}.
 #'
 #' @return A list containing:
 #' \itemize{

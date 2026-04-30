@@ -9,7 +9,7 @@
 #' @param color_list List. Colors for model lines.
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}.
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/main#functions}.
 #'
 #' @return A plot with ETR data, regression results, and a summary table.
 #'
@@ -320,7 +320,7 @@ plot_table <- function(model_result, entries_per_row) {
 #' @param color A color specification for the regression line in the plot.
 #'
 #' @details
-#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}
+#' A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/main#functions}
 #'
 #' @return A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data.
 #'

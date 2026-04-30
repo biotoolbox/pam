@@ -44,7 +44,7 @@ A list containing:
 Fits the Vollenweider (1965) regression model using original naming conventions from the publication.
 }
 \details{
-A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/docs#functions}.
+A detailed documentation can be found under \url{https://github.com/biotoolbox/pam/tree/main#functions}.
 }
 \examples{
 path <- file.path(system.file("extdata/dual_pam_data", package = "pam"), "20240925.csv")
