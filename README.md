@@ -37,90 +37,30 @@ remotes::install_github("biotoolbox/pam", subdir = "src", ref = "dev")
 
 ## Examples
 
-Examples of usage can be found in the `examples` directory.
+Examples of usage can be found in the [examples](examples/) directory:
 
----
+- [Single CSV](examples/example_single_data.R) --> Reads a single CSV, generates regression data using Eilers and Peeters model, modifies the model result, generates control plot and exports the plot as jpg and the result as csv files.
+- [Multiple CSV's](examples/example_multiple_data.R) --> Reads multiple CSV files, generates regression data using Eilers and Peeters model, modifies the model result, generates control plot and exports the plots as pdf and the result as csv files.
+- [Combo control plot](examples/example_combo_plot_control.R) --> Generates one control plot containing all models from a single csv file and exports the plot as jpg.
+- [Compare models](examples/example_compare_models.R) --> Compares all models against each other based on one data set and prints the score.
 
 ## Functions
+
+For detailed information about these functions, visit the respective documentation:
+
+- [Read CSV Data](docs/functions/read_data.md) --> Reads the raw data CSV files and returns the intermediate table.
+- [Generate Regressions](docs/functions/generate_regressions.md) --> Generates ETR regression data from the chosen model.
+- [Modify Model Results](docs/functions/modify_model_results.md) --> Modifies parameter naming to a standard approach and adds parameters from other models.
+- [Plot Control](docs/functions/plot_control.md) --> Generates control plots for visual fit validation.
+- [Write Model Results](docs/functions/write_model_results.md) --> Exports the regression results as CSV files.
+- [Compare Regression Models](docs/functions/compare_regression_models.md) --> Scores models against each other for one data set.
 
 <p align="center">
   <img src="img/flow.png" alt="Processing pipeline overview" width="400">
 </p>
 
-For detailed information about these functions, visit the respective documentation:
-
-- [Read CSV Data](docs/read_data.md) — Reads the raw data CSV files and returns the intermediate table.
-- [Generate Regressions](docs/generate_regressions.md) — Generates ETR regression data from the chosen model.
-- [Modify Model Results](docs/modify_model_results.md) — Modifies parameter naming to a standard approach and adds parameters from other models.
-- [Plot Control](docs/plot_control.md) — Generates control plots for visual fit validation.
-- [Write Model Results](docs/write_model_results.md) — Exports the regression results as CSV files.
-- [Compare Regression Models](docs/compare_regression_models.md) — Scores models against each other for one data set.
-
----
-## Test coverage
-
-```r
-cov <- covr::package_coverage()
-covr::percent_coverage(cov)
-```
-90.05935 %
-
----
-
-## known issues
-
-#### subscript out of bounds
-
-```
-Skipped file: 20231214_14_W6_T5_ML.csv because of error: Error in eilers_peeters[["residual_sum_of_squares"]]: subscript out of bounds
-```
-
-This could indicate that Pm lable in the Action column is at the wrong position in the csv raw data file. Error could be caused by WALZ-Software.
-
-#### Removed rows in combo_plot_control
-
-```
-Warnings:
-1: Removed 1 row containing missing values or values outside the scale range (`geom_point()`). 
-2: Removed 1 row containing missing values or values outside the scale range (`geom_point()`). 
-3: Removed 1 row containing missing values or values outside the scale range (`geom_line()`).
-```
-
-All points and lines present. Reason for warning messages unknown. Possibly a problem in the library ggplot2.
-
-### test all
-
-```r
-library(devtools);
-devtools::test();
-```
-
-### test specific file
-
-```R
-library(devtools);
-devtools::load_all();
-library(testthat);
-test_file('$$path')"
-```
-
-## Linux dependencies for devtools
-
-Ubuntu:
-libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
-
-Debian:
-libxml2-dev libssl-dev libcurl4-openssl-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libjpeg-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
-
-R Packages:
-install.packages("data.table")
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages("minpack.lm")
-install.packages("SciViews")
-install.packages("ggthemes")
-install.packages("gridExtra")
-install.packages("cowplot")
-
-packages <- readLines("packages.txt")
-install.packages(packages)
+## Help
+- The current version and patch notes can be found under [Releases](https://github.com/biotoolbox/pam/releases).
+- Bug reports can be posted under [Issues](https://github.com/biotoolbox/pam/issues).
+- Deeper insights can be found under [developer documentation](docs/dev.md).
+- A good source for general help can be the [rstats Reddit Community](https://www.reddit.com/r/rstats/).

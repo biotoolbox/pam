@@ -1,9 +1,12 @@
+# Generate regression model data
 
-### vollenweider_generate_regression_ETR_I() and vollenweider_generate_regression_ETR_II()
+Those functions will generate regression data with the chosen model and ETR type (e.g. platt_generate_regression_ETR_II).
+Original naming conventions from the publication are used.
 
-This function generates a regression model based on Vollenweider (1965). Original naming conventions from the publication are used.
 
-#### Parameters
+## vollenweider_generate_regression_ETR_I() and vollenweider_generate_regression_ETR_II()
+
+### Parameters
 
 - **data**: A `data.table` containing the input data, processed according to the corresponding read function (e.g. `read_dual_pam_data`).
 - **etr_type**: A character string specifying the column name of the response variable (ETR I or ETR II) to be used in the model.
@@ -12,7 +15,7 @@ This function generates a regression model based on Vollenweider (1965). Origina
 - **alpha_start_value**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_values_vollenweider_default`.
 - **n_start_value**: Numeric. The starting value for the parameter $$n$$ in the model. Defaults to `n_start_values_vollenweider_default`.
 
-#### Return
+### Return
 
 A list containing the following elements:
 
@@ -57,7 +60,7 @@ $$I_k^\prime = \frac{I_k \cdot p_{opt}}{p_{max}}$$
 
 $$\\p_max\\_popt\\_and\\_ik\\_iik\\_ratio = \frac{I_k}{I_k^\prime}$$
 
-#### Details
+### Details
 
 This function uses non-linear least squares fitting to estimate the parameters for the Vollenweider model, which describes the relationship between PAR and ETR. The model used is:
 
@@ -65,7 +68,7 @@ $$p = p_{max} \cdot \frac{a \cdot i}{\sqrt{1 + (a \cdot i)^2}} \cdot \frac{1}{\l
 
 It is valid: $$i = PAR; p = ETR$$
 
-#### Example
+### Example
 
 ```r
 result_vollenweider_ETR_II <- vollenweider_generate_regression_ETR_II(data, 
@@ -75,24 +78,22 @@ result_vollenweider_ETR_II <- vollenweider_generate_regression_ETR_II(data,
     n_start_value = 350)
 ```
 
-#### References
+### References
 
 Vollenweider, R. A. (1965). *Calculation models of photosynthesis-depth curves and some implications regarding day rate estimates in primary production measurements*, p. 427-457. In C. R. Goldman [ed.], *Primary Productivity in Aquatic Environments*. Mem. Ist. Ital. Idrobiol., 18 Suppl., University of California Press, Berkeley.
 
----
 
-### platt_generate_regression_ETR_I() and platt_generate_regression_ETR_II()
 
-This function generates a regression model based on  Platt (1980). Original naming conventions from the publication are used.
+## platt_generate_regression_ETR_I() and platt_generate_regression_ETR_II()
 
-#### Parameters
+### Parameters
 
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
 - **alpha_start_value**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_platt_default`.
 - **beta_start_value**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_platt_default`.
 - **ps_start_value**: Numeric. The starting value for the parameter $$p_s$$ in the model. Defaults to `ps_start_value_platt_default`.
 
-#### Return
+### Return
 
 A list containing the following elements:
 
@@ -123,7 +124,7 @@ $$I_m = \left(\frac{P_s}{\alpha}\right) \cdot \log\left(\frac{\alpha + \beta}{\b
 
 $$I_b = \frac{P_s}{\beta}$$
 
-#### Details
+### Details
 
 This function uses non-linear least squares fitting to estimate the parameters for the Platt model, which describes the relationship between PAR and ETR. The model used is:
 
@@ -131,7 +132,7 @@ $$P = P_s \cdot \left(1 - e^\frac{{-\alpha \cdot I}}{P_s}\right) \cdot e^\left(\
 
 It is valid: $$I = PAR; p = ETR$$
 
-#### Example
+### Example
 
 ```r
 result_platt_ETR_II <- platt_generate_regression_ETR_II(data, 
@@ -140,24 +141,22 @@ result_platt_ETR_II <- platt_generate_regression_ETR_II(data,
     ps_start_value = 30)
 ```
 
-#### References
+### References
 
 Platt, T., Gallegos, C. L., & Harrison, W. G. (1980). *Photoinhibition of photosynthesis in natural assemblages of marine phytoplankton*. Journal of Marine Research, 38(4). Retrieved from <https://elischolar.library.yale.edu/journal_of_marine_research/1525>.
 
----
 
-### eilers_peeters_generate_regression_ETR_I() and eilers_peeters_generate_regression_ETR_II()
 
-This function generates a regression model based on  Eilers-Peeters (1988). Original naming conventions from the publication are used. All parameters are calculated taking photoinhibition into account.
+## eilers_peeters_generate_regression_ETR_I() and eilers_peeters_generate_regression_ETR_II()
 
-#### Parameters
+### Parameters
 
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
 - **a_start_value**: Numeric. The starting value for the parameter $$a$$ in the model. Defaults to `a_start_values_eilers_peeters_default`.
 - **b_start_value**: Numeric. The starting value for the parameter $$b$$ in the model. Defaults to `b_start_values_eilers_peeters_default`.
 - **c_start_value**: Numeric. The starting value for the parameter $$c$$ in the model. Defaults to `c_start_values_eilers_peeters_default`.
 
-#### Return
+### Return
 
 A list containing the following elements:
 
@@ -188,7 +187,7 @@ $$I_m = \sqrt{\frac{c}{a}}$$
 
 $$w = \frac{b}{\sqrt{a \cdot c}}$$
 
-#### Details
+### Details
 
 This function uses non-linear least squares fitting to estimate the parameters for the Eilers-Peeters model, which describes the relationship between PAR and ETR. The model used is:
 
@@ -196,7 +195,7 @@ $$ p = \frac{I}{a \cdot I^2 + b \cdot I + c} $$
 
 It is valid: $$I = PAR$$; $$p = ETR$$
 
-#### Example
+### Example
 
 ```r
 result_eilers_peeters_ETR_II <- eilers_peeters_generate_regression_ETR_II(data,
@@ -205,24 +204,22 @@ b_start_value =  0.004,
 c_start_value = 5)
 ```
 
-#### References
+### References
 
 Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
 
----
+
 
 ### walsby_generate_regression_ETR_I() and walsby_generate_regression_ETR_II()
 
-This function generates a regression model based on  Walsby (1997) in a modified version without the respiration term. Naming conventions from Romoth (2019) are used. ETRmax is calculated without taking photoinhibition into account.
-
-#### Parameters
+### Parameters
 
 - **data**: A `data.table` containing the input data from `read_dual_pam_data`.
 - **etr_max_start_value**: Numeric. The starting value for the parameter $$ETR_{max}$$ in the model. Defaults to `etr_max_start_value_walsby_default`.
 - **alpha_start_value**: Numeric. The starting value for the parameter $$\alpha$$ in the model. Defaults to `alpha_start_value_walsby_default`.
 - **beta_start_value**: Numeric. The starting value for the parameter $$\beta$$ in the model. Defaults to `beta_start_value_walsby_default`.
 
-#### Return
+### Return
 
 A list containing the following elements:
 
@@ -234,7 +231,7 @@ A list containing the following elements:
 - **alpha**: The initial slope of the light curve ($$\alpha$$).
 - **beta**: The photoinhibition of the light curve ($$\beta$$).
 
-#### Details
+### Details
 
 This function uses non-linear least squares fitting to estimate the parameters for the Walsby model, which describes the relationship between PAR and ETR I. The model used is:
 
@@ -242,7 +239,12 @@ $$ETR = ETR_{max} \cdot \left(1 - e^{\left(-\frac{\alpha \cdot I}{ETR_{max}}\rig
 
 It is valid: $$I = PAR$$
 
-#### References
+This function generates a regression model based on  Walsby (1997) in a modified version without the respiration term.
+Naming conventions from Romoth (2019) are used.
+ETRmax is calculated without taking photoinhibition into account.
+
+
+### References
 
 Walsby, A. E. (1997). Numerical integration of phytoplankton photosynthesis through time and depth in a water column. *New Phytologist*, 136(2), 189-209. <https://doi.org/10.1046/j.1469-8137.1997.00736.x>
 

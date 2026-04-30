@@ -1,13 +1,15 @@
-### compare_regression_models_ETR_I() and compare_regression_models_ETR_II()
+# compare regression models
 
 This function compares different regression models.
 
-#### Parameters
+## compare_regression_models_ETR_I() and compare_regression_models_ETR_II()
+
+### Parameters
 
 - **data_dir**: A character string specifying the directory where the input data files are located.
 - **read_func**: Function used to read the CSV files (e.g., `read_dual_pam_data`)
 
-#### Return
+### Return
 
 A vector containing the total points assigned to each regression model based on their performance. Models are ranked based on the calculated deviation of the difference between observed and predicted values. Rating:
 
@@ -16,11 +18,11 @@ A vector containing the total points assigned to each regression model based on 
 - 3rd: 1 point
 - 4th: 0 points
 
-#### Details
+### Details
 
 This function allows a straightforward comparison of the models: Eilers-Peeters (1988), Platt (1980), Vollenweider (1965), and Walsby (1997). The results can guide users in selecting the most appropriate model for their data. If regression is not possible for a model, no points are awarded for the file for any of the models. Start values cannot be adjusted in this function.
 
-#### Example
+### Example
 
 ```r
 #raw data file directory
@@ -31,7 +33,7 @@ compare_regression_models_ETR_II <- compare_regression_models_ETR_II(data_dir_co
 print(compare_regression_models_ETR_II)
 ```
 
-#### References
+### References
 
 Eilers, P. H. C., & Peeters, J. C. H. (1988). *A model for the relationship between light intensity and the rate of photosynthesis in phytoplankton.* Ecological Modelling, 42(3-4), 199-215. [doi:10.1016/0304-3800(88)90057-9](https://doi.org/10.1016/0304-3800(88)90057-9).
 

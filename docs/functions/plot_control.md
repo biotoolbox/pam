@@ -1,19 +1,21 @@
-### plot_control()
+# Control plots
+
+## plot_control()
 
 This function creates a control plot for the used model based on the provided data and model results.
 
-#### Parameters
+### Parameters
 
 - **data**: A `data.table` containing the original ETR and yield data for the plot.
 - **model_result**: A list containing the fitting results of the used model and the calculated parameters (alpha, ik, etc.).
 - **title**: A character string that specifies the title of the plot.
 - **color**: A color specification for the regression line in the plot.
 
-#### Return
+### Return
 
 A plot displaying the original ETR and Yield values and the regression data. A table below the plot shows the calculated data (alpha, ik, etc.).
 
-#### Example
+### Example
 
 ```r
 plot_control_eilers_peeters_ETR_II <- plot_control(
@@ -25,15 +27,13 @@ plot_control_eilers_peeters_ETR_II <- plot_control(
 print(plot_control_eilers_peeters_ETR_II)
 ```
 
-![Plot](img/test-eilers_peeters_etr_II_modified_control_plot_20240925.jpg)
+![Plot](../../img/test-eilers_peeters_etr_II_modified_control_plot_20240925.jpg)
 
----
-
-### combo_plot_control()
+## combo_plot_control()
 
 The `combo_plot_control()` function generates a combined plot of electron transport rate (ETR) data and regression model predictions, along with a customized table summarizing the parameters for each model.
 
-#### Parameters
+### Parameters
 
 - **title**: A character string specifying the title for the plot.
 - **data**: A data frame containing the raw input data for ETR and Photosynthetically Active Radiation (PAR).
@@ -41,11 +41,11 @@ The `combo_plot_control()` function generates a combined plot of electron transp
 - **name_list**: A list of names corresponding to each model result. These names will be used in the legend and table.
 - **color_list**: A list of color values for each model result. Colors are used to differentiate lines on the plot.
 
-#### Return
+### Return
 
 A plot displaying the original ETR and Yield values and the regression data from different models. A table below the plot shows the calculated data (alpha, ik, etc.).
 
-#### Examples
+### Examples
 
 ```r
 test_data_file <- file.path(getwd(), "data", "dual_pam_data", "20240925.csv")
@@ -65,4 +65,4 @@ test_data_file <- file.path(getwd(), "data", "dual_pam_data", "20240925.csv")
     )
 ```
 
-![combo Plot](img/test_combo_plot_control_etr_II.jpg)
+![combo Plot](../../img/test_combo_plot_control_etr_II.jpg)

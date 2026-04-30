@@ -1,16 +1,17 @@
-
-### write_model_result_csv()
+# Write model result
 
 This function exports the raw input data, regression data, and model parameters into separate CSV files for easy access and further analysis.
 
-#### Parameters
+## write_model_result_csv()
+
+### Parameters
 
 - **dest_dir**: A character string specifying the directory where the CSV files will be saved.
 - **name**: A character string specifying the base name for the output files.
 - **data**: A data frame containing the raw input data used in the model.
 - **model_result**: A list containing the model results, including parameter values and regression data.
 
-#### Details
+### Details
 
 This function creates three CSV files:
 
@@ -20,13 +21,13 @@ This function creates three CSV files:
 
 Each file will be named using the `name` parameter as a prefix, followed by a specific suffix for clarity.
 
-#### Examples
+### Examples
 
 ```r
 write_model_result_csv(
   dest_dir = "output",
-  name = "eilers_peeters_experiment_001",
-  data = raw_data,
-  model_result = model_result_eilers_peeters
+  name = "001",
+  data = intermediate_table,
+  model_result = model_result
 )
 ```
