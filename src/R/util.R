@@ -63,6 +63,14 @@ relative_root_mean_squared_error <- function(measured_predicted_etr_data) {
   return(relative_root_mean_squared_error)
 }
 
+did_etr_saturate <- function(etr_regression_data) {
+  validate_etr_regression_data(etr_regression_data)
+  predictions <- etr_regression_data[[prediction_name]]
+  pars <- etr_regression_data[[PAR_name]]
+  par_at_max_prediction <- min(pars[predictions == max(predictions)])
+  return(par_at_max_prediction < max(pars))
+}
+
 calc_etr <- function(yield, par, etr_factor, p_ratio) {
   if (is.na(yield)) {
     return(NA_real_)
@@ -85,4 +93,52 @@ calc_etr <- function(yield, par, etr_factor, p_ratio) {
   }
 
   return(yield * par * etr_factor * p_ratio)
+}
+
+create_modified_model_result <- function(
+  etr_type,
+  etr_regression_data,
+  residual_sum_of_squares,
+  root_mean_squared_error,
+  relative_root_mean_squared_error,
+  a,
+  b,
+  c,
+  d,
+  alpha,
+  beta,
+  etrmax_with_photoinhibition,
+  etrmax_without_photoinhibition,
+  ik_with_photoinhibition,
+  ik_without_photoinhibition,
+  im_with_photoinhibition,
+  w,
+  ib,
+  etrmax_without_with_ratio,
+  saturation
+) {
+  result <- list(
+    etr_type = etr_type,
+    etr_regression_data = etr_regression_data,
+    residual_sum_of_squares = residual_sum_of_squares,
+    root_mean_squared_error = root_mean_squared_error,
+    relative_root_mean_squared_error = relative_root_mean_squared_error,
+    a = a,
+    b = b,
+    c = c,
+    d = d,
+    alpha = alpha,
+    beta = beta,
+    etrmax_with_photoinhibition = etrmax_with_photoinhibition,
+    etrmax_without_photoinhibition = etrmax_without_photoinhibition,
+    ik_with_photoinhibition = ik_with_photoinhibition,
+    ik_without_photoinhibition = ik_without_photoinhibition,
+    im_with_photoinhibition = im_with_photoinhibition,
+    w = w,
+    ib = ib,
+    etrmax_without_with_ratio = etrmax_without_with_ratio,
+    saturation = saturation
+  )
+  validate_modified_model_result(result)
+  return(result)
 }

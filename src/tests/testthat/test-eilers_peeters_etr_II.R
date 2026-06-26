@@ -13,6 +13,7 @@ test_that("test-eilers_peeters_etr_II generate regression 20240925.csv - linux",
   expect_equal(model_result[["ik"]], 271.983185)
   expect_equal(model_result[["im"]], 731.801311)
   expect_equal(model_result[["w"]], 0.69061233)
+  expect_equal(model_result[["saturation"]], TRUE)
 })
 
 test_that("test-eilers_peeters_etr_II generate regression 20240925.csv", {
@@ -45,6 +46,7 @@ test_that("test-eilers_peeters_etr_II modified 20240925.csv - linux", {
   expect_equal(model_result[["w"]], 0.69061233)
   expect_equal(model_result[["ib"]], NA_real_)
   expect_equal(model_result[["etrmax_without_with_ratio"]], NA_real_)
+  expect_equal(model_result[["saturation"]], TRUE)
 })
 
 test_that("test-eilers_peeters_etr_II modified 20240925.csv", {

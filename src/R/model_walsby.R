@@ -32,6 +32,7 @@ walsby_default_start_value_beta <- -0.0008944076
 #'   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
 #'   \item \code{alpha}: Initial slope (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @references{
@@ -88,6 +89,7 @@ walsby_generate_regression_ETR_I <- function(
 #'   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
 #'   \item \code{alpha}: Initial slope (\eqn{\alpha}).
 #'   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @references{
@@ -184,6 +186,8 @@ walsby_generate_regression_internal <- function(
 
       relative_root_mean_squared_error <- relative_root_mean_squared_error(measured_predicted_etr_par_data)
 
+      saturation <- did_etr_saturate(etr_regression_data)
+
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
@@ -192,7 +196,8 @@ walsby_generate_regression_internal <- function(
         relative_root_mean_squared_error = relative_root_mean_squared_error,
         etr_max = etr_max,
         alpha = alpha,
-        beta = beta
+        beta = beta,
+        saturation = saturation
       )
       validate_model_result(result)
       return(result)
@@ -233,6 +238,7 @@ walsby_generate_regression_internal <- function(
 #'   \item \code{w}: Not available, set to \code{NA_real_}.
 #'   \item \code{ib}: Not available, set to \code{NA_real_}.
 #'   \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_without_photoinhibition} / \code{etrmax_with_photoinhibition}.
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range.
 #' }
 #'
 #' @details
@@ -273,7 +279,8 @@ walsby_modified <- function(model_result) {
     im_with_photoinhibition = im_with_photoinhibition,
     w = NA_real_,
     ib = NA_real_,
-    etrmax_without_with_ratio = model_result[["etr_max"]] / etrmax_with_photoinhibition
+    etrmax_without_with_ratio = model_result[["etr_max"]] / etrmax_with_photoinhibition,
+    saturation = model_result[["saturation"]]
   )
 
   return(result)

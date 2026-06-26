@@ -14,6 +14,7 @@ test_that("test-vollenweider_etr_II generate regression 20240925.csv - linux", {
   expect_equal(model_result[["popt"]], 44.1785457)
   expect_equal(model_result[["iik"]], 289.657149)
   expect_equal(model_result[["pmax_popt_and_ik_iik_ratio"]], 1.194065095)
+  expect_equal(model_result[["saturation"]], TRUE)
 })
 
 test_that("test-vollenweider_etr_II generate regression 20240925.csv", {
@@ -65,6 +66,7 @@ test_that("test-vollenweider_etr_II generate regression modified 20240925.csv - 
   expect_equal(model_result[["w"]], NA_real_)
   expect_equal(model_result[["ib"]], NA_real_)
   expect_equal(model_result[["etrmax_without_with_ratio"]], 1.194065095)
+  expect_equal(model_result[["saturation"]], TRUE)
 })
 
 test_that("test-vollenweider_etr_II generate regression modified 20240925.csv", {

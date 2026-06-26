@@ -179,6 +179,12 @@ validate_modified_model_result <- function(model_result) {
         !is.numeric(model_result[["etrmax_without_with_ratio"]])) {
         stop("etrmax_without_with_ratio is null or not a valid number")
       }
+
+      if (is.null(model_result[["saturation"]]) ||
+        !is.logical(model_result[["saturation"]]) ||
+        is.na(model_result[["saturation"]])) {
+        stop("saturation is null or not a valid bool")
+      }
     },
     error = function(e) {
       stop("not a valid modified model result. error: ", e)

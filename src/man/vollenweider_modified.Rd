@@ -31,6 +31,7 @@ A modified model result as a list containing the following elements:
   \item \code{w}: Not available, here set to \code{NA_real_}.
   \item \code{ib}: Transferred unchanged as \code{ib}.
   \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_without_photoinhibition} / \code{etrmax_with_photoinhibition} and \code{ik_without_photoinhibition} / \code{ik_with_photoinhibition}.
+  \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range.
 }
 }
 \description{

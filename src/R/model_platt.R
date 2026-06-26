@@ -33,6 +33,7 @@ platt_default_start_value_ps <- 49.76112
 #'   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
 #'   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
 #'   \item \code{ib}: (\eqn{I_b})
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @details
@@ -88,6 +89,7 @@ platt_generate_regression_ETR_I <- function(
 #'   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
 #'   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
 #'   \item \code{ib}: (\eqn{I_b})
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @details
@@ -262,7 +264,8 @@ platt_generate_regression_internal <- function(
         ik = ik,
         is = is,
         ib = ib,
-        im = im
+        im = im,
+        saturation = did_etr_saturate(etr_regression_data)
       )
       validate_model_result(result)
       return(result)
@@ -303,6 +306,7 @@ platt_generate_regression_internal <- function(
 #'   \item \code{w}: Not available, set to \code{NA_real_}.
 #'   \item \code{ib}: Transferred unchanged as \code{ib}.
 #'   \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_without_photoinhibition} / \code{etrmax_with_photoinhibition}, and \code{ik_without_photoinhibition} / \code{ik_with_photoinhibition}.
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range.
 #' }
 #'
 #' @details
@@ -337,7 +341,8 @@ platt_modified <- function(model_result) {
     im_with_photoinhibition = model_result[["im"]],
     w = NA_real_,
     ib = model_result[["ib"]],
-    etrmax_without_with_ratio = model_result[["ps"]] / model_result[["pm"]]
+    etrmax_without_with_ratio = model_result[["ps"]] / model_result[["pm"]],
+    saturation = model_result[["saturation"]]
   )
 
   return(result)

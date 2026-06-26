@@ -41,6 +41,7 @@ vollenweider_default_start_value_n <- 100
 #'   \item \code{ik}: Transition point from light limitation to light saturation without photoinhibition (\eqn{I_k}).
 #'   \item \code{iik}: Transition point from light limitation to light saturation with photoinhibition (\eqn{I_k^\prime}).
 #'   \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} / \eqn{p_{opt}} and \eqn{I_k} / \eqn{I_k^\prime}.
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @references{
@@ -99,6 +100,7 @@ vollenweider_generate_regression_ETR_I <- function(
 #'   \item \code{ik}: Transition point from light limitation to light saturation without photoinhibition (\eqn{I_k}).
 #'   \item \code{iik}: Transition point from light limitation to light saturation with photoinhibition (\eqn{I_k^\prime}).
 #'   \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} / \eqn{p_{opt}} and \eqn{I_k} / \eqn{I_k^\prime}.
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @references{
@@ -261,7 +263,8 @@ vollenweider_generate_regression_internal <- function(
         ik = ik,
         popt = popt,
         iik = iik,
-        pmax_popt_and_ik_iik_ratio = pmax_popt_and_ik_iik_ratio
+        pmax_popt_and_ik_iik_ratio = pmax_popt_and_ik_iik_ratio,
+        saturation = did_etr_saturate(etr_regression_data)
       )
       validate_model_result(result)
       return(result)
@@ -302,6 +305,7 @@ vollenweider_generate_regression_internal <- function(
 #'   \item \code{w}: Not available, here set to \code{NA_real_}.
 #'   \item \code{ib}: Transferred unchanged as \code{ib}.
 #'   \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_without_photoinhibition} / \code{etrmax_with_photoinhibition} and \code{ik_without_photoinhibition} / \code{ik_with_photoinhibition}.
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range.
 #' }
 #'
 #' @details
@@ -340,7 +344,8 @@ vollenweider_modified <- function(model_result) {
     im_with_photoinhibition = im_with_photoinhibition,
     w = NA_real_,
     ib = NA_real_,
-    etrmax_without_with_ratio = model_result[["pmax_popt_and_ik_iik_ratio"]]
+    etrmax_without_with_ratio = model_result[["pmax_popt_and_ik_iik_ratio"]],
+    saturation = model_result[["saturation"]]
   )
 
   return(result)

@@ -30,6 +30,7 @@ A list containing:
   \item \code{etr_max}: Maximum ETR (\eqn{ETR_{max}}).
   \item \code{alpha}: Initial slope (\eqn{\alpha}).
   \item \code{beta}: Photoinhibition factor (\eqn{\beta}).
+  \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 }
 }
 \description{
