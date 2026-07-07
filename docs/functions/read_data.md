@@ -348,7 +348,7 @@ $$ \textit{ETR (II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of
 The function processes the provided CSV file by:
 
 - Reading the CSV data using `read.csv()` and converting it to a `data.table`.
-- Validating the raw Junior-PAM data with `validate_junior_pam_data()`.
+- Validating the raw Diving-PAM-II data with `validate_diving_pam_data()`.
 - Renaming columns to standard names (`PAR`, `Y.II`.) if necessary.
 - Filtering rows where Type equals `"FO"` or `"F"`.
 - Ordering by `Time (rel/ms)` column.
