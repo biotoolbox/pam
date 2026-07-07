@@ -324,3 +324,54 @@ data <- read_pam_2500_data(
 ### References
 
 - Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+
+## read_diving_pam_data()
+
+### Parameters
+
+- **csv_path**: A string representing the file path to the CSV file.
+- **remove_recovery**: Automatic removal of recovery measurements after the actual Pi curve for an accurate regression. Default is `TRUE`.
+- **etr_factor**: A numeric value used as a factor for calculating ETR. Default is `0.84`.
+- **fraction_photosystem_I**: A numeric value representing the relative distribution of absorbed PAR to photosystem I used in the ETR calculation formula. Default is `0.5`.
+Calculated as: $$\textit{Fraction of Photosystem I} = \frac{PPS 1}{PPS 1+2}$$
+- **fraction_photosystem_II**: A numeric value representing the relative distribution of absorbed PAR to photosystem II used in the ETR calculation formula. Default is `0.5`.
+Calculated as: $$\textit{Fraction of Photosystem II} = \frac{PPS 2}{PPS 1+2}$$
+
+### Details
+
+Device: [DIVING-PAM-II](https://www.walz.com/products/diving-pam-ii/) 
+
+ETR values are calculated using the following formula:
+
+$$ \textit{ETR (II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of Photosystem (II)} \cdot \textit{Yield (II)} $$
+
+The function processes the provided CSV file by:
+
+- Reading the CSV data using `read.csv()` and converting it to a `data.table`.
+- Validating the raw Junior-PAM data with `validate_junior_pam_data()`.
+- Renaming columns to standard names (`PAR`, `Y.II`.) if necessary.
+- Filtering rows where Type equals `"FO"` or `"F"`.
+- Ordering by `Time (rel/ms)` column.
+- Iterating through all rows to calculate ETR values for `Y.II.` using `calc_etr()`.
+- Stopping at the recovery period if `remove_recovery = TRUE`.
+
+To ensure the file is imported correctly, please export the CSV file using the default settings:
+![Plot](../../img/export_junior_pam.png)
+
+### Return
+
+Returning a table containing `par`, `yield_1` (NA), `yield_2`, `etr_1` (NA), and `etr_2`.
+
+### Example
+
+```r
+data <- read_diving_pam_data("path/to/data.csv",
+remove_recovery = TRUE,
+etr_factor = 0.84,
+fraction_photosystem_I = 0.5,
+fraction_photosystem_II = 0.5)
+```
+
+### References
+
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
