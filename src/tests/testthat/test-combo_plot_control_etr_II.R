@@ -21,3 +21,27 @@ test_that("test-combo_plot_control 20240925.csv", {
   ggplot2::ggsave(out, create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 2100, dpi = 100, limitsize = FALSE)
   expect_true(file.exists(out))
 })
+
+test_that("test-combo_plot_control 2026_07_06_diving_pam_II.csv", {
+  test_data_file <- testthat::test_path("data", "diving_pam_II_data", "2026_07_06_diving_pam_II.csv")
+  data <- read_diving_pam_II_data(test_data_file)
+
+  eilers_peeters <- eilers_peeters_modified(eilers_peeters_generate_regression_ETR_II(data))
+  platt <- platt_modified(platt_generate_regression_ETR_II(data))
+  walsby <- walsby_modified(walsby_generate_regression_ETR_II(data))
+  vollenweider <- vollenweider_modified(vollenweider_generate_regression_ETR_II(data))
+
+  plot <- combo_plot_control(
+    "etr II test-combo_plot_control_2026_07_06_diving_pam_II.csv",
+    data,
+    list(eilers_peeters, platt, walsby, vollenweider),
+    list("eilers_peeters", "platt", "walsby", "vollenweider"),
+    list(color_eilers_peeters, color_platt, color_walsby, color_vollenweider)
+  )
+  expect_s3_class(plot, "ggplot")
+  expect_gt(length(plot$layers), 0)
+
+  out <- file.path("results", "test_combo_plot_control_etr_II_2026_07_06_diving_pam_II.jpg")
+  ggplot2::ggsave(out, create.dir = TRUE, plot = plot, units = "px", width = 1000, height = 2100, dpi = 100, limitsize = FALSE)
+  expect_true(file.exists(out))
+})
