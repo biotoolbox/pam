@@ -256,3 +256,20 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |w         |w     |NA     |NA           |NA       |
 |ib         |NA     |ib     |NA           |NA       |
 |etrmax_without_with_ratio   |NA     |etrmax_without_with_ratio  |etrmax_without_with_ratio |pmax_popt_and_ik_iik_ratio |
+
+## Note
+### non-saturating curves (saturation value)
+The `saturation` value reports whether the fitted light curve reaches its maximum within the measured PAR range. It is `FALSE` when the prediction is still rising at the largest measured PAR value.
+
+When saturation = `FALSE`, treat the derived parameters with caution. Several of them become biologically meaningless. Typical symptoms include:
+
+- `im_with_photoinhibition` and `etrmax_with_photoinhibition` collapse onto the last PAR value. For Walsby and Vollenweider it is taken from the PAR at `max(prediction)`; on a still-rising curve that maximum is simply the last measured point (e.g. 2111 in the example), not a true curve peak.
+- `etrmax_without_photoinhibition` values can be lower than`etrmax_with_photoinhibition` values.
+- Photoinhibition parameters may be nonsensical. Without a descending branch there is no photoinhibition information in the data, so `beta`, `ib` and `etrmax_without_with_ratio` are extrapolations and can take extreme, unstable or negative values (e.g. the large negative `ib` for platt in the example).
+
+<p align="center">
+  <img src="../../img/test_combo_plot_control_etr_II_2026_07_06_diving_pam_II.jpg" alt="saturation value overview" width="400">
+</p>
+
+
+

@@ -51,7 +51,7 @@ For detailed information about these functions, visit the respective documentati
 
 - [Read CSV Data](docs/functions/read_data.md) → Reads the raw data CSV files and returns the intermediate table.
 - [Generate Regressions](docs/functions/generate_regressions.md) → Generates ETR regression data from the chosen model.
-- [Modify Model Results](docs/functions/modify_model_results.md) → Modifies parameter naming to a standard approach and adds parameters from other models.
+- [Modify Model Results](docs/functions/modify_model_results.md) → Modifies parameter naming to a standard approach and adds parameters from other models. [**Note**](docs/functions/modify_model_results.md#non-saturating-curves-saturation-value): when a curve does not saturate (`saturation = FALSE`), several derived parameters become unreliable.
 - [Plot Control](docs/functions/plot_control.md) → Generates control plots for visual fit validation.
 - [Write Model Results](docs/functions/write_model_results.md) → Exports the regression results as CSV files.
 - [Compare Regression Models](docs/functions/compare_regression_models.md) → Scores models against each other for one data set.
