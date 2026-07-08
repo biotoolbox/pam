@@ -295,6 +295,7 @@ eilers_peeters_generate_regression_internal <- function(
 #'   \item \code{w}: The sharpness of the peak, transferred as \code{w}.
 #'   \item \code{ib}: Not available, set to \code{NA_real_}.
 #'   \item \code{etrmax_without_with_ratio}: Not available, set to \code{NA_real_}.
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range.
 #' }
 #'
 #' @details

@@ -1,7 +1,7 @@
 .PHONY: test
 
 install:
-	Rscript -e 'packages <- readLines("packages.txt"); install.packages(packages)'
+	Rscript -e 'packages <- readLines("packages.txt"); install.packages(packages, repos = "https://cloud.r-project.org")'
 
 test:
 	rm -rf src/tests/testthat/results

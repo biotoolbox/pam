@@ -40,6 +40,7 @@ $${alpha} = \frac{{etrmax\\_with\\_photoinhibition}}{{ik\\_with\\_photoinhibitio
 - **w**: Not available, here set to `NA_real_`
 - **ib**: Not available, here set to `NA_real_`
 - **etrmax_without_with_ratio**: Ratio of `etrmax_without_photoinhibition` / `etrmax_with_photoinhibition` and  `ik_without_photoinhibition` / `ik_with_photoinhibition`,  transfered as: `pmax_popt_and_ik_iik_ratio`
+- **saturation**: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range
 
 ### Details
 
@@ -84,6 +85,8 @@ Returns a modified model result as a list with the following elements:
 
 $${{etrmax\\_without\\_with\\_ratio}} = \frac{{etrmax\\_without\\_photoinhibition}}{{etrmax\\_with\\_photoinhibition}}$$
 
+- **saturation**: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range
+
 ### Details
 
 This function validates the `model_result` input and processes relevant parameters for the Platt model, creating a structured list using `create_modified_model_result`. This standardized output allows for consistent analysis and comparison across different models.
@@ -127,6 +130,7 @@ Returns a modified model result as a list with the following elements:
 - **w**: The sharpness of the peak, transfered as `w`
 - **ib**: Not available, here set to `NA_real_`
 - **etrmax_without_with_ratio**: Not available, here set to `NA_real_`
+- **saturation**: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range
 
 ### Details
 
@@ -190,6 +194,8 @@ $$ik\\_without\\_photoinhibition = \frac{etrmax\\_without\\_photoinhibition}{alp
 - **etrmax_without_with_ratio**: Ratio of `etrmax_without_photoinhibition` / `etrmax_with_photoinhibition` and `ik_without_photoinhibition` / `ik_with_photoinhibition`. Calculated as:
 
 $${{etrmax\\_without\\_with\\_ratio}} = \frac{{etrmax\\_without\\_photoinhibition}}{{etrmax\\_with\\_photoinhibition}}$$
+
+- **saturation**: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range
 
 ### Details
 

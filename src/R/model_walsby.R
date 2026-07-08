@@ -233,6 +233,7 @@ walsby_generate_regression_internal <- function(
 #'   \item \code{w}: Not available, set to \code{NA_real_}.
 #'   \item \code{ib}: Not available, set to \code{NA_real_}.
 #'   \item \code{etrmax_without_with_ratio}: Ratio of \code{etrmax_without_photoinhibition} / \code{etrmax_with_photoinhibition}.
+#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range.
 #' }
 #'
 #' @details

@@ -60,6 +60,7 @@ test_that("test-walsby_etr_II generate regression modified 20240925.csv - linux"
   expect_equal(model_result[["w"]], NA_real_)
   expect_equal(model_result[["ib"]], NA_real_)
   expect_equal(model_result[["etrmax_without_with_ratio"]], 1.44981217)
+  expect_equal(model_result[["saturation"]], TRUE)
 })
 
 test_that("test-walsby_etr_II generate regression modified 20240925.csv", {

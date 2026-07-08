@@ -23,7 +23,26 @@ test_that("test-write_model_result_csv - walsby_modified - 20240925.csv", {
 
   model_result_csv <- read.csv(
     file = model_result_csv_path,
-    colClasses = "numeric"
+    colClasses = c(
+      residual_sum_of_squares = "numeric",
+      root_mean_squared_error = "numeric",
+      relative_root_mean_squared_error = "numeric",
+      a = "numeric",
+      b = "numeric",
+      c = "numeric",
+      d = "numeric",
+      alpha = "numeric",
+      beta = "numeric",
+      etrmax_with_photoinhibition = "numeric",
+      etrmax_without_photoinhibition = "numeric",
+      ik_with_photoinhibition = "numeric",
+      ik_without_photoinhibition = "numeric",
+      im_with_photoinhibition = "numeric",
+      w = "numeric",
+      ib = "numeric",
+      etrmax_without_with_ratio = "numeric",
+      saturation = "logical"
+    )
   )
   expect_equal(model_result_csv$a, model_result$a)
   expect_equal(model_result_csv$b, model_result$b)
@@ -75,7 +94,14 @@ test_that("test-write_model_result_csv - walsby - 20240925.csv", {
 
   model_result_csv <- read.csv(
     file = model_result_csv_path,
-    colClasses = "numeric"
+    colClasses = c(
+      residual_sum_of_squares = "numeric",
+      root_mean_squared_error = "numeric",
+      relative_root_mean_squared_error = "numeric",
+      etr_max = "numeric",
+      alpha = "numeric",
+      beta = "numeric"
+    )
   )
   expect_equal(model_result_csv$a, model_result$a)
   expect_equal(model_result_csv$b, model_result$b)
