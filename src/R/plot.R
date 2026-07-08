@@ -62,13 +62,18 @@ combo_plot_control <- function(
 
   yield <- NA_real_
   yield_name <- ""
+  etr_name <- ""
   if (etr_type == etr_1_type) {
     yield <- "yield_1"
     yield_name <- "Y(I)"
+    etr_name <- "ETR(I)"
   } else {
     yield <- "yield_2"
     yield_name <- "Y(II)"
+    etr_name <- "ETR(II)"
   }
+
+  etr_label <- bquote(.(etr_name) ~ .(etr_unit_label[[1]]))
 
   plot <- ggplot2::ggplot(data, ggplot2::aes(x = data$par, y = get(etr_type))) +
     ggplot2::geom_point() +
@@ -346,13 +351,19 @@ plot_control <- function(
 
   yield <- NA_real_
   yield_name <- ""
+  etr_name <- ""
   if (etr_type == etr_1_type) {
     yield <- "yield_1"
     yield_name <- "Y(I)"
+    etr_name <- "ETR(I)"
   } else {
     yield <- "yield_2"
     yield_name <- "Y(II)"
+    etr_name <- "ETR(II)"
   }
+
+  # combine the ETR name with the shared unit expression into one plotmath label
+  etr_label <- bquote(.(etr_name) ~ .(etr_unit_label[[1]]))
 
   etr_regression_data <- get_etr_regression_data_from_model_result(model_result)
   validate_etr_regression_data(etr_regression_data)

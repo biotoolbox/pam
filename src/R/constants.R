@@ -9,12 +9,6 @@ etr_2_type <- "etr_2"
 PAR_name <- "par"
 prediction_name <- "prediction"
 
-etr_label <- expression(paste("ETR [", mu, "mol electrons m"^{
-    -2
-} ~ "s"^{
-    -1
-} ~ "]"))
-
 par_label <- expression(paste("PAR [", mu, "mol photons m"^{
     -2
 } ~ "s"^{
