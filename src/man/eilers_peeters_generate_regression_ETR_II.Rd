@@ -33,7 +33,6 @@ A list containing:
   \item \code{ik}: Transition point from light limitation to light saturation (\eqn{I_k}).
   \item \code{im}: PAR at maximum ETR (\eqn{I_m}).
   \item \code{w}: Peak sharpness (\eqn{w}).
-  \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 }
 }
 \description{

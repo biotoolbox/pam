@@ -14,7 +14,6 @@ test_that("test-platt_etr_II generate regression 20240925.csv - linux", {
   expect_equal(model_result[["is"]], 429.51461)
   expect_equal(model_result[["ib"]], 2149.3914)
   expect_equal(model_result[["im"]], 769.889813)
-  expect_equal(model_result[["saturation"]], TRUE)
 })
 
 test_that("test-platt_etr_II generate regression 20240925.csv", {

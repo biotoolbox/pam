@@ -13,7 +13,6 @@ test_that("test-eilers_peeters_etr_I generate regression 20240925.csv - linux", 
   expect_equal(model_result[["ik"]], 440.1289906)
   expect_equal(model_result[["im"]], 1399.769662)
   expect_equal(model_result[["w"]], 1.18036237)
-  expect_equal(model_result[["saturation"]], TRUE)
 })
 
 test_that("test-eilers_peeters_etr_I generate regression 20240925.csv", {

@@ -114,8 +114,7 @@ create_modified_model_result <- function(
   im_with_photoinhibition,
   w,
   ib,
-  etrmax_without_with_ratio,
-  saturation
+  etrmax_without_with_ratio
 ) {
   result <- list(
     etr_type = etr_type,
@@ -137,7 +136,7 @@ create_modified_model_result <- function(
     w = w,
     ib = ib,
     etrmax_without_with_ratio = etrmax_without_with_ratio,
-    saturation = saturation
+    saturation = did_etr_saturate(etr_regression_data)
   )
   validate_modified_model_result(result)
   return(result)

@@ -14,7 +14,6 @@ test_that("test-vollenweider_etr_I generate regression 20240925.csv - linux", {
   expect_equal(model_result[["popt"]], 153.098976)
   expect_equal(model_result[["iik"]], 496.165847)
   expect_equal(model_result[["pmax_popt_and_ik_iik_ratio"]], 1.08078520)
-  expect_equal(model_result[["saturation"]], FALSE)
 })
 
 test_that("test-vollenweider_etr_I generate regression 20240925.csv", {

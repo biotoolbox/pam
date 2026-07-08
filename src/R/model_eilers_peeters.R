@@ -34,7 +34,6 @@ eilers_peeters_default_start_value_c <- 7.012012
 #'   \item \code{ik}: Transition point from light limitation to light saturation (\eqn{I_k}).
 #'   \item \code{im}: PAR at maximum ETR (\eqn{I_m}).
 #'   \item \code{w}: Peak sharpness (\eqn{w}).
-#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @references{
@@ -88,7 +87,6 @@ eilers_peeters_generate_regression_ETR_I <- function(
 #'   \item \code{ik}: Transition point from light limitation to light saturation (\eqn{I_k}).
 #'   \item \code{im}: PAR at maximum ETR (\eqn{I_m}).
 #'   \item \code{w}: Peak sharpness (\eqn{w}).
-#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @references{
@@ -241,9 +239,7 @@ eilers_peeters_generate_regression_internal <- function(
       root_mean_squared_error <- root_mean_squared_error(measured_predicted_etr_par_data)
 
       relative_root_mean_squared_error <- relative_root_mean_squared_error(measured_predicted_etr_par_data)
-      
-      saturation <- did_etr_saturate(etr_regression_data)
-      
+
       result <- list(
         etr_type = etr_type,
         etr_regression_data = etr_regression_data,
@@ -257,8 +253,7 @@ eilers_peeters_generate_regression_internal <- function(
         s = s,
         ik = ik,
         im = im,
-        w = w,
-        saturation = saturation
+        w = w
       )
 
       validate_model_result(result)
@@ -335,8 +330,7 @@ eilers_peeters_modified <- function(model_result) {
     model_result[["im"]],
     model_result[["w"]],
     NA_real_,
-    NA_real_,
-    saturation = model_result[["saturation"]]
+    NA_real_
   )
 
   return(result)

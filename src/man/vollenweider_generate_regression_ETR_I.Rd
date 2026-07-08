@@ -38,7 +38,6 @@ A list containing:
   \item \code{ik}: Transition point from light limitation to light saturation without photoinhibition (\eqn{I_k}).
   \item \code{iik}: Transition point from light limitation to light saturation with photoinhibition (\eqn{I_k^\prime}).
   \item \code{pmax_popt_and_ik_iik_ratio}: Ratio of \eqn{p_{max}} / \eqn{p_{opt}} and \eqn{I_k} / \eqn{I_k^\prime}.
-  \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 }
 }
 \description{

@@ -100,8 +100,7 @@ test_that("test-write_model_result_csv - walsby - 20240925.csv", {
       relative_root_mean_squared_error = "numeric",
       etr_max = "numeric",
       alpha = "numeric",
-      beta = "numeric",
-      saturation = "logical"
+      beta = "numeric"
     )
   )
   expect_equal(model_result_csv$a, model_result$a)

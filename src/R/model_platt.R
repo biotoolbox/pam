@@ -33,7 +33,6 @@ platt_default_start_value_ps <- 49.76112
 #'   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
 #'   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
 #'   \item \code{ib}: (\eqn{I_b})
-#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @details
@@ -89,7 +88,6 @@ platt_generate_regression_ETR_I <- function(
 #'   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
 #'   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
 #'   \item \code{ib}: (\eqn{I_b})
-#'   \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 #' }
 #'
 #' @details
@@ -264,8 +262,7 @@ platt_generate_regression_internal <- function(
         ik = ik,
         is = is,
         ib = ib,
-        im = im,
-        saturation = did_etr_saturate(etr_regression_data)
+        im = im
       )
       validate_model_result(result)
       return(result)
@@ -341,8 +338,7 @@ platt_modified <- function(model_result) {
     im_with_photoinhibition = model_result[["im"]],
     w = NA_real_,
     ib = model_result[["ib"]],
-    etrmax_without_with_ratio = model_result[["ps"]] / model_result[["pm"]],
-    saturation = model_result[["saturation"]]
+    etrmax_without_with_ratio = model_result[["ps"]] / model_result[["pm"]]
   )
 
   return(result)

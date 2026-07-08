@@ -35,7 +35,6 @@ A list containing:
   \item \code{is}: Transition PAR without photoinhibition (\eqn{I_s}).
   \item \code{im}: PAR at maximum ETR with photoinhibition (\eqn{I_m}).
   \item \code{ib}: (\eqn{I_b})
-  \item \code{saturation}: Logical flag indicating whether the predicted light curve reached saturation within the tested PAR range (\code{TRUE} if the maximum prediction occurs before the highest tested PAR).
 }
 }
 \description{
