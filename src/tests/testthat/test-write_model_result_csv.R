@@ -7,16 +7,16 @@ test_that("test-write_model_result_csv - walsby_modified - 20240925.csv", {
   result_dir <- testthat::test_path("results")
   dir.create(result_dir, showWarnings = FALSE)
 
-  model_result_csv_path <- file.path(result_dir, "20240925_model_result.csv")
-  raw_data_csv_path <- file.path(result_dir, "20240925_raw_data.csv")
-  regression_data_csv_path <- file.path(result_dir, "20240925_regression_data.csv")
+  model_result_csv_path <- file.path(result_dir, "20240925_modified_model_result.csv")
+  raw_data_csv_path <- file.path(result_dir, "20240925_modified_raw_data.csv")
+  regression_data_csv_path <- file.path(result_dir, "20240925_modified_regression_data.csv")
   unlink(model_result_csv_path)
   unlink(raw_data_csv_path)
   unlink(regression_data_csv_path)
 
   write_model_result_csv(
     result_dir,
-    "20240925",
+    "20240925_modified",
     data,
     model_result
   )
@@ -27,6 +27,7 @@ test_that("test-write_model_result_csv - walsby_modified - 20240925.csv", {
       residual_sum_of_squares = "numeric",
       root_mean_squared_error = "numeric",
       relative_root_mean_squared_error = "numeric",
+      saturation = "logical",
       a = "numeric",
       b = "numeric",
       c = "numeric",
@@ -40,8 +41,7 @@ test_that("test-write_model_result_csv - walsby_modified - 20240925.csv", {
       im_with_photoinhibition = "numeric",
       w = "numeric",
       ib = "numeric",
-      etrmax_without_with_ratio = "numeric",
-      saturation = "logical"
+      etrmax_without_with_ratio = "numeric"
     )
   )
   expect_equal(model_result_csv$a, model_result$a)
@@ -56,6 +56,7 @@ test_that("test-write_model_result_csv - walsby_modified - 20240925.csv", {
   expect_equal(model_result_csv$w, model_result$w)
   expect_equal(model_result_csv$ib, model_result$ib)
   expect_equal(model_result_csv$etrmax_without_with_ratio, model_result$etrmax_without_with_ratio)
+  expect_equal(model_result_csv$saturation, model_result$saturation)
 
   raw_data_csv <- read.csv(
     file = raw_data_csv_path,

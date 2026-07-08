@@ -271,7 +271,7 @@ plot_table <- function(model_result, entries_per_row) {
       next()
     }
 
-    value <- model_result[[i]]
+    value <- as.character(model_result[[i]])
 
     if (is.null(row)) {
       row <- data.frame(tmp = NA)

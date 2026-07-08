@@ -241,6 +241,7 @@ modified        |Eilers and Peeters |Platt    |Walsby          |Vollenweider    
 |residual_sum_of_squares        |residual_sum_of_squares    |residual_sum_of_squares    |residual_sum_of_squares          |residual_sum_of_squares      |
 |root_mean_squared_error       |root_mean_squared_error    |root_mean_squared_error    |root_mean_squared_error          |root_mean_squared_error     |
 |relative_root_mean_squared_error       |relative_root_mean_squared_error    |relative_root_mean_squared_error    |relative_root_mean_squared_error         |relative_root_mean_squared_error    |
+| saturation | saturation | saturation | saturation | saturation |
 |a         |a     |ps     |etr_max         |pmax      |
 |b         |b     |alpha    |alpha          |a       |
 |c         |c     |beta    |beta          |alpha      |
