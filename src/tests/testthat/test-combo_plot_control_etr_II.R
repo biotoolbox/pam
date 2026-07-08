@@ -23,6 +23,8 @@ test_that("test-combo_plot_control 20240925.csv", {
 })
 
 test_that("test-combo_plot_control 2026_07_06_diving_pam_II.csv", {
+  skip_if_not(is_reference_platform()) # vollenweider start parameters break with some versions on Mac and windows
+
   test_data_file <- testthat::test_path("data", "diving_pam_II_data", "2026_07_06_diving_pam_II.csv")
   data <- read_diving_pam_II_data(test_data_file)
 
