@@ -39,7 +39,8 @@ remotes::install_github("biotoolbox/pam", subdir = "src", ref = "dev")
 
 Examples of usage can be found in the [examples](examples/) directory:
 
-- [Single CSV](examples/example_single_data.R) → Reads a single CSV, generates regression data using Eilers and Peeters model, modifies the model result, generates control plot and exports the plot as jpg and the result as csv files.
+- [Single CSV](examples/example_single_data.R) → Reads a single CSV, generates regression data using the Eilers and Peeters model, modifies the model result, generates a control plot and exports the plot as a jpg and the result as csv files.
+- [Filter data from a single CSV](examples/example_filter_single_data.R) → Reads a single CSV, filters the data for a specific Y(II) range, generates regression data using the Eilers and Peeters model, modifies the model result, generates a control plot and exports the plot as a jpg and the result as csv files. The same logic can be applied for a specific PAR range. Note that filtering removes entire rows, so the corresponding Y(I) values (and all other columns) in those rows are dropped as well.
 - [Multiple CSV's](examples/example_multiple_data.R) → Reads multiple CSV files, generates regression data using Eilers and Peeters model, modifies the model result, generates control plot and exports the plots as pdf and the result as csv files.
 - [Combo control plot](examples/example_combo_plot_control.R) → Generates one control plot containing all models from a single csv file and exports the plot as jpg.
 - [Compare models](examples/example_compare_models.R) → Compares all models against each other based on one data set and prints the score.
