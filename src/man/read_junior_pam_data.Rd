@@ -53,6 +53,6 @@ data <- read_junior_pam_data(path)
 {
   Heinz Walz GmbH. (2024). \emph{DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).}
   Heinz Walz GmbH, Effeltrich, Germany.
-  Available at: \url{https://www.walz.com/files/downloads/dualpamed05.pdf}
+  Available at: \url{https://www.walz.com/downloads/?filter=dual-pam-100}
 }
 }

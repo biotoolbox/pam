@@ -43,7 +43,7 @@ fraction_photosystem_II = 0.5)
 
 ### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/downloads/?filter=dual-pam-100)
 
 
 
@@ -95,7 +95,7 @@ fraction_photosystem_II = 0.5)
 
 ### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/downloads/?filter=dual-pam-100)
 
 
 
@@ -154,7 +154,7 @@ data <- read_dual_pam_single_channel_p700_data(
 
 ### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/downloads/?filter=dual-pam-100)
 
 
 ## read_dual_pam_single_channel_fluo_data()
@@ -211,7 +211,7 @@ data <- read_dual_pam_single_channel_fluo_data(
 
 ### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/downloads/?filter=dual-pam-100)
 
 
 ## read_junior_pam_data()
@@ -263,7 +263,7 @@ fraction_photosystem_II = 0.5)
 
 ### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/downloads/?filter=dual-pam-100)
 
 
 
@@ -323,9 +323,9 @@ data <- read_pam_2500_data(
 
 ### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/downloads/?filter=dual-pam-100)
 
-## read_diving_pam_data()
+## read_diving_pam_II_data()
 
 ### Parameters
 
@@ -348,7 +348,7 @@ $$ \textit{ETR (II)} = PAR \cdot \textit{ETR–Factor} \cdot \textit{Fraction of
 The function processes the provided CSV file by:
 
 - Reading the CSV data using `read.csv()` and converting it to a `data.table`.
-- Validating the raw Diving-PAM-II data with `validate_diving_pam_data()`.
+- Validating the raw Diving-PAM-II data with `validate_diving_pam_II_data()`.
 - Renaming columns to standard names (`PAR`, `Y.II`.) if necessary.
 - Filtering rows where Type equals `"FO"` or `"F"`.
 - Ordering by `Time (rel/ms)` column.
@@ -365,7 +365,7 @@ Returning a table containing `par`, `yield_1` (NA), `yield_2`, `etr_1` (NA), and
 ### Example
 
 ```r
-data <- read_diving_pam_data("path/to/data.csv",
+data <- read_diving_pam_II_data("path/to/data.csv",
 remove_recovery = TRUE,
 etr_factor = 0.84,
 fraction_photosystem_I = 0.5,
@@ -374,4 +374,4 @@ fraction_photosystem_II = 0.5)
 
 ### References
 
-- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/files/downloads/dualpamed05.pdf)
+- Heinz Walz GmbH. (2024). *DUAL-PAM-100 DUAL-PAM/F MANUAL, 5th Edition, April 2024, Chapter 7 (pp. 162-172).* Heinz Walz GmbH, Effeltrich, Germany. Available at: [DUAL-PAM-100 Manual](https://www.walz.com/downloads/?filter=dual-pam-100)
