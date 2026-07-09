@@ -13,10 +13,10 @@ par_label <- expression(paste("PAR [", mu, "mol photons m"^{
     -2
 } ~ "s"^{
     -1
-} ~ "]"))
+} * "]"))
 
 etr_unit_label <- expression(paste("[", mu, "mol electrons m"^{
     -2
 } ~ "s"^{
     -1
-} ~ "]"))
+} * "]"))
