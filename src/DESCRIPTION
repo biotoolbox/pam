@@ -19,7 +19,7 @@ Authors@R: c(
     )
 URL: https://github.com/biotoolbox/pam
 BugReports: https://github.com/biotoolbox/pam/issues
-Description: Processing Chlorophyll Fluorescence & P700 Absorbance data. Four models are provided for the regression of Pi curves, which can be compared with each other in order to select the most suitable model for the data set. Control plots ensure the successful verification of each regression. Bundled output of alpha, ETRmax, Ik etc. enables fast and reliable further processing of the data. 
+Description: Rapid light curves obtained via the pulse-amplitude modulation (PAM) technique are widely used to characterize photosynthesis, but extracting kinetic parameters requires fitting regression models to raw data. The pam R package automates this process, enabling fast, reproducible analysis using established models (Vollenweider 1965; Platt et al. 1980; Eilers & Peeters 1988; Walsby 1997).
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
